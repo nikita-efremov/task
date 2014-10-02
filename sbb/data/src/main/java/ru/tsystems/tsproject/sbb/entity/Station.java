@@ -15,6 +15,7 @@ import java.util.TreeSet;
 @Table(name = "station")
 public class Station {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
