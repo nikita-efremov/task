@@ -12,6 +12,7 @@ import ru.tsystems.tsproject.sbb.entity.Passenger;
 public interface PassengerDAO {
 
     public void addPassenger(Passenger passenger);
-    public void updatePassenger(int passengerID, Passenger passenger);
     public Passenger getPassengerById(int passengerID);
+    public void updatePassenger(Passenger passenger);
+    public void deletePassenger(Passenger passenger);
 }

@@ -31,7 +31,7 @@ public class PassengerDAOImpl implements PassengerDAO {
         }
     }
 
-    public void updatePassenger(int passengerID, Passenger passenger) {
+    public void updatePassenger(Passenger passenger) {
         EntityManager entityManager = null;
         try {
             entityManager = JPAUtil.getEntityManger();
@@ -62,5 +62,21 @@ public class PassengerDAOImpl implements PassengerDAO {
             }
         }
         return passenger;
+    }
+
+    public void deletePassenger(Passenger passenger) {
+        EntityManager entityManager = null;
+        try {
+            entityManager = JPAUtil.getEntityManger();
+            entityManager.getTransaction().begin();
+            entityManager.remove(entityManager.contains(passenger) ? passenger : entityManager.merge(passenger));
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            if ((entityManager != null) && (entityManager.isOpen())) {
+                entityManager.close();
+            }
+        }
     }
 }

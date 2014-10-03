@@ -2,6 +2,7 @@ package ru.tsystems.tsproject.sbb.entity;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,13 +28,13 @@ public class Timetable {
     private Station station;
 
     @Column(name = "date")
-    private Calendar date;
+    private Date date;
 
     public Timetable() {
         id = 0;
         train = new Train();
         station = new Station();
-        date = Calendar.getInstance();
+        date = new Date();
     }
 
     public int getId() {
@@ -60,11 +61,11 @@ public class Timetable {
         this.station = station;
     }
 
-    public Calendar getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

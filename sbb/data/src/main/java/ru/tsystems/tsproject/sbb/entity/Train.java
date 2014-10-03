@@ -25,6 +25,9 @@ public class Train {
     @Column(name = "seats")
     private int seats;
 
+    @Column(name = "total_seats")
+    private int total_seats;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "train")
     private Set<Timetable> timetables;
 
@@ -32,6 +35,7 @@ public class Train {
         id = 0;
         number = "";
         seats = 0;
+        total_seats = 0;
         timetables = new TreeSet<Timetable>();
     }
 
@@ -69,5 +73,13 @@ public class Train {
 
     public void addTimetable(Timetable timetable) {
         timetables.add(timetable);
+    }
+
+    public int getTotal_seats() {
+        return total_seats;
+    }
+
+    public void setTotal_seats(int total_seats) {
+        this.total_seats = total_seats;
     }
 }

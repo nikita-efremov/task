@@ -1,15 +1,15 @@
 package ru.tsystems.tsproject.sbb;
 
 import ru.tsystems.tsproject.sbb.dao.StationDAO;
-import ru.tsystems.tsproject.sbb.dao.TicketDAO;
+import ru.tsystems.tsproject.sbb.dao.TimetableDAO;
 import ru.tsystems.tsproject.sbb.dao.TrainDAO;
 import ru.tsystems.tsproject.sbb.daoImpl.*;
-import ru.tsystems.tsproject.sbb.entity.Passenger;
-import ru.tsystems.tsproject.sbb.entity.Station;
-import ru.tsystems.tsproject.sbb.entity.Ticket;
-import ru.tsystems.tsproject.sbb.entity.Train;
+import ru.tsystems.tsproject.sbb.entity.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * Hello world!
@@ -19,80 +19,86 @@ public class App
 {
     public static void main( String[] args )
     {
-        try {
-            PassengerDAOImpl passengerDAOImpl = new PassengerDAOImpl();
+        //passengerFetch();
+        //addTrain();
+        //addTimetable();
+        //getTrainsByStation();
+        getTrainsByStationAndDate();
+    }
 
-            Passenger passenger = new Passenger();
-            passenger.setFirstName("John");
-            passenger.setLastName("Connor");
+    public static void passengerFetch() {
+        PassengerDAOImpl passengerDAOImpl = new PassengerDAOImpl();
 
-            StationDAO stationDAO = new StationDAOImpl();
-            Station station = stationDAO.getStationById(4);
-            //station.setName("Kabul3");
-            //stationDAO.deleteStation(station);
-            //stationDAO.updateStation(station);
-            //stationDAO.getStationById(4);
-            //System.out.println(station.getName());
+        Passenger passenger = passengerDAOImpl.getPassengerById(2);
+        System.out.println(passenger.getLastName());
+        System.out.println(passenger.getFirstName());
+        System.out.println(passenger.getTickets().size());
 
-            TrainDAO trainDAO = new TrainDAOImpl();
-            //Train train = new Train();
-            //train.setSeats(56);
-            //train.setNumber("007x");
+    }
 
-            for (Object o: trainDAO.getAllTrains()) {
-                Train train = ((Train)o);
-                System.out.println(train.getNumber() + "-" + train.getSeats() + "-" + train.getId());
-            }
+    public static void addTrain() {
+        TrainDAO trainDAO = new TrainDAOImpl();
 
-            TicketDAO ticketDAO = new TicketDAOImpl();
-            //Ticket ticket = new Ticket();
-            //ticket.setPassenger(passengerDAOImpl.getPassengerById(2));
-            //ticket.setTrain(trainDAOImpl.getTrainByID(1));
-            //ticketDAOImpl.addTicket(ticket);
+        Train train = new Train();
+        train.setSeats(344);
+        train.setNumber("230z");
+        trainDAO.addTrain(train);
+    }
 
+    public static void addTimetable() {
+        TimetableDAO timetableDAO = new TimetableDAOImpl();
+        StationDAO stationDAO = new StationDAOImpl();
+        TrainDAO trainDAO = new TrainDAOImpl();
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2014, Calendar.OCTOBER, 13, 6, 55);
 
-            //trainDAOImpl.addTrain(train);
-            //trainDAOImpl.decreaseSeatAmount(2);
-            Collection<Passenger> collection = ticketDAO.getPassengersByTrain(1);
+        Timetable timetable = new Timetable();
+        timetable.setStation(stationDAO.getStationById(1));
+        timetable.setTrain(trainDAO.getTrainByID(3));
+        timetable.setDate(calendar.getTime());
 
-            for (Passenger passenger1: collection) {
-                System.out.println(passenger1.getLastName() + " " + passenger1.getFirstName());
-            }
+        timetableDAO.addTimetable(timetable);
+    }
 
+    public static void getTrainsByStation() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
+        TimetableDAO timetableDAO = new TimetableDAOImpl();
+        StationDAO stationDAO = new StationDAOImpl();
 
+        Collection<Timetable> collection = timetableDAO.getTimetableByStation(stationDAO.getStationById(1));
+        for (Timetable timetable: collection) {
+            System.out.println("train: " + timetable.getTrain().getNumber() + "-" + timetable.getTrain().getSeats());
+            System.out.println("time: " + simpleDateFormat.format(timetable.getDate().getTime()));
+            System.out.println();
 
-            //passengerDAOImpl.updatePassenger(4,passenger);
-            //passenger = passengerDAOImpl.getPassengerById(4);
-            //System.out.println(passenger.getFirstName());
-            //System.out.println(passenger.getLastName());
-            //passengerDAOImpl.addPassenger(passenger);
-        } catch (Exception e) {
-            System.out.println(e);
+        }
+    }
+
+    public static void getTrainsByStationAndDate() {
+        SimpleDateFormat simpleDateFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+        TimetableDAO timetableDAO = new TimetableDAOImpl();
+        StationDAO stationDAO = new StationDAOImpl();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2010, Calendar.OCTOBER, 13, 6, 55);
+        Date dateStart = calendar.getTime();
+        calendar.set(2014, Calendar.OCTOBER, 18, 6, 55);
+        Date dateEnd = calendar.getTime();
+
+        Collection<Train> collection = timetableDAO.getTrainsByStationsAndDate(
+                stationDAO.getStationById(1),
+                stationDAO.getStationById(2),
+                dateStart,
+                dateEnd);
+        for (Train train: collection) {
+            System.out.println("train: " + train.getNumber() + "-" + train.getSeats());
+            System.out.println();
+
         }
 
-        /*
-        System.out.println("Hibernate one to many (Annotation)");
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        session.beginTransaction();
-        session.save(passenger);
-
-        session.getTransaction().commit();
-
-        session.beginTransaction();
-
-        Ticket ticket = new Ticket();
-        ticket.setPassenger(passenger);
-        ticket.setTrainID(2);
-
-        passenger.getTickets().add(ticket);
-        session.save(ticket);
-
-        session.getTransaction().commit();
-        System.out.println("Done");
-        */
 
     }
 }

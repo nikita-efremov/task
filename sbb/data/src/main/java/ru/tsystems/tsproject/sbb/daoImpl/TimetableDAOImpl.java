@@ -1,7 +1,8 @@
 package ru.tsystems.tsproject.sbb.daoImpl;
 
-
-import ru.tsystems.tsproject.sbb.dao.TrainDAO;
+import ru.tsystems.tsproject.sbb.dao.TimetableDAO;
+import ru.tsystems.tsproject.sbb.entity.Station;
+import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.util.JPAUtil;
 
@@ -9,23 +10,24 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
  * User: herr
- * Date: 02.10.14
- * Time: 11:35
+ * Date: 03.10.14
+ * Time: 11:11
  * To change this template use File | Settings | File Templates.
  */
-public class TrainDAOImpl implements TrainDAO {
+public class TimetableDAOImpl implements TimetableDAO {
 
-    public void addTrain(Train train) {
+    public void addTimetable(Timetable timetable) {
         EntityManager entityManager = null;
         try {
             entityManager = JPAUtil.getEntityManger();
             entityManager.getTransaction().begin();
-            entityManager.persist(train);
+            entityManager.persist(timetable);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e);
@@ -36,12 +38,12 @@ public class TrainDAOImpl implements TrainDAO {
         }
     }
 
-    public Train getTrainByID(int trainID)  {
+    public Timetable getTimetableById(int timetableID) {
         EntityManager entityManager = null;
-        Train train = null;
+        Timetable Timetable = null;
         try {
             entityManager = JPAUtil.getEntityManger();
-            train = entityManager.find(Train.class, trainID);
+            Timetable = entityManager.find(Timetable.class, timetableID);
         } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
@@ -50,15 +52,15 @@ public class TrainDAOImpl implements TrainDAO {
                 entityManager.close();
             }
         }
-        return train;
+        return Timetable;
     }
 
-    public void updateTrain(Train train) {
+    public void updateTimetable(Timetable timetable) {
         EntityManager entityManager = null;
         try {
             entityManager = JPAUtil.getEntityManger();
             entityManager.getTransaction().begin();
-            entityManager.merge(train);
+            entityManager.merge(timetable);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e);
@@ -69,12 +71,12 @@ public class TrainDAOImpl implements TrainDAO {
         }
     }
 
-    public void deleteTrain(Train train) {
+    public void deleteTimetable(Timetable timetable) {
         EntityManager entityManager = null;
         try {
             entityManager = JPAUtil.getEntityManger();
             entityManager.getTransaction().begin();
-            entityManager.remove(entityManager.contains(train) ? train : entityManager.merge(train));
+            entityManager.remove(entityManager.contains(timetable) ? timetable : entityManager.merge(timetable));
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e);
@@ -85,15 +87,18 @@ public class TrainDAOImpl implements TrainDAO {
         }
     }
 
-    public void decreaseSeatAmount(int trainID) {
-        Train train = getTrainByID(trainID);
+    public Collection getTimetableByStation(Station station) {
         EntityManager entityManager = null;
+        List timetableList = new ArrayList<Timetable>();
         try {
             entityManager = JPAUtil.getEntityManger();
-            entityManager.getTransaction().begin();
-            train.setSeats(train.getSeats() - 1);
-            entityManager.merge(train);
-            entityManager.getTransaction().commit();
+            Query query = entityManager.createQuery(
+                    " select t "
+                            + " from Timetable t INNER JOIN FETCH t.train Train"
+                            + " where t.station = :station"
+            )
+                    .setParameter("station", station);
+            timetableList = query.getResultList();
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -101,15 +106,25 @@ public class TrainDAOImpl implements TrainDAO {
                 entityManager.close();
             }
         }
+        return timetableList;
     }
 
-    public Collection getAllTrains() {
+    public Collection getTrainsByStationsAndDate(Station stationStart, Station stationEnd, Date dateStart, Date dateEnd) {
         EntityManager entityManager = null;
-        List trains = new ArrayList<Train>();
+        List trainList = new ArrayList<Train>();
         try {
             entityManager = JPAUtil.getEntityManger();
-            Query query = entityManager.createQuery("SELECT e FROM Train e");
-            trains = query.getResultList();
+            Query query = entityManager.createQuery(
+                    "select t.train"
+                            + " from Timetable t INNER JOIN t.train Train"
+                            + " where (t.station = :stationStart or t.station = :stationEnd) and (t.date >= :dateStart and t.date <=:dateEnd)"
+            )
+                    .setParameter("stationStart", stationStart)
+                    .setParameter("stationEnd", stationEnd)
+                    .setParameter("dateStart", dateStart)
+                    .setParameter("dateEnd", dateEnd);
+
+            trainList = query.getResultList();
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -117,6 +132,6 @@ public class TrainDAOImpl implements TrainDAO {
                 entityManager.close();
             }
         }
-        return trains;
+        return trainList;
     }
 }

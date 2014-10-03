@@ -15,6 +15,8 @@ public interface TrainDAO {
 
     public void addTrain(Train train);
     public Train getTrainByID(int trainID);
+    public void updateTrain(Train train);
+    public void deleteTrain(Train train);
     public void decreaseSeatAmount(int trainID);
     public Collection getAllTrains();
 }

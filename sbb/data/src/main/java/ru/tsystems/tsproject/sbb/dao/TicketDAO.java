@@ -13,5 +13,8 @@ import java.util.Collection;
  */
 public interface TicketDAO {
     public void addTicket(Ticket ticket);
+    public Ticket getTicketById(int ticketID);
+    public void updateTicket(Ticket ticket);
+    public void deleteTicket(Ticket ticket);
     public Collection getPassengersByTrain(int trainID);
 }
