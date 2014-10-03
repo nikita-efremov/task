@@ -5,6 +5,8 @@ import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.util.JPAUtil;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,6 +39,28 @@ public class StationDAOImpl implements StationDAO {
         try {
             entityManager = JPAUtil.getEntityManger();
             station = entityManager.find(Station.class, stationID);
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        } finally {
+            if ((entityManager != null) && (entityManager.isOpen())) {
+                entityManager.close();
+            }
+        }
+        return station;
+    }
+
+    public Station getStationByName(String name) {
+        EntityManager entityManager = null;
+        Station station = null;
+        try {
+            entityManager = JPAUtil.getEntityManger();
+            Query query = entityManager.createQuery("SELECT s FROM Station s where s.name = :name")
+                    .setParameter("name", name);
+            List stations = query.getResultList();
+            if (stations.size() != 0) {
+                station = (Station)stations.get(0);
+            }
         } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();

@@ -5,6 +5,8 @@ import ru.tsystems.tsproject.sbb.dao.TimetableDAO;
 import ru.tsystems.tsproject.sbb.dao.TrainDAO;
 import ru.tsystems.tsproject.sbb.daoImpl.*;
 import ru.tsystems.tsproject.sbb.entity.*;
+import ru.tsystems.tsproject.sbb.service.AdministratorService;
+import ru.tsystems.tsproject.sbb.serviceImpl.AdministratorServiceImpl;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,7 +25,8 @@ public class App
         //addTrain();
         //addTimetable();
         //getTrainsByStation();
-        getTrainsByStationAndDate();
+        //getTrainsByStationAndDate();
+        adminService();
     }
 
     public static void passengerFetch() {
@@ -98,7 +101,12 @@ public class App
             System.out.println();
 
         }
+    }
 
-
+    public static void adminService() {
+        AdministratorService administratorService = new AdministratorServiceImpl();
+        Station station = new Station();
+        station.setName("Pskov");
+        administratorService.addStation(station);
     }
 }

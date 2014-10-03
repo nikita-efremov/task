@@ -3,5 +3,35 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <display-name>Archetype Created Web Application</display-name>
+    <servlet>
+        <servlet-name>AdministratorServlet</servlet-name>
+        <display-name>AdministratorServlet</display-name>
+        <description></description>
+        <servlet-class>ru.tsystems.tsproject.sbb.AdministratorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminActionResolver</servlet-name>
+        <display-name>AdminActionResolver</display-name>
+        <description></description>
+        <servlet-class>ru.tsystems.tsproject.sbb.AdminActionResolver</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateNewStation</servlet-name>
+        <display-name>CreateNewStation</display-name>
+        <description></description>
+        <servlet-class>ru.tsystems.tsproject.sbb.CreateNewStation</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdministratorServlet</servlet-name>
+        <url-pattern>/administrator/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminActionResolver</servlet-name>
+        <url-pattern>/administrator/AdminActionResolver</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateNewStation</servlet-name>
+        <url-pattern>/administrator/CreateNewStation</url-pattern>
+    </servlet-mapping>
 </web-app>

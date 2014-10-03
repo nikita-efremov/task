@@ -13,6 +13,7 @@ public interface StationDAO {
 
     public void addStation(Station station);
     public Station getStationById(int stationID);
+    public Station getStationByName(String name);
     public void updateStation(Station station);
     public void deleteStation(Station station);
 }
