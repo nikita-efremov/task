@@ -27,8 +27,6 @@ public class TrainDAOImpl implements TrainDAO {
             entityManager.getTransaction().begin();
             entityManager.persist(train);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -42,9 +40,6 @@ public class TrainDAOImpl implements TrainDAO {
         try {
             entityManager = JPAUtil.getEntityManger();
             train = entityManager.find(Train.class, trainID);
-        } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -60,8 +55,6 @@ public class TrainDAOImpl implements TrainDAO {
             entityManager.getTransaction().begin();
             entityManager.merge(train);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -76,8 +69,6 @@ public class TrainDAOImpl implements TrainDAO {
             entityManager.getTransaction().begin();
             entityManager.remove(entityManager.contains(train) ? train : entityManager.merge(train));
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -94,8 +85,6 @@ public class TrainDAOImpl implements TrainDAO {
             train.setSeats(train.getSeats() - 1);
             entityManager.merge(train);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -110,8 +99,6 @@ public class TrainDAOImpl implements TrainDAO {
             entityManager = JPAUtil.getEntityManger();
             Query query = entityManager.createQuery("SELECT e FROM Train e");
             trains = query.getResultList();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();

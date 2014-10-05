@@ -29,8 +29,6 @@ public class TimetableDAOImpl implements TimetableDAO {
             entityManager.getTransaction().begin();
             entityManager.persist(timetable);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -44,9 +42,6 @@ public class TimetableDAOImpl implements TimetableDAO {
         try {
             entityManager = JPAUtil.getEntityManger();
             Timetable = entityManager.find(Timetable.class, timetableID);
-        } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -62,8 +57,6 @@ public class TimetableDAOImpl implements TimetableDAO {
             entityManager.getTransaction().begin();
             entityManager.merge(timetable);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -78,8 +71,6 @@ public class TimetableDAOImpl implements TimetableDAO {
             entityManager.getTransaction().begin();
             entityManager.remove(entityManager.contains(timetable) ? timetable : entityManager.merge(timetable));
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -99,8 +90,6 @@ public class TimetableDAOImpl implements TimetableDAO {
             )
                     .setParameter("station", station);
             timetableList = query.getResultList();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -125,8 +114,6 @@ public class TimetableDAOImpl implements TimetableDAO {
                     .setParameter("dateEnd", dateEnd);
 
             trainList = query.getResultList();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();

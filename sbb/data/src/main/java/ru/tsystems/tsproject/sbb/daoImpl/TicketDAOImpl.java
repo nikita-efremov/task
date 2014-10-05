@@ -27,8 +27,6 @@ public class TicketDAOImpl implements TicketDAO {
             entityManager.getTransaction().begin();
             entityManager.persist(ticket);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -42,9 +40,6 @@ public class TicketDAOImpl implements TicketDAO {
         try {
             entityManager = JPAUtil.getEntityManger();
             ticket = entityManager.find(Ticket.class, ticketID);
-        } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -60,8 +55,6 @@ public class TicketDAOImpl implements TicketDAO {
             entityManager.getTransaction().begin();
             entityManager.merge(ticket);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -76,8 +69,6 @@ public class TicketDAOImpl implements TicketDAO {
             entityManager.getTransaction().begin();
             entityManager.remove(entityManager.contains(ticket) ? ticket : entityManager.merge(ticket));
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -97,8 +88,6 @@ public class TicketDAOImpl implements TicketDAO {
             )
                     .setParameter("trainId", trainID);
             passengers = query.getResultList();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();

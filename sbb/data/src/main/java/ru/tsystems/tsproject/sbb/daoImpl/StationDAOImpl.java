@@ -1,11 +1,16 @@
 package ru.tsystems.tsproject.sbb.daoImpl;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.dao.StationDAO;
 import ru.tsystems.tsproject.sbb.entity.Station;
+import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.util.JPAUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,6 +22,8 @@ import java.util.List;
  */
 public class StationDAOImpl implements StationDAO {
 
+    private static final Logger log = Logger.getLogger(StationDAOImpl.class);
+
     public void addStation(Station station) {
         EntityManager entityManager = null;
         try {
@@ -24,8 +31,6 @@ public class StationDAOImpl implements StationDAO {
             entityManager.getTransaction().begin();
             entityManager.persist(station);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -39,9 +44,6 @@ public class StationDAOImpl implements StationDAO {
         try {
             entityManager = JPAUtil.getEntityManger();
             station = entityManager.find(Station.class, stationID);
-        } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -61,15 +63,27 @@ public class StationDAOImpl implements StationDAO {
             if (stations.size() != 0) {
                 station = (Station)stations.get(0);
             }
-        } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
             }
         }
         return station;
+    }
+
+    public Collection getAllStations() {
+        EntityManager entityManager = null;
+        List stations = new ArrayList<Station>();
+        try {
+            entityManager = JPAUtil.getEntityManger();
+            Query query = entityManager.createQuery("SELECT s FROM Station s");
+            stations = query.getResultList();
+        } finally {
+            if ((entityManager != null) && (entityManager.isOpen())) {
+                entityManager.close();
+            }
+        }
+        return stations;
     }
 
     public void updateStation(Station station) {
@@ -79,8 +93,6 @@ public class StationDAOImpl implements StationDAO {
             entityManager.getTransaction().begin();
             entityManager.merge(station);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -95,8 +107,6 @@ public class StationDAOImpl implements StationDAO {
             entityManager.getTransaction().begin();
             entityManager.remove(entityManager.contains(station) ? station : entityManager.merge(station));
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();

@@ -22,8 +22,6 @@ public class PassengerDAOImpl implements PassengerDAO {
             entityManager.getTransaction().begin();
             entityManager.persist(passenger);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -38,8 +36,6 @@ public class PassengerDAOImpl implements PassengerDAO {
             entityManager.getTransaction().begin();
             entityManager.merge(passenger);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -53,9 +49,6 @@ public class PassengerDAOImpl implements PassengerDAO {
         try {
             entityManager = JPAUtil.getEntityManger();
             passenger = entityManager.find(Passenger.class, passengerID);
-        } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();
@@ -71,8 +64,6 @@ public class PassengerDAOImpl implements PassengerDAO {
             entityManager.getTransaction().begin();
             entityManager.remove(entityManager.contains(passenger) ? passenger : entityManager.merge(passenger));
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
         } finally {
             if ((entityManager != null) && (entityManager.isOpen())) {
                 entityManager.close();

@@ -12,14 +12,31 @@
 </head>
 <body>
 <form method="get" action="AdminActionResolver">
-    Select action
-    <select name="adminAction" size="2">
-        <option>Add new train</option>
-        <option>Add new Station</option>
-        <option>Watch all trains</option>
-        <option>Watch passengers of chosen train</option>
-    </select>
-    <INPUT TYPE="submit" value="Send">
+    <CENTER>
+        <TABLE border="0"width="600px">
+            <TR align = "center">
+                <TD>
+                    Select action
+                </TD>
+            </TR>
+            <TR align = "center">
+                <TD>
+                    <select name="adminAction" size="2">
+                        <option>Add new train</option>
+                        <option>Add new station</option>
+                        <option>Watch all trains</option>
+                        <option>Watch all stations</option>
+                        <option>Watch passengers of chosen train</option>
+                    </select>
+                </TD>
+            </TR>
+            <TR align = "center">
+                <TD>
+                    <INPUT TYPE="submit" value="Submit">
+                </TD>
+            </TR>
+        </TABLE>
+    </CENTER>
 </form>
 </body>
 </html>

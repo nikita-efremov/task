@@ -6,16 +6,16 @@ import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.entity.Train;
+import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
 import ru.tsystems.tsproject.sbb.service.AdministratorService;
 
 import java.util.Collection;
 
 /**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 03.10.14
- * Time: 15:28
- * To change this template use File | Settings | File Templates.
+ *
+ * AdministratorService interface implementation
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public class AdministratorServiceImpl implements AdministratorService {
     private StationDAO stationDAO;
@@ -24,13 +24,15 @@ public class AdministratorServiceImpl implements AdministratorService {
         stationDAO = new StationDAOImpl();
     }
 
-    public void addStation(Station station) {
+    public void addStation(Station station) throws StationAlreadyExistsException {
         if (stationDAO.getStationByName(station.getName()) == null) {
             stationDAO.addStation(station);
+        } else {
+            throw new StationAlreadyExistsException("Station with name " + station.getName() + " already exists");
         }
     }
 
-    public void addTrain(Collection<Timetable> timetables) {
+    public void addTrain(Train train) {
         //
     }
 
@@ -40,5 +42,9 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     public Collection<Train> getAllTrains() {
         return null;
+    }
+
+    public Collection<Station> getAllStations() {
+        return stationDAO.getAllStations();
     }
 }

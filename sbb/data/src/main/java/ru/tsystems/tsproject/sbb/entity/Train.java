@@ -1,6 +1,7 @@
 package ru.tsystems.tsproject.sbb.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -16,10 +17,12 @@ import java.util.TreeSet;
 @Table(name = "train")
 public class Train {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
     @Column(name = "number")
+    @Pattern(regexp = "[A-Za-z0-9]+", message="Train number name must contain only english letters and digits, one or more")
     private String number;
 
     @Column(name = "seats")

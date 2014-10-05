@@ -8,19 +8,25 @@
         <servlet-name>AdministratorServlet</servlet-name>
         <display-name>AdministratorServlet</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.AdministratorServlet</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdministratorServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminActionResolver</servlet-name>
         <display-name>AdminActionResolver</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.AdminActionResolver</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminActionResolver</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateNewStation</servlet-name>
         <display-name>CreateNewStation</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.CreateNewStation</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.CreateNewStation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAllStations</servlet-name>
+        <display-name>ViewAllStations</display-name>
+        <description></description>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.ViewAllStations</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdministratorServlet</servlet-name>
@@ -32,6 +38,10 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateNewStation</servlet-name>
-        <url-pattern>/administrator/CreateNewStation</url-pattern>
+        <url-pattern>/administrator/station/CreateNewStation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAllStations</servlet-name>
+        <url-pattern>/administrator/station/ViewAllStations</url-pattern>
     </servlet-mapping>
 </web-app>

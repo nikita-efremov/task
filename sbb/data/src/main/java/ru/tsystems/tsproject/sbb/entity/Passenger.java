@@ -2,10 +2,12 @@ package ru.tsystems.tsproject.sbb.entity;
 
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,17 +20,20 @@ import javax.persistence.*;
 @Table(name = "passenger")
 public class Passenger {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
     @Column(name = "first_name")
+    @Pattern(regexp = "[A-Za-z]+", message="First name must contain only english letters, one or more")
     private String firstName;
 
     @Column(name = "last_name")
+    @Pattern(regexp = "[A-Za-z]+", message="Last name must contain only english letters, one or more")
     private String lastName;
 
     @Column(name = "birthdate")
-    private Calendar birthDate;
+    private Date birthDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "passenger")
     private Set<Ticket> tickets;
@@ -37,7 +42,7 @@ public class Passenger {
         id = 0;
         firstName = "";
         lastName = "";
-        birthDate = Calendar.getInstance();
+        birthDate = new Date();
         tickets = new HashSet<Ticket>();
     }
 
@@ -65,11 +70,11 @@ public class Passenger {
         this.lastName = lastName;
     }
 
-    public Calendar getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Calendar birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 

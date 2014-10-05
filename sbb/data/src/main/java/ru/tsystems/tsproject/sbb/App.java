@@ -1,5 +1,7 @@
 package ru.tsystems.tsproject.sbb;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.dao.StationDAO;
 import ru.tsystems.tsproject.sbb.dao.TimetableDAO;
 import ru.tsystems.tsproject.sbb.dao.TrainDAO;
@@ -17,8 +19,10 @@ import java.util.Date;
  * Hello world!
  *
  */
-public class App 
-{
+public class App {
+    
+    private static final Logger log = Logger.getLogger(App.class);
+            
     public static void main( String[] args )
     {
         //passengerFetch();
@@ -33,9 +37,9 @@ public class App
         PassengerDAOImpl passengerDAOImpl = new PassengerDAOImpl();
 
         Passenger passenger = passengerDAOImpl.getPassengerById(2);
-        System.out.println(passenger.getLastName());
-        System.out.println(passenger.getFirstName());
-        System.out.println(passenger.getTickets().size());
+        log.log(Level.INFO, passenger.getLastName());
+        log.log(Level.INFO, passenger.getFirstName());
+        log.log(Level.INFO, passenger.getTickets().size());
 
     }
 
@@ -72,9 +76,9 @@ public class App
 
         Collection<Timetable> collection = timetableDAO.getTimetableByStation(stationDAO.getStationById(1));
         for (Timetable timetable: collection) {
-            System.out.println("train: " + timetable.getTrain().getNumber() + "-" + timetable.getTrain().getSeats());
-            System.out.println("time: " + simpleDateFormat.format(timetable.getDate().getTime()));
-            System.out.println();
+            log.log(Level.INFO, "train: " + timetable.getTrain().getNumber() + "-" + timetable.getTrain().getSeats());
+            log.log(Level.INFO, "time: " + simpleDateFormat.format(timetable.getDate().getTime()));
+            log.log(Level.INFO, "");
 
         }
     }
@@ -97,8 +101,8 @@ public class App
                 dateStart,
                 dateEnd);
         for (Train train: collection) {
-            System.out.println("train: " + train.getNumber() + "-" + train.getSeats());
-            System.out.println();
+            log.log(Level.INFO, "train: " + train.getNumber() + "-" + train.getSeats());
+            log.log(Level.INFO, "");
 
         }
     }
@@ -107,6 +111,10 @@ public class App
         AdministratorService administratorService = new AdministratorServiceImpl();
         Station station = new Station();
         station.setName("Pskov");
-        administratorService.addStation(station);
+        try {
+            administratorService.addStation(station);
+        } catch (Exception e) {
+            log.log(Level.ERROR, e);
+        }
     }
 }
