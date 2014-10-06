@@ -3,7 +3,6 @@ package ru.tsystems.tsproject.sbb.entity;
 import javax.persistence.*;
 import java.util.Set;
 import java.util.TreeSet;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -60,5 +59,22 @@ public class Station {
 
     public void addTimetable(Timetable timetable) {
         timetables.add(timetable);
+    }
+
+    public boolean equals(Object o) {
+        if (super.equals(o)) {
+            return Boolean.TRUE;
+        }
+        if (o == null) {
+            return Boolean.FALSE;
+        }
+        if (this.getClass() != o.getClass()) {
+            return Boolean.FALSE;
+        } else {
+            Station otherStation = (Station)o;
+            return ((otherStation.getId() == this.getId())
+                    && (otherStation.getName().equals(this.getName()))
+                    && (otherStation.getTimetables().equals(this.getTimetables())));
+        }
     }
 }

@@ -13,9 +13,14 @@ import ru.tsystems.tsproject.sbb.service.CommonService;
  */
 public class CommonServiceImpl implements CommonService {
 
+    private StationDAO stationDAO;
+
+    public CommonServiceImpl() {
+        stationDAO = new StationDAOImpl();
+    }
+
     public Station getStationInfo(Station station) {
         Station stationWithFullInfo = null;
-        StationDAO stationDAO = new StationDAOImpl();
         if (station.getId() > 0) {
            stationWithFullInfo = stationDAO.getStationById(station.getId());
         } else if (!station.getName().equals("")) {
