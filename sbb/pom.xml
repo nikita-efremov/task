@@ -12,7 +12,7 @@
     </modules>
 
     <properties>
-        <tomcat.dir>C:\Program Files\apache-tomcat-8.0.12</tomcat.dir>
+        <tomcat.dir>${env.CATALINA_HOME} </tomcat.dir>
     </properties>
 
     <build>
@@ -22,7 +22,6 @@
                 <artifactId>cargo-maven2-plugin</artifactId>
                 <version>1.4.11-SNAPSHOT</version>
                 <configuration>
-
                     <!-- Container configuration -->
                     <container>
                         <containerId>tomcat8x</containerId>
@@ -34,7 +33,6 @@
                         <type>standalone</type>
                         <home>${tomcat.dir}</home>
                     </configuration>
-
                     <!-- Deployables configuration -->
                     <deployables>
                         <deployable>
