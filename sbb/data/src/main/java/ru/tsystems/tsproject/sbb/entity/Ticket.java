@@ -24,12 +24,6 @@ public class Ticket {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Train train;
 
-    public Ticket() {
-        id = 0;
-        passenger = new Passenger();
-        train = new Train();
-    }
-
     public int getId() {
         return id;
     }

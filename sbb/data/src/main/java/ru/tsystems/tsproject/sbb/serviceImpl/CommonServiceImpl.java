@@ -4,6 +4,7 @@ import ru.tsystems.tsproject.sbb.dao.StationDAO;
 import ru.tsystems.tsproject.sbb.daoImpl.StationDAOImpl;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.service.CommonService;
+import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 /**
  *
@@ -19,7 +20,7 @@ public class CommonServiceImpl implements CommonService {
         stationDAO = new StationDAOImpl();
     }
 
-    public Station getStationInfo(Station station) {
+    public Station getStationInfo(Station station) throws DAOException {
         Station stationWithFullInfo = null;
         if (station.getId() > 0) {
            stationWithFullInfo = stationDAO.getStationById(station.getId());

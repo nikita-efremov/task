@@ -5,6 +5,7 @@ import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.util.JPAUtil;
+import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -22,103 +23,139 @@ import java.util.List;
  */
 public class TimetableDAOImpl implements TimetableDAO {
 
-    public void addTimetable(Timetable timetable) {
+    public void addTimetable(Timetable timetable) throws DAOException {
         EntityManager entityManager = null;
         try {
-            entityManager = JPAUtil.getEntityManger();
-            entityManager.getTransaction().begin();
-            entityManager.persist(timetable);
-            entityManager.getTransaction().commit();
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
-        }
+			try {
+				entityManager = JPAUtil.getEntityManger();
+				entityManager.getTransaction().begin();
+				entityManager.persist(timetable);
+				entityManager.getTransaction().commit();
+			} finally {
+				if ((entityManager != null) && (entityManager.isOpen())) {
+					entityManager.close();
+				}
+			}
+		} catch (Exception e) {
+			DAOException daoException = new DAOException(e.getMessage());
+			daoException.initCause(e.getCause());
+			throw daoException;
+		}
     }
 
-    public Timetable getTimetableById(int timetableID) {
+    public Timetable getTimetableById(int timetableID) throws DAOException {
         EntityManager entityManager = null;
         Timetable Timetable = null;
         try {
-            entityManager = JPAUtil.getEntityManger();
-            Timetable = entityManager.find(Timetable.class, timetableID);
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
-        }
+			try {
+				entityManager = JPAUtil.getEntityManger();
+				Timetable = entityManager.find(Timetable.class, timetableID);
+			} finally {
+				if ((entityManager != null) && (entityManager.isOpen())) {
+					entityManager.close();
+				}
+			}
+		} catch (Exception e) {
+			DAOException daoException = new DAOException(e.getMessage());
+			daoException.initCause(e.getCause());
+			throw daoException;
+		}
         return Timetable;
     }
 
-    public void updateTimetable(Timetable timetable) {
+    public void updateTimetable(Timetable timetable) throws DAOException {
         EntityManager entityManager = null;
         try {
-            entityManager = JPAUtil.getEntityManger();
-            entityManager.getTransaction().begin();
-            entityManager.merge(timetable);
-            entityManager.getTransaction().commit();
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
-        }
+			try {
+				entityManager = JPAUtil.getEntityManger();
+				entityManager.getTransaction().begin();
+				entityManager.merge(timetable);
+				entityManager.getTransaction().commit();
+			} finally {
+				if ((entityManager != null) && (entityManager.isOpen())) {
+					entityManager.close();
+				}
+			}
+		} catch (Exception e) {
+			DAOException daoException = new DAOException(e.getMessage());
+			daoException.initCause(e.getCause());
+			throw daoException;
+		}
     }
 
-    public void deleteTimetable(Timetable timetable) {
+    public void deleteTimetable(Timetable timetable) throws DAOException {
         EntityManager entityManager = null;
         try {
-            entityManager = JPAUtil.getEntityManger();
-            entityManager.getTransaction().begin();
-            entityManager.remove(entityManager.contains(timetable) ? timetable : entityManager.merge(timetable));
-            entityManager.getTransaction().commit();
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
-        }
+			try {
+				entityManager = JPAUtil.getEntityManger();
+				entityManager.getTransaction().begin();
+				entityManager.remove(entityManager.contains(timetable) ? timetable : entityManager.merge(timetable));
+				entityManager.getTransaction().commit();
+			} finally {
+				if ((entityManager != null) && (entityManager.isOpen())) {
+					entityManager.close();
+				}
+			}
+		} catch (Exception e) {
+			DAOException daoException = new DAOException(e.getMessage());
+			daoException.initCause(e.getCause());
+			throw daoException;
+		}
     }
 
-    public Collection getTimetableByStation(Station station) {
+    public Collection getTimetableByStation(Station station) throws DAOException {
         EntityManager entityManager = null;
         List timetableList = new ArrayList<Timetable>();
         try {
-            entityManager = JPAUtil.getEntityManger();
-            Query query = entityManager.createQuery(
-                    " select t "
-                            + " from Timetable t INNER JOIN FETCH t.train Train"
-                            + " where t.station = :station"
-            )
-                    .setParameter("station", station);
-            timetableList = query.getResultList();
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
-        }
+			try {
+				entityManager = JPAUtil.getEntityManger();
+				Query query = entityManager.createQuery(
+						" select t "
+								+ " from Timetable t INNER JOIN FETCH t.train Train"
+								+ " where t.station = :station"
+				)
+						.setParameter("station", station);
+				timetableList = query.getResultList();
+			} finally {
+				if ((entityManager != null) && (entityManager.isOpen())) {
+					entityManager.close();
+				}
+			}	
+        } catch (Exception e) {
+			DAOException daoException = new DAOException(e.getMessage());
+			daoException.initCause(e.getCause());
+			throw daoException;
+		}
         return timetableList;
     }
 
-    public Collection getTrainsByStationsAndDate(Station stationStart, Station stationEnd, Date dateStart, Date dateEnd) {
+    public Collection getTrainsByStationsAndDate(Station stationStart, Station stationEnd, Date dateStart, Date dateEnd) throws DAOException {
         EntityManager entityManager = null;
         List trainList = new ArrayList<Train>();
         try {
-            entityManager = JPAUtil.getEntityManger();
-            Query query = entityManager.createQuery(
-                    "select t.train"
-                            + " from Timetable t INNER JOIN t.train Train"
-                            + " where (t.station = :stationStart or t.station = :stationEnd) and (t.date >= :dateStart and t.date <=:dateEnd)"
-            )
-                    .setParameter("stationStart", stationStart)
-                    .setParameter("stationEnd", stationEnd)
-                    .setParameter("dateStart", dateStart)
-                    .setParameter("dateEnd", dateEnd);
+			try {
+				entityManager = JPAUtil.getEntityManger();
+				Query query = entityManager.createQuery(
+						"select t.train"
+								+ " from Timetable t INNER JOIN t.train Train"
+								+ " where (t.station = :stationStart or t.station = :stationEnd) and (t.date >= :dateStart and t.date <=:dateEnd)"
+				)
+						.setParameter("stationStart", stationStart)
+						.setParameter("stationEnd", stationEnd)
+						.setParameter("dateStart", dateStart)
+						.setParameter("dateEnd", dateEnd);
 
-            trainList = query.getResultList();
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
-        }
+				trainList = query.getResultList();
+			} finally {
+				if ((entityManager != null) && (entityManager.isOpen())) {
+					entityManager.close();
+				}
+			}
+        } catch (Exception e) {
+			DAOException daoException = new DAOException(e.getMessage());
+			daoException.initCause(e.getCause());
+			throw daoException;
+		}
         return trainList;
     }
 }

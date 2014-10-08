@@ -2,6 +2,7 @@ package ru.tsystems.tsproject.sbb.service;
 
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Train;
+import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import java.util.Collection;
 
@@ -22,5 +23,5 @@ public interface CommonService {
      * @return station with full info
      *
      */
-    public Station getStationInfo(Station station);
+    public Station getStationInfo(Station station) throws DAOException;
 }

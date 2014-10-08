@@ -38,14 +38,6 @@ public class Passenger {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "passenger")
     private Set<Ticket> tickets;
 
-    public Passenger() {
-        id = 0;
-        firstName = "";
-        lastName = "";
-        birthDate = new Date();
-        tickets = new HashSet<Ticket>();
-    }
-
     public int getId() {
         return id;
     }
@@ -79,7 +71,11 @@ public class Passenger {
     }
 
     public Set<Ticket> getTickets() {
-        return tickets;
+		if (tickets == null) {
+			return new HashSet<Ticket>();
+		} else {
+			return tickets;
+		}
     }
 
     public void setTickets(HashSet<Ticket> tickets) {

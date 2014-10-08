@@ -27,12 +27,6 @@ public class Station {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "station")
     private Set<Timetable> timetables;
 
-    public Station() {
-        id = 0;
-        name = "";
-        timetables = new TreeSet<Timetable>();
-    }
-
     public int getId() {
         return id;
     }
@@ -50,7 +44,11 @@ public class Station {
     }
 
     public Set<Timetable> getTimetables() {
-        return timetables;
+		if (timetables == null) {
+			return new TreeSet<Timetable>();
+		} else {
+			return timetables;
+		}
     }
 
     public void setTimetables(TreeSet<Timetable> timetables) {

@@ -8,6 +8,7 @@ import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
 import ru.tsystems.tsproject.sbb.service.AdministratorService;
+import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import java.util.Collection;
 
@@ -24,7 +25,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         stationDAO = new StationDAOImpl();
     }
 
-    public void addStation(Station station) throws StationAlreadyExistsException {
+    public void addStation(Station station) throws StationAlreadyExistsException, DAOException {
         if (stationDAO.getStationByName(station.getName()) == null) {
             stationDAO.addStation(station);
         } else {
@@ -32,19 +33,19 @@ public class AdministratorServiceImpl implements AdministratorService {
         }
     }
 
-    public void addTrain(Train train) {
+    public void addTrain(Train train) throws DAOException {
         //
     }
 
-    public Collection<Passenger> getPassengersByTrain(Train train) {
+    public Collection<Passenger> getPassengersByTrain(Train train) throws DAOException {
         return null;
     }
 
-    public Collection<Train> getAllTrains() {
+    public Collection<Train> getAllTrains() throws DAOException {
         return null;
     }
 
-    public Collection<Station> getAllStations() {
+    public Collection<Station> getAllStations() throws DAOException {
         return stationDAO.getAllStations();
     }
 }

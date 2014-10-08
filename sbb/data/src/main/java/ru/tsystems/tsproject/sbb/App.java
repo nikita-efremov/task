@@ -34,84 +34,102 @@ public class App {
     }
 
     public static void passengerFetch() {
-        PassengerDAOImpl passengerDAOImpl = new PassengerDAOImpl();
+		try {
+			PassengerDAOImpl passengerDAOImpl = new PassengerDAOImpl();
 
-        Passenger passenger = passengerDAOImpl.getPassengerById(2);
-        log.log(Level.INFO, passenger.getLastName());
-        log.log(Level.INFO, passenger.getFirstName());
-        log.log(Level.INFO, passenger.getTickets().size());
+			Passenger passenger = passengerDAOImpl.getPassengerById(2);
+			log.log(Level.INFO, passenger.getLastName());
+			log.log(Level.INFO, passenger.getFirstName());
+			log.log(Level.INFO, passenger.getTickets().size());
+		} catch (Exception e) {
+			log.log(Level.ERROR, e);		
+		}
 
     }
 
     public static void addTrain() {
-        TrainDAO trainDAO = new TrainDAOImpl();
+		try {
+			TrainDAO trainDAO = new TrainDAOImpl();
 
-        Train train = new Train();
-        train.setSeats(344);
-        train.setNumber("230z");
-        trainDAO.addTrain(train);
+			Train train = new Train();
+			train.setSeats(344);
+			train.setNumber("230z");
+			trainDAO.addTrain(train);
+		} catch (Exception e) {
+			log.log(Level.ERROR, e);		
+		}
     }
 
     public static void addTimetable() {
-        TimetableDAO timetableDAO = new TimetableDAOImpl();
-        StationDAO stationDAO = new StationDAOImpl();
-        TrainDAO trainDAO = new TrainDAOImpl();
+        try {
+			TimetableDAO timetableDAO = new TimetableDAOImpl();
+			StationDAO stationDAO = new StationDAOImpl();
+			TrainDAO trainDAO = new TrainDAOImpl();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2014, Calendar.OCTOBER, 13, 6, 55);
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(2014, Calendar.OCTOBER, 13, 6, 55);
 
-        Timetable timetable = new Timetable();
-        timetable.setStation(stationDAO.getStationById(1));
-        timetable.setTrain(trainDAO.getTrainByID(3));
-        timetable.setDate(calendar.getTime());
-
-        timetableDAO.addTimetable(timetable);
+			Timetable timetable = new Timetable();
+			timetable.setStation(stationDAO.getStationById(1));
+			timetable.setTrain(trainDAO.getTrainByID(3));
+			timetable.setDate(calendar.getTime());
+			timetableDAO.addTimetable(timetable);
+		} catch (Exception e) {
+			log.log(Level.ERROR, e);		
+		}
     }
 
     public static void getTrainsByStation() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
-        TimetableDAO timetableDAO = new TimetableDAOImpl();
-        StationDAO stationDAO = new StationDAOImpl();
+			TimetableDAO timetableDAO = new TimetableDAOImpl();
+			StationDAO stationDAO = new StationDAOImpl();
 
-        Collection<Timetable> collection = timetableDAO.getTimetableByStation(stationDAO.getStationById(1));
-        for (Timetable timetable: collection) {
-            log.log(Level.INFO, "train: " + timetable.getTrain().getNumber() + "-" + timetable.getTrain().getSeats());
-            log.log(Level.INFO, "time: " + simpleDateFormat.format(timetable.getDate().getTime()));
-            log.log(Level.INFO, "");
-
-        }
+			Collection<Timetable> collection = timetableDAO.getTimetableByStation(stationDAO.getStationById(1));
+			for (Timetable timetable: collection) {
+				log.log(Level.INFO, "train: " + timetable.getTrain().getNumber() + "-" + timetable.getTrain().getSeats());
+				log.log(Level.INFO, "time: " + simpleDateFormat.format(timetable.getDate().getTime()));
+				log.log(Level.INFO, "");
+			}
+		} catch (Exception e) {
+			log.log(Level.ERROR, e);		
+		}
     }
 
     public static void getTrainsByStationAndDate() {
-        SimpleDateFormat simpleDateFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+			SimpleDateFormat simpleDateFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
-        TimetableDAO timetableDAO = new TimetableDAOImpl();
-        StationDAO stationDAO = new StationDAOImpl();
+			TimetableDAO timetableDAO = new TimetableDAOImpl();
+			StationDAO stationDAO = new StationDAOImpl();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2010, Calendar.OCTOBER, 13, 6, 55);
-        Date dateStart = calendar.getTime();
-        calendar.set(2014, Calendar.OCTOBER, 18, 6, 55);
-        Date dateEnd = calendar.getTime();
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(2010, Calendar.OCTOBER, 13, 6, 55);
+			Date dateStart = calendar.getTime();
+			calendar.set(2014, Calendar.OCTOBER, 18, 6, 55);
+			Date dateEnd = calendar.getTime();
 
-        Collection<Train> collection = timetableDAO.getTrainsByStationsAndDate(
+			Collection<Train> collection = timetableDAO.getTrainsByStationsAndDate(
                 stationDAO.getStationById(1),
                 stationDAO.getStationById(2),
                 dateStart,
                 dateEnd);
-        for (Train train: collection) {
-            log.log(Level.INFO, "train: " + train.getNumber() + "-" + train.getSeats());
-            log.log(Level.INFO, "");
+			for (Train train: collection) {
+				log.log(Level.INFO, "train: " + train.getNumber() + "-" + train.getSeats());
+				log.log(Level.INFO, "");
 
-        }
+			}
+		} catch (Exception e) {
+			log.log(Level.ERROR, e);		
+		}
     }
 
     public static void adminService() {
-        AdministratorService administratorService = new AdministratorServiceImpl();
-        Station station = new Station();
-        station.setName("Pskov");
-        try {
+		try {
+			AdministratorService administratorService = new AdministratorServiceImpl();
+			Station station = new Station();
+			station.setName("Pskov");
             administratorService.addStation(station);
         } catch (Exception e) {
             log.log(Level.ERROR, e);

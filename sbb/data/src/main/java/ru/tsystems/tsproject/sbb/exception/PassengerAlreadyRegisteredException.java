@@ -7,9 +7,9 @@ package ru.tsystems.tsproject.sbb.exception;
  * Time: 20:48
  * To change this template use File | Settings | File Templates.
  */
-public class StationAlreadyExistsException extends BusinessLogicException {
+public class PassengerAlreadyRegisteredException extends BusinessLogicException {
 
-    public StationAlreadyExistsException(String message) {
+    public PassengerAlreadyRegisteredException(String message) {
         super(message);
     }
 

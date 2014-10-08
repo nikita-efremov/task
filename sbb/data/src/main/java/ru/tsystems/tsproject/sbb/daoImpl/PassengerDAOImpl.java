@@ -3,6 +3,7 @@ package ru.tsystems.tsproject.sbb.daoImpl;
 import ru.tsystems.tsproject.sbb.dao.PassengerDAO;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.util.JPAUtil;
+import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import javax.persistence.EntityManager;
 
@@ -15,59 +16,83 @@ import javax.persistence.EntityManager;
  */
 public class PassengerDAOImpl implements PassengerDAO {
 
-    public void addPassenger(Passenger passenger) {
+    public void addPassenger(Passenger passenger) throws DAOException {
         EntityManager entityManager = null;
-        try {
-            entityManager = JPAUtil.getEntityManger();
-            entityManager.getTransaction().begin();
-            entityManager.persist(passenger);
-            entityManager.getTransaction().commit();
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
-        }
+		try {
+			try {
+				entityManager = JPAUtil.getEntityManger();
+				entityManager.getTransaction().begin();
+				entityManager.persist(passenger);
+				entityManager.getTransaction().commit();
+		    } finally {
+				if ((entityManager != null) && (entityManager.isOpen())) {
+					entityManager.close();
+				}
+			}		
+		} catch (Exception e) {
+			DAOException daoException = new DAOException(e.getMessage());
+			daoException.initCause(e.getCause());
+			throw daoException;
+		}
     }
 
-    public void updatePassenger(Passenger passenger) {
+    public void updatePassenger(Passenger passenger) throws DAOException {
         EntityManager entityManager = null;
-        try {
-            entityManager = JPAUtil.getEntityManger();
-            entityManager.getTransaction().begin();
-            entityManager.merge(passenger);
-            entityManager.getTransaction().commit();
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
-        }
+		try {
+			try {
+				entityManager = JPAUtil.getEntityManger();
+				entityManager.getTransaction().begin();
+				entityManager.merge(passenger);
+				entityManager.getTransaction().commit();
+			} finally {
+				if ((entityManager != null) && (entityManager.isOpen())) {
+					entityManager.close();
+				}
+			}
+		} catch (Exception e) {
+			DAOException daoException = new DAOException(e.getMessage());
+			daoException.initCause(e.getCause());
+			throw daoException;
+		}		
     }
 
-    public Passenger getPassengerById(int passengerID) {
+    public Passenger getPassengerById(int passengerID) throws DAOException {
         EntityManager entityManager = null;
         Passenger passenger = null;
-        try {
-            entityManager = JPAUtil.getEntityManger();
-            passenger = entityManager.find(Passenger.class, passengerID);
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
-        }
+		try {
+			try {
+				entityManager = JPAUtil.getEntityManger();
+				passenger = entityManager.find(Passenger.class, passengerID);
+			} finally {
+				if ((entityManager != null) && (entityManager.isOpen())) {
+					entityManager.close();
+				}
+			}	
+        } catch (Exception e) {
+			DAOException daoException = new DAOException(e.getMessage());
+			daoException.initCause(e.getCause());
+			throw daoException;
+		}
         return passenger;
     }
 
-    public void deletePassenger(Passenger passenger) {
+    public void deletePassenger(Passenger passenger) throws DAOException {
         EntityManager entityManager = null;
         try {
-            entityManager = JPAUtil.getEntityManger();
-            entityManager.getTransaction().begin();
-            entityManager.remove(entityManager.contains(passenger) ? passenger : entityManager.merge(passenger));
-            entityManager.getTransaction().commit();
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
-        }
+			try {
+				entityManager = JPAUtil.getEntityManger();
+				entityManager.getTransaction().begin();
+				entityManager.remove(entityManager.contains(passenger) ? passenger : entityManager.merge(passenger));
+				entityManager.getTransaction().commit();
+			} finally {
+				if ((entityManager != null) && (entityManager.isOpen())) {
+					entityManager.close();
+				}
+			}
+		} catch (Exception e) {
+			DAOException daoException = new DAOException(e.getMessage());
+			daoException.initCause(e.getCause());
+			throw daoException;        
+		} 
     }
 }

@@ -34,14 +34,6 @@ public class Train {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "train")
     private Set<Timetable> timetables;
 
-    public Train() {
-        id = 0;
-        number = "";
-        seats = 0;
-        total_seats = 0;
-        timetables = new TreeSet<Timetable>();
-    }
-
     public String getNumber() {
         return number;
     }
@@ -67,7 +59,11 @@ public class Train {
     }
 
     public Set<Timetable> getTimetables() {
-        return timetables;
+		if (timetables == null) {
+			return new TreeSet<Timetable>();
+		} else {
+			return timetables;
+		}
     }
 
     public void setTimetables(TreeSet<Timetable> timetables) {

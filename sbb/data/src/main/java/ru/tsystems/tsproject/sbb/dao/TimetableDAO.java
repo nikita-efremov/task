@@ -3,6 +3,7 @@ package ru.tsystems.tsproject.sbb.dao;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
+import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import java.util.Collection;
 import java.util.Date;
@@ -16,10 +17,10 @@ import java.util.Date;
  */
 public interface TimetableDAO {
 
-    public void addTimetable(Timetable Timetable);
-    public Timetable getTimetableById(int timetableID);
-    public void updateTimetable(Timetable timetable);
-    public void deleteTimetable(Timetable timetable);
-    public Collection getTimetableByStation(Station station);
-    public Collection getTrainsByStationsAndDate(Station stationStart, Station stationEnd,Date dateStart, Date end);
+    public void addTimetable(Timetable Timetable) throws DAOException;
+    public Timetable getTimetableById(int timetableID) throws DAOException;
+    public void updateTimetable(Timetable timetable) throws DAOException;
+    public void deleteTimetable(Timetable timetable) throws DAOException;
+    public Collection getTimetableByStation(Station station) throws DAOException;
+    public Collection getTrainsByStationsAndDate(Station stationStart, Station stationEnd,Date dateStart, Date end) throws DAOException;
 }

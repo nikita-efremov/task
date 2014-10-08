@@ -1,5 +1,5 @@
 package ru.tsystems.tsproject.sbb.dao;
-
+import ru.tsystems.tsproject.sbb.exception.DAOException;
 import ru.tsystems.tsproject.sbb.entity.Train;
 
 import java.util.Collection;
@@ -13,10 +13,10 @@ import java.util.Collection;
  */
 public interface TrainDAO {
 
-    public void addTrain(Train train);
-    public Train getTrainByID(int trainID);
-    public void updateTrain(Train train);
-    public void deleteTrain(Train train);
-    public void decreaseSeatAmount(int trainID);
-    public Collection getAllTrains();
+    public void addTrain(Train train) throws DAOException;
+    public Train getTrainByID(int trainID) throws DAOException;
+    public void updateTrain(Train train) throws DAOException;
+    public void deleteTrain(Train train) throws DAOException;
+    public void decreaseSeatAmount(int trainID) throws DAOException;
+    public Collection getAllTrains() throws DAOException;
 }

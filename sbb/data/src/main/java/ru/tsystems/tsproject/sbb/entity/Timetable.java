@@ -30,13 +30,6 @@ public class Timetable {
     @Column(name = "date")
     private Date date;
 
-    public Timetable() {
-        id = 0;
-        train = new Train();
-        station = new Station();
-        date = new Date();
-    }
-
     public int getId() {
         return id;
     }

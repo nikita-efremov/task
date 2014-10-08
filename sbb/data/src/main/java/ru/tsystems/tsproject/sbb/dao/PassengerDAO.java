@@ -1,6 +1,7 @@
 package ru.tsystems.tsproject.sbb.dao;
 
 import ru.tsystems.tsproject.sbb.entity.Passenger;
+import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,8 +12,8 @@ import ru.tsystems.tsproject.sbb.entity.Passenger;
  */
 public interface PassengerDAO {
 
-    public void addPassenger(Passenger passenger);
-    public Passenger getPassengerById(int passengerID);
-    public void updatePassenger(Passenger passenger);
-    public void deletePassenger(Passenger passenger);
+    public void addPassenger(Passenger passenger) throws DAOException;
+    public Passenger getPassengerById(int passengerID) throws DAOException;
+    public void updatePassenger(Passenger passenger) throws DAOException;
+    public void deletePassenger(Passenger passenger) throws DAOException;
 }

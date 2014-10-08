@@ -5,6 +5,7 @@ import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
+import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import java.util.Collection;
 
@@ -25,7 +26,7 @@ public interface AdministratorService {
      * @throws  StationAlreadyExistsException
      *          If station with specified name already exists
      */
-    public void addStation(Station station) throws StationAlreadyExistsException;
+    public void addStation(Station station) throws StationAlreadyExistsException, DAOException;
 
     /**
      * Adds new train with name, specified in param
@@ -34,7 +35,7 @@ public interface AdministratorService {
      *        Train instance with specified if, name and timetable
      *
      */
-    public void addTrain(Train train);
+    public void addTrain(Train train) throws DAOException;
 
     /**
      * Gets collection of passengers which have tickets on train, specified in param
@@ -45,7 +46,7 @@ public interface AdministratorService {
      * @return collection of passengers
      *
      */
-    public Collection<Passenger> getPassengersByTrain(Train train);
+    public Collection<Passenger> getPassengersByTrain(Train train) throws DAOException;
 
     /**
      * Gets collection of all exists trains
@@ -53,7 +54,7 @@ public interface AdministratorService {
      * @return collection of trains
      *
      */
-    public Collection<Station> getAllStations();
+    public Collection<Station> getAllStations() throws DAOException;
 
     /**
      * Gets collection of all exists stations
@@ -61,5 +62,5 @@ public interface AdministratorService {
      * @return collection of trains
      *
      */
-    public Collection<Train> getAllTrains();
+    public Collection<Train> getAllTrains() throws DAOException;
 }

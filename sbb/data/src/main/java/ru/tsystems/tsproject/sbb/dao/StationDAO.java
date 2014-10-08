@@ -1,6 +1,7 @@
 package ru.tsystems.tsproject.sbb.dao;
 
 import ru.tsystems.tsproject.sbb.entity.Station;
+import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import java.util.Collection;
 
@@ -13,10 +14,10 @@ import java.util.Collection;
  */
 public interface StationDAO {
 
-    public void addStation(Station station);
-    public Station getStationById(int stationID);
-    public Station getStationByName(String name);
-    public Collection getAllStations();
-    public void updateStation(Station station);
-    public void deleteStation(Station station);
+    public void addStation(Station station) throws DAOException;
+    public Station getStationById(int stationID) throws DAOException;
+    public Station getStationByName(String name) throws DAOException;
+    public Collection getAllStations() throws DAOException;
+    public void updateStation(Station station) throws DAOException;
+    public void deleteStation(Station station) throws DAOException;
 }
