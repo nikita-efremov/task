@@ -23,7 +23,7 @@ import ru.tsystems.tsproject.sbb.entity.Station;
 public class CommonServiceImplTest {
 
     @Mock
-    private StationDAOImpl stationDAO;
+    private StationDAOImpl stationDAO = new StationDAOImpl(null);
 
     @InjectMocks
     private CommonServiceImpl commonServiceImpl = new CommonServiceImpl();

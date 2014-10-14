@@ -19,5 +19,5 @@ public interface StationDAO {
     public Station getStationByName(String name) throws DAOException;
     public Collection getAllStations() throws DAOException;
     public void updateStation(Station station) throws DAOException;
-    public void deleteStation(Station station) throws DAOException;
+    public void deleteStation(int stationID) throws DAOException;
 }

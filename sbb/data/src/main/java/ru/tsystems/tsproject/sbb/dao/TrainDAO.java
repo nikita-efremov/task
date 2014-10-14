@@ -16,7 +16,7 @@ public interface TrainDAO {
     public void addTrain(Train train) throws DAOException;
     public Train getTrainByID(int trainID) throws DAOException;
     public void updateTrain(Train train) throws DAOException;
-    public void deleteTrain(Train train) throws DAOException;
+    public void deleteTrain(int trainID) throws DAOException;
     public void decreaseSeatAmount(int trainID) throws DAOException;
     public Collection getAllTrains() throws DAOException;
 }

@@ -10,6 +10,9 @@ import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
 import ru.tsystems.tsproject.sbb.service.AdministratorService;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.Collection;
 
 /**
@@ -22,7 +25,9 @@ public class AdministratorServiceImpl implements AdministratorService {
     private StationDAO stationDAO;
 
     public AdministratorServiceImpl() {
-        stationDAO = new StationDAOImpl();
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpa-hibernate");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+        stationDAO = new StationDAOImpl(entityManager);
     }
 
     public void addStation(Station station) throws StationAlreadyExistsException, DAOException {

@@ -7,10 +7,6 @@ import ru.tsystems.tsproject.sbb.util.JPAUtil;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,7 +15,11 @@ import java.util.List;
  * Time: 12:57
  * To change this template use File | Settings | File Templates.
  */
-public class TicketDAOImpl implements TicketDAO {
+public class TicketDAOImpl extends AbstractDAOImpl implements TicketDAO {
+
+	public TicketDAOImpl(EntityManager em) {
+		super(em);
+	}
 
     public void addTicket(Ticket ticket) throws DAOException {
         EntityManager entityManager = null;
@@ -81,12 +81,13 @@ public class TicketDAOImpl implements TicketDAO {
 		}
     }
 
-    public void deleteTicket(Ticket ticket) throws DAOException {
+    public void deleteTicket(int ticketID) throws DAOException {
         EntityManager entityManager = null;
         try {
 			try {
 				entityManager = JPAUtil.getEntityManger();
 				entityManager.getTransaction().begin();
+				Ticket ticket = getTicketById(ticketID);
 				entityManager.remove(entityManager.contains(ticket) ? ticket : entityManager.merge(ticket));
 				entityManager.getTransaction().commit();
 			} finally {
@@ -99,31 +100,5 @@ public class TicketDAOImpl implements TicketDAO {
 			daoException.initCause(e.getCause());
 			throw daoException;
 		}
-    }
-
-    public Collection getPassengersByTrain(int trainID) throws DAOException {
-        EntityManager entityManager = null;
-        List passengers = new ArrayList<Passenger>();
-        try {
-			try {
-				entityManager = JPAUtil.getEntityManger();
-				Query query = entityManager.createQuery(
-						" select p "
-								+ " from Passenger p INNER JOIN p.tickets ticket"
-								+ " where ticket.train.id = :trainId "
-				)
-						.setParameter("trainId", trainID);
-				passengers = query.getResultList();
-			} finally {
-				if ((entityManager != null) && (entityManager.isOpen())) {
-					entityManager.close();
-				}
-			}	
-        } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
-        return passengers;
     }
 }

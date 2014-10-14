@@ -19,21 +19,19 @@ import java.util.List;
  * Time: 11:35
  * To change this template use File | Settings | File Templates.
  */
-public class TrainDAOImpl implements TrainDAO {
+public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
+	
+	public TrainDAOImpl(EntityManager em) {
+		super(em);
+	}
 
     public void addTrain(Train train) throws DAOException {
-        EntityManager entityManager = null;
         try {
-			try {
-				entityManager = JPAUtil.getEntityManger();
-				entityManager.getTransaction().begin();
-				entityManager.persist(train);
-				entityManager.getTransaction().commit();
-			} finally {
-				if ((entityManager != null) && (entityManager.isOpen())) {
-					entityManager.close();
-				}
-			}
+			EntityManager entityManager = getEntityManager();
+			entityManager = JPAUtil.getEntityManger();
+			entityManager.getTransaction().begin();
+			entityManager.persist(train);
+			entityManager.getTransaction().commit();
         } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
@@ -81,12 +79,13 @@ public class TrainDAOImpl implements TrainDAO {
 		}
     }
 
-    public void deleteTrain(Train train) throws DAOException {
+    public void deleteTrain(int trainID) throws DAOException {
         EntityManager entityManager = null;
         try {
 			try {
 				entityManager = JPAUtil.getEntityManger();
 				entityManager.getTransaction().begin();
+				Train train = getTrainByID(trainID);
 				entityManager.remove(entityManager.contains(train) ? train : entityManager.merge(train));
 				entityManager.getTransaction().commit();
 			} finally {

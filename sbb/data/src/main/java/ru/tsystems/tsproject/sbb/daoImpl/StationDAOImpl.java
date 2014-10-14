@@ -21,9 +21,13 @@ import java.util.List;
  * Time: 11:28
  * To change this template use File | Settings | File Templates.
  */
-public class StationDAOImpl implements StationDAO {
+public class StationDAOImpl extends AbstractDAOImpl implements StationDAO {
 
     private static final Logger log = Logger.getLogger(StationDAOImpl.class);
+
+	public StationDAOImpl(EntityManager em) {
+		super(em);
+	}
 
     public void addStation(Station station) throws DAOException {
         EntityManager entityManager = null;
@@ -131,12 +135,13 @@ public class StationDAOImpl implements StationDAO {
         }
     }
 
-    public void deleteStation(Station station) throws DAOException {
+    public void deleteStation(int stationID) throws DAOException {
         EntityManager entityManager = null;
         try {
 			try {
 				entityManager = JPAUtil.getEntityManger();
 				entityManager.getTransaction().begin();
+				Station station = getStationById(stationID);
 				entityManager.remove(entityManager.contains(station) ? station : entityManager.merge(station));
 				entityManager.getTransaction().commit();
 			} finally {

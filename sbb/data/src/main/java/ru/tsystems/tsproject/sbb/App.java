@@ -10,6 +10,10 @@ import ru.tsystems.tsproject.sbb.entity.*;
 import ru.tsystems.tsproject.sbb.service.AdministratorService;
 import ru.tsystems.tsproject.sbb.serviceImpl.AdministratorServiceImpl;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
@@ -22,6 +26,11 @@ import java.util.Date;
 public class App {
     
     private static final Logger log = Logger.getLogger(App.class);
+	private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpa-hibernate");
+
+    public static EntityManager getEntityManger() {
+        return entityManagerFactory.createEntityManager();
+    }
             
     public static void main( String[] args )
     {
@@ -35,7 +44,7 @@ public class App {
 
     public static void passengerFetch() {
 		try {
-			PassengerDAOImpl passengerDAOImpl = new PassengerDAOImpl();
+			PassengerDAOImpl passengerDAOImpl = new PassengerDAOImpl(getEntityManger());
 
 			Passenger passenger = passengerDAOImpl.getPassengerById(2);
 			log.log(Level.INFO, passenger.getLastName());
@@ -49,7 +58,7 @@ public class App {
 
     public static void addTrain() {
 		try {
-			TrainDAO trainDAO = new TrainDAOImpl();
+			TrainDAO trainDAO = new TrainDAOImpl(getEntityManger());
 
 			Train train = new Train();
 			train.setSeats(344);
@@ -62,9 +71,9 @@ public class App {
 
     public static void addTimetable() {
         try {
-			TimetableDAO timetableDAO = new TimetableDAOImpl();
-			StationDAO stationDAO = new StationDAOImpl();
-			TrainDAO trainDAO = new TrainDAOImpl();
+			TimetableDAO timetableDAO = new TimetableDAOImpl(getEntityManger());
+			StationDAO stationDAO = new StationDAOImpl(getEntityManger());
+			TrainDAO trainDAO = new TrainDAOImpl(getEntityManger());
 
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(2014, Calendar.OCTOBER, 13, 6, 55);
@@ -83,10 +92,10 @@ public class App {
         try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
-			TimetableDAO timetableDAO = new TimetableDAOImpl();
-			StationDAO stationDAO = new StationDAOImpl();
+			TimetableDAO timetableDAO = new TimetableDAOImpl(getEntityManger());
+			StationDAO stationDAO = new StationDAOImpl(getEntityManger());
 
-			Collection<Timetable> collection = timetableDAO.getTimetableByStation(stationDAO.getStationById(1));
+			Collection<Timetable> collection = timetableDAO.getTimetableByStation(1);
 			for (Timetable timetable: collection) {
 				log.log(Level.INFO, "train: " + timetable.getTrain().getNumber() + "-" + timetable.getTrain().getSeats());
 				log.log(Level.INFO, "time: " + simpleDateFormat.format(timetable.getDate().getTime()));
@@ -101,8 +110,8 @@ public class App {
         try {
 			SimpleDateFormat simpleDateFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
-			TimetableDAO timetableDAO = new TimetableDAOImpl();
-			StationDAO stationDAO = new StationDAOImpl();
+			TimetableDAO timetableDAO = new TimetableDAOImpl(getEntityManger());
+			StationDAO stationDAO = new StationDAOImpl(getEntityManger());
 
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(2010, Calendar.OCTOBER, 13, 6, 55);
@@ -111,8 +120,8 @@ public class App {
 			Date dateEnd = calendar.getTime();
 
 			Collection<Train> collection = timetableDAO.getTrainsByStationsAndDate(
-                stationDAO.getStationById(1),
-                stationDAO.getStationById(2),
+                1,
+                2,
                 dateStart,
                 dateEnd);
 			for (Train train: collection) {

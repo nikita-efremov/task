@@ -21,7 +21,11 @@ import java.util.List;
  * Time: 11:11
  * To change this template use File | Settings | File Templates.
  */
-public class TimetableDAOImpl implements TimetableDAO {
+public class TimetableDAOImpl extends AbstractDAOImpl implements TimetableDAO {
+
+	public TimetableDAOImpl(EntityManager em) {
+		super(em);
+	}
 
     public void addTimetable(Timetable timetable) throws DAOException {
         EntityManager entityManager = null;
@@ -83,12 +87,13 @@ public class TimetableDAOImpl implements TimetableDAO {
 		}
     }
 
-    public void deleteTimetable(Timetable timetable) throws DAOException {
+    public void deleteTimetable(int timetableID) throws DAOException {
         EntityManager entityManager = null;
         try {
 			try {
 				entityManager = JPAUtil.getEntityManger();
 				entityManager.getTransaction().begin();
+				Timetable timetable = getTimetableById(timetableID);
 				entityManager.remove(entityManager.contains(timetable) ? timetable : entityManager.merge(timetable));
 				entityManager.getTransaction().commit();
 			} finally {
@@ -103,7 +108,7 @@ public class TimetableDAOImpl implements TimetableDAO {
 		}
     }
 
-    public Collection getTimetableByStation(Station station) throws DAOException {
+    public Collection getTimetableByStation(int stationID) throws DAOException {
         EntityManager entityManager = null;
         List timetableList = new ArrayList<Timetable>();
         try {
@@ -112,9 +117,9 @@ public class TimetableDAOImpl implements TimetableDAO {
 				Query query = entityManager.createQuery(
 						" select t "
 								+ " from Timetable t INNER JOIN FETCH t.train Train"
-								+ " where t.station = :station"
+								+ " where t.station.id = :stationID"
 				)
-						.setParameter("station", station);
+						.setParameter("stationID", stationID);
 				timetableList = query.getResultList();
 			} finally {
 				if ((entityManager != null) && (entityManager.isOpen())) {
@@ -129,7 +134,7 @@ public class TimetableDAOImpl implements TimetableDAO {
         return timetableList;
     }
 
-    public Collection getTrainsByStationsAndDate(Station stationStart, Station stationEnd, Date dateStart, Date dateEnd) throws DAOException {
+    public Collection getTrainsByStationsAndDate(int stationStartID, int stationEndID, Date dateStart, Date dateEnd) throws DAOException {
         EntityManager entityManager = null;
         List trainList = new ArrayList<Train>();
         try {
@@ -138,10 +143,10 @@ public class TimetableDAOImpl implements TimetableDAO {
 				Query query = entityManager.createQuery(
 						"select t.train"
 								+ " from Timetable t INNER JOIN t.train Train"
-								+ " where (t.station = :stationStart or t.station = :stationEnd) and (t.date >= :dateStart and t.date <=:dateEnd)"
+								+ " where (t.station.id = :stationStartID or t.station.id = :stationEndID) and (t.date >= :dateStart and t.date <=:dateEnd)"
 				)
-						.setParameter("stationStart", stationStart)
-						.setParameter("stationEnd", stationEnd)
+						.setParameter("stationStartID", stationStartID)
+						.setParameter("stationEndID", stationEndID)
 						.setParameter("dateStart", dateStart)
 						.setParameter("dateEnd", dateEnd);
 

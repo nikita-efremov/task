@@ -6,6 +6,10 @@ import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.service.CommonService;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 /**
  *
  * CommonService interface implementation
@@ -17,7 +21,9 @@ public class CommonServiceImpl implements CommonService {
     private StationDAO stationDAO;
 
     public CommonServiceImpl() {
-        stationDAO = new StationDAOImpl();
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpa-hibernate");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+        stationDAO = new StationDAOImpl(entityManager);
     }
 
     public Station getStationInfo(Station station) throws DAOException {

@@ -20,7 +20,7 @@ public interface TimetableDAO {
     public void addTimetable(Timetable Timetable) throws DAOException;
     public Timetable getTimetableById(int timetableID) throws DAOException;
     public void updateTimetable(Timetable timetable) throws DAOException;
-    public void deleteTimetable(Timetable timetable) throws DAOException;
-    public Collection getTimetableByStation(Station station) throws DAOException;
-    public Collection getTrainsByStationsAndDate(Station stationStart, Station stationEnd,Date dateStart, Date end) throws DAOException;
+    public void deleteTimetable(int timetableID) throws DAOException;
+    public Collection getTimetableByStation(int stationID) throws DAOException;
+    public Collection getTrainsByStationsAndDate(int stationStartID, int stationEndID, Date dateStart, Date end) throws DAOException;
 }
