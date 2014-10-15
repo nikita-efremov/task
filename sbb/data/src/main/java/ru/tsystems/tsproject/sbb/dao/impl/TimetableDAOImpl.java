@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -90,24 +91,20 @@ public class TimetableDAOImpl extends AbstractDAOImpl implements TimetableDAO {
 		}
     }
 
-    public Collection getTrainsByStationsAndDate(int stationStartID, int stationEndID, Date dateStart, Date dateEnd) throws DAOException {
+    public List getTimetableByTrain(int trainID) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
             Query query = entityManager.createQuery(
-                    "select t.train"
-                            + " from Timetable t INNER JOIN t.train Train"
-                            + " where (t.station.id = :stationStartID or t.station.id = :stationEndID)"
-                            + " and (t.date >= :dateStart and t.date <=:dateEnd)"
+                    " select t "
+                            + " from Timetable t INNER JOIN FETCH t.train Train"
+                            + " where t.train.id = :trainID"
             )
-                    .setParameter("stationStartID", stationStartID)
-                    .setParameter("stationEndID", stationEndID)
-                    .setParameter("dateStart", dateStart)
-                    .setParameter("dateEnd", dateEnd);
+                    .setParameter("trainID", trainID);
             return query.getResultList();
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            throw daoException;
+        }
     }
 }

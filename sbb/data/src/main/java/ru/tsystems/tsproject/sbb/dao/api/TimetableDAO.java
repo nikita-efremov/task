@@ -7,6 +7,7 @@ import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,5 +23,5 @@ public interface TimetableDAO {
     public void updateTimetable(Timetable timetable) throws DAOException;
     public void deleteTimetable(int timetableID) throws DAOException;
     public Collection getTimetableByStation(int stationID) throws DAOException;
-    public Collection getTrainsByStationsAndDate(int stationStartID, int stationEndID, Date dateStart, Date end) throws DAOException;
+    public List getTimetableByTrain(int trainID) throws DAOException;
 }

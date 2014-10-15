@@ -3,8 +3,8 @@ package ru.tsystems.tsproject.sbb.model;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
-import ru.tsystems.tsproject.sbb.dao.api.StationDAO;
-import ru.tsystems.tsproject.sbb.dao.impl.StationDAOImpl;
+import ru.tsystems.tsproject.sbb.dao.api.*;
+import ru.tsystems.tsproject.sbb.dao.impl.*;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
@@ -40,8 +40,13 @@ public class StationModel extends AbstractModel {
         try {
             EntityManager entityManager = AbstractModel.getEntityManager();
             StationDAO stationDAO = new StationDAOImpl(entityManager);
-            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO);
-            CommonService commonService = new CommonServiceImpl(stationDAO);
+            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
+            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
+            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
+            TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
+            AdministratorService administratorService = new AdministratorServiceImpl(
+                    stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
 
             Station station = new Station();
             station.setName(stationBean.getName());
@@ -75,7 +80,12 @@ public class StationModel extends AbstractModel {
         try {
             EntityManager entityManager = AbstractModel.getEntityManager();
             StationDAO stationDAO = new StationDAOImpl(entityManager);
-            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO);
+            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
+            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
+            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
+            TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
+            AdministratorService administratorService = new AdministratorServiceImpl(
+                    stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
             Collection<Station> stations = administratorService.getAllStations();
             for (Station station: stations) {
                 StationBean stationBean = new StationBean();

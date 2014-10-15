@@ -2,13 +2,8 @@ package ru.tsystems.tsproject.sbb;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.dao.api.StationDAO;
-import ru.tsystems.tsproject.sbb.dao.api.TimetableDAO;
-import ru.tsystems.tsproject.sbb.dao.api.TrainDAO;
-import ru.tsystems.tsproject.sbb.dao.impl.PassengerDAOImpl;
-import ru.tsystems.tsproject.sbb.dao.impl.StationDAOImpl;
-import ru.tsystems.tsproject.sbb.dao.impl.TimetableDAOImpl;
-import ru.tsystems.tsproject.sbb.dao.impl.TrainDAOImpl;
+import ru.tsystems.tsproject.sbb.dao.api.*;
+import ru.tsystems.tsproject.sbb.dao.impl.*;
 import ru.tsystems.tsproject.sbb.entity.*;
 import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
 import ru.tsystems.tsproject.sbb.service.impl.AdministratorServiceImpl;
@@ -115,6 +110,7 @@ public class App {
 
 			TimetableDAO timetableDAO = new TimetableDAOImpl(getEntityManger());
 			StationDAO stationDAO = new StationDAOImpl(getEntityManger());
+            TrainDAO trainDAO = new TrainDAOImpl(getEntityManger());
 
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(2010, Calendar.OCTOBER, 13, 6, 55);
@@ -122,7 +118,7 @@ public class App {
 			calendar.set(2014, Calendar.OCTOBER, 18, 6, 55);
 			Date dateEnd = calendar.getTime();
 
-			Collection<Train> collection = timetableDAO.getTrainsByStationsAndDate(
+			Collection<Train> collection = trainDAO.getTrainsByStationsAndDate(
                 1,
                 2,
                 dateStart,
@@ -142,7 +138,12 @@ public class App {
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpa-hibernate");
             EntityManager entityManager = entityManagerFactory.createEntityManager();
             StationDAO stationDAO = new StationDAOImpl(entityManager);
-			AdministratorService administratorService = new AdministratorServiceImpl(stationDAO);
+            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
+            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
+            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
+            TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
+			AdministratorService administratorService = new AdministratorServiceImpl(
+                    stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
 			Station station = new Station();
 			station.setName("Pskov");
             administratorService.addStation(station);

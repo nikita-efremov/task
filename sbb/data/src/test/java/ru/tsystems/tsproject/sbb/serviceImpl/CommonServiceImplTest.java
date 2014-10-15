@@ -8,7 +8,8 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.tsystems.tsproject.sbb.dao.impl.StationDAOImpl;
+import ru.tsystems.tsproject.sbb.dao.api.TimetableDAO;
+import ru.tsystems.tsproject.sbb.dao.impl.*;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.service.impl.CommonServiceImpl;
 
@@ -26,8 +27,20 @@ public class CommonServiceImplTest {
     @Mock
     private StationDAOImpl stationDAO = new StationDAOImpl(null);
 
+    @Mock
+    private TrainDAOImpl trainDAO = new TrainDAOImpl(null);
+
+    @Mock
+    private PassengerDAOImpl passengerDAO = new PassengerDAOImpl(null);
+
+    @Mock
+    private TimetableDAOImpl timetableDAO = new TimetableDAOImpl(null);
+
+    @Mock
+    private TicketDAOImpl ticketDAO = new TicketDAOImpl(null);
+
     @InjectMocks
-    private CommonServiceImpl commonServiceImpl = new CommonServiceImpl(stationDAO);
+    private CommonServiceImpl commonServiceImpl = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
 
     @Test
     public void testGetStationInfoPart1() throws Exception {

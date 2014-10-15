@@ -22,6 +22,8 @@ public interface CommonService {
      *
      * @return station with full info
      *
+     * @throws DAOException
+     *         If error occurred in JPA layer
      */
     public Station getStationInfo(Station station) throws DAOException;
 }

@@ -1,6 +1,6 @@
 package ru.tsystems.tsproject.sbb.service.impl;
 
-import ru.tsystems.tsproject.sbb.dao.api.StationDAO;
+import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.dao.impl.StationDAOImpl;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.service.api.CommonService;
@@ -18,8 +18,12 @@ import javax.persistence.Persistence;
  */
 public class CommonServiceImpl extends AbstractServiceImpl implements CommonService {
 
-    public CommonServiceImpl(StationDAO stationDAO) {
-        super(stationDAO);
+    public CommonServiceImpl(StationDAO stationDAO,
+                             TrainDAO trainDAO,
+                             PassengerDAO passengerDAO,
+                             TimetableDAO timetableDAO,
+                             TicketDAO ticketDAO) {
+        super(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
     }
 
     public Station getStationInfo(Station station) throws DAOException {

@@ -6,6 +6,7 @@ import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
+import ru.tsystems.tsproject.sbb.exception.TrainAlreadyExistsException;
 
 import java.util.Collection;
 
@@ -25,6 +26,8 @@ public interface AdministratorService {
      *
      * @throws  StationAlreadyExistsException
      *          If station with specified name already exists
+     * @throws DAOException
+     *         If error occurred in JPA layer
      */
     public void addStation(Station station) throws StationAlreadyExistsException, DAOException;
 
@@ -34,8 +37,12 @@ public interface AdministratorService {
      * @param train
      *        Train instance with specified if, name and timetable
      *
+     * @throws  TrainAlreadyExistsException
+     *          If train with specified name already exists
+     * @throws DAOException
+     *         If error occurred in JPA layer
      */
-    public void addTrain(Train train) throws DAOException;
+    public void addTrain(Train train) throws TrainAlreadyExistsException, DAOException;
 
     /**
      * Gets collection of passengers which have tickets on train, specified in param
@@ -45,6 +52,8 @@ public interface AdministratorService {
      *
      * @return collection of passengers
      *
+     * @throws DAOException
+     *         If error occurred in JPA layer
      */
     public Collection<Passenger> getPassengersByTrain(Train train) throws DAOException;
 
@@ -53,6 +62,8 @@ public interface AdministratorService {
      *
      * @return collection of trains
      *
+     * @throws DAOException
+     *         If error occurred in JPA layer
      */
     public Collection<Station> getAllStations() throws DAOException;
 
@@ -61,6 +72,8 @@ public interface AdministratorService {
      *
      * @return collection of trains
      *
+     * @throws DAOException
+     *         If error occurred in JPA layer
      */
     public Collection<Train> getAllTrains() throws DAOException;
 }

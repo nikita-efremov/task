@@ -8,6 +8,8 @@ import ru.tsystems.tsproject.sbb.exception.DAOException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,6 +46,45 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
 			daoException.initCause(e.getCause());
 			throw daoException;
 		}
+    }
+
+    public Train getTrainByNumber(String trainNumber) throws DAOException {
+        try {
+            EntityManager entityManager = getEntityManager();
+            Query query = entityManager.createQuery("SELECT t FROM Train t where t.number = :trainNumber")
+                    .setParameter("trainNumber", trainNumber);
+            List trains = query.getResultList();
+            if (trains.size() != 0) {
+                return  (Train)trains.get(0);
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            throw daoException;
+        }
+    }
+
+    public Collection getTrainsByStationsAndDate(int stationStartID, int stationEndID, Date dateStart, Date dateEnd) throws DAOException {
+        try {
+            EntityManager entityManager = getEntityManager();
+            Query query = entityManager.createQuery(
+                    "select t.train"
+                            + " from Timetable t INNER JOIN t.train Train"
+                            + " where (t.station.id = :stationStartID or t.station.id = :stationEndID)"
+                            + " and (t.date >= :dateStart and t.date <=:dateEnd)"
+            )
+                    .setParameter("stationStartID", stationStartID)
+                    .setParameter("stationEndID", stationEndID)
+                    .setParameter("dateStart", dateStart)
+                    .setParameter("dateEnd", dateEnd);
+            return query.getResultList();
+        } catch (Exception e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            throw daoException;
+        }
     }
 
     public void updateTrain(Train train) throws DAOException {
