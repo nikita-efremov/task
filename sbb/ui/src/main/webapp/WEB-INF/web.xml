@@ -4,11 +4,39 @@
 
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.tsystems.tsproject.sbb.filter.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/administrator/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>AdministratorServlet</servlet-name>
         <display-name>AdministratorServlet</display-name>
         <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdministratorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminLogin</servlet-name>
+        <display-name>AdminLogin</display-name>
+        <description></description>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminAuthorization</servlet-class>
+        <init-param>
+            <param-name>login</param-name>
+            <param-value>admin</param-value>
+        </init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>qwerty</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminLogout</servlet-name>
+        <display-name>AdminLogout</display-name>
+        <description></description>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminLogout</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminActionResolver</servlet-name>
@@ -31,6 +59,14 @@
     <servlet-mapping>
         <servlet-name>AdministratorServlet</servlet-name>
         <url-pattern>/administrator/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminLogin</servlet-name>
+        <url-pattern>/authorization</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminLogout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminActionResolver</servlet-name>

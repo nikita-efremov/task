@@ -1,71 +1,64 @@
 package ru.tsystems.tsproject.sbb.servlet;
 
-import ru.tsystems.tsproject.sbb.bean.StationBean;
-import ru.tsystems.tsproject.sbb.model.StationModel;
+import org.apache.log4j.Logger;
+import ru.tsystems.tsproject.sbb.bean.AdminLoginBean;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 
-/**
- * Servlet launches creating new station, than it analyzes result and send to view
- * @author  Nikita Efremov
- * @since   1.0
- */
-public class CreateNewStation extends HttpServlet {
 
-    private StationModel stationModel;
+public class AdminAuthorization extends HttpServlet {
+
+    private static final Logger log = Logger.getLogger(AdminAuthorization.class);
 
     /**
-     * Initialize servlet`s attribute - stationModel
-     */
-    public void init() {
-        stationModel = new StationModel();
-    }
-
-    /**
-     * Method proceeds both GET and POST requests. It launches station creation, analyses result of creation, send result to view
-     * @param request   an {@link HttpServletRequest} object that
+     * Method proceeds both GET and POST requests. It analyze login and password from login page, which was inputted by user.
+     * If credentials is valid, method adds "user" attribute to HttpSession object
+     * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
      *
-     * @param response  an {@link HttpServletResponse} object that
+     * @param response  an {@link javax.servlet.http.HttpServletResponse} object that
      *                  contains the response the servlet sends
      *                  to the client
      *
-     * @exception IOException   if an input or output error is
+     * @exception java.io.IOException   if an input or output error is
      *                              detected when the servlet handles
      *                              the GET request
      *
-     * @exception ServletException  if the request for the GET
+     * @exception javax.servlet.ServletException  if the request for the GET
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("stationCreateAction");
+        String action = request.getParameter("loginAction");
         if (action == null) {
-            response.sendRedirect("/ui/administrator/station/createNewStation.jsp");
-        } else if (action.equals("back")) {
-            response.sendRedirect("/ui/administrator/administratorMain.jsp");
+           response.sendRedirect("/ui/adminAuthorization.jsp");
         } else {
-            StationBean stationBean = new StationBean();
-            stationBean.setName(request.getParameter("Station name"));
-            stationBean.validate();
-            if (stationBean.isValidationFailed()) {
-                request.setAttribute("createResult", stationBean);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/station/createNewStation.jsp");
+            AdminLoginBean adminLoginBean = new AdminLoginBean();
+            adminLoginBean.setLogin(request.getParameter("login"));
+            adminLoginBean.setPassword(request.getParameter("password"));
+            adminLoginBean.validate();
+            if (adminLoginBean.isValidationFailed()) {
+                request.setAttribute("loginResult", adminLoginBean);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/adminAuthorization.jsp");
                 requestDispatcher.forward(request, response);
             } else {
-                stationBean = stationModel.addStation(stationBean);
-                request.setAttribute("createResult", stationBean);
-                RequestDispatcher requestDispatcher;
-                if (stationBean.isProcessingFailed()) {
-                    requestDispatcher = request.getRequestDispatcher("/administrator/station/createStationFail.jsp");
+                String loginExpected = getServletConfig().getInitParameter("login");
+                String passExpected = getServletConfig().getInitParameter("password");
+                if ((loginExpected.equals(adminLoginBean.getLogin()))
+                        && (passExpected.equals(adminLoginBean.getPassword()))) {
+                    HttpSession httpSession = request.getSession();
+                    httpSession.setAttribute("user", "admin");
+                    httpSession.setMaxInactiveInterval(30*60);
+                    response.sendRedirect("/ui/administrator/administratorMain.jsp");
                 } else {
-                    requestDispatcher = request.getRequestDispatcher("/administrator/station/createStationSuccess.jsp");
+                    adminLoginBean.setValidationMessage("Invalid credentials");
+                    request.setAttribute("loginResult", adminLoginBean);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/adminAuthorization.jsp");
+                    requestDispatcher.forward(request, response);
                 }
-                requestDispatcher.forward(request, response);
             }
         }
     }

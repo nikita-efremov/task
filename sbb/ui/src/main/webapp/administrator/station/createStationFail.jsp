@@ -18,5 +18,11 @@
 <h3> Station creation failed:  <%=bean.getProcessingErrorMessage()%> </h3>
 
 <a href="/ui/administrator/station/createNewStation.jsp">return to station creation page</a>
+<div id = "userPanel">
+    <div id = "userInfo">
+        <label> user name: <%=request.getSession().getAttribute("user")%></label>
+    </div>
+    <a href="<%=request.getContextPath()%>/logout">logout</a>
+</div>
 </body>
 </html>

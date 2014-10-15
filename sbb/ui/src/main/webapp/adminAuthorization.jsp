@@ -1,35 +1,41 @@
 <%--
   Created by IntelliJ IDEA.
   User: herr
-  Date: 03.10.14
-  Time: 19:59
+  Date: 15.10.14
+  Time: 16:10
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="ru.tsystems.tsproject.sbb.bean.StationBean" %>
-<% StationBean bean = (StationBean)request.getAttribute("createResult");
+<%@page import="ru.tsystems.tsproject.sbb.bean.AdminLoginBean" %>
+<% AdminLoginBean bean = (AdminLoginBean)request.getAttribute("loginResult");
     if (bean == null) {
-        bean = new StationBean();
+        bean = new AdminLoginBean();
     }
 %>
 <html>
 <head>
-    <title></title>
+    <title>Administrator authorization page</title>
 </head>
 <body>
-<form method="post" action="CreateNewStation">
+<h2 align ="center"> Please, enter you credentials</h2>
+<form method="post" action="authorization">
     <CENTER>
         <TABLE border="0"width="60px">
             <TR align="center">
-                <TD width="150px">Name:</TD>
+                <TD width="150px">Login</TD>
                 <TD>
-                    <INPUT TYPE="text" NAME="Station name" value="">
+                    <INPUT TYPE="text" NAME="login" value="">
+                </TD>
+            </TR>
+            <TR>
+                <TD width="150px">Password</TD>
+                <TD>
+                    <INPUT TYPE="password" NAME="password" value="">
                 </TD>
             </TR>
             <TR>
                 <TD colspan="2" align="center">
-                    <INPUT TYPE="submit" value="create" name="stationCreateAction">
-                    <INPUT TYPE="submit" value="back" name="stationCreateAction">
+                    <INPUT TYPE="submit" value="Login" name="loginAction">
                 </TD>
                 <TD>
                     &nbsp;
@@ -45,11 +51,6 @@
         </TABLE>
     </CENTER>
 </form>
-<div id = "userPanel">
-    <div id = "userInfo">
-        <label> user name: <%=request.getSession().getAttribute("user")%></label>
-    </div>
-    <a href="<%=request.getContextPath()%>/logout">logout</a>
-</div>
+
 </body>
 </html>

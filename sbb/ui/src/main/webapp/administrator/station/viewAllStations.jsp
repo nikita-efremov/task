@@ -38,5 +38,11 @@
         %>
     </table>
 </CENTER>
+<div id = "userPanel">
+    <div id = "userInfo">
+        <label> user name: <%=request.getSession().getAttribute("user")%></label>
+    </div>
+    <a href="<%=request.getContextPath()%>/logout">logout</a>
+</div>
 </body>
 </html>
