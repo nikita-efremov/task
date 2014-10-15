@@ -11,7 +11,7 @@
     <artifactId>ui</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
-    <name>ui Maven Webapp</name>
+    <name>ui</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>

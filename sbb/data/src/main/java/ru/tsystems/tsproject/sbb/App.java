@@ -2,13 +2,16 @@ package ru.tsystems.tsproject.sbb;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.dao.StationDAO;
-import ru.tsystems.tsproject.sbb.dao.TimetableDAO;
-import ru.tsystems.tsproject.sbb.dao.TrainDAO;
-import ru.tsystems.tsproject.sbb.daoImpl.*;
+import ru.tsystems.tsproject.sbb.dao.api.StationDAO;
+import ru.tsystems.tsproject.sbb.dao.api.TimetableDAO;
+import ru.tsystems.tsproject.sbb.dao.api.TrainDAO;
+import ru.tsystems.tsproject.sbb.dao.impl.PassengerDAOImpl;
+import ru.tsystems.tsproject.sbb.dao.impl.StationDAOImpl;
+import ru.tsystems.tsproject.sbb.dao.impl.TimetableDAOImpl;
+import ru.tsystems.tsproject.sbb.dao.impl.TrainDAOImpl;
 import ru.tsystems.tsproject.sbb.entity.*;
-import ru.tsystems.tsproject.sbb.service.AdministratorService;
-import ru.tsystems.tsproject.sbb.serviceImpl.AdministratorServiceImpl;
+import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
+import ru.tsystems.tsproject.sbb.service.impl.AdministratorServiceImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -136,7 +139,10 @@ public class App {
 
     public static void adminService() {
 		try {
-			AdministratorService administratorService = new AdministratorServiceImpl();
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpa-hibernate");
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            StationDAO stationDAO = new StationDAOImpl(entityManager);
+			AdministratorService administratorService = new AdministratorServiceImpl(stationDAO);
 			Station station = new Station();
 			station.setName("Pskov");
             administratorService.addStation(station);

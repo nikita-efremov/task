@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.service;
+package ru.tsystems.tsproject.sbb.service.api;
 
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Train;

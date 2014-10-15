@@ -17,6 +17,9 @@ public class Ticket {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "ticket_number")
+    private long ticketNumber;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "passenger_id")
     private Passenger passenger;
@@ -30,6 +33,14 @@ public class Ticket {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public long getTicketNumber() {
+        return ticketNumber;
+    }
+
+    public void setTicketNumber(long ticketNumber) {
+        this.ticketNumber = ticketNumber;
     }
 
     public Passenger getPassenger() {

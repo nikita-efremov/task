@@ -7,7 +7,7 @@ package ru.tsystems.tsproject.sbb.exception;
  * Time: 20:48
  * To change this template use File | Settings | File Templates.
  */
-public class BusinessLogicException extends Exception {
+public abstract class BusinessLogicException extends Exception {
 
     public BusinessLogicException(String message) {
         super(message);

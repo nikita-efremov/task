@@ -8,8 +8,9 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.tsystems.tsproject.sbb.daoImpl.StationDAOImpl;
+import ru.tsystems.tsproject.sbb.dao.impl.StationDAOImpl;
 import ru.tsystems.tsproject.sbb.entity.Station;
+import ru.tsystems.tsproject.sbb.service.impl.CommonServiceImpl;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,7 +27,7 @@ public class CommonServiceImplTest {
     private StationDAOImpl stationDAO = new StationDAOImpl(null);
 
     @InjectMocks
-    private CommonServiceImpl commonServiceImpl = new CommonServiceImpl();
+    private CommonServiceImpl commonServiceImpl = new CommonServiceImpl(stationDAO);
 
     @Test
     public void testGetStationInfoPart1() throws Exception {

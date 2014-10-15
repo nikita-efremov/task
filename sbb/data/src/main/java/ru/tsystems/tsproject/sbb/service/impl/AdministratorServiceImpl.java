@@ -1,13 +1,12 @@
-package ru.tsystems.tsproject.sbb.serviceImpl;
+package ru.tsystems.tsproject.sbb.service.impl;
 
-import ru.tsystems.tsproject.sbb.dao.StationDAO;
-import ru.tsystems.tsproject.sbb.daoImpl.StationDAOImpl;
+import ru.tsystems.tsproject.sbb.dao.api.StationDAO;
+import ru.tsystems.tsproject.sbb.dao.impl.StationDAOImpl;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
-import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
-import ru.tsystems.tsproject.sbb.service.AdministratorService;
+import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import javax.persistence.EntityManager;
@@ -21,18 +20,15 @@ import java.util.Collection;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class AdministratorServiceImpl implements AdministratorService {
-    private StationDAO stationDAO;
+public class AdministratorServiceImpl extends AbstractServiceImpl implements AdministratorService {
 
-    public AdministratorServiceImpl() {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpa-hibernate");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-        stationDAO = new StationDAOImpl(entityManager);
+    public AdministratorServiceImpl(StationDAO stationDAO) {
+        super(stationDAO);
     }
 
     public void addStation(Station station) throws StationAlreadyExistsException, DAOException {
-        if (stationDAO.getStationByName(station.getName()) == null) {
-            stationDAO.addStation(station);
+        if (getStationDAO().getStationByName(station.getName()) == null) {
+            getStationDAO().addStation(station);
         } else {
             throw new StationAlreadyExistsException("Station with name " + station.getName() + " already exists");
         }
@@ -51,6 +47,6 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     public Collection<Station> getAllStations() throws DAOException {
-        return stationDAO.getAllStations();
+        return getStationDAO().getAllStations();
     }
 }

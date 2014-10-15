@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.daoImpl;
+package ru.tsystems.tsproject.sbb.dao.impl;
 
 import javax.persistence.EntityManager;
 

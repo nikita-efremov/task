@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.dao;
+package ru.tsystems.tsproject.sbb.dao.api;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 import ru.tsystems.tsproject.sbb.entity.Train;
 

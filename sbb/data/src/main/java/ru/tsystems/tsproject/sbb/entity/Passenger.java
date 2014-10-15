@@ -35,6 +35,9 @@ public class Passenger {
     @Column(name = "birthdate")
     private Date birthDate;
 
+    @Column(name = "doc_number")
+    private String docNumber;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "passenger")
     private Set<Ticket> tickets;
 
@@ -68,6 +71,14 @@ public class Passenger {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getDocNumber() {
+        return docNumber;
+    }
+
+    public void setDocNumber(String docNumber) {
+        this.docNumber = docNumber;
     }
 
     public Set<Ticket> getTickets() {

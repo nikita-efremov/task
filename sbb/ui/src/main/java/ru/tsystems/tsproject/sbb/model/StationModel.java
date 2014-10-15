@@ -3,16 +3,19 @@ package ru.tsystems.tsproject.sbb.model;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
+import ru.tsystems.tsproject.sbb.dao.api.StationDAO;
+import ru.tsystems.tsproject.sbb.dao.impl.StationDAOImpl;
 import ru.tsystems.tsproject.sbb.entity.Station;
+import ru.tsystems.tsproject.sbb.exception.DAOException;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
-import ru.tsystems.tsproject.sbb.service.AdministratorService;
-import ru.tsystems.tsproject.sbb.service.CommonService;
-import ru.tsystems.tsproject.sbb.serviceImpl.AdministratorServiceImpl;
-import ru.tsystems.tsproject.sbb.serviceImpl.CommonServiceImpl;
+import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
+import ru.tsystems.tsproject.sbb.service.api.CommonService;
+import ru.tsystems.tsproject.sbb.service.impl.AdministratorServiceImpl;
+import ru.tsystems.tsproject.sbb.service.impl.CommonServiceImpl;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.TreeSet;
 
 
 /**
@@ -21,7 +24,7 @@ import java.util.TreeSet;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class StationModel {
+public class StationModel extends AbstractModel {
     private static final Logger log = Logger.getLogger(StationModel.class);
 
     /**
@@ -35,8 +38,10 @@ public class StationModel {
      */
     public StationBean addStation(StationBean stationBean) {
         try {
-            AdministratorService administratorService = new AdministratorServiceImpl();
-            CommonService commonService = new CommonServiceImpl();
+            EntityManager entityManager = AbstractModel.getEntityManager();
+            StationDAO stationDAO = new StationDAOImpl(entityManager);
+            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO);
+            CommonService commonService = new CommonServiceImpl(stationDAO);
 
             Station station = new Station();
             station.setName(stationBean.getName());
@@ -49,6 +54,9 @@ public class StationModel {
         } catch (StationAlreadyExistsException e) {
             stationBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e);
+        } catch (DAOException e) {
+            stationBean.setProcessingErrorMessage("Database error occurred");
+            log.log(Level.ERROR, "Database error occurred: " + e);
         } catch (Exception e) {
             stationBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
@@ -65,7 +73,9 @@ public class StationModel {
     public Collection<StationBean> getAllStations() {
         Collection<StationBean> stationBeans = new ArrayList<StationBean>();
         try {
-            AdministratorService administratorService = new AdministratorServiceImpl();
+            EntityManager entityManager = AbstractModel.getEntityManager();
+            StationDAO stationDAO = new StationDAOImpl(entityManager);
+            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO);
             Collection<Station> stations = administratorService.getAllStations();
             for (Station station: stations) {
                 StationBean stationBean = new StationBean();
@@ -74,6 +84,8 @@ public class StationModel {
                 stationBean.setTimetables(station.getTimetables());
                 stationBeans.add(stationBean);
             }
+        } catch (DAOException e) {
+            log.log(Level.ERROR, "Database error occurred: " + e);
         } catch (Exception e) {
             log.log(Level.ERROR, "Unknown error occurred: " + e);
         }
