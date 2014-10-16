@@ -5,6 +5,7 @@ import ru.tsystems.tsproject.sbb.entity.Ticket;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,9 +23,16 @@ public class TicketDAOImpl extends AbstractDAOImpl implements TicketDAO {
     public void addTicket(Ticket ticket) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.persist(ticket);
-            entityManager.getTransaction().commit();
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                entityManager.persist(ticket);
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
         } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
@@ -46,9 +54,16 @@ public class TicketDAOImpl extends AbstractDAOImpl implements TicketDAO {
     public void updateTicket(Ticket ticket) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.merge(ticket);
-            entityManager.getTransaction().commit();
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                entityManager.merge(ticket);
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
         } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
@@ -59,11 +74,18 @@ public class TicketDAOImpl extends AbstractDAOImpl implements TicketDAO {
     public void deleteTicket(int ticketID) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
-            Ticket ticket = getTicketById(ticketID);
-            entityManager.remove(entityManager.contains(ticket) ? ticket : entityManager.merge(ticket));
-            entityManager.getTransaction().commit();
-		} catch (Exception e) {
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                Ticket ticket = getTicketById(ticketID);
+                entityManager.remove(entityManager.contains(ticket) ? ticket : entityManager.merge(ticket));
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
+        } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
 			throw daoException;

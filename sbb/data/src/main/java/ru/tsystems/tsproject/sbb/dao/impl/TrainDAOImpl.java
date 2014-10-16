@@ -6,6 +6,7 @@ import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.Collection;
 import java.util.Date;
@@ -26,10 +27,17 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
 
     public void addTrain(Train train) throws DAOException {
         try {
-			EntityManager entityManager = getEntityManager();
-			entityManager.getTransaction().begin();
-			entityManager.persist(train);
-			entityManager.getTransaction().commit();
+            EntityManager entityManager = getEntityManager();
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                entityManager.persist(train);
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
         } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
@@ -90,9 +98,16 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
     public void updateTrain(Train train) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.merge(train);
-            entityManager.getTransaction().commit();
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                entityManager.merge(train);
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
         } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
@@ -103,11 +118,18 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
     public void deleteTrain(int trainID) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
-            Train train = getTrainByID(trainID);
-            entityManager.remove(entityManager.contains(train) ? train : entityManager.merge(train));
-            entityManager.getTransaction().commit();
-		} catch (Exception e) {
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                Train train = getTrainByID(trainID);
+                entityManager.remove(entityManager.contains(train) ? train : entityManager.merge(train));
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
+        } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
 			throw daoException;

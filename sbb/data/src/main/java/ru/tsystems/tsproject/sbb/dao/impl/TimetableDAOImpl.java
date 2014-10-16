@@ -5,6 +5,7 @@ import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.Collection;
 import java.util.Date;
@@ -26,10 +27,17 @@ public class TimetableDAOImpl extends AbstractDAOImpl implements TimetableDAO {
     public void addTimetable(Timetable timetable) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.persist(timetable);
-            entityManager.getTransaction().commit();
-		} catch (Exception e) {
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                entityManager.persist(timetable);
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
+        } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
 			throw daoException;
@@ -50,10 +58,17 @@ public class TimetableDAOImpl extends AbstractDAOImpl implements TimetableDAO {
     public void updateTimetable(Timetable timetable) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.merge(timetable);
-            entityManager.getTransaction().commit();
-		} catch (Exception e) {
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                entityManager.merge(timetable);
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
+        } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
 			throw daoException;
@@ -63,11 +78,18 @@ public class TimetableDAOImpl extends AbstractDAOImpl implements TimetableDAO {
     public void deleteTimetable(int timetableID) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
-            Timetable timetable = getTimetableById(timetableID);
-            entityManager.remove(entityManager.contains(timetable) ? timetable : entityManager.merge(timetable));
-            entityManager.getTransaction().commit();
-		} catch (Exception e) {
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                Timetable timetable = getTimetableById(timetableID);
+                entityManager.remove(entityManager.contains(timetable) ? timetable : entityManager.merge(timetable));
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
+        } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
 			throw daoException;

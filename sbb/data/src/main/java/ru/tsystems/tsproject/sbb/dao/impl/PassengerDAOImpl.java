@@ -5,6 +5,7 @@ import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.Collection;
 
@@ -24,10 +25,17 @@ public class PassengerDAOImpl extends AbstractDAOImpl implements PassengerDAO {
     public void addPassenger(Passenger passenger) throws DAOException {
 		try {
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.persist(passenger);
-            entityManager.getTransaction().commit();
-		} catch (Exception e) {
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                entityManager.persist(passenger);
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
+        } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
 			throw daoException;
@@ -37,10 +45,17 @@ public class PassengerDAOImpl extends AbstractDAOImpl implements PassengerDAO {
     public void updatePassenger(Passenger passenger) throws DAOException {
 		try {
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.merge(passenger);
-            entityManager.getTransaction().commit();
-		} catch (Exception e) {
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                entityManager.merge(passenger);
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
+        } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
 			throw daoException;
@@ -78,11 +93,18 @@ public class PassengerDAOImpl extends AbstractDAOImpl implements PassengerDAO {
     public void deletePassenger(int passengerID) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
-            Passenger passenger = getPassengerById(passengerID);
-            entityManager.remove(entityManager.contains(passenger) ? passenger : entityManager.merge(passenger));
-            entityManager.getTransaction().commit();
-		} catch (Exception e) {
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            try {
+                entityTransaction.begin();
+                Passenger passenger = getPassengerById(passengerID);
+                entityManager.remove(entityManager.contains(passenger) ? passenger : entityManager.merge(passenger));
+                entityTransaction.commit();
+            } finally {
+                if (entityTransaction.isActive()) {
+                    entityTransaction.rollback();
+                }
+            }
+        } catch (Exception e) {
 			DAOException daoException = new DAOException(e.getMessage());
 			daoException.initCause(e.getCause());
 			throw daoException;        

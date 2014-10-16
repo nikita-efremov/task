@@ -37,8 +37,9 @@ public class StationModel extends AbstractModel {
      * @return result of processing
      */
     public StationBean addStation(StationBean stationBean) {
+        EntityManager entityManager = null;
         try {
-            EntityManager entityManager = AbstractModel.getEntityManager();
+            entityManager = AbstractModel.getEntityManager();
             StationDAO stationDAO = new StationDAOImpl(entityManager);
             PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
@@ -65,6 +66,10 @@ public class StationModel extends AbstractModel {
         } catch (Exception e) {
             stationBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
+        } finally {
+            if ((entityManager != null) && (entityManager.isOpen())) {
+                entityManager.close();
+            }
         }
         return stationBean;
     }
@@ -77,8 +82,9 @@ public class StationModel extends AbstractModel {
      */
     public Collection<StationBean> getAllStations() {
         Collection<StationBean> stationBeans = new ArrayList<StationBean>();
+        EntityManager entityManager = null;
         try {
-            EntityManager entityManager = AbstractModel.getEntityManager();
+            entityManager = AbstractModel.getEntityManager();
             StationDAO stationDAO = new StationDAOImpl(entityManager);
             PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
@@ -98,6 +104,10 @@ public class StationModel extends AbstractModel {
             log.log(Level.ERROR, "Database error occurred: " + e);
         } catch (Exception e) {
             log.log(Level.ERROR, "Unknown error occurred: " + e);
+        } finally {
+            if ((entityManager != null) && (entityManager.isOpen())) {
+                entityManager.close();
+            }
         }
         return stationBeans;
     }
