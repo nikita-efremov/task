@@ -52,7 +52,7 @@ public class StationModel extends AbstractModel {
             station.setName(stationBean.getName());
 
             administratorService.addStation(station);
-            station = commonService.getStationInfo(station);
+            station = commonService.findStation(station);
 
             stationBean.setId(station.getId());
             stationBean.setName(station.getName());

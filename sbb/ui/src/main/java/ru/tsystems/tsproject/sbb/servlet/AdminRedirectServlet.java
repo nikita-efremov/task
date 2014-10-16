@@ -13,7 +13,7 @@ import java.io.IOException;
  * @since   1.0
  */
 
-public class AdministratorServlet extends HttpServlet {
+public class AdminRedirectServlet extends HttpServlet {
 
     /**
      * Method proceeds both GET and POST requests. In all cases it forwards to the default administrator page

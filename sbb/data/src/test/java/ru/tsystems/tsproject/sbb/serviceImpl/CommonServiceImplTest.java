@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.tsystems.tsproject.sbb.dao.api.TimetableDAO;
 import ru.tsystems.tsproject.sbb.dao.impl.*;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.service.impl.CommonServiceImpl;
@@ -58,7 +57,7 @@ public class CommonServiceImplTest {
 
         when(stationDAO.getStationById(stationID)).thenReturn(stationOutput);
 
-        Station stationFromMethod = commonServiceImpl.getStationInfo(stationSource);
+        Station stationFromMethod = commonServiceImpl.findStation(stationSource);
         Assert.assertEquals(stationOutput, stationFromMethod);
     }
 
@@ -78,7 +77,7 @@ public class CommonServiceImplTest {
 
         when(stationDAO.getStationByName(stationName)).thenReturn(stationOutput);
 
-        Station stationFromMethod = commonServiceImpl.getStationInfo(stationSource);
+        Station stationFromMethod = commonServiceImpl.findStation(stationSource);
         Assert.assertEquals(stationOutput, stationFromMethod);
     }
 }

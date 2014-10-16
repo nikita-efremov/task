@@ -26,7 +26,7 @@ public class CommonServiceImpl extends AbstractServiceImpl implements CommonServ
         super(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
     }
 
-    public Station getStationInfo(Station station) throws DAOException {
+    public Station findStation(Station station) throws DAOException {
         Station stationWithFullInfo = null;
         if (station.getId() > 0) {
            stationWithFullInfo = getStationDAO().getStationById(station.getId());

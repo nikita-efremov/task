@@ -1,9 +1,7 @@
 package ru.tsystems.tsproject.sbb.servlet;
 
 import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.bean.AdminLoginBean;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +16,9 @@ import java.io.IOException;
  * Time: 20:27
  * To change this template use File | Settings | File Templates.
  */
-public class AdminLogout extends HttpServlet {
+public class AdminLogoutServlet extends HttpServlet {
 
-    private static final Logger log = Logger.getLogger(AdminAuthorization.class);
+    private static final Logger log = Logger.getLogger(AdminLogoutServlet.class);
 
     /**
      * Method proceeds both GET and POST requests. It removes user attribute from current http session

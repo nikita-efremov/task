@@ -16,13 +16,13 @@
         <servlet-name>AdministratorServlet</servlet-name>
         <display-name>AdministratorServlet</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdministratorServlet</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminRedirectServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminLogin</servlet-name>
         <display-name>AdminLogin</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminAuthorization</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminAuthorizationServlet</servlet-class>
         <init-param>
             <param-name>login</param-name>
             <param-value>admin</param-value>
@@ -36,25 +36,25 @@
         <servlet-name>AdminLogout</servlet-name>
         <display-name>AdminLogout</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminLogout</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminLogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminActionResolver</servlet-name>
         <display-name>AdminActionResolver</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminActionResolver</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminActionResolverServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateNewStation</servlet-name>
         <display-name>CreateNewStation</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.CreateNewStation</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.CreateNewStationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewAllStations</servlet-name>
         <display-name>ViewAllStations</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.ViewAllStations</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.ViewAllStationsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdministratorServlet</servlet-name>
