@@ -1,9 +1,8 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="ru.tsystems.tsproject.sbb.bean.TrainBean" %>
-<% TrainBean bean = (TrainBean)request.getAttribute("searchResult");
+<%@page import="ru.tsystems.tsproject.sbb.bean.StationBean" %>
+<% StationBean bean = (StationBean)request.getAttribute("searchResult");
     if (bean == null) {
-        bean = new TrainBean();
+        bean = new StationBean();
     }
 
 %>
@@ -12,33 +11,27 @@
     <title>Train search</title>
 </head>
 <body>
-<form method="post" action="SearchTrain">
+<form method="post" action="SearchStation">
     <CENTER>
         <TABLE border="0"width="300px">
             <TR align="left">
-                <TD width="150px">Train number:</TD>
+                <TD width="150px">Station name:</TD>
                 <TD>
-                    <INPUT TYPE="text" NAME="Train number" value="<%=bean.getNumber()%>">
+                    <INPUT TYPE="text" NAME="Station name" value="<%=bean.getName()%>">
                 </TD>
             </TR>
-            <% if (!bean.getSeats().equals("")) { %>
+            <% if (bean.getId() > 0) { %>
             <TR align="left">
                 <TD width="150px">Seats:</TD>
                 <TD>
-                    <INPUT TYPE="text" NAME="Seats" value="<%=bean.getSeats()%>">
-                </TD>
-            </TR>
-            <TR align="left">
-                <TD width="150px">Total seats:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Total seats" value="<%=bean.getTotalSeats()%>">
+                    <INPUT TYPE="text" NAME="Seats" value="<%=bean.getId()%>">
                 </TD>
             </TR>
             <% } %>
             <TR>
                 <TD colspan="2" align="center">
-                    <INPUT TYPE="submit" value="search" name="trainSearchAction">
-                    <INPUT TYPE="submit" value="back" name="trainSearchAction">
+                    <INPUT TYPE="submit" value="search" name="stationSearchAction">
+                    <INPUT TYPE="submit" value="back" name="stationSearchAction">
                 </TD>
                 <TD>
                     &nbsp;
@@ -46,9 +39,8 @@
             </TR>
             <TR>
                 <TD colspan="2" align="center">
-                    <% if (!bean.getSeats().equals("")) { %>
-                    <INPUT TYPE="submit" value="watch passengers" name="trainSearchAction">
-                    <INPUT TYPE="submit" value="watch timetable" name="trainSearchAction">
+                    <% if (bean.getId() > 0) { %>
+                    <INPUT TYPE="submit" value="watch timetable" name="stationSearchAction">
                     <% } %>
                 </TD>
                 <TD>

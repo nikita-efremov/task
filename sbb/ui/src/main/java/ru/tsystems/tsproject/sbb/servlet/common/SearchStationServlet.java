@@ -1,7 +1,10 @@
-package ru.tsystems.tsproject.sbb.servlet.administrator;
+package ru.tsystems.tsproject.sbb.servlet.common;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import ru.tsystems.tsproject.sbb.bean.PassengerBean;
+import ru.tsystems.tsproject.sbb.bean.StationBean;
+import ru.tsystems.tsproject.sbb.bean.TrainBean;
+import ru.tsystems.tsproject.sbb.model.StationModel;
+import ru.tsystems.tsproject.sbb.model.TrainModel;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,53 +12,70 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 
 /**
- * Servlet redirects to appropriate administrator service page. That redirect depends on param adminAction,
- * which user could fill on administrator default page
+ * Servlet launches searching new station, than it analyzes result and send to view
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class AdminActionResolverServlet extends HttpServlet {
 
-    private static final Logger log = Logger.getLogger(AdminActionResolverServlet.class);
+public class SearchStationServlet extends HttpServlet {
+
+    private StationModel stationModel;
 
     /**
-     * Method proceeds both GET and POST requests. It redirects to appropriate administrator service page
-     * @param request   an {@link HttpServletRequest} object that
+     * Initialize servlet`s attribute - trainModel
+     */
+    public void init() {
+        stationModel = new StationModel();
+    }
+
+    /**
+     * Method proceeds both GET and POST requests. It launches train creation, analyses result of creation, send result to view
+     * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
      *
-     * @param response  an {@link HttpServletResponse} object that
+     * @param response  an {@link javax.servlet.http.HttpServletResponse} object that
      *                  contains the response the servlet sends
      *                  to the client
      *
-     * @exception IOException   if an input or output error is
+     * @exception java.io.IOException   if an input or output error is
      *                              detected when the servlet handles
      *                              the GET request
      *
-     * @exception ServletException  if the request for the GET
+     * @exception javax.servlet.ServletException  if the request for the GET
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String chosenAction = request.getParameter("adminAction");
-        log.log(Level.DEBUG, "chosenAction=" + chosenAction);
-
-        if (chosenAction == null) {
-            response.sendRedirect("/ui/administrator/administratorMain.jsp");
-        } else if (chosenAction.equals("Add new station")) {
-            response.sendRedirect("/ui/administrator/station/createNewStation.jsp");
-        } else if (chosenAction.equals("Watch all stations")) {
-            response.sendRedirect("/ui/administrator/station/ViewAllStations");
-        } else if (chosenAction.equals("Add new train")) {
-            response.sendRedirect("/ui/administrator/train/createNewTrain.jsp");
-        } else if (chosenAction.equals("Search train")) {
-            response.sendRedirect("/ui/administrator/train/searchTrain.jsp");
-        } else if (chosenAction.equals("Watch all trains")) {
-            response.sendRedirect("/ui/administrator/train/ViewAllTrains");
-        } else {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/pageIsNotReady.jsp");
+        String action = request.getParameter("stationSearchAction");
+        if (action == null) {
+            response.sendRedirect("/ui/common/searchStation.jsp");
+        } else if (action.equals("back")) {
+            response.sendRedirect("/ui/index.jsp");
+        } else if (action.equals("watch timetable")) {
+            StationBean stationBean = new StationBean();
+            stationBean.setName(request.getParameter("Station name"));
+            stationBean = stationModel.findStation(stationBean);
+            request.setAttribute("stationBean", stationBean);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/stationTimetable.jsp");
             requestDispatcher.forward(request, response);
+
+        } else {
+            StationBean stationBean = new StationBean();
+            stationBean.setName(request.getParameter("Station name"));
+            stationBean.validate();
+            if (stationBean.isValidationFailed()) {
+                request.setAttribute("searchResult", stationBean);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStation.jsp");
+                requestDispatcher.forward(request, response);
+            } else {
+                stationBean = stationModel.findStation(stationBean);
+                request.setAttribute("searchResult", stationBean);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStation.jsp");
+                requestDispatcher.forward(request, response);
+            }
         }
     }
 
@@ -101,3 +121,4 @@ public class AdminActionResolverServlet extends HttpServlet {
         processRequest(request, response);
     }
 }
+

@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.servlet.administrator;
+package ru.tsystems.tsproject.sbb.servlet.common;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -11,48 +11,41 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet redirects to appropriate administrator service page. That redirect depends on param adminAction,
- * which user could fill on administrator default page
+ * Servlet redirects to appropriate common service page. That redirect depends on param commonAction,
+ * which user could fill on common default page
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class AdminActionResolverServlet extends HttpServlet {
 
-    private static final Logger log = Logger.getLogger(AdminActionResolverServlet.class);
+public class CommonActionResolverServlet extends HttpServlet {
+
+    private static final Logger log = Logger.getLogger(CommonActionResolverServlet.class);
 
     /**
-     * Method proceeds both GET and POST requests. It redirects to appropriate administrator service page
-     * @param request   an {@link HttpServletRequest} object that
+     * Method proceeds both GET and POST requests. It redirects to appropriate common service page
+     * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
      *
-     * @param response  an {@link HttpServletResponse} object that
+     * @param response  an {@link javax.servlet.http.HttpServletResponse} object that
      *                  contains the response the servlet sends
      *                  to the client
      *
-     * @exception IOException   if an input or output error is
+     * @exception java.io.IOException   if an input or output error is
      *                              detected when the servlet handles
      *                              the GET request
      *
-     * @exception ServletException  if the request for the GET
+     * @exception javax.servlet.ServletException  if the request for the GET
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String chosenAction = request.getParameter("adminAction");
+        String chosenAction = request.getParameter("commonAction");
         log.log(Level.DEBUG, "chosenAction=" + chosenAction);
 
         if (chosenAction == null) {
-            response.sendRedirect("/ui/administrator/administratorMain.jsp");
-        } else if (chosenAction.equals("Add new station")) {
-            response.sendRedirect("/ui/administrator/station/createNewStation.jsp");
-        } else if (chosenAction.equals("Watch all stations")) {
-            response.sendRedirect("/ui/administrator/station/ViewAllStations");
-        } else if (chosenAction.equals("Add new train")) {
-            response.sendRedirect("/ui/administrator/train/createNewTrain.jsp");
-        } else if (chosenAction.equals("Search train")) {
-            response.sendRedirect("/ui/administrator/train/searchTrain.jsp");
-        } else if (chosenAction.equals("Watch all trains")) {
-            response.sendRedirect("/ui/administrator/train/ViewAllTrains");
+            response.sendRedirect("/ui/index.jsp");
+        } else if (chosenAction.equals("Watch station timetable")) {
+            response.sendRedirect("/ui/common/searchStation.jsp");
         } else {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/pageIsNotReady.jsp");
             requestDispatcher.forward(request, response);

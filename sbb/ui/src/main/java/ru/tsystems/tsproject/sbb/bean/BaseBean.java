@@ -1,5 +1,7 @@
 package ru.tsystems.tsproject.sbb.bean;
 
+import org.apache.log4j.Logger;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -14,6 +16,7 @@ import java.util.Set;
  */
 public abstract class BaseBean {
     private static final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+    private static final Logger log = Logger.getLogger(BaseBean.class);
 
     private String validationMessage;
     private String processingErrorMessage;
@@ -34,6 +37,27 @@ public abstract class BaseBean {
     public void validate() {
         Validator validator = validatorFactory.getValidator();
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate((Object)this);
+
+        StringBuilder errorMessageBuilder = new StringBuilder();
+
+        for (ConstraintViolation<Object> constraintViolation : constraintViolations) {
+            errorMessageBuilder.append(" - ").append(constraintViolation.getMessage()).append("\r\n");
+        }
+        validationMessage = errorMessageBuilder.toString();
+        if (validationMessage.isEmpty()) {
+            validationFailed = Boolean.FALSE;
+        } else {
+            validationFailed = Boolean.TRUE;
+        }
+    }
+
+    /**
+     * Method makes validation of specified property of bean, and if validation failed it sets validationFailed flag to false
+     * and fills validationMessage
+     */
+    public void validate(String propertyName) {
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<Object>> constraintViolations = validator.validateProperty((Object)this, propertyName);
 
         StringBuilder errorMessageBuilder = new StringBuilder();
 

@@ -80,6 +80,17 @@
         <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.ViewAllTrainsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CommonActionResolver</servlet-name>
+        <display-name>CommonActionResolver</display-name>
+        <description></description>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.CommonActionResolverServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchStationServlet</servlet-name>
+        <display-name>SearchStationServlet</display-name>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.SearchStationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdministratorServlet</servlet-name>
         <url-pattern>/administrator/</url-pattern>
@@ -119,5 +130,13 @@
     <servlet-mapping>
         <servlet-name>ViewAllTrains</servlet-name>
         <url-pattern>/administrator/train/ViewAllTrains</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CommonActionResolver</servlet-name>
+        <url-pattern>/CommonAction</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchStationServlet</servlet-name>
+        <url-pattern>/common/SearchStation</url-pattern>
     </servlet-mapping>
 </web-app>

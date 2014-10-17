@@ -12,12 +12,6 @@
 </head>
 <body>
 <h1> Oops, this page is not ready</h1>
-<a href="administratorMain.jsp">go back to administrator actions</a>
-<div id = "userPanel">
-    <div id = "userInfo">
-        <label> user name: <%=request.getSession().getAttribute("user")%></label>
-    </div>
-    <a href="<%=request.getContextPath()%>/logout">logout</a>
-</div>
+<a href="index.jsp">go back common actions</a>
 </body>
 </html>

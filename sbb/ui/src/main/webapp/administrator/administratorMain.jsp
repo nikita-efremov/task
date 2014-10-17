@@ -27,7 +27,6 @@
                         <option>Add new station</option>
                         <option>Watch all trains</option>
                         <option>Watch all stations</option>
-                        <option>Watch passengers of chosen train</option>
                     </select>
                 </TD>
             </TR>

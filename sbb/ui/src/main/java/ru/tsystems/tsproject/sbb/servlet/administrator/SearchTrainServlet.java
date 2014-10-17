@@ -72,8 +72,7 @@ public class SearchTrainServlet extends HttpServlet {
         } else {
             TrainBean trainBean = new TrainBean();
             trainBean.setNumber(request.getParameter("Train number"));
-            trainBean.setTotalSeats("1");
-            trainBean.validate();
+            trainBean.validate("number");
             if (trainBean.isValidationFailed()) {
                 request.setAttribute("searchResult", trainBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/train/searchTrain.jsp");

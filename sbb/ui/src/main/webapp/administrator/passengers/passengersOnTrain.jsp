@@ -16,7 +16,7 @@
 <a href="<%=request.getContextPath()%>/administrator/">back</a>
 <CENTER>
     <table width="150"border="1">
-        <tr>Passengers ot train number <%=bean.getNumber()%> </tr>
+        <tr>Passengers of train number <%=bean.getNumber()%> </tr>
         <tr>
             <th>Document number</th>
             <th>Full name</th>
