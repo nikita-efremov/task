@@ -45,6 +45,17 @@ public interface AdministratorService {
     public void addTrain(Train train) throws TrainAlreadyExistsException, DAOException;
 
     /**
+     * Adds new timetable with station, train and date specified in param
+     *
+     * @param timetable
+     *        Train instance with specified if, name and timetable
+     *
+     * @throws DAOException
+     *         If error occurred in JPA layer
+     */
+    public void addTimetable(Timetable timetable) throws DAOException;
+
+    /**
      * Gets collection of passengers which have tickets on train, specified in param
      *
      * @param train

@@ -1,21 +1,38 @@
-package ru.tsystems.tsproject.sbb.servlet;
+package ru.tsystems.tsproject.sbb.servlet.administrator;
 
-import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.bean.AdminLoginBean;
+import ru.tsystems.tsproject.sbb.bean.PassengerBean;
+import ru.tsystems.tsproject.sbb.bean.TrainBean;
+import ru.tsystems.tsproject.sbb.model.TrainModel;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Set;
 
+/**
+ * Servlet launches searching new train, than it analyzes result and send to view
+ * @author  Nikita Efremov
+ * @since   1.0
+ */
 
-public class AdminAuthorizationServlet extends HttpServlet {
+public class SearchTrainServlet extends HttpServlet {
 
-    private static final Logger log = Logger.getLogger(AdminAuthorizationServlet.class);
+    private TrainModel trainModel;
 
     /**
-     * Method proceeds both GET and POST requests. It analyze login and password from login page, which was inputted by user.
-     * If credentials is valid, method adds "user" attribute to HttpSession object
+     * Initialize servlet`s attribute - trainModel
+     */
+    public void init() {
+        trainModel = new TrainModel();
+    }
+
+    /**
+     * Method proceeds both GET and POST requests. It launches train creation, analyses result of creation, send result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
@@ -32,33 +49,40 @@ public class AdminAuthorizationServlet extends HttpServlet {
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("loginAction");
+        String action = request.getParameter("trainSearchAction");
         if (action == null) {
-           response.sendRedirect("/ui/adminAuthorization.jsp");
+            response.sendRedirect("/ui/administrator/train/searchTrain.jsp");
+        } else if (action.equals("back")) {
+            response.sendRedirect("/ui/administrator/administratorMain.jsp");
+        } else if (action.equals("watch passengers")) {
+            TrainBean trainBean = new TrainBean();
+            trainBean.setNumber(request.getParameter("Train number"));
+            Collection<PassengerBean> passengerBeanSet = trainModel.findTrainPassengers(trainBean);
+            request.setAttribute("trainPassengers", passengerBeanSet);
+            request.setAttribute("trainBean", trainBean);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/passengers/passengersOnTrain.jsp");
+            requestDispatcher.forward(request, response);
+        } else if (action.equals("watch timetable")) {
+            TrainBean trainBean = new TrainBean();
+            trainBean.setNumber(request.getParameter("Train number"));
+            trainBean = trainModel.findTrain(trainBean);
+            request.setAttribute("trainBean", trainBean);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/timetable/trainTimetable.jsp");
+            requestDispatcher.forward(request, response);
         } else {
-            AdminLoginBean adminLoginBean = new AdminLoginBean();
-            adminLoginBean.setLogin(request.getParameter("login"));
-            adminLoginBean.setPassword(request.getParameter("password"));
-            adminLoginBean.validate();
-            if (adminLoginBean.isValidationFailed()) {
-                request.setAttribute("loginResult", adminLoginBean);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/adminAuthorization.jsp");
+            TrainBean trainBean = new TrainBean();
+            trainBean.setNumber(request.getParameter("Train number"));
+            trainBean.setTotalSeats("1");
+            trainBean.validate();
+            if (trainBean.isValidationFailed()) {
+                request.setAttribute("searchResult", trainBean);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/train/searchTrain.jsp");
                 requestDispatcher.forward(request, response);
             } else {
-                String loginExpected = getServletConfig().getInitParameter("login");
-                String passExpected = getServletConfig().getInitParameter("password");
-                if ((loginExpected.equals(adminLoginBean.getLogin()))
-                        && (passExpected.equals(adminLoginBean.getPassword()))) {
-                    HttpSession httpSession = request.getSession();
-                    httpSession.setAttribute("user", "admin");
-                    httpSession.setMaxInactiveInterval(30*60);
-                    response.sendRedirect("/ui/administrator/administratorMain.jsp");
-                } else {
-                    adminLoginBean.setValidationMessage("Invalid credentials");
-                    request.setAttribute("loginResult", adminLoginBean);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/adminAuthorization.jsp");
-                    requestDispatcher.forward(request, response);
-                }
+                trainBean = trainModel.findTrain(trainBean);
+                request.setAttribute("searchResult", trainBean);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/train/searchTrain.jsp");
+                requestDispatcher.forward(request, response);
             }
         }
     }

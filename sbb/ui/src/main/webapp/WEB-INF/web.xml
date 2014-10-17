@@ -16,13 +16,13 @@
         <servlet-name>AdministratorServlet</servlet-name>
         <display-name>AdministratorServlet</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminRedirectServlet</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AdminRedirectServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminLogin</servlet-name>
         <display-name>AdminLogin</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminAuthorizationServlet</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AdminAuthorizationServlet</servlet-class>
         <init-param>
             <param-name>login</param-name>
             <param-value>admin</param-value>
@@ -36,25 +36,49 @@
         <servlet-name>AdminLogout</servlet-name>
         <display-name>AdminLogout</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminLogoutServlet</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AdminLogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminActionResolver</servlet-name>
         <display-name>AdminActionResolver</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.AdminActionResolverServlet</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AdminActionResolverServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateNewStation</servlet-name>
         <display-name>CreateNewStation</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.CreateNewStationServlet</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.CreateNewStationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewAllStations</servlet-name>
         <display-name>ViewAllStations</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.ViewAllStationsServlet</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.ViewAllStationsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateNewTrain</servlet-name>
+        <display-name>CreateNewTrain</display-name>
+        <description></description>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.CreateNewTrainServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchTrain</servlet-name>
+        <display-name>SearchTrain</display-name>
+        <description></description>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.SearchTrainServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddTrainStop</servlet-name>
+        <display-name>AddTrainStop</display-name>
+        <description></description>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AddNewTrainStopServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAllTrains</servlet-name>
+        <display-name>ViewAllTrains</display-name>
+        <description></description>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.ViewAllTrainsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdministratorServlet</servlet-name>
@@ -79,5 +103,21 @@
     <servlet-mapping>
         <servlet-name>ViewAllStations</servlet-name>
         <url-pattern>/administrator/station/ViewAllStations</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateNewTrain</servlet-name>
+        <url-pattern>/administrator/train/CreateNewTrain</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchTrain</servlet-name>
+        <url-pattern>/administrator/train/SearchTrain</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddTrainStop</servlet-name>
+        <url-pattern>/administrator/train/AddNewTrainStop</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAllTrains</servlet-name>
+        <url-pattern>/administrator/train/ViewAllTrains</url-pattern>
     </servlet-mapping>
 </web-app>

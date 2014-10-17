@@ -26,4 +26,17 @@ public interface CommonService {
      *         If error occurred in JPA layer
      */
     public Station findStation(Station station) throws DAOException;
+
+    /**
+     * Searches train in system with using information, specified in param
+     *
+     * @param train
+     *        Train instance with specified id or name
+     *
+     * @return train with full info
+     *
+     * @throws DAOException
+     *         If error occurred in JPA layer
+     */
+    public Train findTrain(Train train) throws DAOException;
 }

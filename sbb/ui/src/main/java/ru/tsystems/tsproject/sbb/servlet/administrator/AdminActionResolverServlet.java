@@ -1,7 +1,8 @@
-package ru.tsystems.tsproject.sbb.servlet;
+package ru.tsystems.tsproject.sbb.servlet.administrator;
 
-import ru.tsystems.tsproject.sbb.bean.StationBean;
-import ru.tsystems.tsproject.sbb.model.StationModel;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,23 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet launches creating new station, than it analyzes result and send to view
+ * Servlet redirects to appropriate administrator service page. That redirect depends on param adminAction,
+ * which user could fill on administrator default page
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class CreateNewStationServlet extends HttpServlet {
+public class AdminActionResolverServlet extends HttpServlet {
 
-    private StationModel stationModel;
-
-    /**
-     * Initialize servlet`s attribute - stationModel
-     */
-    public void init() {
-        stationModel = new StationModel();
-    }
+    private static final Logger log = Logger.getLogger(AdminActionResolverServlet.class);
 
     /**
-     * Method proceeds both GET and POST requests. It launches station creation, analyses result of creation, send result to view
+     * Method proceeds both GET and POST requests. It redirects to appropriate administrator service page
      * @param request   an {@link HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
@@ -43,30 +38,24 @@ public class CreateNewStationServlet extends HttpServlet {
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("stationCreateAction");
-        if (action == null) {
-            response.sendRedirect("/ui/administrator/station/createNewStation.jsp");
-        } else if (action.equals("back")) {
+        String chosenAction = request.getParameter("adminAction");
+        log.log(Level.DEBUG, "chosenAction=" + chosenAction);
+
+        if (chosenAction == null) {
             response.sendRedirect("/ui/administrator/administratorMain.jsp");
+        } else if (chosenAction.equals("Add new station")) {
+            response.sendRedirect("/ui/administrator/station/createNewStation.jsp");
+        } else if (chosenAction.equals("Watch all stations")) {
+            response.sendRedirect("/ui/administrator/station/ViewAllStations");
+        } else if (chosenAction.equals("Add new train")) {
+            response.sendRedirect("/ui/administrator/train/createNewTrain.jsp");
+        } else if (chosenAction.equals("Search train")) {
+            response.sendRedirect("/ui/administrator/train/searchTrain.jsp");
+        } else if (chosenAction.equals("Watch all trains")) {
+            response.sendRedirect("/ui/administrator/train/ViewAllTrains");
         } else {
-            StationBean stationBean = new StationBean();
-            stationBean.setName(request.getParameter("Station name"));
-            stationBean.validate();
-            if (stationBean.isValidationFailed()) {
-                request.setAttribute("createResult", stationBean);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/station/createNewStation.jsp");
-                requestDispatcher.forward(request, response);
-            } else {
-                stationBean = stationModel.addStation(stationBean);
-                request.setAttribute("createResult", stationBean);
-                RequestDispatcher requestDispatcher;
-                if (stationBean.isProcessingFailed()) {
-                    requestDispatcher = request.getRequestDispatcher("/administrator/station/createStationFail.jsp");
-                } else {
-                    requestDispatcher = request.getRequestDispatcher("/administrator/station/createStationSuccess.jsp");
-                }
-                requestDispatcher.forward(request, response);
-            }
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/pageIsNotReady.jsp");
+            requestDispatcher.forward(request, response);
         }
     }
 

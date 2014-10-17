@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.servlet;
+package ru.tsystems.tsproject.sbb.servlet.administrator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

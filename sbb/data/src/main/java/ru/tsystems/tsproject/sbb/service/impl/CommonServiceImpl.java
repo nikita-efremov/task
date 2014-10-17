@@ -3,6 +3,7 @@ package ru.tsystems.tsproject.sbb.service.impl;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.dao.impl.StationDAOImpl;
 import ru.tsystems.tsproject.sbb.entity.Station;
+import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
@@ -34,5 +35,15 @@ public class CommonServiceImpl extends AbstractServiceImpl implements CommonServ
             stationWithFullInfo = getStationDAO().getStationByName(station.getName());
         }
         return stationWithFullInfo;
+    }
+
+    public Train findTrain(Train train) throws DAOException {
+        Train trainWithFullInfo = null;
+        if (train.getId() > 0) {
+            trainWithFullInfo = getTrainDAO().getTrainByID(train.getId());
+        } else if (!train.getNumber().equals("")) {
+            trainWithFullInfo = getTrainDAO().getTrainByNumber(train.getNumber());
+        }
+        return trainWithFullInfo;
     }
 }

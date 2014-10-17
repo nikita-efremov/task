@@ -17,16 +17,15 @@ public class StationBean extends BaseBean {
 
     private int id;
 
-    @Column(name = "name")
     @Pattern(regexp = "[A-Za-z]+", message="Station name must contain only english letters, one or more")
     private String name;
 
-    private Set<Timetable> timetables;
+    private Set<TimetableBean> timetables;
 
     public StationBean() {
         id = 0;
         name = "";
-        timetables = new TreeSet<Timetable>();
+        timetables = new TreeSet<TimetableBean>();
     }
 
     public int getId() {
@@ -45,11 +44,11 @@ public class StationBean extends BaseBean {
         this.name = name;
     }
 
-    public Set<Timetable> getTimetables() {
+    public Set<TimetableBean> getTimetables() {
         return timetables;
     }
 
-    public void setTimetables(Set<Timetable> timetables) {
+    public void setTimetables(Set<TimetableBean> timetables) {
         this.timetables = timetables;
     }
 }

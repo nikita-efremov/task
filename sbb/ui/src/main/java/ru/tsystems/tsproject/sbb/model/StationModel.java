@@ -20,7 +20,7 @@ import java.util.Collection;
 
 /**
  *
- * Class implements model behaviour of mvc pattern
+ * Class implements model behaviour of mvc pattern of object station
  * @author  Nikita Efremov
  * @since   1.0
  */
@@ -97,7 +97,6 @@ public class StationModel extends AbstractModel {
                 StationBean stationBean = new StationBean();
                 stationBean.setId(station.getId());
                 stationBean.setName(station.getName());
-                stationBean.setTimetables(station.getTimetables());
                 stationBeans.add(stationBean);
             }
         } catch (DAOException e) {

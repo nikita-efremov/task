@@ -1,8 +1,9 @@
-package ru.tsystems.tsproject.sbb.servlet;
+package ru.tsystems.tsproject.sbb.servlet.administrator;
 
 import ru.tsystems.tsproject.sbb.bean.StationBean;
-import ru.tsystems.tsproject.sbb.entity.Station;
+import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.StationModel;
+import ru.tsystems.tsproject.sbb.model.TrainModel;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,23 +14,24 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
- * Servlet gets all stations and sens it to the view
+ * Servlet gets all trains and sends it to the view
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class ViewAllStationsServlet extends HttpServlet {
 
-    private StationModel stationModel;
+public class ViewAllTrainsServlet extends HttpServlet {
+
+    private TrainModel trainModel;
 
     /**
-     * Initialize servlet`s attribute - stationModel
+     * Initialize servlet`s attribute - trainModel
      */
     public void init() {
-        stationModel = new StationModel();
+        trainModel = new TrainModel();
     }
 
     /**
-     * Method proceeds both GET and POST requests. It gets all stations and sends it to view
+     * Method proceeds both GET and POST requests. It gets all trains and sends it to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
@@ -46,9 +48,9 @@ public class ViewAllStationsServlet extends HttpServlet {
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Collection<StationBean> stations = stationModel.getAllStations();
-        request.setAttribute("allStations", stations);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/station/viewAllStations.jsp");
+        Collection<TrainBean> trains = trainModel.getAllTrains();
+        request.setAttribute("allTrains", trains);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/train/viewAllTrains.jsp");
         requestDispatcher.forward(request, response);
     }
 

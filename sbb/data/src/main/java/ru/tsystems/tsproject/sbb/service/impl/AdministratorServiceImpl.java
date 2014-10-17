@@ -3,6 +3,7 @@ package ru.tsystems.tsproject.sbb.service.impl;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
+import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
 import ru.tsystems.tsproject.sbb.exception.TrainAlreadyExistsException;
@@ -41,6 +42,10 @@ public class AdministratorServiceImpl extends AbstractServiceImpl implements Adm
         } else {
             throw new TrainAlreadyExistsException("Train with number " + train.getNumber() + " already exists");
         }
+    }
+
+    public void addTimetable(Timetable timetable) throws DAOException {
+        getTimetableDAO().addTimetable(timetable);
     }
 
     public Collection<Passenger> getPassengersByTrain(Train train) throws DAOException {

@@ -23,6 +23,7 @@
                 <TD>
                     <select name="adminAction" size="2">
                         <option>Add new train</option>
+                        <option>Search train</option>
                         <option>Add new station</option>
                         <option>Watch all trains</option>
                         <option>Watch all stations</option>
