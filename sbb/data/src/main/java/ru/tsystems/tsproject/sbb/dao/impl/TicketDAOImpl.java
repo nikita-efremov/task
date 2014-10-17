@@ -4,8 +4,7 @@ import ru.tsystems.tsproject.sbb.dao.api.TicketDAO;
 import ru.tsystems.tsproject.sbb.entity.Ticket;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import javax.persistence.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,10 +32,41 @@ public class TicketDAOImpl extends AbstractDAOImpl implements TicketDAO {
                     entityTransaction.rollback();
                 }
             }
+        } catch (IllegalStateException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("010001");
+            throw daoException;
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (EntityExistsException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("110001");
+            throw daoException;
+        } catch (RollbackException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("120001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
         }
     }
 
@@ -44,11 +74,17 @@ public class TicketDAOImpl extends AbstractDAOImpl implements TicketDAO {
         try {
             EntityManager entityManager = getEntityManager();
             return entityManager.find(Ticket.class, ticketID);
-		} catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;        
-		}
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (Exception e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 
     public void updateTicket(Ticket ticket) throws DAOException {
@@ -64,11 +100,37 @@ public class TicketDAOImpl extends AbstractDAOImpl implements TicketDAO {
                     entityTransaction.rollback();
                 }
             }
+        } catch (IllegalStateException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("010001");
+            throw daoException;
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (RollbackException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("120001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 
     public void deleteTicket(int ticketID) throws DAOException {
@@ -85,10 +147,31 @@ public class TicketDAOImpl extends AbstractDAOImpl implements TicketDAO {
                     entityTransaction.rollback();
                 }
             }
+        } catch (IllegalStateException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("010001");
+            throw daoException;
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (RollbackException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("120001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 }

@@ -85,5 +85,6 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
         ticket.setPassenger(passenger);
         ticket.setTicketNumber(train.getId() * 1000000000 + passenger.getId());
         getTicketDAO().addTicket(ticket);
+        getTrainDAO().decreaseSeatAmount(train.getId());
     }
 }

@@ -9,7 +9,18 @@ package ru.tsystems.tsproject.sbb.exception;
  */
 public class DAOException extends Exception {
 
+    private String errorCode;
+
     public DAOException(String message) {
         super(message);
+        errorCode = "0";
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 }

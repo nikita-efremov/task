@@ -61,8 +61,8 @@ public class StationModel extends AbstractModel {
             stationBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e);
         } catch (DAOException e) {
-            stationBean.setProcessingErrorMessage("Database error occurred");
-            log.log(Level.ERROR, "Database error occurred: " + e);
+            stationBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
+            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             stationBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
@@ -101,7 +101,7 @@ public class StationModel extends AbstractModel {
                 stationBeans.add(stationBean);
             }
         } catch (DAOException e) {
-            log.log(Level.ERROR, "Database error occurred: " + e);
+            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             log.log(Level.ERROR, "Unknown error occurred: " + e);
         } finally {

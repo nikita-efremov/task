@@ -5,9 +5,7 @@ import ru.tsystems.tsproject.sbb.dao.api.TrainDAO;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -38,22 +36,59 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
                     entityTransaction.rollback();
                 }
             }
+        } catch (IllegalStateException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("010001");
+            throw daoException;
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (EntityExistsException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("110001");
+            throw daoException;
+        } catch (RollbackException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("120001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 
     public Train getTrainByID(int trainID) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
             return entityManager.find(Train.class, trainID);
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 
     public Train getTrainByNumber(String trainNumber) throws DAOException {
@@ -67,9 +102,40 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
             } else {
                 return null;
             }
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (QueryTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("150001");
+            throw daoException;
+        } catch (PessimisticLockException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("160001");
+            throw daoException;
+        } catch (LockTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("170001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
             throw daoException;
         }
     }
@@ -88,9 +154,40 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
                     .setParameter("dateStart", dateStart)
                     .setParameter("dateEnd", dateEnd);
             return query.getResultList();
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (QueryTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("150001");
+            throw daoException;
+        } catch (PessimisticLockException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("160001");
+            throw daoException;
+        } catch (LockTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("170001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
             throw daoException;
         }
     }
@@ -108,11 +205,37 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
                     entityTransaction.rollback();
                 }
             }
+        } catch (IllegalStateException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("010001");
+            throw daoException;
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (RollbackException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("120001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 
     public void deleteTrain(int trainID) throws DAOException {
@@ -129,11 +252,32 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
                     entityTransaction.rollback();
                 }
             }
+        } catch (IllegalStateException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("010001");
+            throw daoException;
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (RollbackException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("120001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 
     public void decreaseSeatAmount(int trainID) throws DAOException {
@@ -144,9 +288,35 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
             train.setSeats(train.getSeats() - 1);
             entityManager.merge(train);
             entityManager.getTransaction().commit();
+        } catch (IllegalStateException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("010001");
+            throw daoException;
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (RollbackException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("120001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
             throw daoException;
         }
     }
@@ -156,10 +326,41 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
             EntityManager entityManager = getEntityManager();
 			Query query = entityManager.createQuery("SELECT e FROM Train e");
 			return query.getResultList();
-		} catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (QueryTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("150001");
+            throw daoException;
+        } catch (PessimisticLockException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("160001");
+            throw daoException;
+        } catch (LockTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("170001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
+        } catch (Exception e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 }

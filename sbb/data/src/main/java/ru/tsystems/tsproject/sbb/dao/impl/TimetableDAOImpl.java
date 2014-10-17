@@ -4,9 +4,7 @@ import ru.tsystems.tsproject.sbb.dao.api.TimetableDAO;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -37,22 +35,59 @@ public class TimetableDAOImpl extends AbstractDAOImpl implements TimetableDAO {
                     entityTransaction.rollback();
                 }
             }
+        } catch (IllegalStateException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("010001");
+            throw daoException;
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (EntityExistsException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("110001");
+            throw daoException;
+        } catch (RollbackException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("120001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 
     public Timetable getTimetableById(int timetableID) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
             return entityManager.find(Timetable.class, timetableID);
-		} catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (Exception e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 
     public void updateTimetable(Timetable timetable) throws DAOException {
@@ -68,11 +103,37 @@ public class TimetableDAOImpl extends AbstractDAOImpl implements TimetableDAO {
                     entityTransaction.rollback();
                 }
             }
+        } catch (IllegalStateException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("010001");
+            throw daoException;
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (RollbackException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("120001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 
     public void deleteTimetable(int timetableID) throws DAOException {
@@ -89,11 +150,32 @@ public class TimetableDAOImpl extends AbstractDAOImpl implements TimetableDAO {
                     entityTransaction.rollback();
                 }
             }
+        } catch (IllegalStateException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("010001");
+            throw daoException;
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (RollbackException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("120001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 
     public Collection getTimetableByStation(int stationID) throws DAOException {
@@ -106,11 +188,42 @@ public class TimetableDAOImpl extends AbstractDAOImpl implements TimetableDAO {
             )
                     .setParameter("stationID", stationID);
             return query.getResultList();
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (QueryTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("150001");
+            throw daoException;
+        } catch (PessimisticLockException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("160001");
+            throw daoException;
+        } catch (LockTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("170001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
-			DAOException daoException = new DAOException(e.getMessage());
-			daoException.initCause(e.getCause());
-			throw daoException;
-		}
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
     }
 
     public List getTimetableByTrain(int trainID) throws DAOException {
@@ -123,9 +236,40 @@ public class TimetableDAOImpl extends AbstractDAOImpl implements TimetableDAO {
             )
                     .setParameter("trainID", trainID);
             return query.getResultList();
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (QueryTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("150001");
+            throw daoException;
+        } catch (PessimisticLockException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("160001");
+            throw daoException;
+        } catch (LockTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("170001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
         } catch (Exception e) {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
             throw daoException;
         }
     }
