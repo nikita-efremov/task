@@ -64,7 +64,7 @@ public abstract class BaseBean {
         for (ConstraintViolation<Object> constraintViolation : constraintViolations) {
             errorMessageBuilder.append(" - ").append(constraintViolation.getMessage()).append("\r\n");
         }
-        validationMessage = errorMessageBuilder.toString();
+        validationMessage += errorMessageBuilder.toString();
         if (validationMessage.isEmpty()) {
             validationFailed = Boolean.FALSE;
         } else {

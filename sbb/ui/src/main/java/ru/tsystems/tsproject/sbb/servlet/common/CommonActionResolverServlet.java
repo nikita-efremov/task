@@ -46,6 +46,8 @@ public class CommonActionResolverServlet extends HttpServlet {
             response.sendRedirect("/ui/index.jsp");
         } else if (chosenAction.equals("Watch station timetable")) {
             response.sendRedirect("/ui/common/searchStation.jsp");
+        } else if (chosenAction.equals("Search train by stations and date")) {
+            response.sendRedirect("/ui/common/searchStationDateTrain.jsp");
         } else {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/pageIsNotReady.jsp");
             requestDispatcher.forward(request, response);

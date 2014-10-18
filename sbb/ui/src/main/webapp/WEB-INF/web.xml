@@ -91,6 +91,16 @@
         <display-name>SearchStationServlet</display-name>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.SearchStationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchTrainByStationsAndDateServlet</servlet-name>
+        <display-name>SearchTrainByStationsAndDateServlet</display-name>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.SearchTrainByStationsAndDateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WatchTrainTimetableServlet</servlet-name>
+        <display-name>WatchTrainTimetableServlet</display-name>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.TrainTimetableServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdministratorServlet</servlet-name>
         <url-pattern>/administrator/</url-pattern>
@@ -138,5 +148,13 @@
     <servlet-mapping>
         <servlet-name>SearchStationServlet</servlet-name>
         <url-pattern>/common/SearchStation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchTrainByStationsAndDateServlet</servlet-name>
+        <url-pattern>/common/SearchStationDateTrain</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WatchTrainTimetableServlet</servlet-name>
+        <url-pattern>/common/TrainTimetable</url-pattern>
     </servlet-mapping>
 </web-app>

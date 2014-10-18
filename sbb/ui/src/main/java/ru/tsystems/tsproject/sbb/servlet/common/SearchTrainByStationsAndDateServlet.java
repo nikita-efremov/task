@@ -1,7 +1,7 @@
 package ru.tsystems.tsproject.sbb.servlet.common;
 
-import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
+import ru.tsystems.tsproject.sbb.bean.TimetableBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.StationModel;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
@@ -12,27 +12,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 /**
- * Servlet launches searching new station, than it analyzes result and send to view
+ * Servlet launches searching new train by specifies stations and date, than it analyzes result and send to view
  * @author  Nikita Efremov
  * @since   1.0
  */
 
-public class SearchStationServlet extends HttpServlet {
+public class SearchTrainByStationsAndDateServlet extends HttpServlet {
 
-    private StationModel stationModel;
+    private TrainModel trainModel;
 
     /**
-     * Initialize servlet`s attribute - stationModel
+     * Initialize servlet`s attribute - trainModel
      */
     public void init() {
-        stationModel = new StationModel();
+        trainModel = new TrainModel();
     }
 
     /**
-     * Method proceeds both GET and POST requests. It launches station searching, analyses result of searching, send result to view
+     * Method proceeds both GET and POST requests. It launches train searching, analyses result of searching, send result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
@@ -49,32 +52,57 @@ public class SearchStationServlet extends HttpServlet {
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("stationSearchAction");
+        String action = request.getParameter("stationDateTrainSearchAction");
         if (action == null) {
-            response.sendRedirect("/ui/common/searchStation.jsp");
+            response.sendRedirect("/ui/common/searchStationDateTrain.jsp");
         } else if (action.equals("back")) {
             response.sendRedirect("/ui/index.jsp");
-        } else if (action.equals("watch timetable")) {
-            StationBean stationBean = new StationBean();
-            stationBean.setName(request.getParameter("Station name"));
-            stationBean = stationModel.findStation(stationBean);
-            request.setAttribute("stationBean", stationBean);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/stationTimetable.jsp");
-            requestDispatcher.forward(request, response);
-
         } else {
-            StationBean stationBean = new StationBean();
-            stationBean.setName(request.getParameter("Station name"));
-            stationBean.validate();
-            if (stationBean.isValidationFailed()) {
-                request.setAttribute("searchResult", stationBean);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStation.jsp");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            String startDateString = request.getParameter("Start date");
+            String endDateString = request.getParameter("End date");
+            Date startDate;
+            Date endDate;
+            try {
+                startDate = simpleDateFormat.parse(startDateString);
+            } catch (ParseException e) {
+                startDate = null;
+            }
+            try {
+                endDate = simpleDateFormat.parse(endDateString);
+            } catch (ParseException e) {
+                endDate = null;
+            }
+
+            TimetableBean startBean = new TimetableBean();
+            startBean.setStationName(request.getParameter("Station start name"));
+            startBean.setDate(startDate);
+
+            TimetableBean endBean = new TimetableBean();
+            endBean.setStationName(request.getParameter("Station end name"));
+            endBean.setDate(endDate);
+
+            startBean.validate("stationName");
+            startBean.validate("date");
+            endBean.validate("stationName");
+            endBean.validate("date");
+            if ((startBean.isValidationFailed()) || (endBean.isValidationFailed())) {
+                request.setAttribute("startBean", startBean);
+                request.setAttribute("endBean", endBean);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStationDateTrain.jsp");
                 requestDispatcher.forward(request, response);
             } else {
-                stationBean = stationModel.findStation(stationBean);
-                request.setAttribute("searchResult", stationBean);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStation.jsp");
-                requestDispatcher.forward(request, response);
+                Collection<TrainBean> trains = trainModel.findTrainsByStationsAndDate(startBean, endBean);
+                if ((startBean.isProcessingFailed()) || (endBean.isProcessingFailed())) {
+                    request.setAttribute("startBean", startBean);
+                    request.setAttribute("endBean", endBean);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStationDateTrain.jsp");
+                    requestDispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("foundTrains", trains);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/viewFoundTrains.jsp");
+                    requestDispatcher.forward(request, response);
+                }
             }
         }
     }

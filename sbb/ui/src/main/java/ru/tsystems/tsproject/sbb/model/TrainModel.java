@@ -15,8 +15,10 @@ import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.*;
 import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
 import ru.tsystems.tsproject.sbb.service.api.CommonService;
+import ru.tsystems.tsproject.sbb.service.api.PassengerService;
 import ru.tsystems.tsproject.sbb.service.impl.AdministratorServiceImpl;
 import ru.tsystems.tsproject.sbb.service.impl.CommonServiceImpl;
+import ru.tsystems.tsproject.sbb.service.impl.PassengerServiceImpl;
 
 import javax.persistence.EntityManager;
 import java.util.*;
@@ -271,6 +273,69 @@ public class TrainModel extends AbstractModel {
             }
         }
         return timetableBean;
+    }
+
+    /**
+     * Gets collection of trains, which have stops on specified stations and specified dates
+     * If error occurs, method will add error message and error flag to output parameter
+     *
+     * @return collection of trains
+     */
+    public Collection<TrainBean> findTrainsByStationsAndDate(TimetableBean startBean, TimetableBean endBean) {
+        Collection<TrainBean> trainBeans = new ArrayList<TrainBean>();
+        EntityManager entityManager = null;
+        try {
+            entityManager = AbstractModel.getEntityManager();
+            StationDAO stationDAO = new StationDAOImpl(entityManager);
+            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
+            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
+            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
+            TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
+            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+            PassengerService passengerService = new PassengerServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+
+            Station stationStart = new Station();
+            stationStart.setName(startBean.getStationName());
+            stationStart = commonService.findStation(stationStart);
+
+            if (stationStart == null) {
+                String message = "Station with name " + startBean.getStationName() + " not exists";
+                startBean.setProcessingErrorMessage(message);
+                throw new StationNotExistsException(message);
+            }
+
+            Station stationEnd = new Station();
+            stationEnd.setName(endBean.getStationName());
+            stationEnd = commonService.findStation(stationEnd);
+
+            if (stationEnd == null) {
+                String message = "Station with name " + endBean.getStationName() + " not exists";
+                endBean.setProcessingErrorMessage(message);
+                throw new StationNotExistsException(message);
+            }
+
+            Collection<Train> trains = passengerService.findTrainsByStationsAndDate(
+                    stationStart,stationEnd, startBean.getDate(), endBean.getDate());
+            for (Train train: trains) {
+                TrainBean trainBean = new TrainBean();
+                trainBean.setId(train.getId());
+                trainBean.setNumber(train.getNumber());
+                trainBean.setSeats(String.valueOf(train.getSeats()));
+                trainBean.setTotalSeats(String.valueOf(train.getTotalSeats()));
+                trainBeans.add(trainBean);
+            }
+        } catch (StationNotExistsException e) {
+            log.log(Level.ERROR, e.getMessage() + " - " + e);
+        } catch (DAOException e) {
+            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (Exception e) {
+            log.log(Level.ERROR, "Unknown error occurred: " + e);
+        } finally {
+            if ((entityManager != null) && (entityManager.isOpen())) {
+                entityManager.close();
+            }
+        }
+        return trainBeans;
     }
 
     /**

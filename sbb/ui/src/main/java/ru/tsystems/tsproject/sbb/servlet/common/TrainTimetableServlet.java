@@ -1,9 +1,7 @@
 package ru.tsystems.tsproject.sbb.servlet.common;
 
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
-import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
-import ru.tsystems.tsproject.sbb.model.StationModel;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
 
 import javax.servlet.RequestDispatcher;
@@ -15,24 +13,24 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
- * Servlet launches searching new station, than it analyzes result and send to view
+ * Servlet launches searching train with getting its timetable, than it analyzes result and send to view
  * @author  Nikita Efremov
  * @since   1.0
  */
 
-public class SearchStationServlet extends HttpServlet {
+public class TrainTimetableServlet extends HttpServlet {
 
-    private StationModel stationModel;
+    private TrainModel trainModel;
 
     /**
-     * Initialize servlet`s attribute - stationModel
+     * Initialize servlet`s attribute - trainModel
      */
     public void init() {
-        stationModel = new StationModel();
+        trainModel = new TrainModel();
     }
 
     /**
-     * Method proceeds both GET and POST requests. It launches station searching, analyses result of searching, send result to view
+     * Method proceeds both GET and POST requests. It launches train and its time table searching, analyses result of creation, send result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
@@ -49,33 +47,18 @@ public class SearchStationServlet extends HttpServlet {
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("stationSearchAction");
+        String action = request.getParameter("trainSearchAction");
         if (action == null) {
-            response.sendRedirect("/ui/common/searchStation.jsp");
+            response.sendRedirect("/ui/index.jsp");
         } else if (action.equals("back")) {
             response.sendRedirect("/ui/index.jsp");
-        } else if (action.equals("watch timetable")) {
-            StationBean stationBean = new StationBean();
-            stationBean.setName(request.getParameter("Station name"));
-            stationBean = stationModel.findStation(stationBean);
-            request.setAttribute("stationBean", stationBean);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/stationTimetable.jsp");
-            requestDispatcher.forward(request, response);
-
         } else {
-            StationBean stationBean = new StationBean();
-            stationBean.setName(request.getParameter("Station name"));
-            stationBean.validate();
-            if (stationBean.isValidationFailed()) {
-                request.setAttribute("searchResult", stationBean);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStation.jsp");
-                requestDispatcher.forward(request, response);
-            } else {
-                stationBean = stationModel.findStation(stationBean);
-                request.setAttribute("searchResult", stationBean);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStation.jsp");
-                requestDispatcher.forward(request, response);
-            }
+            TrainBean trainBean = new TrainBean();
+            trainBean.setNumber(request.getParameter("Train number"));
+            trainBean = trainModel.findTrain(trainBean);
+            request.setAttribute("trainBean", trainBean);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/trainTimetable.jsp");
+            requestDispatcher.forward(request, response);
         }
     }
 
@@ -121,4 +104,3 @@ public class SearchStationServlet extends HttpServlet {
         processRequest(request, response);
     }
 }
-

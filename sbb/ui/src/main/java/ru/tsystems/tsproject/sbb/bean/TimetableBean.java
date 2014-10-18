@@ -23,8 +23,13 @@ public class TimetableBean extends BaseBean implements Comparable<TimetableBean>
     private String stationName;
 
     @Future(message = "Train departure date must be in future")
-    @NotNull(message = "Date format: dd-MM-yyyyTHH:mm")
+    @NotNull(message = "Date format: dd-MM-yyyy HH:mm")
     private Date date;
+
+    public TimetableBean() {
+        trainNumber = "";
+        stationName = "";
+    }
 
     public int getId() {
         return id;
