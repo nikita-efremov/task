@@ -14,9 +14,18 @@
 %>
 <html>
 <head>
-    <title>Administrator authorization page</title>
+    <title>Administrator authorization</title>
+    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css"/>
 </head>
 <body>
+<div id="mainHeader">
+    <span id = "title-pic">
+        <a href="<%=request.getContextPath()%>/"><img src="<%=request.getContextPath()%>/resources/images/logo_sbb.png" width="75" height="75" alt="Git"></a>
+    </span>
+    <span id = "title">
+        <label>SBB railways</label>
+    </span>
+</div>
 <a href="<%=request.getContextPath()%>/">back to passenger menu</a>
 <h2 align ="center"> Please, enter you credentials</h2>
 <form method="post" action="authorization">

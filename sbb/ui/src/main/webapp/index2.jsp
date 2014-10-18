@@ -1,13 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="ru.tsystems.tsproject.sbb.bean.TrainBean" %>
-<% TrainBean bean = (TrainBean)request.getAttribute("createResult");
-%>
 <html>
 <head>
-    <title>Train creating success</title>
+    <title>SBB</title>
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css"/>
 </head>
-<body>
+
+<body id="homepage">
 <div id="mainHeader">
     <span id = "title-pic">
         <a href="<%=request.getContextPath()%>/"><img src="<%=request.getContextPath()%>/resources/images/logo_sbb.png" width="75" height="75" alt="Git"></a>
@@ -41,26 +39,5 @@
     </div>
 </div>
 
-    <h1> Train has been created successfully</h1>
-    <TABLE border="0"width="600px">
-        <TR>
-            <TD width="50px">id:</TD>
-            <TD width="50px"><%=bean.getId()%></TD>
-        </TR>
-        <TR>
-            <TD width="50px">number:</TD>
-            <TD width="50px"><%=bean.getNumber()%></TD>
-        </TR>
-        <TR>
-            <TD width="50px">seats:</TD>
-            <TD width="50px"><%=bean.getSeats()%></TD>
-        </TR>
-        <TR>
-            <TD width="50px">total seats:</TD>
-            <TD width="50px"><%=bean.getTotalSeats()%></TD>
-        </TR>
-    </TABLE>
 </body>
-<a href="/ui/administrator/">return to main menu</a>
-
 </html>
