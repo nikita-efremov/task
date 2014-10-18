@@ -6,11 +6,19 @@
     <display-name>Archetype Created Web Application</display-name>
     <filter>
         <filter-name>AuthFilter</filter-name>
-        <filter-class>ru.tsystems.tsproject.sbb.filter.AuthFilter</filter-class>
+        <filter-class>ru.tsystems.tsproject.sbb.filter.AuthAdminFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>PassengerLoginFIlter</filter-name>
+        <filter-class>ru.tsystems.tsproject.sbb.filter.LoginPassengerFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/administrator/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>PassengerLoginFIlter</filter-name>
+        <url-pattern>/passenger/*</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>AdministratorServlet</servlet-name>
@@ -36,7 +44,7 @@
         <servlet-name>AdminLogout</servlet-name>
         <display-name>AdminLogout</display-name>
         <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AdminLogoutServlet</servlet-class>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminActionResolver</servlet-name>
@@ -101,6 +109,21 @@
         <display-name>WatchTrainTimetableServlet</display-name>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.TrainTimetableServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterPassenger</servlet-name>
+        <display-name>RegisterPassenger</display-name>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.passenger.RegisterPassengerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginPassengerServlet</servlet-name>
+        <display-name>LoginPassengerServlet</display-name>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.passenger.PassengerLoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PurchaseTicketServlet</servlet-name>
+        <display-name>PurchaseTicketServlet</display-name>
+        <servlet-class>ru.tsystems.tsproject.sbb.servlet.passenger.PurchaseTicketServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdministratorServlet</servlet-name>
         <url-pattern>/administrator/</url-pattern>
@@ -156,5 +179,17 @@
     <servlet-mapping>
         <servlet-name>WatchTrainTimetableServlet</servlet-name>
         <url-pattern>/common/TrainTimetable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterPassenger</servlet-name>
+        <url-pattern>/RegisterPassenger</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginPassengerServlet</servlet-name>
+        <url-pattern>/PassengerLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseTicketServlet</servlet-name>
+        <url-pattern>/passenger/TicketPurchase</url-pattern>
     </servlet-mapping>
 </web-app>

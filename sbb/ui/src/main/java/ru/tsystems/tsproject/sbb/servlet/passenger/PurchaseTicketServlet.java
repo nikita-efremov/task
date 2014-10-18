@@ -1,7 +1,10 @@
-package ru.tsystems.tsproject.sbb.servlet.administrator;
+package ru.tsystems.tsproject.sbb.servlet.passenger;
 
-import org.apache.log4j.Logger;
+import ru.tsystems.tsproject.sbb.bean.PassengerBean;
+import ru.tsystems.tsproject.sbb.bean.TicketBean;
+import ru.tsystems.tsproject.sbb.model.PassengerModel;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,18 +13,23 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 15.10.14
- * Time: 20:27
- * To change this template use File | Settings | File Templates.
+ * Servlet launches purchasing ticket process, than it analyzes result and send to view
+ * @author  Nikita Efremov
+ * @since   1.0
  */
-public class AdminLogoutServlet extends HttpServlet {
+public class PurchaseTicketServlet extends HttpServlet {
 
-    private static final Logger log = Logger.getLogger(AdminLogoutServlet.class);
+    private PassengerModel passengerModel;
 
     /**
-     * Method proceeds both GET and POST requests. It removes user attribute from current http session
+     * Initialize servlet`s attribute - passengerModel
+     */
+    public void init() {
+        passengerModel = new PassengerModel();
+    }
+
+    /**
+     * Method proceeds both GET and POST requests. It launches passenger login process, analyses result of creation, send result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
@@ -38,9 +46,32 @@ public class AdminLogoutServlet extends HttpServlet {
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession httpSession = request.getSession();
-        httpSession.removeAttribute("user");
-        response.sendRedirect("/ui/administrator/");
+        String action = request.getParameter("purchaseAction");
+        if (action == null) {
+            response.sendRedirect("/ui/passenger/purchase.jsp");
+        } else if (action.equals("Back")) {
+            response.sendRedirect("/ui/index.jsp");
+        } else {
+            TicketBean ticketBean = new TicketBean();
+            ticketBean.setTrainNumber(request.getParameter("Train number"));
+            ticketBean.setPassengerDocNumber((String)request.getSession().getAttribute("passDoc"));
+            ticketBean.validate("trainNumber");
+            if (ticketBean.isValidationFailed()) {
+                request.setAttribute("purchaseResult", ticketBean);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/passenger/purchase.jsp");
+                requestDispatcher.forward(request, response);
+            } else {
+                ticketBean = passengerModel.purchaseTicket(ticketBean);
+                request.setAttribute("purchaseResult", ticketBean);
+                RequestDispatcher requestDispatcher;
+                if (ticketBean.isProcessingFailed()) {
+                    requestDispatcher = request.getRequestDispatcher("/passenger/purchase.jsp");
+                } else {
+                    requestDispatcher = request.getRequestDispatcher("/passenger/purchaseSuccess.jsp");
+                }
+                requestDispatcher.forward(request, response);
+            }
+        }
     }
 
     /**

@@ -16,6 +16,7 @@ public interface PassengerDAO {
     public void addPassenger(Passenger passenger) throws DAOException;
     public Passenger getPassengerById(int passengerID) throws DAOException;
 	public Collection getPassengersByTrain(int trainID) throws DAOException;
+    public Collection getPassengerByDocumentNumber(String docNumber) throws DAOException;
     public void updatePassenger(Passenger passenger) throws DAOException;
     public void deletePassenger(int passengerID) throws DAOException;
 }

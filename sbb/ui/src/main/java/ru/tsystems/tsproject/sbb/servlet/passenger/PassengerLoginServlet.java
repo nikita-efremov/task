@@ -1,21 +1,37 @@
-package ru.tsystems.tsproject.sbb.servlet.administrator;
+package ru.tsystems.tsproject.sbb.servlet.passenger;
 
-import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.bean.AdminLoginBean;
+import ru.tsystems.tsproject.sbb.bean.PassengerBean;
+import ru.tsystems.tsproject.sbb.model.PassengerModel;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+/**
+ * Servlet launches passenger login process, than it analyzes result and send to view
+ * @author  Nikita Efremov
+ * @since   1.0
+ */
+public class PassengerLoginServlet extends HttpServlet {
 
-public class AdminAuthorizationServlet extends HttpServlet {
-
-    private static final Logger log = Logger.getLogger(AdminAuthorizationServlet.class);
+    private PassengerModel passengerModel;
 
     /**
-     * Method proceeds both GET and POST requests. It analyze login and password from login page, which was inputted by user.
-     * If credentials is valid, method adds "user" attribute to HttpSession object
+     * Initialize servlet`s attribute - passengerModel
+     */
+    public void init() {
+        passengerModel = new PassengerModel();
+    }
+
+    /**
+     * Method proceeds both GET and POST requests. It launches passenger login process, analyses result of creation, send result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
@@ -37,30 +53,31 @@ public class AdminAuthorizationServlet extends HttpServlet {
         httpSession.removeAttribute("passDoc");
         String action = request.getParameter("loginAction");
         if (action == null) {
-           response.sendRedirect("/ui/adminAuthorization.jsp");
+            response.sendRedirect("/ui/passengerLogin.jsp");
+        } else if (action.equals("Back")) {
+            response.sendRedirect("/ui/index.jsp");
         } else {
-            AdminLoginBean adminLoginBean = new AdminLoginBean();
-            adminLoginBean.setLogin(request.getParameter("login"));
-            adminLoginBean.setPassword(request.getParameter("password"));
-            adminLoginBean.validate();
-            if (adminLoginBean.isValidationFailed()) {
-                request.setAttribute("loginResult", adminLoginBean);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/adminAuthorization.jsp");
+            PassengerBean passengerBean = new PassengerBean();
+            passengerBean.setDocNumber(request.getParameter("Document number"));
+
+            passengerBean.validate("docNumber");
+            if (passengerBean.isValidationFailed()) {
+                request.setAttribute("loginResult", passengerBean);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/passengerLogin.jsp");
                 requestDispatcher.forward(request, response);
             } else {
-                String loginExpected = getServletConfig().getInitParameter("login");
-                String passExpected = getServletConfig().getInitParameter("password");
-                if ((loginExpected.equals(adminLoginBean.getLogin()))
-                        && (passExpected.equals(adminLoginBean.getPassword()))) {
-                    httpSession.setAttribute("user", "admin");
-                    httpSession.setMaxInactiveInterval(30*60);
-                    response.sendRedirect("/ui/administrator/administratorMain.jsp");
+                passengerBean = passengerModel.getPassenger(passengerBean);
+                request.setAttribute("createResult", passengerBean);
+                RequestDispatcher requestDispatcher;
+                if (passengerBean.isProcessingFailed()) {
+                    requestDispatcher = request.getRequestDispatcher("/passengerLogin.jsp");
                 } else {
-                    adminLoginBean.setValidationMessage("Invalid credentials");
-                    request.setAttribute("loginResult", adminLoginBean);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/adminAuthorization.jsp");
-                    requestDispatcher.forward(request, response);
+                    httpSession.setAttribute("user", passengerBean.getLastName() + " " + passengerBean.getFirstName().charAt(0) + ".");
+                    httpSession.setAttribute("passDoc", passengerBean.getDocNumber());
+                    httpSession.setMaxInactiveInterval(30*60);
+                    requestDispatcher = request.getRequestDispatcher("/index.jsp");
                 }
+                requestDispatcher.forward(request, response);
             }
         }
     }

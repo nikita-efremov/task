@@ -1,9 +1,6 @@
 package ru.tsystems.tsproject.sbb.bean;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
@@ -26,12 +23,20 @@ public class PassengerBean extends BaseBean {
     private String lastName;
 
     @Past(message = "Passenger birth date must be in the past")
+    @NotNull(message = "Date format: dd-MM-yyyy")
     private Date birthDate;
 
     @Pattern(regexp = "[A-Za-z0-9]{10}", message="Document number must contain 10 symbols: only english letters and digits")
     private String docNumber;
 
     private Set<TicketBean> tickets;
+
+    public PassengerBean() {
+        firstName = "";
+        docNumber = "";
+        lastName = "";
+    }
+
 
     public int getId() {
         return id;

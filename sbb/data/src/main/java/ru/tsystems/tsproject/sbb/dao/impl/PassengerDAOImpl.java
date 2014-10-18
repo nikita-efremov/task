@@ -181,6 +181,54 @@ public class PassengerDAOImpl extends AbstractDAOImpl implements PassengerDAO {
         }
     }
 
+    public Collection getPassengerByDocumentNumber(String docNumber) throws DAOException {
+        try {
+            EntityManager entityManager = getEntityManager();
+            Query query = entityManager.createQuery(
+                    " select p "
+                            + " from Passenger p "
+                            + " where p.docNumber = :docNumber"
+            )
+                    .setParameter("docNumber", docNumber);
+            return query.getResultList();
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("020001");
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("190001");
+            throw daoException;
+        } catch (QueryTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("150001");
+            throw daoException;
+        } catch (PessimisticLockException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("160001");
+            throw daoException;
+        } catch (LockTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("170001");
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("100001");
+            throw daoException;
+        } catch (Exception e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode("000001");
+            throw daoException;
+        }
+    }
+
     public void deletePassenger(int passengerID) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();

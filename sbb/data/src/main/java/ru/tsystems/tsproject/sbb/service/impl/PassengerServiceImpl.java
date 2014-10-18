@@ -55,7 +55,7 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
         return getTimetableDAO().getTimetableByStation(station.getId());
     }
 
-    public void purchaseTicket(Train train, Passenger passenger)
+    public Ticket purchaseTicket(Train train, Passenger passenger)
             throws TrainAlreadyFullException, PassengerAlreadyRegisteredException, TrainAlreadyDepartedException, DAOException {
         if (train.getSeats() == 0) {
             throw new TrainAlreadyFullException("Train with number " + train.getNumber() + " does not have free seats");
@@ -69,9 +69,9 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
                         + " had been already registered on train " + train.getNumber());
             }
         }
-        List<Timetable> timetables = getTimetableDAO().getTimetableByTrain(train.getId());
+        TreeSet<Timetable> timetables = new TreeSet<Timetable>(getTimetableDAO().getTimetableByTrain(train.getId()));
         if (timetables.size() > 0) {
-            Date trainStartTime = timetables.get(0).getDate();
+            Date trainStartTime = timetables.first().getDate();
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.MINUTE, 10);
             Date currentTimeWithStock = calendar.getTime();
@@ -80,11 +80,29 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
 
             }
         }
+        long ticketNumber = train.getId() * 1000000000 + passenger.getId();
         Ticket ticket = new Ticket();
         ticket.setTrain(train);
         ticket.setPassenger(passenger);
-        ticket.setTicketNumber(train.getId() * 1000000000 + passenger.getId());
-        getTicketDAO().addTicket(ticket);
+        ticket.setTicketNumber(ticketNumber);
         getTrainDAO().decreaseSeatAmount(train.getId());
+        getTicketDAO().addTicket(ticket);
+
+        List<Ticket> tickets = new LinkedList<Ticket>(getTicketDAO().getTicketByNumber(ticketNumber));
+
+        if (tickets.size() > 0) {
+            ticket = tickets.get(0);
+        }
+        return ticket;
+    }
+
+    public void addPassenger(Passenger passenger) throws PassengerAlreadyRegisteredException, DAOException {
+        Collection<Passenger> passengers = getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber());
+        if ((passengers != null) && (passengers.size() > 0)) {
+            throw new PassengerAlreadyRegisteredException("Passenger with document  number " + passenger.getDocNumber()
+                    + " already registered in system");
+        } else {
+            getPassengerDAO().addPassenger(passenger);
+        }
     }
 }

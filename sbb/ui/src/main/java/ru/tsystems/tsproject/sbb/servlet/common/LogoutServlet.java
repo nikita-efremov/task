@@ -1,21 +1,27 @@
-package ru.tsystems.tsproject.sbb.servlet.administrator;
+package ru.tsystems.tsproject.sbb.servlet.common;
 
 import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.bean.AdminLoginBean;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Created with IntelliJ IDEA.
+ * User: herr
+ * Date: 15.10.14
+ * Time: 20:27
+ * To change this template use File | Settings | File Templates.
+ */
+public class LogoutServlet extends HttpServlet {
 
-public class AdminAuthorizationServlet extends HttpServlet {
-
-    private static final Logger log = Logger.getLogger(AdminAuthorizationServlet.class);
+    private static final Logger log = Logger.getLogger(LogoutServlet.class);
 
     /**
-     * Method proceeds both GET and POST requests. It analyze login and password from login page, which was inputted by user.
-     * If credentials is valid, method adds "user" attribute to HttpSession object
+     * Method proceeds both GET and POST requests. It removes user attribute from current http session
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
@@ -35,34 +41,7 @@ public class AdminAuthorizationServlet extends HttpServlet {
         HttpSession httpSession = request.getSession();
         httpSession.removeAttribute("user");
         httpSession.removeAttribute("passDoc");
-        String action = request.getParameter("loginAction");
-        if (action == null) {
-           response.sendRedirect("/ui/adminAuthorization.jsp");
-        } else {
-            AdminLoginBean adminLoginBean = new AdminLoginBean();
-            adminLoginBean.setLogin(request.getParameter("login"));
-            adminLoginBean.setPassword(request.getParameter("password"));
-            adminLoginBean.validate();
-            if (adminLoginBean.isValidationFailed()) {
-                request.setAttribute("loginResult", adminLoginBean);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/adminAuthorization.jsp");
-                requestDispatcher.forward(request, response);
-            } else {
-                String loginExpected = getServletConfig().getInitParameter("login");
-                String passExpected = getServletConfig().getInitParameter("password");
-                if ((loginExpected.equals(adminLoginBean.getLogin()))
-                        && (passExpected.equals(adminLoginBean.getPassword()))) {
-                    httpSession.setAttribute("user", "admin");
-                    httpSession.setMaxInactiveInterval(30*60);
-                    response.sendRedirect("/ui/administrator/administratorMain.jsp");
-                } else {
-                    adminLoginBean.setValidationMessage("Invalid credentials");
-                    request.setAttribute("loginResult", adminLoginBean);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/adminAuthorization.jsp");
-                    requestDispatcher.forward(request, response);
-                }
-            }
-        }
+        response.sendRedirect("/ui/");
     }
 
     /**

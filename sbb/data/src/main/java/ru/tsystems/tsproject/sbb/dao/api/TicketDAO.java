@@ -3,6 +3,8 @@ package ru.tsystems.tsproject.sbb.dao.api;
 import ru.tsystems.tsproject.sbb.entity.Ticket;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 
+import java.util.Collection;
+
 /**
  * Created with IntelliJ IDEA.
  * User: herr
@@ -13,6 +15,7 @@ import ru.tsystems.tsproject.sbb.exception.DAOException;
 public interface TicketDAO {
     public void addTicket(Ticket ticket) throws DAOException;
     public Ticket getTicketById(int ticketID) throws DAOException;
+    public Collection getTicketByNumber(long ticketNumber) throws DAOException;
     public void updateTicket(Ticket ticket) throws DAOException;
     public void deleteTicket(int ticketID) throws DAOException;
 }

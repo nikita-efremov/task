@@ -44,9 +44,20 @@
 
 <div id = "userPanel">
     <div id = "userInfo">
-        <label> user name: <%=request.getSession().getAttribute("user")%></label>
+        <%
+            String userName = (String)request.getSession().getAttribute("user");
+            if (userName == null) {
+                userName = "unauthorized user";
+            }
+        %>
+        <label> user name: <%=userName%></label>
     </div>
+    <% if (request.getSession().getAttribute("user") != null) { %>
     <a href="<%=request.getContextPath()%>/logout">logout</a>
+    <% } else { %>
+    <a href="<%=request.getContextPath()%>/passengerLogin.jsp">login</a>
+    <% } %>
+</div>
 </div>
 </body>
 </html>

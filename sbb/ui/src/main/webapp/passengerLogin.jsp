@@ -6,37 +6,32 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="ru.tsystems.tsproject.sbb.bean.AdminLoginBean" %>
-<% AdminLoginBean bean = (AdminLoginBean)request.getAttribute("loginResult");
+<%@ page import="ru.tsystems.tsproject.sbb.bean.PassengerBean" %>
+<% PassengerBean bean = (PassengerBean)request.getAttribute("loginResult");
     if (bean == null) {
-        bean = new AdminLoginBean();
+        bean = new PassengerBean();
     }
 %>
 <html>
 <head>
-    <title>Administrator authorization page</title>
+    <title>Passenger login page</title>
 </head>
 <body>
-<a href="<%=request.getContextPath()%>/">back to passenger menu</a>
-<h2 align ="center"> Please, enter you credentials</h2>
-<form method="post" action="authorization">
+<h2 align ="center"> Please, login in system</h2>
+<a href="<%=request.getContextPath()%>/">back</a>
+<form method="post" action="PassengerLogin">
     <CENTER>
         <TABLE border="0"width="60px">
             <TR align="center">
-                <TD width="150px">Login</TD>
+                <TD width="150px">Document number:</TD>
                 <TD>
-                    <INPUT TYPE="text" NAME="login" value="">
-                </TD>
-            </TR>
-            <TR>
-                <TD width="150px">Password</TD>
-                <TD>
-                    <INPUT TYPE="password" NAME="password" value="">
+                    <INPUT TYPE="text" NAME="Document number" value="">
                 </TD>
             </TR>
             <TR>
                 <TD colspan="2" align="center">
                     <INPUT TYPE="submit" value="Login" name="loginAction">
+                    <INPUT TYPE="submit" value="Back" name="loginAction">
                 </TD>
                 <TD>
                     &nbsp;
@@ -47,6 +42,7 @@
             <TR>
                 <TD>
                     <font color="red" width="300px"><%=bean.getValidationMessage()%></font>
+                    <font color="red" width="300px"><%=bean.getProcessingErrorMessage()%></font>
                 </TD>
             </TR>
         </TABLE>

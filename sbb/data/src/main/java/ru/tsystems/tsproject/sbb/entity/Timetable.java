@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "timetable")
-public class Timetable {
+public class Timetable implements Comparable<Timetable> {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
@@ -60,5 +60,16 @@ public class Timetable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public int compareTo(Timetable other) {
+        if (this.date.after(other.date)) {
+            return 1;
+        } else if (this.date.equals(other.date)){
+            return 0;
+        } else {
+            return -1;
+        }
     }
 }

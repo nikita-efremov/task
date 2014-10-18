@@ -2,6 +2,7 @@ package ru.tsystems.tsproject.sbb.service.api;
 
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
+import ru.tsystems.tsproject.sbb.entity.Ticket;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
 import ru.tsystems.tsproject.sbb.exception.PassengerAlreadyRegisteredException;
@@ -70,6 +71,20 @@ public interface PassengerService {
      * @throws DAOException
      *         If error occurred in JPA layer
      */
-    public void purchaseTicket(Train train, Passenger passenger)
+    public Ticket purchaseTicket(Train train, Passenger passenger)
             throws TrainAlreadyFullException, PassengerAlreadyRegisteredException, TrainAlreadyDepartedException, DAOException;
+
+    /**
+     * Creates passenger, if passenger with specified document number not exists
+     *
+     * @param  passenger
+     *         Passenger in ticket
+     *
+     * @throws PassengerAlreadyRegisteredException
+     *         If current passenger had been already registered in system
+     *
+     * @throws DAOException
+     *         If error occurred in JPA layer
+     */
+    public void addPassenger(Passenger passenger) throws PassengerAlreadyRegisteredException, DAOException;
 }

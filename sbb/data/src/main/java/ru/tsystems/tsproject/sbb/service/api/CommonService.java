@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.service.api;
 
+import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.DAOException;
@@ -26,6 +27,19 @@ public interface CommonService {
      *         If error occurred in JPA layer
      */
     public Station findStation(Station station) throws DAOException;
+
+    /**
+     * Searches passenger in system with using information, specified in param
+     *
+     * @param passenger
+     *        Passenger instance with specified id or name
+     *
+     * @return train with full info
+     *
+     * @throws DAOException
+     *         If error occurred in JPA layer
+     */
+    public Passenger findPassenger(Passenger passenger) throws DAOException;
 
     /**
      * Searches train in system with using information, specified in param

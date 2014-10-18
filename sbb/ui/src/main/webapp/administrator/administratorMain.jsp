@@ -11,6 +11,7 @@
     <title>Choose administrator action:</title>
 </head>
 <body>
+<a href="<%=request.getContextPath()%>/">back to passenger menu</a>
 <form method="get" action="AdminActionResolver">
     <CENTER>
         <TABLE border="0"width="600px">

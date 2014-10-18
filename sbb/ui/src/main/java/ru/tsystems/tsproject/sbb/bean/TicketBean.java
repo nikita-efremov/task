@@ -25,6 +25,11 @@ public class TicketBean extends BaseBean {
     @Pattern(regexp = "[A-Za-z0-9]+", message = "Train number name must contain only english letters and digits, one or more")
     private String trainNumber;
 
+    public TicketBean() {
+        passengerDocNumber = "";
+        trainNumber = "";
+    }
+
     public int getId() {
         return id;
     }

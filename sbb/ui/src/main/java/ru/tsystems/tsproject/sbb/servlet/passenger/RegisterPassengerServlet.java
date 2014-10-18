@@ -1,28 +1,39 @@
-package ru.tsystems.tsproject.sbb.servlet.common;
+package ru.tsystems.tsproject.sbb.servlet.passenger;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import ru.tsystems.tsproject.sbb.bean.PassengerBean;
+import ru.tsystems.tsproject.sbb.bean.TrainBean;
+import ru.tsystems.tsproject.sbb.model.PassengerModel;
+import ru.tsystems.tsproject.sbb.model.TrainModel;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
- * Servlet redirects to appropriate common service page. That redirect depends on param commonAction,
- * which user could fill on common default page
+ * Servlet launches passenger creation process, than it analyzes result and send to view
  * @author  Nikita Efremov
  * @since   1.0
  */
+public class RegisterPassengerServlet extends HttpServlet {
 
-public class CommonActionResolverServlet extends HttpServlet {
-
-    private static final Logger log = Logger.getLogger(CommonActionResolverServlet.class);
+    private PassengerModel passengerModel;
 
     /**
-     * Method proceeds both GET and POST requests. It redirects to appropriate common service page
+     * Initialize servlet`s attribute - passengerModel
+     */
+    public void init() {
+        passengerModel = new PassengerModel();
+    }
+
+    /**
+     * Method proceeds both GET and POST requests. It launches passenger registering, analyses result of creation, send result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet
@@ -39,20 +50,47 @@ public class CommonActionResolverServlet extends HttpServlet {
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String chosenAction = request.getParameter("commonAction");
-        log.log(Level.DEBUG, "chosenAction=" + chosenAction);
-
-        if (chosenAction == null) {
+        String action = request.getParameter("passengerRegisterAction");
+        if (action == null) {
+            response.sendRedirect("/ui/register.jsp");
+        } else if (action.equals("back")) {
             response.sendRedirect("/ui/index.jsp");
-        } else if (chosenAction.equals("Watch station timetable")) {
-            response.sendRedirect("/ui/common/searchStation.jsp");
-        } else if (chosenAction.equals("Search train by stations and date")) {
-            response.sendRedirect("/ui/common/searchStationDateTrain.jsp");
-        } else if (chosenAction.equals("Purchase ticket")) {
-            response.sendRedirect("/ui/passenger/purchase.jsp");;
         } else {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/pageIsNotReady.jsp");
-            requestDispatcher.forward(request, response);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String birthDateString = request.getParameter("Birth date");
+            Date birthDate;
+            try {
+                birthDate = simpleDateFormat.parse(birthDateString);
+            } catch (ParseException e) {
+                birthDate = null;
+            }
+
+            PassengerBean passengerBean = new PassengerBean();
+            passengerBean.setLastName(request.getParameter("Last name"));
+            passengerBean.setFirstName(request.getParameter("First name"));
+            passengerBean.setDocNumber(request.getParameter("Document number"));
+            passengerBean.setBirthDate(birthDate);
+
+            passengerBean.validate();
+            if (passengerBean.isValidationFailed()) {
+                request.setAttribute("createResult", passengerBean);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/register.jsp");
+                requestDispatcher.forward(request, response);
+            } else {
+                passengerBean = passengerModel.addPassenger(passengerBean);
+                request.setAttribute("createResult", passengerBean);
+                RequestDispatcher requestDispatcher;
+                if (passengerBean.isProcessingFailed()) {
+                    requestDispatcher = request.getRequestDispatcher("/register.jsp");
+                } else {
+                    HttpSession httpSession = request.getSession();
+                    httpSession.setAttribute("user", passengerBean.getLastName() + " " + passengerBean.getFirstName().charAt(0) + ".");
+                    httpSession.setAttribute("passDoc", passengerBean.getDocNumber());
+                    httpSession.setMaxInactiveInterval(30*60);
+                    requestDispatcher = request.getRequestDispatcher("/passenger/registerSuccess.jsp");
+                }
+                requestDispatcher.forward(request, response);
+            }
         }
     }
 
