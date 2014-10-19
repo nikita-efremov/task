@@ -62,33 +62,35 @@
     </table>
 </div>
 
-<form method="post" action="CreateNewStation">
-    <CENTER>
-        <TABLE border="0"width="60px">
-            <TR align="center">
-                <TD width="150px">Name:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Station name" value="">
-                </TD>
-            </TR>
-            <TR>
-                <TD colspan="2" align="center">
+<div class = inputBlock>
+    <label>To create a new station, please fill the following fields: </label>
+    <form method="post" action="CreateNewStation">
+        <table id = "inputData">
+            <tr>
+                <td>Station name:</TD>
+                <td>
+                    <input type="text" name="Station name" value="<%=bean.getName()%>">
+                </td>
+            </tr>
+        </table>
+        <table id="inputControls">
+            <tr>
+                <td>
                     <INPUT TYPE="submit" value="create" name="stationCreateAction">
                     <INPUT TYPE="submit" value="back" name="stationCreateAction">
-                </TD>
-                <TD>
-                    &nbsp;
-                </TD>
-            </TR>
-        </TABLE>
-        <TABLE border="0"width="300px">
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getValidationMessage()%></font>
-                </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
-</form>
+                </td>
+            </tr>
+        </table>
+        <table id="validationMessages">
+            <tr>
+                <td><%=bean.getValidationMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=bean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
 </body>
 </html>

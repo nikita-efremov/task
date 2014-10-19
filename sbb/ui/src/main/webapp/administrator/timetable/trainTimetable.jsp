@@ -1,6 +1,7 @@
 <%@ page import="ru.tsystems.tsproject.sbb.bean.TrainBean" %>
 <%@ page import="ru.tsystems.tsproject.sbb.bean.TimetableBean" %>
 <%@ page import="java.util.Set" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <% TrainBean bean = (TrainBean)request.getAttribute("trainBean");
     if (bean == null) {
         bean = new TrainBean();
@@ -65,9 +66,9 @@
     </table>
 </div>
 
-<CENTER>
-    <table width="150"border="1">
-        <tr>Timetable of train number <%=bean.getNumber()%> </tr>
+<div class = inputBlock>
+    <label>Timetable of train number <%=bean.getNumber()%> </label>
+    <table id = "resultData">
         <tr>
             <th>Station name</th>
             <th>Departure date</th>
@@ -82,40 +83,30 @@
         %>
         <tr>
             <td><%=timetableBean.getStationName()%></td>
-            <td><%=timetableBean.getDate()%></td>
+            <td><%=new SimpleDateFormat("dd-MM-yyyy HH:mm").format(timetableBean.getDate())%></td>
         </tr>
         <%
                 }
             }
         %>
     </table>
-</CENTER>
+    <table id="inputControls">
+        <tr>
+            <td>
+                <input type=button onClick="location.href='<%=request.getContextPath()%>/administrator/train/AddNewTrainStop?trainTimetableAction=add new stop&Train number=<%=bean.getNumber()%>'" value='add new stop'>
+                <INPUT TYPE="button" VALUE="back" onClick="history.go(-1);">
+            </td>
+        </tr>
+    </table>
+    <table id="validationMessages">
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+</div>
 
-<form method="post" action="AddNewTrainStop">
-    <CENTER>
-        <TABLE border="0"width="60px">
-            <tr align="center">
-                <TD>
-                    <INPUT NAME="Train number" value = "<%=bean.getNumber()%>" hidden="hidden">
-                </TD>
-            </tr>
-            <TR>
-                <TD colspan="2" align="center">
-                    <INPUT TYPE="submit" value="add new stop" name="trainTimetableAction">
-                </TD>
-                <TD>
-                    &nbsp;
-                </TD>
-            </TR>
-        </TABLE>
-        <TABLE border="0"width="300px">
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getValidationMessage()%></font>
-                </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
-</form>
 </body>
 </html>

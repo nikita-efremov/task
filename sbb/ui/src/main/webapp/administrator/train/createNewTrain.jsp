@@ -62,39 +62,41 @@
     </table>
 </div>
 
-<form method="post" action="CreateNewTrain">
-    <CENTER>
-        <TABLE border="0"width="60px">
-            <TR align="center">
-                <TD width="150px">Train number:</TD>
+<div class = inputBlock>
+    <label>To create a new train, please fill the following fields: </label>
+    <form method="post" action="CreateNewTrain">
+        <table id = "inputData">
+            <TR>
+                <TD>Train number:</TD>
                 <TD>
-                    <INPUT TYPE="text" NAME="Train number" value="">
-                </TD>
-            </TR>
-            <TR align="center">
-                <TD width="150px">Total seats:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Total seats" value="">
+                    <INPUT TYPE="text" NAME="Train number" value="<%=bean.getNumber()%>">
                 </TD>
             </TR>
             <TR>
-                <TD colspan="2" align="center">
+                <TD>Total seats:</TD>
+                <TD>
+                    <INPUT TYPE="text" NAME="Total seats" value="<%=bean.getTotalSeats()%>">
+                </TD>
+            </TR>
+        </table>
+        <table id="inputControls">
+            <tr>
+                <td>
                     <INPUT TYPE="submit" value="create" name="trainCreateAction">
                     <INPUT TYPE="submit" value="back" name="trainCreateAction">
-                </TD>
-                <TD>
-                    &nbsp;
-                </TD>
-            </TR>
-        </TABLE>
-        <TABLE border="0"width="300px">
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getValidationMessage()%></font>
-                </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
-</form>
+                </td>
+            </tr>
+        </table>
+        <table id="validationMessages">
+            <tr>
+                <td><%=bean.getValidationMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=bean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
 </body>
 </html>

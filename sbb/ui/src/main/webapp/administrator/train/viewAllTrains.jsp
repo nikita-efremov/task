@@ -58,15 +58,16 @@
     </table>
 </div>
 
-<CENTER>
-    <table width="150"border="1">
+<div class = inputBlock>
+    <label>All trains</label>
+    <table id = "resultData">
         <tr>
             <th>ID</th>
             <th>Number</th>
             <th>Seats</th>
             <th>Total seats</th>
-            <th>Watch timetable</th>
-            <th>Watch passengers</th>
+            <th>Timetable</th>
+            <th>Passengers</th>
         </tr>
         <%
             List list = (List)request.getAttribute("allTrains");
@@ -93,6 +94,22 @@
             }
         %>
     </table>
-</CENTER>
+    <table id="inputControls">
+        <tr>
+            <td>
+                <INPUT TYPE="button" VALUE="back" onClick="history.go(-1);">
+            </td>
+        </tr>
+    </table>
+    <table id="validationMessages">
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+</div>
+
 </body>
 </html>

@@ -66,7 +66,7 @@ public class CreateNewTrainServlet extends HttpServlet {
                 request.setAttribute("createResult", trainBean);
                 RequestDispatcher requestDispatcher;
                 if (trainBean.isProcessingFailed()) {
-                    requestDispatcher = request.getRequestDispatcher("/administrator/train/createTrainFail.jsp");
+                    requestDispatcher = request.getRequestDispatcher("/administrator/train/createNewTrain.jsp");
                 } else {
                     requestDispatcher = request.getRequestDispatcher("/administrator/train/createTrainSuccess.jsp");
                 }

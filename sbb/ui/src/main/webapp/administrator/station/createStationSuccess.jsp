@@ -59,17 +59,34 @@
     </table>
 </div>
 
-    <h1> Station has been created successfully</h1>
-    <TABLE border="0"width="600px">
+<div class = inputBlock>
+    <label>Station has been created successfully</label>
+    <table id = "resultData">
         <TR>
-            <TD width="50px">id:</TD>
-            <TD width="50px"><%=bean.getId()%></TD>
+            <TD>id:</TD>
+            <TD><%=bean.getId()%></TD>
         </TR>
         <TR>
-            <TD width="50px">name:</TD>
-            <TD width="50px"><%=bean.getName()%></TD>
+            <TD>name:</TD>
+            <TD><%=bean.getName()%></TD>
         </TR>
-    </TABLE>
+    </table>
+    <table id="inputControls">
+        <tr>
+            <td>
+                <input type=button onClick="location.href='<%=request.getContextPath()%>/administrator/administratorMain.jsp'" value='back'>
+            </td>
+        </tr>
+    </table>
+    <table id="validationMessages">
+        <tr>
+            <td><%=bean.getValidationMessage()%></td>
+        </tr>
+        <tr>
+            <td><%=bean.getProcessingErrorMessage()%></td>
+        </tr>
+    </table>
+</div>
+
 </body>
-<a href="/ui/administrator/">return to main menu</a>
 </html>

@@ -1,6 +1,7 @@
 <%@ page import="ru.tsystems.tsproject.sbb.bean.PassengerBean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ru.tsystems.tsproject.sbb.bean.TrainBean" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <% TrainBean bean = (TrainBean)request.getAttribute("trainBean");
     if (bean == null) {
         bean = new TrainBean();
@@ -65,9 +66,9 @@
     </table>
 </div>
 
-<CENTER>
-    <table width="150"border="1">
-        <tr>Passengers of train number <%=bean.getNumber()%> </tr>
+<div class = inputBlock>
+    <label>Passengers of train number <%=bean.getNumber()%></label>
+    <table id = "resultData">
         <tr>
             <th>Document number</th>
             <th>Full name</th>
@@ -84,13 +85,29 @@
         <tr>
             <td><%=passengerBean.getDocNumber()%></td>
             <td><%=passengerBean.getLastName()%> <%=passengerBean.getFirstName()%></td>
-            <td><%=passengerBean.getBirthDate()%></td>
+            <td><%=new SimpleDateFormat("dd-MM-yyyy").format(passengerBean.getBirthDate())%></td>
         </tr>
         <%
                 }
             }
         %>
     </table>
-</CENTER>
+    <table id="inputControls">
+        <tr>
+            <td>
+                <INPUT TYPE="button" VALUE="back" onClick="history.go(-1);">
+            </td>
+        </tr>
+    </table>
+    <table id="validationMessages">
+        <tr>
+            <td><%=bean.getValidationMessage()%></td>
+        </tr>
+        <tr>
+            <td><%=bean.getProcessingErrorMessage()%></td>
+        </tr>
+    </table>
+</div>
+
 </body>
 </html>

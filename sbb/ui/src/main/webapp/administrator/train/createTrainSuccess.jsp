@@ -59,26 +59,42 @@
     </table>
 </div>
 
-    <h1> Train has been created successfully</h1>
-    <TABLE border="0"width="600px">
+<div class = inputBlock>
+    <label>Train has been created successfully</label>
+    <table id = "resultData">
         <TR>
-            <TD width="50px">id:</TD>
-            <TD width="50px"><%=bean.getId()%></TD>
+            <TD>id:</TD>
+            <TD><%=bean.getId()%></TD>
         </TR>
         <TR>
-            <TD width="50px">number:</TD>
-            <TD width="50px"><%=bean.getNumber()%></TD>
+            <TD>number:</TD>
+            <TD><%=bean.getNumber()%></TD>
         </TR>
         <TR>
-            <TD width="50px">seats:</TD>
-            <TD width="50px"><%=bean.getSeats()%></TD>
+            <TD>seats:</TD>
+            <TD><%=bean.getSeats()%></TD>
         </TR>
         <TR>
-            <TD width="50px">total seats:</TD>
-            <TD width="50px"><%=bean.getTotalSeats()%></TD>
+            <TD>total seats:</TD>
+            <TD><%=bean.getTotalSeats()%></TD>
         </TR>
-    </TABLE>
-</body>
-<a href="/ui/administrator/">return to main menu</a>
+    </table>
+    <table id="inputControls">
+        <tr>
+            <td>
+                <input type=button onClick="location.href='<%=request.getContextPath()%>/administrator/administratorMain.jsp'" value='back'>
+            </td>
+        </tr>
+    </table>
+    <table id="validationMessages">
+        <tr>
+            <td><%=bean.getValidationMessage()%></td>
+        </tr>
+        <tr>
+            <td><%=bean.getProcessingErrorMessage()%></td>
+        </tr>
+    </table>
+</div>
 
+</body>
 </html>

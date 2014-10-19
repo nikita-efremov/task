@@ -56,33 +56,8 @@
     </table>
 </div>
 
-<form method="get" action="AdminActionResolver">
-    <CENTER>
-        <TABLE border="0"width="600px">
-            <TR align = "center">
-                <TD>
-                    Select action
-                </TD>
-            </TR>
-            <TR align = "center">
-                <TD>
-                    <select name="adminAction" size="2">
-                        <option>Add new train</option>
-                        <option>Search train</option>
-                        <option>Add new station</option>
-                        <option>Watch all trains</option>
-                        <option>Watch all stations</option>
-                    </select>
-                </TD>
-            </TR>
-            <TR align = "center">
-                <TD>
-                    <INPUT TYPE="submit" value="Submit">
-                </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
-</form>
+<h2 align = "center">Welcome to SBB administrator system</h2>
+
 </body>
 </html>
 

@@ -63,48 +63,44 @@
     </table>
 </div>
 
-<form method="post" action="AddNewTrainStop">
-    <CENTER>
-        <TABLE border="0"width="60px">
-            <tr align="center">
-                <label> Add stop for train number: <%=trainNumber%> </label>
+<div class = inputBlock>
+    <label>To create a new stop for train number <%=trainNumber%>, please fill the following fields: </label>
+    <form method="post" action="AddNewTrainStop">
+        <table id = "inputData">
+            <tr>
                 <INPUT TYPE="text" NAME="Train number" value="<%=trainNumber%>" hidden="hidden">
             </tr>
-            <TR align="center">
-                <TD width="150px">Station name:</TD>
+            <TR>
+                <TD>Station name:</TD>
                 <TD>
                     <INPUT TYPE="text" NAME="Station name" value="">
                 </TD>
             </TR>
-            <TR align="center">
-                <TD width="150px">Departure date:</TD>
+            <TR>
+                <TD>Departure date:</TD>
                 <TD>
                     <INPUT TYPE="datetime-local" NAME="Departure date" value="">
                 </TD>
             </TR>
-            <TR>
-                <TD colspan="2" align="center">
+        </table>
+        <table id="inputControls">
+            <tr>
+                <td>
                     <INPUT TYPE="submit" value="add" name="stopAddAction">
                     <INPUT TYPE="submit" value="back" name="stopAddAction">
-                </TD>
-                <TD>
-                    &nbsp;
-                </TD>
-            </TR>
-        </TABLE>
-        <TABLE border="0"width="300px">
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getValidationMessage()%></font>
-                </TD>
-            </TR>
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getProcessingErrorMessage()%></font>
-                </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
-</form>
+                </td>
+            </tr>
+        </table>
+        <table id="validationMessages">
+            <tr>
+                <td><%=bean.getValidationMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=bean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
 </body>
 </html>

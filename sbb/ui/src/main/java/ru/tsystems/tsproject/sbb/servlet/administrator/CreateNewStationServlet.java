@@ -61,7 +61,7 @@ public class CreateNewStationServlet extends HttpServlet {
                 request.setAttribute("createResult", stationBean);
                 RequestDispatcher requestDispatcher;
                 if (stationBean.isProcessingFailed()) {
-                    requestDispatcher = request.getRequestDispatcher("/administrator/station/createStationFail.jsp");
+                    requestDispatcher = request.getRequestDispatcher("/administrator/station/createNewStation.jsp");
                 } else {
                     requestDispatcher = request.getRequestDispatcher("/administrator/station/createStationSuccess.jsp");
                 }

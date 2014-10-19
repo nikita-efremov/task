@@ -58,8 +58,9 @@
     </table>
 </div>
 
-<CENTER>
-    <table width="150"border="1">
+<div class = inputBlock>
+    <label>All stations</label>
+    <table id = "resultData">
         <tr>
             <th>ID</th>
             <th>Name</th>
@@ -81,6 +82,22 @@
             }
         %>
     </table>
-</CENTER>
+    <table id="inputControls">
+        <tr>
+            <td>
+                <INPUT TYPE="button" VALUE="back" onClick="history.go(-1);">
+            </td>
+        </tr>
+    </table>
+    <table id="validationMessages">
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+</div>
+
 </body>
 </html>
