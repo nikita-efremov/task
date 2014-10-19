@@ -58,8 +58,9 @@
     </table>
 </div>
 
-<h2 align = "center">SBB system</h2>
-<form method="get" action="CommonAction">
+<h2 align = "center">Welcome to SBB system</h2>
+
+<!--form method="get" action="CommonAction">
     <CENTER>
         <TABLE border="0"width="600px">
             <TR align = "center">
@@ -83,6 +84,6 @@
             </TR>
         </TABLE>
     </CENTER>
-</form>
+</form-->
 </body>
 </html>

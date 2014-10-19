@@ -34,7 +34,9 @@ public class AdminAuthorizationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("loginAction");
         if (action == null) {
-           response.sendRedirect("/ui/adminAuthorization.jsp");
+                response.sendRedirect("/ui/adminAuthorization.jsp");
+        } else if (action.equals("Back")) {
+            response.sendRedirect("/ui/index.jsp");
         } else {
             HttpSession httpSession = request.getSession();
             httpSession.removeAttribute("user");

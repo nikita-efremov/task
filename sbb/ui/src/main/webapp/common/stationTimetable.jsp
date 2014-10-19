@@ -1,6 +1,7 @@
 <%@ page import="ru.tsystems.tsproject.sbb.bean.TimetableBean" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="ru.tsystems.tsproject.sbb.bean.StationBean" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <% StationBean bean = (StationBean)request.getAttribute("stationBean");
     if (bean == null) {
         bean = new StationBean();
@@ -68,10 +69,9 @@
     </table>
 </div>
 
-<a href="<%=request.getContextPath()%>/">back</a>
-<CENTER>
-    <table width="150"border="1">
-        <tr>Timetable of station name <%=bean.getName()%> </tr>
+<div class = inputBlock>
+    <label>Timetable of station name <%=bean.getName()%>:</label>
+    <table id = "resultData">
         <tr>
             <th>Train number</th>
             <th>Departure date</th>
@@ -82,17 +82,32 @@
             {
                 for (Object o: set) {
                     TimetableBean timetableBean = (TimetableBean)o;
-
-        %>
+            %>
         <tr>
             <td><%=timetableBean.getTrainNumber()%></td>
-            <td><%=timetableBean.getDate()%></td>
+            <td><%=new SimpleDateFormat("dd-MM-yyyy HH:mm").format(timetableBean.getDate())%></td>
         </tr>
         <%
                 }
             }
         %>
     </table>
-</CENTER>
+    <table id="inputControls">
+        <tr>
+            <td>
+                <INPUT TYPE="button" VALUE="back" onClick="history.go(-1);">
+            </td>
+        </tr>
+    </table>
+    <table id="validationMessages">
+        <tr>
+            <td><%=bean.getValidationMessage()%></td>
+        </tr>
+        <tr>
+            <td><%=bean.getProcessingErrorMessage()%></td>
+        </tr>
+    </table>
+</div>
+
 </body>
 </html>

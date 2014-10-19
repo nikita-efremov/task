@@ -70,52 +70,60 @@
     </table>
 </div>
 
-<form method="post" action="SearchStationDateTrain">
-    <CENTER>
-        <TABLE border="0"width="1000px">
+<div class = inputBlock>
+    <label>To find trains by stations and dates, please fill the following fields: </label>
+    <form method="post" action="SearchStationDateTrain">
+        <table id = "inputData">
             <tr>
-                <th></th>
-                <th>Station</th>
-                <th>Date</th>
-                <th></th>
+                <td>Station start name:</TD>
+                <td>
+                    <input type="text" name="Station start name" value="<%=startBean.getStationName()%>">
+                </td>
             </tr>
-            <TR align="left">
-                <TD width="50px">Start:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Station start name" value="<%=startBean.getStationName()%>">
-                </TD>
-                <TD>
-                    <INPUT TYPE="datetime-local" NAME="Start date" value="<%=startBean.getDate()%>">
-                </TD>
-                <TD width="500px">
-                    <font color="red" width="300px"><%=startBean.getValidationMessage()%></font>
-                    <font color="red" width="300px"><%=startBean.getProcessingErrorMessage()%></font>
-                </TD>
-            </TR>
-            <TR align="left">
-                <TD width="50px">End:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Station end name" value="<%=endBean.getStationName()%>">
-                </TD>
-                <TD>
-                    <INPUT TYPE="datetime-local" NAME="End date" value="<%=endBean.getDate()%>">
-                </TD>
-                <TD width="500px">
-                    <font color="red" width="300px"><%=endBean.getValidationMessage()%></font>
-                    <font color="red" width="300px"><%=endBean.getProcessingErrorMessage()%></font>
-                </TD>
-            </TR>
-            <TR>
-                <TD colspan="2" align="center">
+            <tr>
+                <td>Start date after:</TD>
+                <td>
+                    <input type="datetime-local" name="Start date" value="<%=startBean.getDate()%>">
+                </td>
+            </tr>
+            <tr>
+                <td>Station end name:</TD>
+                <td>
+                    <input type="text" name="Station end name" value="<%=endBean.getStationName()%>">
+                </td>
+            </tr>
+            <tr>
+                <td>End date before:</TD>
+                <td>
+                    <input type="datetime-local" name="End date" value="<%=endBean.getDate()%>">
+                </td>
+            </tr>
+        </table>
+        <table id="inputControls">
+            <tr>
+                <td>
                     <INPUT TYPE="submit" value="search trains" name="stationDateTrainSearchAction">
                     <INPUT TYPE="submit" value="back" name="stationDateTrainSearchAction">
-                </TD>
-                <TD>
-                    &nbsp;
-                </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
-</form>
+                </td>
+            </tr>
+        </table>
+        <table id="validationMessages">
+            <tr>
+                <td><%=startBean.getValidationMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=endBean.getValidationMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=startBean.getProcessingErrorMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=endBean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
 </body>
 </html>

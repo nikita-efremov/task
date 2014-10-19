@@ -66,56 +66,38 @@
     </table>
 </div>
 
-<form method="post" action="SearchStation">
-    <CENTER>
-        <TABLE border="0"width="300px">
-            <TR align="left">
-                <TD width="150px">Station name:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Station name" value="<%=bean.getName()%>">
-                </TD>
-            </TR>
-            <% if (bean.getId() > 0) { %>
-            <TR align="left">
-                <TD width="150px">Seats:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Seats" value="<%=bean.getId()%>">
-                </TD>
-            </TR>
-            <% } %>
-            <TR>
-                <TD colspan="2" align="center">
-                    <INPUT TYPE="submit" value="search" name="stationSearchAction">
-                    <INPUT TYPE="submit" value="back" name="stationSearchAction">
-                </TD>
-                <TD>
-                    &nbsp;
-                </TD>
-            </TR>
-            <TR>
-                <TD colspan="2" align="center">
-                    <% if (bean.getId() > 0) { %>
-                    <INPUT TYPE="submit" value="watch timetable" name="stationSearchAction">
-                    <% } %>
-                </TD>
-                <TD>
-                    &nbsp;
-                </TD>
-            </TR>
-        </TABLE>
-        <TABLE border="0"width="300px">
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getValidationMessage()%></font>
-                </TD>
-            </TR>
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getProcessingErrorMessage()%></font>
-                </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
-</form>
+<div class = inputBlock>
+    <label>To find trains by station name, please fill the following fields: </label>
+    <form method="post" action="SearchStation">
+        <table id = "inputData">
+            <tr>
+                <td>Station name:</TD>
+                <td>
+                    <input type="text" name="Station name" value="<%=bean.getName()%>">
+                </td>
+            </tr>
+        </table>
+        <table id="inputControls">
+            <tr>
+                <td>
+                <input type="submit" value="search" name="stationSearchAction">
+                <input type="submit" value="back" name="stationSearchAction">
+                <% if (bean.getId() > 0) { %>
+                    <input type="submit" value="watch timetable" name="stationSearchAction">
+                <% } %>
+                </td>
+            </tr>
+        </table>
+        <table id="validationMessages">
+            <tr>
+                <td><%=bean.getValidationMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=bean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
 </body>
 </html>

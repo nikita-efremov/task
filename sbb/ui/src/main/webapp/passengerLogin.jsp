@@ -65,37 +65,35 @@
     </table>
 </div>
 
-<h2 align ="center"> Please, login in system</h2>
-<a href="<%=request.getContextPath()%>/">back</a>
-<form method="post" action="PassengerLogin">
-    <CENTER>
-        <TABLE border="0"width="60px">
-            <TR align="center">
-                <TD width="150px">Document number:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Document number" value="">
-                </TD>
-            </TR>
-            <TR>
-                <TD colspan="2" align="center">
+<div class = inputBlock>
+    <label>To login in system, please fill the following fields: </label>
+    <form method="post" action="PassengerLogin">
+        <table id = "inputData">
+            <tr>
+                <td>Document number:</TD>
+                <td>
+                    <input type="text" name="Document number" value="">
+                </td>
+            </tr>
+        </table>
+        <table id="inputControls">
+            <tr>
+                <td>
                     <INPUT TYPE="submit" value="Login" name="loginAction">
                     <INPUT TYPE="submit" value="Back" name="loginAction">
-                </TD>
-                <TD>
-                    &nbsp;
-                </TD>
-            </TR>
-        </TABLE>
-        <TABLE border="0"width="300px">
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getValidationMessage()%></font>
-                    <font color="red" width="300px"><%=bean.getProcessingErrorMessage()%></font>
-                </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
-</form>
+                </td>
+            </tr>
+        </table>
+        <table id="validationMessages">
+            <tr>
+                <td><%=bean.getValidationMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=bean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>

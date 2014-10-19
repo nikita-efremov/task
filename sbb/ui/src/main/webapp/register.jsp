@@ -72,52 +72,53 @@
     </table>
 </div>
 
-<a href="<%=request.getContextPath()%>/">back</a>
-<form method="post" action="RegisterPassenger">
-    <CENTER>
-        <TABLE border="0"width="60px">
-            <TR align="center">
-                <TD width="150px">First name:</TD>
+<div class = inputBlock>
+    <label>To find trains by station name, please fill the following fields: </label>
+    <form method="post" action="RegisterPassenger">
+        <table id = "inputData">
+            <TR>
+                <TD>First name:</TD>
                 <TD>
                     <INPUT TYPE="text" NAME="First name" value="<%=bean.getFirstName()%>">
                 </TD>
             </TR>
-            <TR align="center">
-                <TD width="150px">Last name:</TD>
+            <TR>
+                <TD>Last name:</TD>
                 <TD>
                     <INPUT TYPE="text" NAME="Last name" value="<%=bean.getLastName()%>">
                 </TD>
             </TR>
-            <TR align="center">
-                <TD width="150px">Birth date:</TD>
+            <TR>
+                <TD>Birth date:</TD>
                 <TD>
                     <INPUT TYPE="date" NAME="Birth date" value="<%=bean.getBirthDate()%>">
                 </TD>
             </TR>
-            <TR align="center">
-                <TD width="150px">Document number:</TD>
+            <TR>
+                <TD>Document number:</TD>
                 <TD>
                     <INPUT TYPE="text" NAME="Document number" value="<%=bean.getDocNumber()%>">
                 </TD>
             </TR>
-            <TR>
-                <TD colspan="2" align="center">
+        </table>
+        <table id="inputControls">
+            <tr>
+                <td>
                     <INPUT TYPE="submit" value="register" name="passengerRegisterAction">
                     <INPUT TYPE="submit" value="back" name="passengerRegisterAction">
-                </TD>
-                <TD>
-                    &nbsp;
-                </TD>
-            </TR>
-        </TABLE>
-        <TABLE border="0"width="300px">
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getValidationMessage()%></font>
-                </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
-</form>
+                </td>
+            </tr>
+        </table>
+        <table id="validationMessages">
+            <tr>
+                <td><%=bean.getValidationMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=bean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
 </body>
 </html>

@@ -74,29 +74,41 @@
     </table>
 </div>
 
-<h2> You have been registered successfully</h2>
-<a href="<%=request.getContextPath()%>/index.jsp">back to options page</a>
-<div id = "passengerData">
-    <CENTER>
-        <TABLE border="0"width="60px">
-            <TR align="center">
-                <TD width="150px">First name:</TD>
-                <TD> <%=bean.getFirstName()%> </TD>
-            </TR>
-            <TR align="center">
-                <TD width="150px">Last name:</TD>
-                <TD> <%=bean.getLastName()%> </TD>
-            </TR>
-            <TR align="center">
-                <TD width="150px">Document number:</TD>
-                <TD> <%=bean.getDocNumber()%> </TD>
-            </TR>
-            <TR align="center">
-                <TD width="150px">Birth date:</TD>
-                <TD> <%=new SimpleDateFormat("dd-MM-yyyy").format(bean.getBirthDate())%> </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
+<div class = inputBlock>
+    <label>You have been registered successfully</label>
+    <table id = "resultData">
+        <TR>
+            <TD>First name:</TD>
+            <TD> <%=bean.getFirstName()%> </TD>
+        </TR>
+        <TR>
+            <TD>Last name:</TD>
+            <TD> <%=bean.getLastName()%> </TD>
+        </TR>
+        <TR>
+            <TD>Document number:</TD>
+            <TD> <%=bean.getDocNumber()%> </TD>
+        </TR>
+        <TR>
+            <TD>Birth date:</TD>
+            <TD> <%=new SimpleDateFormat("dd-MM-yyyy").format(bean.getBirthDate())%> </TD>
+        </TR>
+    </table>
+    <table id="inputControls">
+        <tr>
+            <td>
+                <input type=button onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='back'>
+            </td>
+        </tr>
+    </table>
+    <table id="validationMessages">
+        <tr>
+            <td><%=bean.getValidationMessage()%></td>
+        </tr>
+        <tr>
+            <td><%=bean.getProcessingErrorMessage()%></td>
+        </tr>
+    </table>
 </div>
 
 </body>

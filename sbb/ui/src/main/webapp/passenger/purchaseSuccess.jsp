@@ -72,25 +72,37 @@
     </table>
 </div>
 
-<h2> You have been purchased ticket successfully. Ticket Data: </h2>
-<a href="<%=request.getContextPath()%>/index.jsp">back to options page</a>
-<div id = "passengerData">
-    <CENTER>
-        <TABLE border="0"width="60px">
-            <TR align="center">
-                <TD width="150px">Ticket number:</TD>
-                <TD> <%=bean.getTicketNumber()%> </TD>
-            </TR>
-            <TR align="center">
-                <TD width="150px">Train number:</TD>
-                <TD> <%=bean.getTrainNumber()%> </TD>
-            </TR>
-            <TR align="center">
-                <TD width="150px">Document number:</TD>
-                <TD> <%=bean.getPassengerDocNumber()%> </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
+<div class = inputBlock>
+    <label>You have been purchased ticket successfully. Ticket Data:</label>
+    <table id = "resultData">
+        <TR>
+            <TD>Ticket number:</TD>
+            <TD> <%=bean.getTicketNumber()%> </TD>
+        </TR>
+        <TR>
+            <TD>Train number:</TD>
+            <TD> <%=bean.getTrainNumber()%> </TD>
+        </TR>
+        <TR>
+            <TD>Document number:</TD>
+            <TD> <%=bean.getPassengerDocNumber()%> </TD>
+        </TR>
+    </table>
+    <table id="inputControls">
+        <tr>
+            <td>
+                <input type=button onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='back'>
+            </td>
+        </tr>
+    </table>
+    <table id="validationMessages">
+        <tr>
+            <td><%=bean.getValidationMessage()%></td>
+        </tr>
+        <tr>
+            <td><%=bean.getProcessingErrorMessage()%></td>
+        </tr>
+    </table>
 </div>
 
 </body>

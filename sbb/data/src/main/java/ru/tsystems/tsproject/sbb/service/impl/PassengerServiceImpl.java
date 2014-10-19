@@ -32,20 +32,24 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
                                                          Date end) throws DAOException {
         Collection<Train> directionUnImportantTrains = getTrainDAO().getTrainsByStationsAndDate(stationStart.getId(), stationEnd.getId(), start, end);
         Collection<Train> directionImportantTrains = new LinkedList<Train>();
+        Set<String> trains = new HashSet<String>();
         for (Train train: directionUnImportantTrains) {
-            Collection<Timetable> trainTimetables = getTimetableDAO().getTimetableByTrain(train.getId());
-            Date currentTrainStart = null;
-            Date currentTrainEnd = null;
-            for (Timetable timetable: trainTimetables) {
-                if (timetable.getStation().equals(stationStart)) {
-                    currentTrainStart = timetable.getDate();
+            if (!trains.contains(train.getNumber())) {
+                Collection<Timetable> trainTimetables = getTimetableDAO().getTimetableByTrain(train.getId());
+                Date currentTrainStart = null;
+                Date currentTrainEnd = null;
+                for (Timetable timetable: trainTimetables) {
+                    if (timetable.getStation().equals(stationStart)) {
+                        currentTrainStart = timetable.getDate();
+                    }
+                    if (timetable.getStation().equals(stationEnd)) {
+                        currentTrainEnd = timetable.getDate();
+                    }
                 }
-                if (timetable.getStation().equals(stationEnd)) {
-                    currentTrainEnd = timetable.getDate();
+                if ((currentTrainStart != null) && (currentTrainEnd != null) && (currentTrainStart.before(currentTrainEnd))) {
+                    directionImportantTrains.add(train);
                 }
-            }
-            if ((currentTrainStart != null) && (currentTrainEnd != null) && (currentTrainStart.before(currentTrainEnd))) {
-                directionImportantTrains.add(train);
+                trains.add(train.getNumber());
             }
         }
         return directionImportantTrains;
@@ -80,7 +84,7 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
 
             }
         }
-        long ticketNumber = train.getId() * 1000000000 + passenger.getId();
+        long ticketNumber = train.getId() * 1000000 + passenger.getId();
         Ticket ticket = new Ticket();
         ticket.setTrain(train);
         ticket.setPassenger(passenger);

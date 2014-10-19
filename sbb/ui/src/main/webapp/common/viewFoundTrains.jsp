@@ -61,9 +61,9 @@
     </table>
 </div>
 
-<a href="<%=request.getContextPath()%>/">back</a>
-<CENTER>
-    <table width="150"border="1">
+<div class = inputBlock>
+    <label>Found trains</label>
+    <table id = "resultData">
         <tr>
             <th>Number</th>
             <th>Seats</th>
@@ -91,7 +91,16 @@
             }
         %>
     </table>
-</CENTER>
+    <table id="inputControls">
+        <tr>
+            <td>
+                <INPUT TYPE="button" VALUE="back" onClick="history.go(-1);">
+            </td>
+        </tr>
+    </table>
+    <table id="validationMessages">
+    </table>
+</div>
 
 </body>
 </html>

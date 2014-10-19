@@ -68,10 +68,9 @@
     </table>
 </div>
 
-<a href="<%=request.getContextPath()%>/">back</a>
-<CENTER>
-    <table width="150"border="1">
-        <tr>Timetable of train number <%=bean.getNumber()%> </tr>
+<div class = inputBlock>
+    <label>Timetable of train number <%=bean.getNumber()%></label>
+    <table id = "resultData">
         <tr>
             <th>Station name</th>
             <th>Departure date</th>
@@ -93,7 +92,22 @@
             }
         %>
     </table>
-</CENTER>
+    <table id="inputControls">
+        <tr>
+            <td>
+                <INPUT TYPE="button" VALUE="back" onClick="history.go(-1);">
+            </td>
+        </tr>
+    </table>
+    <table id="validationMessages">
+        <tr>
+            <td><%=bean.getValidationMessage()%></td>
+        </tr>
+        <tr>
+            <td><%=bean.getProcessingErrorMessage()%></td>
+        </tr>
+    </table>
+</div>
 
 </body>
 </html>

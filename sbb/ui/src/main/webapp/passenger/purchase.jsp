@@ -65,39 +65,35 @@
     </table>
 </div>
 
-<form method="post" action="TicketPurchase">
-    <CENTER>
-        <TABLE border="0"width="300px">
-            <TR align="left">
-                <TD width="150px">Train number:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Train number" value="<%=bean.getTrainNumber()%>">
-                </TD>
-            </TR>
-            <TR>
-                <TD colspan="2" align="center">
+<div class = inputBlock>
+    <label>To purchase ticket, please fill the following fields: </label>
+    <form method="post" action="TicketPurchase">
+        <table id = "inputData">
+            <tr>
+                <td>Train number:</TD>
+                <td>
+                    <input type="text" name="Train number" value="<%=bean.getTrainNumber()%>">
+                </td>
+            </tr>
+        </table>
+        <table id="inputControls">
+            <tr>
+                <td>
                     <INPUT TYPE="submit" value="Purchase" name="purchaseAction">
                     <INPUT TYPE="submit" value="Back" name="purchaseAction">
-                </TD>
-                <TD>
-                    &nbsp;
-                </TD>
-            </TR>
-        </TABLE>
-        <TABLE border="0"width="300px">
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getValidationMessage()%></font>
-                </TD>
-            </TR>
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getProcessingErrorMessage()%></font>
-                </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
-</form>
+                </td>
+            </tr>
+        </table>
+        <table id="validationMessages">
+            <tr>
+                <td><%=bean.getValidationMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=bean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>

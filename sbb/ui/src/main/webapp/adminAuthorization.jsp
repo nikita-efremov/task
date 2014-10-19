@@ -48,40 +48,41 @@
     </table>
 </div>
 
-<h2 align ="center"> Please, enter you credentials</h2>
-<form method="post" action="authorization">
-    <CENTER>
-        <TABLE border="0"width="60px">
-            <TR align="center">
-                <TD width="150px">Login</TD>
+<div class = inputBlock>
+    <label>To continue work as administrator, please fill the following fields:  </label>
+    <form method="post" action="authorization">
+        <table id = "inputData">
+            <TR>
+                <TD>Login</TD>
                 <TD>
                     <INPUT TYPE="text" NAME="login" value="">
                 </TD>
             </TR>
             <TR>
-                <TD width="150px">Password</TD>
+                <TD>Password</TD>
                 <TD>
                     <INPUT TYPE="password" NAME="password" value="">
                 </TD>
             </TR>
-            <TR>
-                <TD colspan="2" align="center">
+        </table>
+        <table id="inputControls">
+            <tr>
+                <td>
                     <INPUT TYPE="submit" value="Login" name="loginAction">
-                </TD>
-                <TD>
-                    &nbsp;
-                </TD>
-            </TR>
-        </TABLE>
-        <TABLE border="0"width="300px">
-            <TR>
-                <TD>
-                    <font color="red" width="300px"><%=bean.getValidationMessage()%></font>
-                </TD>
-            </TR>
-        </TABLE>
-    </CENTER>
-</form>
+                    <INPUT TYPE="submit" value="Back" name="loginAction">
+                </td>
+            </tr>
+        </table>
+        <table id="validationMessages">
+            <tr>
+                <td><%=bean.getValidationMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=bean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>
