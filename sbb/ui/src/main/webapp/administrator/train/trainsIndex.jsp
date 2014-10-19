@@ -1,10 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="ru.tsystems.tsproject.sbb.bean.StationBean" %>
-<% StationBean bean = (StationBean)request.getAttribute("createResult");
-%>
 <html>
 <head>
-    <title>Station create success</title>
+    <title>Choose administrator action</title>
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css"/>
 </head>
 <body>
@@ -59,17 +56,20 @@
     </table>
 </div>
 
-    <h1> Station has been created successfully</h1>
-    <TABLE border="0"width="600px">
-        <TR>
-            <TD width="50px">id:</TD>
-            <TD width="50px"><%=bean.getId()%></TD>
-        </TR>
-        <TR>
-            <TD width="50px">name:</TD>
-            <TD width="50px"><%=bean.getName()%></TD>
-        </TR>
-    </TABLE>
+<div class = "additionalOptionsList">
+    <label>Train options:</label>
+    <ul>
+        <li>
+            <a href="<%=request.getContextPath()%>/administrator/train/createNewTrain.jsp"> Add new train</a>
+        </li>
+        <li>
+            <a href="<%=request.getContextPath()%>/administrator/train/searchTrain.jsp">Search train</a>
+        </li>
+        <li>
+            <a href="<%=request.getContextPath()%>/administrator/train/ViewAllTrains">Watch all trains</a>
+        </li>
+    </ul>
+</div>
+
 </body>
-<a href="/ui/administrator/">return to main menu</a>
 </html>

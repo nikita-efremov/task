@@ -39,5 +39,26 @@
     </div>
 </div>
 
+<div id="commonOptions">
+    <table id="commonOptionsTable">
+        <tbody>
+        <tr class="optionButtonsTR">
+            <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/common/searchStation.jsp">Trains by station</a>
+            </td>
+            <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/common/searchStationDateTrain.jsp">Trains by stations and date</a>
+            </td>
+            <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/passenger/purchase.jsp">Purchase ticket</a>
+            </td>
+            <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/administrator/">I am admin</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>

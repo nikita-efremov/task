@@ -32,13 +32,13 @@ public class AdminAuthorizationServlet extends HttpServlet {
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession httpSession = request.getSession();
-        httpSession.removeAttribute("user");
-        httpSession.removeAttribute("passDoc");
         String action = request.getParameter("loginAction");
         if (action == null) {
            response.sendRedirect("/ui/adminAuthorization.jsp");
         } else {
+            HttpSession httpSession = request.getSession();
+            httpSession.removeAttribute("user");
+            httpSession.removeAttribute("passDoc");
             AdminLoginBean adminLoginBean = new AdminLoginBean();
             adminLoginBean.setLogin(request.getParameter("login"));
             adminLoginBean.setPassword(request.getParameter("password"));

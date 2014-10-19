@@ -40,7 +40,24 @@
     </div>
 </div>
 
-<a href="<%=request.getContextPath()%>/administrator/">back</a>
+<div id="adminOptions">
+    <table id="adminOptionsTable">
+        <tbody>
+        <tr class="optionButtonsTR">
+            <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/administrator/train/trainsIndex.jsp">Trains</a>
+            </td>
+            <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/administrator/station/stationsIndex.jsp">Stations</a>
+            </td>
+            <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/index.jsp">Back to passenger options</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 <CENTER>
     <table width="150"border="1">
         <tr>

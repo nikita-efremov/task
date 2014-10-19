@@ -26,7 +26,28 @@
         <label>SBB railways</label>
     </span>
 </div>
-<a href="<%=request.getContextPath()%>/">back to passenger menu</a>
+
+<div id="commonOptions">
+    <table id="commonOptionsTable">
+        <tbody>
+        <tr class="optionButtonsTR">
+            <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/common/searchStation.jsp">Trains by station</a>
+            </td>
+            <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/common/searchStationDateTrain.jsp">Trains by stations and date</a>
+            </td>
+            <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/passenger/purchase.jsp">Purchase ticket</a>
+            </td>
+            <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/administrator/">I am admin</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 <h2 align ="center"> Please, enter you credentials</h2>
 <form method="post" action="authorization">
     <CENTER>
