@@ -34,7 +34,7 @@ public class CommonServiceImpl extends AbstractServiceImpl implements CommonServ
     public Station findStation(Station station) throws DAOException {
         Station stationWithFullInfo = null;
         if (station.getId() > 0) {
-           stationWithFullInfo = getStationDAO().getStationById(station.getId());
+           stationWithFullInfo = getStationDAO().get(station.getId());
         } else if (!station.getName().equals("")) {
             stationWithFullInfo = getStationDAO().getStationByName(station.getName());
         }
@@ -44,7 +44,7 @@ public class CommonServiceImpl extends AbstractServiceImpl implements CommonServ
     public Train findTrain(Train train) throws DAOException {
         Train trainWithFullInfo = null;
         if (train.getId() > 0) {
-            trainWithFullInfo = getTrainDAO().getTrainByID(train.getId());
+            trainWithFullInfo = getTrainDAO().get(train.getId());
         } else if (!train.getNumber().equals("")) {
             trainWithFullInfo = getTrainDAO().getTrainByNumber(train.getNumber());
         }
@@ -54,7 +54,7 @@ public class CommonServiceImpl extends AbstractServiceImpl implements CommonServ
     public Passenger findPassenger(Passenger passenger) throws DAOException {
         Passenger passengerWithFullInfo = null;
         if (passenger.getId() > 0) {
-            passengerWithFullInfo = getPassengerDAO().getPassengerById(passenger.getId());
+            passengerWithFullInfo = getPassengerDAO().get(passenger.getId());
         } else {
             List<Passenger> passengers = new LinkedList<Passenger>(
                     getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber()));

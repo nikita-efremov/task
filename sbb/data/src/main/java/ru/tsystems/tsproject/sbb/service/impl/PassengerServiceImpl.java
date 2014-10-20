@@ -90,7 +90,7 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
         ticket.setPassenger(passenger);
         ticket.setTicketNumber(ticketNumber);
         getTrainDAO().decreaseSeatAmount(train.getId());
-        getTicketDAO().addTicket(ticket);
+        getTicketDAO().create(ticket);
 
         List<Ticket> tickets = new LinkedList<Ticket>(getTicketDAO().getTicketByNumber(ticketNumber));
 
@@ -106,7 +106,7 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
             throw new PassengerAlreadyRegisteredException("Passenger with document  number " + passenger.getDocNumber()
                     + " already registered in system");
         } else {
-            getPassengerDAO().addPassenger(passenger);
+            getPassengerDAO().create(passenger);
         }
     }
 }

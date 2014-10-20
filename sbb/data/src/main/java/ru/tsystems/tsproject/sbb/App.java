@@ -42,9 +42,9 @@ public class App {
 
     public static void passengerFetch() {
 		try {
-			PassengerDAOImpl passengerDAOImpl = new PassengerDAOImpl(getEntityManger());
+			PassengerDAO passengerDAO = new PassengerDAOImpl(getEntityManger());
 
-			Passenger passenger = passengerDAOImpl.getPassengerById(2);
+			Passenger passenger = passengerDAO.get(2);
 			log.log(Level.INFO, passenger.getLastName());
 			log.log(Level.INFO, passenger.getFirstName());
 			log.log(Level.INFO, passenger.getTickets().size());
@@ -61,7 +61,7 @@ public class App {
 			Train train = new Train();
 			train.setSeats(344);
 			train.setNumber("230z");
-			trainDAO.addTrain(train);
+			trainDAO.create(train);
 		} catch (Exception e) {
 			log.log(Level.ERROR, e);		
 		}
@@ -77,10 +77,10 @@ public class App {
 			calendar.set(2014, Calendar.OCTOBER, 13, 6, 55);
 
 			Timetable timetable = new Timetable();
-			timetable.setStation(stationDAO.getStationById(1));
-			timetable.setTrain(trainDAO.getTrainByID(3));
+			timetable.setStation(stationDAO.<Station>get(1));
+			timetable.setTrain(trainDAO.<Train>get(3));
 			timetable.setDate(calendar.getTime());
-			timetableDAO.addTimetable(timetable);
+			timetableDAO.create(timetable);
 		} catch (Exception e) {
 			log.log(Level.ERROR, e);		
 		}

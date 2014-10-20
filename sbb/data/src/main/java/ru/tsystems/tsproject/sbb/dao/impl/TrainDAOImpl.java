@@ -17,79 +17,11 @@ import java.util.List;
  * Time: 11:35
  * To change this template use File | Settings | File Templates.
  */
-public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
+public class TrainDAOImpl extends AbstractDAOImpl<Train> implements TrainDAO {
 	
 	public TrainDAOImpl(EntityManager em) {
 		super(em);
 	}
-
-    public void addTrain(Train train) throws DAOException {
-        try {
-            EntityManager entityManager = getEntityManager();
-            EntityTransaction entityTransaction = entityManager.getTransaction();
-            try {
-                entityTransaction.begin();
-                entityManager.persist(train);
-                entityTransaction.commit();
-            } finally {
-                if (entityTransaction.isActive()) {
-                    entityTransaction.rollback();
-                }
-            }
-        } catch (IllegalStateException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("010001");
-            throw daoException;
-        } catch (IllegalArgumentException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("020001");
-            throw daoException;
-        } catch (TransactionRequiredException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("190001");
-            throw daoException;
-        } catch (EntityExistsException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("110001");
-            throw daoException;
-        } catch (RollbackException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("120001");
-            throw daoException;
-        } catch (PersistenceException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("100001");
-            throw daoException;
-        } catch (Exception e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("000001");
-            throw daoException;
-        }
-    }
-
-    public Train getTrainByID(int trainID) throws DAOException {
-        try {
-            EntityManager entityManager = getEntityManager();
-            return entityManager.find(Train.class, trainID);
-        } catch (IllegalArgumentException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("020001");
-            throw daoException;
-        } catch (Exception e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("000001");
-            throw daoException;
-        }
-    }
 
     public Train getTrainByNumber(String trainNumber) throws DAOException {
         try {
@@ -192,97 +124,9 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
         }
     }
 
-    public void updateTrain(Train train) throws DAOException {
-        try {
-            EntityManager entityManager = getEntityManager();
-            EntityTransaction entityTransaction = entityManager.getTransaction();
-            try {
-                entityTransaction.begin();
-                entityManager.merge(train);
-                entityTransaction.commit();
-            } finally {
-                if (entityTransaction.isActive()) {
-                    entityTransaction.rollback();
-                }
-            }
-        } catch (IllegalStateException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("010001");
-            throw daoException;
-        } catch (IllegalArgumentException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("020001");
-            throw daoException;
-        } catch (TransactionRequiredException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("190001");
-            throw daoException;
-        } catch (RollbackException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("120001");
-            throw daoException;
-        } catch (PersistenceException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("100001");
-            throw daoException;
-        } catch (Exception e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("000001");
-            throw daoException;
-        }
-    }
-
-    public void deleteTrain(int trainID) throws DAOException {
-        try {
-            EntityManager entityManager = getEntityManager();
-            EntityTransaction entityTransaction = entityManager.getTransaction();
-            try {
-                entityTransaction.begin();
-                Train train = getTrainByID(trainID);
-                entityManager.remove(entityManager.contains(train) ? train : entityManager.merge(train));
-                entityTransaction.commit();
-            } finally {
-                if (entityTransaction.isActive()) {
-                    entityTransaction.rollback();
-                }
-            }
-        } catch (IllegalStateException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("010001");
-            throw daoException;
-        } catch (IllegalArgumentException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("020001");
-            throw daoException;
-        } catch (RollbackException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("120001");
-            throw daoException;
-        } catch (PersistenceException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("100001");
-            throw daoException;
-        } catch (Exception e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("000001");
-            throw daoException;
-        }
-    }
-
     public void decreaseSeatAmount(int trainID) throws DAOException {
         try {
-            Train train = getTrainByID(trainID);
+            Train train = get(trainID);
             EntityManager entityManager = getEntityManager();
             entityManager.getTransaction().begin();
             train.setSeats(train.getSeats() - 1);
@@ -307,49 +151,6 @@ public class TrainDAOImpl extends AbstractDAOImpl implements TrainDAO {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
             daoException.setErrorCode("120001");
-            throw daoException;
-        } catch (PersistenceException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("100001");
-            throw daoException;
-        } catch (Exception e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("000001");
-            throw daoException;
-        }
-    }
-
-    public Collection getAllTrains() throws DAOException {
-        try {
-            EntityManager entityManager = getEntityManager();
-			Query query = entityManager.createQuery("SELECT e FROM Train e");
-			return query.getResultList();
-        } catch (IllegalArgumentException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("020001");
-            throw daoException;
-        } catch (TransactionRequiredException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("190001");
-            throw daoException;
-        } catch (QueryTimeoutException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("150001");
-            throw daoException;
-        } catch (PessimisticLockException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("160001");
-            throw daoException;
-        } catch (LockTimeoutException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode("170001");
             throw daoException;
         } catch (PersistenceException e) {
             DAOException daoException = new DAOException(e.getMessage());

@@ -12,12 +12,7 @@ import java.util.Collection;
  * Time: 22:18
  * To change this template use File | Settings | File Templates.
  */
-public interface StationDAO {
+public interface StationDAO extends CommonDAO <Station> {
 
-    public void addStation(Station station) throws DAOException;
-    public Station getStationById(int stationID) throws DAOException;
     public Station getStationByName(String name) throws DAOException;
-    public Collection getAllStations() throws DAOException;
-    public void updateStation(Station station) throws DAOException;
-    public void deleteStation(int stationID) throws DAOException;
 }

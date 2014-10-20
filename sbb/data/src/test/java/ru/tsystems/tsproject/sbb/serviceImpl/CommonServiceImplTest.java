@@ -55,7 +55,7 @@ public class CommonServiceImplTest {
         stationOutput.setId(stationID);
         stationOutput.setName(stationName);
 
-        when(stationDAO.getStationById(stationID)).thenReturn(stationOutput);
+        when(stationDAO.get(stationID)).thenReturn(stationOutput);
 
         Station stationFromMethod = commonServiceImpl.findStation(stationSource);
         Assert.assertEquals(stationOutput, stationFromMethod);

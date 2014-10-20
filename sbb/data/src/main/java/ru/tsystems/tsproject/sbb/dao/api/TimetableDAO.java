@@ -16,12 +16,8 @@ import java.util.List;
  * Time: 11:07
  * To change this template use File | Settings | File Templates.
  */
-public interface TimetableDAO {
+public interface TimetableDAO extends CommonDAO <Timetable> {
 
-    public void addTimetable(Timetable Timetable) throws DAOException;
-    public Timetable getTimetableById(int timetableID) throws DAOException;
-    public void updateTimetable(Timetable timetable) throws DAOException;
-    public void deleteTimetable(int timetableID) throws DAOException;
     public Collection getTimetableByStation(int stationID) throws DAOException;
     public List getTimetableByTrain(int trainID) throws DAOException;
 }
