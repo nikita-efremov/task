@@ -47,8 +47,8 @@ public class PassengerModel extends AbstractModel {
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
             TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
             TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
-            PassengerService passengerService = new PassengerServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
+            PassengerService passengerService = new PassengerServiceImpl(trainDAO, passengerDAO, timetableDAO, ticketDAO);
 
             Passenger passenger = new Passenger();
             passenger.setLastName(passengerBean.getLastName());
@@ -100,8 +100,7 @@ public class PassengerModel extends AbstractModel {
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
             TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
             TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
-            PassengerService passengerService = new PassengerServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
 
             Passenger passenger = new Passenger();
             passenger.setDocNumber(passengerBean.getDocNumber());
@@ -156,8 +155,8 @@ public class PassengerModel extends AbstractModel {
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
             TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
             TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
-            PassengerService passengerService = new PassengerServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
+            PassengerService passengerService = new PassengerServiceImpl(trainDAO, passengerDAO, timetableDAO, ticketDAO);
 
             Passenger passenger = new Passenger();
             passenger.setDocNumber(ticketBean.getPassengerDocNumber());

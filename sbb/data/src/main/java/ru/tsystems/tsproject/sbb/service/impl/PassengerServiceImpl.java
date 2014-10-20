@@ -16,26 +16,33 @@ import java.util.*;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class PassengerServiceImpl extends AbstractServiceImpl implements PassengerService {
+public class PassengerServiceImpl implements PassengerService {
 
-    public PassengerServiceImpl(StationDAO stationDAO,
-                                TrainDAO trainDAO,
+    private TrainDAO trainDAO;
+    private PassengerDAO passengerDAO;
+    private TimetableDAO timetableDAO;
+    private TicketDAO ticketDAO;
+
+    public PassengerServiceImpl(TrainDAO trainDAO,
                                 PassengerDAO passengerDAO,
                                 TimetableDAO timetableDAO,
                                 TicketDAO ticketDAO) {
-        super(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+        this.trainDAO = trainDAO;
+        this.passengerDAO = passengerDAO;
+        this.timetableDAO = timetableDAO;
+        this.ticketDAO = ticketDAO;
     }
 
     public Collection<Train> findTrainsByStationsAndDate(int stationStartID,
                                                          int stationEndID,
                                                          Date start,
                                                          Date end) throws DAOException {
-        Collection<Train> directionUnImportantTrains = getTrainDAO().getTrainsByStationsAndDate(stationStartID, stationEndID, start, end);
+        Collection<Train> directionUnImportantTrains = trainDAO.getTrainsByStationsAndDate(stationStartID, stationEndID, start, end);
         Collection<Train> directionImportantTrains = new LinkedList<Train>();
         Set<String> trains = new HashSet<String>();
         for (Train train: directionUnImportantTrains) {
             if (!trains.contains(train.getNumber())) {
-                Collection<Timetable> trainTimetables = getTimetableDAO().getTimetableByTrain(train.getId());
+                Collection<Timetable> trainTimetables = timetableDAO.getTimetableByTrain(train.getId());
                 Date currentTrainStart = null;
                 Date currentTrainEnd = null;
                 for (Timetable timetable: trainTimetables) {
@@ -56,7 +63,7 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
     }
 
     public Collection<Train> getTrainsByStation(int stationID) throws DAOException {
-        return getTimetableDAO().getTimetableByStation(stationID);
+        return timetableDAO.getTimetableByStation(stationID);
     }
 
     public Ticket purchaseTicket(Train train, Passenger passenger)
@@ -64,7 +71,7 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
         if (train.getSeats() == 0) {
             throw new TrainAlreadyFullException("Train with number " + train.getNumber() + " does not have free seats");
         }
-        Collection<Passenger> trainPassengers = getPassengerDAO().getPassengersByTrain(train.getId());
+        Collection<Passenger> trainPassengers = passengerDAO.getPassengersByTrain(train.getId());
         for (Passenger trainPassenger: trainPassengers) {
             if ((trainPassenger.getFirstName().equals(passenger.getFirstName()))
                     && (trainPassenger.getLastName().equals(passenger.getLastName()))
@@ -73,7 +80,7 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
                         + " had been already registered on train " + train.getNumber());
             }
         }
-        TreeSet<Timetable> timetables = new TreeSet<Timetable>(getTimetableDAO().getTimetableByTrain(train.getId()));
+        TreeSet<Timetable> timetables = new TreeSet<Timetable>(timetableDAO.getTimetableByTrain(train.getId()));
         if (timetables.size() > 0) {
             Date trainStartTime = timetables.first().getDate();
             Calendar calendar = Calendar.getInstance();
@@ -89,10 +96,10 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
         ticket.setTrain(train);
         ticket.setPassenger(passenger);
         ticket.setTicketNumber(ticketNumber);
-        getTrainDAO().decreaseSeatAmount(train.getId());
-        getTicketDAO().create(ticket);
+        trainDAO.decreaseSeatAmount(train.getId());
+        ticketDAO.create(ticket);
 
-        List<Ticket> tickets = new LinkedList<Ticket>(getTicketDAO().getTicketByNumber(ticketNumber));
+        List<Ticket> tickets = new LinkedList<Ticket>(ticketDAO.getTicketByNumber(ticketNumber));
 
         if (tickets.size() > 0) {
             ticket = tickets.get(0);
@@ -101,12 +108,12 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
     }
 
     public void addPassenger(Passenger passenger) throws PassengerAlreadyRegisteredException, DAOException {
-        Passenger foundPassenger = getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber());
+        Passenger foundPassenger = passengerDAO.getPassengerByDocumentNumber(passenger.getDocNumber());
         if (foundPassenger != null) {
             throw new PassengerAlreadyRegisteredException("Passenger with document  number " + passenger.getDocNumber()
                     + " already registered in system");
         } else {
-            getPassengerDAO().create(passenger);
+            passengerDAO.create(passenger);
         }
     }
 }

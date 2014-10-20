@@ -32,14 +32,8 @@ public class CommonServiceImplTest {
     @Mock
     private PassengerDAOImpl passengerDAO = new PassengerDAOImpl(null);
 
-    @Mock
-    private TimetableDAOImpl timetableDAO = new TimetableDAOImpl(null);
-
-    @Mock
-    private TicketDAOImpl ticketDAO = new TicketDAOImpl(null);
-
     @InjectMocks
-    private CommonServiceImpl commonServiceImpl = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+    private CommonServiceImpl commonServiceImpl = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
 
     @Test
     public void testFindStation() throws Exception {

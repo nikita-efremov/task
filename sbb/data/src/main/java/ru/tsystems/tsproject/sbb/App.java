@@ -141,9 +141,8 @@ public class App {
             PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
             TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
 			AdministratorService administratorService = new AdministratorServiceImpl(
-                    stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+                    stationDAO, trainDAO, passengerDAO, timetableDAO);
 			Station station = new Station();
 			station.setName("Pskov");
             administratorService.addStation(station);

@@ -18,45 +18,52 @@ import java.util.Collection;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class AdministratorServiceImpl extends AbstractServiceImpl implements AdministratorService {
+public class AdministratorServiceImpl implements AdministratorService {
+
+    private StationDAO stationDAO;
+    private TrainDAO trainDAO;
+    private PassengerDAO passengerDAO;
+    private TimetableDAO timetableDAO;
 
     public AdministratorServiceImpl(StationDAO stationDAO,
                                     TrainDAO trainDAO,
                                     PassengerDAO passengerDAO,
-                                    TimetableDAO timetableDAO,
-                                    TicketDAO ticketDAO) {
-        super(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+                                    TimetableDAO timetableDAO) {
+        this.stationDAO = stationDAO;
+        this.trainDAO = trainDAO;
+        this.passengerDAO = passengerDAO;
+        this.timetableDAO = timetableDAO;
     }
 
     public void addStation(Station station) throws StationAlreadyExistsException, DAOException {
-        if (getStationDAO().getStationByName(station.getName()) == null) {
-            getStationDAO().create(station);
+        if (stationDAO.getStationByName(station.getName()) == null) {
+            stationDAO.create(station);
         } else {
             throw new StationAlreadyExistsException("Station with name " + station.getName() + " already exists");
         }
     }
 
     public void addTrain(Train train) throws TrainAlreadyExistsException, DAOException {
-        if (getTrainDAO().getTrainByNumber(train.getNumber()) == null) {
-            getTrainDAO().create(train);
+        if (trainDAO.getTrainByNumber(train.getNumber()) == null) {
+            trainDAO.create(train);
         } else {
             throw new TrainAlreadyExistsException("Train with number " + train.getNumber() + " already exists");
         }
     }
 
     public void addTimetable(Timetable timetable) throws DAOException {
-        getTimetableDAO().create(timetable);
+        timetableDAO.create(timetable);
     }
 
     public Collection<Passenger> getPassengersByTrain(int trainID) throws DAOException {
-        return getPassengerDAO().getPassengersByTrain(trainID);
+        return passengerDAO.getPassengersByTrain(trainID);
     }
 
     public Collection<Train> getAllTrains() throws DAOException {
-        return getTrainDAO().<Train>getAll();
+        return trainDAO.<Train>getAll();
     }
 
     public Collection<Station> getAllStations() throws DAOException {
-        return getStationDAO().<Station>getAll();
+        return stationDAO.<Station>getAll();
     }
 }

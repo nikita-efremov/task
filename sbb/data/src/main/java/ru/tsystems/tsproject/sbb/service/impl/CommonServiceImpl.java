@@ -16,25 +16,29 @@ import java.util.List;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class CommonServiceImpl extends AbstractServiceImpl implements CommonService {
+public class CommonServiceImpl implements CommonService {
+
+    private StationDAO stationDAO;
+    private TrainDAO trainDAO;
+    private PassengerDAO passengerDAO;
 
     public CommonServiceImpl(StationDAO stationDAO,
                              TrainDAO trainDAO,
-                             PassengerDAO passengerDAO,
-                             TimetableDAO timetableDAO,
-                             TicketDAO ticketDAO) {
-        super(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+                             PassengerDAO passengerDAO) {
+        this.stationDAO = stationDAO;
+        this.trainDAO = trainDAO;
+        this.passengerDAO = passengerDAO;
     }
 
     public Station findStation(String stationName) throws DAOException {
-        return getStationDAO().getStationByName(stationName);
+        return stationDAO.getStationByName(stationName);
     }
 
     public Train findTrain(String trainNumber) throws DAOException {
-        return getTrainDAO().getTrainByNumber(trainNumber);
+        return trainDAO.getTrainByNumber(trainNumber);
     }
 
     public Passenger findPassenger(String docNumber) throws DAOException {
-        return getPassengerDAO().getPassengerByDocumentNumber(docNumber);
+        return passengerDAO.getPassengerByDocumentNumber(docNumber);
     }
 }

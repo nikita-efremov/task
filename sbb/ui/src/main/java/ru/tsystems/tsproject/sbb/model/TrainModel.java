@@ -51,10 +51,9 @@ public class TrainModel extends AbstractModel {
             PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
             TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
             AdministratorService administratorService = new AdministratorServiceImpl(
-                    stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+                    stationDAO, trainDAO, passengerDAO, timetableDAO);
+            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
 
             Train train = new Train();
             train.setNumber(trainBean.getNumber());
@@ -101,9 +100,7 @@ public class TrainModel extends AbstractModel {
             StationDAO stationDAO = new StationDAOImpl(entityManager);
             PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
 
             Train train = new Train();
             train.setNumber(trainBean.getNumber());
@@ -164,9 +161,8 @@ public class TrainModel extends AbstractModel {
             PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
             TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
-            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
+            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO);
 
             Train train = new Train();
             train.setId(trainBean.getId());
@@ -221,9 +217,8 @@ public class TrainModel extends AbstractModel {
             PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
             TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
-            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
+            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO);
 
             Train train = new Train();
             train.setNumber(timetableBean.getTrainNumber());
@@ -291,8 +286,8 @@ public class TrainModel extends AbstractModel {
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
             TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
             TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
-            PassengerService passengerService = new PassengerServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
+            PassengerService passengerService = new PassengerServiceImpl(trainDAO, passengerDAO, timetableDAO, ticketDAO);
 
             Station stationStart = new Station();
             stationStart.setName(startBean.getStationName());
@@ -353,9 +348,7 @@ public class TrainModel extends AbstractModel {
             PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
             TrainDAO trainDAO = new TrainDAOImpl(entityManager);
             TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
-            AdministratorService administratorService = new AdministratorServiceImpl(
-                    stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO);
             Collection<Train> trains = administratorService.getAllTrains();
             for (Train train: trains) {
                 TrainBean trainBean = new TrainBean();
