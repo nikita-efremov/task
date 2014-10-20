@@ -3,9 +3,7 @@ package ru.tsystems.tsproject.sbb.service.api;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Train;
-import ru.tsystems.tsproject.sbb.exception.DAOException;
-
-import java.util.Collection;
+import ru.tsystems.tsproject.sbb.dao.DAOException;
 
 /**
  *
@@ -18,39 +16,39 @@ public interface CommonService {
     /**
      * Searches station in system with using information, specified in param
      *
-     * @param station
-     *        Station instance with specified id or name
+     * @param stationName
+     *        Name of the station to search
      *
      * @return station with full info
      *
      * @throws DAOException
      *         If error occurred in JPA layer
      */
-    public Station findStation(Station station) throws DAOException;
+    public Station findStation(String stationName) throws DAOException;
 
     /**
      * Searches passenger in system with using information, specified in param
      *
-     * @param passenger
-     *        Passenger instance with specified id or name
+     * @param docNumber
+     *        Document number of passenger to search
      *
      * @return train with full info
      *
      * @throws DAOException
      *         If error occurred in JPA layer
      */
-    public Passenger findPassenger(Passenger passenger) throws DAOException;
+    public Passenger findPassenger(String docNumber) throws DAOException;
 
     /**
      * Searches train in system with using information, specified in param
      *
-     * @param train
-     *        Train instance with specified id or name
+     * @param trainNumber
+     *        Number of train to search
      *
      * @return train with full info
      *
      * @throws DAOException
      *         If error occurred in JPA layer
      */
-    public Train findTrain(Train train) throws DAOException;
+    public Train findTrain(String trainNumber) throws DAOException;
 }

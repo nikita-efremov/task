@@ -5,7 +5,7 @@ import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
-import ru.tsystems.tsproject.sbb.exception.DAOException;
+import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.exception.TrainAlreadyExistsException;
 
 import java.util.Collection;
@@ -58,15 +58,15 @@ public interface AdministratorService {
     /**
      * Gets collection of passengers which have tickets on train, specified in param
      *
-     * @param train
-     *        Train instance with specified if, name and timetable
+     * @param trainID
+     *        ID of train on which passengers must be found
      *
      * @return collection of passengers
      *
      * @throws DAOException
      *         If error occurred in JPA layer
      */
-    public Collection<Passenger> getPassengersByTrain(Train train) throws DAOException;
+    public Collection<Passenger> getPassengersByTrain(int trainID) throws DAOException;
 
     /**
      * Gets collection of all exists trains

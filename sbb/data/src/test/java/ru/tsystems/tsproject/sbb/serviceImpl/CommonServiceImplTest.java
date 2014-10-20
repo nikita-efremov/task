@@ -42,34 +42,9 @@ public class CommonServiceImplTest {
     private CommonServiceImpl commonServiceImpl = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
 
     @Test
-    public void testGetStationInfoPart1() throws Exception {
+    public void testFindStation() throws Exception {
         int stationID = 44044;
         String stationName = "TestStation";
-        String anotherStationName = "AnotherTestStation";
-
-        Station stationSource = new Station();
-        stationSource.setId(stationID);
-        stationSource.setName(anotherStationName);
-
-        Station stationOutput = new Station();
-        stationOutput.setId(stationID);
-        stationOutput.setName(stationName);
-
-        when(stationDAO.get(stationID)).thenReturn(stationOutput);
-
-        Station stationFromMethod = commonServiceImpl.findStation(stationSource);
-        Assert.assertEquals(stationOutput, stationFromMethod);
-    }
-
-    @Test
-    public void testGetStationInfoPart2() throws Exception {
-        int stationID = 44044;
-        int anotherStationID = 0;
-        String stationName = "TestStation";
-
-        Station stationSource = new Station();
-        stationSource.setId(anotherStationID);
-        stationSource.setName(stationName);
 
         Station stationOutput = new Station();
         stationOutput.setId(stationID);
@@ -77,7 +52,7 @@ public class CommonServiceImplTest {
 
         when(stationDAO.getStationByName(stationName)).thenReturn(stationOutput);
 
-        Station stationFromMethod = commonServiceImpl.findStation(stationSource);
+        Station stationFromMethod = commonServiceImpl.findStation(stationName);
         Assert.assertEquals(stationOutput, stationFromMethod);
     }
 }

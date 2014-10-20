@@ -3,19 +3,16 @@ package ru.tsystems.tsproject.sbb.model;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
-import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TicketBean;
+import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.dao.impl.*;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
-import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Ticket;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.*;
-import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
 import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.service.api.PassengerService;
-import ru.tsystems.tsproject.sbb.service.impl.AdministratorServiceImpl;
 import ru.tsystems.tsproject.sbb.service.impl.CommonServiceImpl;
 import ru.tsystems.tsproject.sbb.service.impl.PassengerServiceImpl;
 
@@ -60,7 +57,7 @@ public class PassengerModel extends AbstractModel {
             passenger.setBirthDate(passengerBean.getBirthDate());
 
             passengerService.addPassenger(passenger);
-            passenger = commonService.findPassenger(passenger);
+            passenger = commonService.findPassenger(passenger.getDocNumber());
 
             passengerBean.setId(passenger.getId());
             passengerBean.setLastName(passenger.getLastName());
@@ -109,7 +106,7 @@ public class PassengerModel extends AbstractModel {
             Passenger passenger = new Passenger();
             passenger.setDocNumber(passengerBean.getDocNumber());
 
-            passenger = commonService.findPassenger(passenger);
+            passenger = commonService.findPassenger(passenger.getDocNumber());
 
             if (passenger == null) {
                 throw new PassengerNotRegisteredException("Passenger with document number " + passengerBean.getDocNumber()
@@ -164,7 +161,7 @@ public class PassengerModel extends AbstractModel {
 
             Passenger passenger = new Passenger();
             passenger.setDocNumber(ticketBean.getPassengerDocNumber());
-            passenger = commonService.findPassenger(passenger);
+            passenger = commonService.findPassenger(passenger.getDocNumber());
 
             if (passenger == null) {
                 throw new PassengerNotRegisteredException("Passenger with document number " + ticketBean.getPassengerDocNumber()
@@ -173,7 +170,7 @@ public class PassengerModel extends AbstractModel {
 
             Train train = new Train();
             train.setNumber(ticketBean.getTrainNumber());
-            train = commonService.findTrain(train);
+            train = commonService.findTrain(train.getNumber());
 
             if (train == null) {
                 throw new TrainNotExistsException("Train with number " + ticketBean.getTrainNumber() + " not exists");

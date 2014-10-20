@@ -2,7 +2,7 @@ package ru.tsystems.tsproject.sbb.service.impl;
 
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.entity.*;
-import ru.tsystems.tsproject.sbb.exception.DAOException;
+import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.exception.PassengerAlreadyRegisteredException;
 import ru.tsystems.tsproject.sbb.exception.TrainAlreadyDepartedException;
 import ru.tsystems.tsproject.sbb.exception.TrainAlreadyFullException;
@@ -26,11 +26,11 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
         super(stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
     }
 
-    public Collection<Train> findTrainsByStationsAndDate(Station stationStart,
-                                                         Station stationEnd,
+    public Collection<Train> findTrainsByStationsAndDate(int stationStartID,
+                                                         int stationEndID,
                                                          Date start,
                                                          Date end) throws DAOException {
-        Collection<Train> directionUnImportantTrains = getTrainDAO().getTrainsByStationsAndDate(stationStart.getId(), stationEnd.getId(), start, end);
+        Collection<Train> directionUnImportantTrains = getTrainDAO().getTrainsByStationsAndDate(stationStartID, stationEndID, start, end);
         Collection<Train> directionImportantTrains = new LinkedList<Train>();
         Set<String> trains = new HashSet<String>();
         for (Train train: directionUnImportantTrains) {
@@ -39,10 +39,10 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
                 Date currentTrainStart = null;
                 Date currentTrainEnd = null;
                 for (Timetable timetable: trainTimetables) {
-                    if (timetable.getStation().equals(stationStart)) {
+                    if (timetable.getStation().getId() == stationStartID) {
                         currentTrainStart = timetable.getDate();
                     }
-                    if (timetable.getStation().equals(stationEnd)) {
+                    if (timetable.getStation().getId() == stationEndID) {
                         currentTrainEnd = timetable.getDate();
                     }
                 }
@@ -55,8 +55,8 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
         return directionImportantTrains;
     }
 
-    public Collection<Train> getTrainsByStation(Station station) throws DAOException {
-        return getTimetableDAO().getTimetableByStation(station.getId());
+    public Collection<Train> getTrainsByStation(int stationID) throws DAOException {
+        return getTimetableDAO().getTimetableByStation(stationID);
     }
 
     public Ticket purchaseTicket(Train train, Passenger passenger)
@@ -101,8 +101,8 @@ public class PassengerServiceImpl extends AbstractServiceImpl implements Passeng
     }
 
     public void addPassenger(Passenger passenger) throws PassengerAlreadyRegisteredException, DAOException {
-        Collection<Passenger> passengers = getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber());
-        if ((passengers != null) && (passengers.size() > 0)) {
+        Passenger foundPassenger = getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber());
+        if (foundPassenger != null) {
             throw new PassengerAlreadyRegisteredException("Passenger with document  number " + passenger.getDocNumber()
                     + " already registered in system");
         } else {

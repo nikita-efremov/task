@@ -1,9 +1,7 @@
 package ru.tsystems.tsproject.sbb.dao.api;
 
 import ru.tsystems.tsproject.sbb.entity.Station;
-import ru.tsystems.tsproject.sbb.exception.DAOException;
-
-import java.util.Collection;
+import ru.tsystems.tsproject.sbb.dao.DAOException;
 
 /**
  * Created with IntelliJ IDEA.

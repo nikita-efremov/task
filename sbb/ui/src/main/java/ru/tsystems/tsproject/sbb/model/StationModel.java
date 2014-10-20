@@ -4,16 +4,13 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TimetableBean;
-import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.dao.impl.*;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
-import ru.tsystems.tsproject.sbb.entity.Train;
-import ru.tsystems.tsproject.sbb.exception.DAOException;
+import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
 import ru.tsystems.tsproject.sbb.exception.StationNotExistsException;
-import ru.tsystems.tsproject.sbb.exception.TrainNotExistsException;
 import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
 import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.service.impl.AdministratorServiceImpl;
@@ -61,7 +58,7 @@ public class StationModel extends AbstractModel {
             station.setName(stationBean.getName());
 
             administratorService.addStation(station);
-            station = commonService.findStation(station);
+            station = commonService.findStation(station.getName());
 
             stationBean.setId(station.getId());
             stationBean.setName(station.getName());
@@ -105,7 +102,7 @@ public class StationModel extends AbstractModel {
             Station station = new Station();
             station.setName(stationBean.getName());
 
-            station = commonService.findStation(station);
+            station = commonService.findStation(station.getName());
 
             if (station == null) {
                 throw new StationNotExistsException("Station with name " + stationBean.getName() + " not exists");

@@ -1,5 +1,5 @@
 package ru.tsystems.tsproject.sbb.dao.api;
-import ru.tsystems.tsproject.sbb.exception.DAOException;
+import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.entity.Train;
 
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.exception;
+package ru.tsystems.tsproject.sbb.dao;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,18 +9,18 @@ package ru.tsystems.tsproject.sbb.exception;
  */
 public class DAOException extends Exception {
 
-    private String errorCode;
+    private ErrorCode errorCode;
 
     public DAOException(String message) {
         super(message);
-        errorCode = "0";
+        errorCode = ErrorCode.UNKNOWN_ERROR;
     }
 
-    public String getErrorCode() {
+    public ErrorCode getErrorCode() {
         return errorCode;
     }
 
-    public void setErrorCode(String errorCode) {
+    public void setErrorCode(ErrorCode errorCode) {
         this.errorCode = errorCode;
     }
 }

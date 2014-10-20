@@ -4,7 +4,7 @@ import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Ticket;
 import ru.tsystems.tsproject.sbb.entity.Train;
-import ru.tsystems.tsproject.sbb.exception.DAOException;
+import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.exception.PassengerAlreadyRegisteredException;
 import ru.tsystems.tsproject.sbb.exception.TrainAlreadyDepartedException;
 import ru.tsystems.tsproject.sbb.exception.TrainAlreadyFullException;
@@ -22,11 +22,11 @@ public interface PassengerService {
     /**
      * Finds all trains which are move from station $stationStart, departs to $stationEnd and trip time is between $start and $end
      *
-     * @param  stationStart
-     *         Station at which train must depart
+     * @param  stationStartID
+     *         ID of station at which train must depart
      *
-     * @param  stationEnd
-     *         Station at which train must arrive
+     * @param  stationEndID
+     *         ID of station at which train must arrive
      *
      * @param  start
      *         Date from which train must depart
@@ -34,21 +34,21 @@ public interface PassengerService {
      * @param  end
      *         Date, to which train must arrive
      *
-     * @throws ru.tsystems.tsproject.sbb.exception.DAOException
+     * @throws ru.tsystems.tsproject.sbb.dao.DAOException
      *         If error occurred in JPA layer
      */
-    public Collection<Train> findTrainsByStationsAndDate(Station stationStart, Station stationEnd, Date start, Date end) throws DAOException;
+    public Collection<Train> findTrainsByStationsAndDate(int stationStartID, int stationEndID, Date start, Date end) throws DAOException;
 
     /**
      * Finds all trains, which have stop in station $station
      *
-     * @param  station
-     *         Station at which trains must be found
+     * @param  stationID
+     *         ID of station at which trains must be found
      *
-     * @throws ru.tsystems.tsproject.sbb.exception.DAOException
+     * @throws ru.tsystems.tsproject.sbb.dao.DAOException
      *         If error occurred in JPA layer
      */
-    public Collection<Train> getTrainsByStation(Station station) throws DAOException;
+    public Collection<Train> getTrainsByStation(int stationID) throws DAOException;
 
     /**
      * Create ticket for passenger $passenger on train $train

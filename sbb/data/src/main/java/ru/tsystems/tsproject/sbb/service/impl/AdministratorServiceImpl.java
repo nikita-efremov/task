@@ -8,7 +8,7 @@ import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
 import ru.tsystems.tsproject.sbb.exception.TrainAlreadyExistsException;
 import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
-import ru.tsystems.tsproject.sbb.exception.DAOException;
+import ru.tsystems.tsproject.sbb.dao.DAOException;
 
 import java.util.Collection;
 
@@ -48,8 +48,8 @@ public class AdministratorServiceImpl extends AbstractServiceImpl implements Adm
         getTimetableDAO().create(timetable);
     }
 
-    public Collection<Passenger> getPassengersByTrain(Train train) throws DAOException {
-        return getPassengerDAO().getPassengersByTrain(train.getId());
+    public Collection<Passenger> getPassengersByTrain(int trainID) throws DAOException {
+        return getPassengerDAO().getPassengersByTrain(trainID);
     }
 
     public Collection<Train> getAllTrains() throws DAOException {

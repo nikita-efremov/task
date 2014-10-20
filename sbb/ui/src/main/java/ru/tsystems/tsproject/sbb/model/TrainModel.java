@@ -3,9 +3,9 @@ package ru.tsystems.tsproject.sbb.model;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
-import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TimetableBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
+import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.dao.impl.*;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
@@ -62,7 +62,7 @@ public class TrainModel extends AbstractModel {
             train.setTotalSeats(Integer.parseInt(trainBean.getTotalSeats()));
 
             administratorService.addTrain(train);
-            train = commonService.findTrain(train);
+            train = commonService.findTrain(train.getNumber());
 
             trainBean.setId(train.getId());
             trainBean.setNumber(train.getNumber());
@@ -108,7 +108,7 @@ public class TrainModel extends AbstractModel {
             Train train = new Train();
             train.setNumber(trainBean.getNumber());
 
-            train = commonService.findTrain(train);
+            train = commonService.findTrain(train.getNumber());
 
             if (train == null) {
                 throw new TrainNotExistsException("Train with number " + trainBean.getNumber() + " not exists");
@@ -171,13 +171,13 @@ public class TrainModel extends AbstractModel {
             Train train = new Train();
             train.setId(trainBean.getId());
             train.setNumber(trainBean.getNumber());
-            train = commonService.findTrain(train);
+            train = commonService.findTrain(train.getNumber());
 
             if (train == null) {
                 throw new TrainNotExistsException("Train with number " + trainBean.getNumber() + " not exists");
             }
 
-            Collection<Passenger> passengers = administratorService.getPassengersByTrain(train);
+            Collection<Passenger> passengers = administratorService.getPassengersByTrain(train.getId());
             for (Passenger passenger: passengers) {
                 PassengerBean passengerBean = new PassengerBean();
                 passengerBean.setLastName(passenger.getLastName());
@@ -227,7 +227,7 @@ public class TrainModel extends AbstractModel {
 
             Train train = new Train();
             train.setNumber(timetableBean.getTrainNumber());
-            train = commonService.findTrain(train);
+            train = commonService.findTrain(train.getNumber());
 
             if (train == null) {
                 throw new TrainNotExistsException("Train with number " + timetableBean.getTrainNumber() + " not exists");
@@ -243,7 +243,7 @@ public class TrainModel extends AbstractModel {
 
             Station station = new Station();
             station.setName(timetableBean.getStationName());
-            station = commonService.findStation(station);
+            station = commonService.findStation(station.getName());
 
             if (station == null) {
                 throw new StationNotExistsException("Station with name " + timetableBean.getStationName() + " not exists");
@@ -296,7 +296,7 @@ public class TrainModel extends AbstractModel {
 
             Station stationStart = new Station();
             stationStart.setName(startBean.getStationName());
-            stationStart = commonService.findStation(stationStart);
+            stationStart = commonService.findStation(stationStart.getName());
 
             if (stationStart == null) {
                 String message = "Station with name " + startBean.getStationName() + " not exists";
@@ -306,7 +306,7 @@ public class TrainModel extends AbstractModel {
 
             Station stationEnd = new Station();
             stationEnd.setName(endBean.getStationName());
-            stationEnd = commonService.findStation(stationEnd);
+            stationEnd = commonService.findStation(stationEnd.getName());
 
             if (stationEnd == null) {
                 String message = "Station with name " + endBean.getStationName() + " not exists";
@@ -315,7 +315,7 @@ public class TrainModel extends AbstractModel {
             }
 
             Collection<Train> trains = passengerService.findTrainsByStationsAndDate(
-                    stationStart,stationEnd, startBean.getDate(), endBean.getDate());
+                    stationStart.getId(),stationEnd.getId(), startBean.getDate(), endBean.getDate());
             for (Train train: trains) {
                 TrainBean trainBean = new TrainBean();
                 trainBean.setId(train.getId());

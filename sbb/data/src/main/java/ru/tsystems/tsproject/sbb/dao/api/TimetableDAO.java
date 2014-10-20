@@ -1,12 +1,9 @@
 package ru.tsystems.tsproject.sbb.dao.api;
 
-import ru.tsystems.tsproject.sbb.entity.Passenger;
-import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
-import ru.tsystems.tsproject.sbb.exception.DAOException;
+import ru.tsystems.tsproject.sbb.dao.DAOException;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
