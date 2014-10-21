@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.administrator;
 
+import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TimetableBean;
@@ -27,13 +28,12 @@ import java.util.Date;
 public class AddNewTrainStopServlet extends HttpServlet {
 
     private TrainModel trainModel;
-    private String trainNumber;
 
     /**
      * Initialize servlet`s attribute - trainModel
      */
     public void init() {
-        trainModel = new TrainModel();
+        trainModel = ApplicationContext.getTrainModel();
     }
 
     /**

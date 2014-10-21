@@ -30,9 +30,19 @@ import java.util.*;
  * @since   1.0
  */
 
-public class TrainModel extends AbstractModel {
+public class TrainModel {
 
     private static final Logger log = Logger.getLogger(TrainModel.class);
+
+    private AdministratorService administratorService;
+    private PassengerService passengerService;
+    private CommonService commonService;
+
+    public TrainModel(AdministratorService administratorService, PassengerService passengerService, CommonService commonService) {
+        this.administratorService = administratorService;
+        this.passengerService = passengerService;
+        this.commonService = commonService;
+    }
 
     /**
      * Adds new train with number, seats and totalSeats specified in param.
@@ -44,24 +54,13 @@ public class TrainModel extends AbstractModel {
      * @return result of processing
      */
     public TrainBean addTrain(TrainBean trainBean) {
-        EntityManager entityManager = null;
         try {
-            entityManager = AbstractModel.getEntityManager();
-            StationDAO stationDAO = new StationDAOImpl(entityManager);
-            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
-            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            AdministratorService administratorService = new AdministratorServiceImpl(
-                    stationDAO, trainDAO, passengerDAO, timetableDAO);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
-
             Train train = new Train();
             train.setNumber(trainBean.getNumber());
             train.setSeats(Integer.parseInt(trainBean.getSeats()));
             train.setTotalSeats(Integer.parseInt(trainBean.getTotalSeats()));
 
-            administratorService.addTrain(train);
-            train = commonService.findTrain(train.getNumber());
+            train = administratorService.addTrain(train);
 
             trainBean.setId(train.getId());
             trainBean.setNumber(train.getNumber());
@@ -76,10 +75,6 @@ public class TrainModel extends AbstractModel {
         } catch (Exception e) {
             trainBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
         }
         return trainBean;
     }
@@ -94,22 +89,8 @@ public class TrainModel extends AbstractModel {
      * @return result of processing
      */
     public TrainBean findTrain(TrainBean trainBean) {
-        EntityManager entityManager = null;
         try {
-            entityManager = AbstractModel.getEntityManager();
-            StationDAO stationDAO = new StationDAOImpl(entityManager);
-            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
-            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
-
-            Train train = new Train();
-            train.setNumber(trainBean.getNumber());
-
-            train = commonService.findTrain(train.getNumber());
-
-            if (train == null) {
-                throw new TrainNotExistsException("Train with number " + trainBean.getNumber() + " not exists");
-            }
+            Train train = commonService.findTrain(trainBean.getNumber());
 
             trainBean.setId(train.getId());
             trainBean.setNumber(train.getNumber());
@@ -135,10 +116,6 @@ public class TrainModel extends AbstractModel {
         } catch (Exception e) {
             trainBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
         }
         return trainBean;
     }
@@ -153,27 +130,9 @@ public class TrainModel extends AbstractModel {
      * @return result of processing
      */
     public Collection<PassengerBean> findTrainPassengers(TrainBean trainBean) {
-        EntityManager entityManager = null;
         Collection<PassengerBean> passengerBeanSet = new LinkedList<PassengerBean>();
         try {
-            entityManager = AbstractModel.getEntityManager();
-            StationDAO stationDAO = new StationDAOImpl(entityManager);
-            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
-            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
-            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO);
-
-            Train train = new Train();
-            train.setId(trainBean.getId());
-            train.setNumber(trainBean.getNumber());
-            train = commonService.findTrain(train.getNumber());
-
-            if (train == null) {
-                throw new TrainNotExistsException("Train with number " + trainBean.getNumber() + " not exists");
-            }
-
-            Collection<Passenger> passengers = administratorService.getPassengersByTrain(train.getId());
+            Collection<Passenger> passengers = administratorService.getPassengersByTrain(trainBean.getNumber());
             for (Passenger passenger: passengers) {
                 PassengerBean passengerBean = new PassengerBean();
                 passengerBean.setLastName(passenger.getLastName());
@@ -191,10 +150,6 @@ public class TrainModel extends AbstractModel {
         } catch (Exception e) {
             trainBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
         }
         return passengerBeanSet;
     }
@@ -209,47 +164,8 @@ public class TrainModel extends AbstractModel {
      * @return result of processing
      */
     public TimetableBean addTrainStop(TimetableBean timetableBean) {
-        EntityManager entityManager = null;
-        Collection<PassengerBean> passengerBeanSet = new LinkedList<PassengerBean>();
         try {
-            entityManager = AbstractModel.getEntityManager();
-            StationDAO stationDAO = new StationDAOImpl(entityManager);
-            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
-            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
-            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO);
-
-            Train train = new Train();
-            train.setNumber(timetableBean.getTrainNumber());
-            train = commonService.findTrain(train.getNumber());
-
-            if (train == null) {
-                throw new TrainNotExistsException("Train with number " + timetableBean.getTrainNumber() + " not exists");
-            }
-
-            Set<Timetable> timetables = train.getTimetables();
-            for (Timetable timetable: timetables) {
-                if (timetable.getStation().getName().equals(timetableBean.getStationName())) {
-                    throw new TrainStopAlreadyExistsException("Stop of the train with number " + timetableBean.getTrainNumber()
-                            + " already exists on station with name " + timetableBean.getStationName());
-                }
-            }
-
-            Station station = new Station();
-            station.setName(timetableBean.getStationName());
-            station = commonService.findStation(station.getName());
-
-            if (station == null) {
-                throw new StationNotExistsException("Station with name " + timetableBean.getStationName() + " not exists");
-            }
-
-            Timetable timetable = new Timetable();
-            timetable.setTrain(train);
-            timetable.setStation(station);
-            timetable.setDate(timetableBean.getDate());
-            administratorService.addTimetable(timetable);
-
+            administratorService.addTimetable(timetableBean.getTrainNumber(), timetableBean.getStationName(), timetableBean.getDate());
         } catch (TrainNotExistsException e) {
             timetableBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e.getMessage() + " - " + e);
@@ -262,10 +178,6 @@ public class TrainModel extends AbstractModel {
         } catch (Exception e) {
             timetableBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
         }
         return timetableBean;
     }
@@ -278,39 +190,9 @@ public class TrainModel extends AbstractModel {
      */
     public Collection<TrainBean> findTrainsByStationsAndDate(TimetableBean startBean, TimetableBean endBean) {
         Collection<TrainBean> trainBeans = new ArrayList<TrainBean>();
-        EntityManager entityManager = null;
         try {
-            entityManager = AbstractModel.getEntityManager();
-            StationDAO stationDAO = new StationDAOImpl(entityManager);
-            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
-            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
-            PassengerService passengerService = new PassengerServiceImpl(trainDAO, passengerDAO, timetableDAO, ticketDAO);
-
-            Station stationStart = new Station();
-            stationStart.setName(startBean.getStationName());
-            stationStart = commonService.findStation(stationStart.getName());
-
-            if (stationStart == null) {
-                String message = "Station with name " + startBean.getStationName() + " not exists";
-                startBean.setProcessingErrorMessage(message);
-                throw new StationNotExistsException(message);
-            }
-
-            Station stationEnd = new Station();
-            stationEnd.setName(endBean.getStationName());
-            stationEnd = commonService.findStation(stationEnd.getName());
-
-            if (stationEnd == null) {
-                String message = "Station with name " + endBean.getStationName() + " not exists";
-                endBean.setProcessingErrorMessage(message);
-                throw new StationNotExistsException(message);
-            }
-
             Collection<Train> trains = passengerService.findTrainsByStationsAndDate(
-                    stationStart.getId(),stationEnd.getId(), startBean.getDate(), endBean.getDate());
+                    startBean.getStationName(), endBean.getStationName(), startBean.getDate(), endBean.getDate());
             for (Train train: trains) {
                 TrainBean trainBean = new TrainBean();
                 trainBean.setId(train.getId());
@@ -320,15 +202,14 @@ public class TrainModel extends AbstractModel {
                 trainBeans.add(trainBean);
             }
         } catch (StationNotExistsException e) {
+            startBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e.getMessage() + " - " + e);
         } catch (DAOException e) {
+            startBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
             log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
+            startBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
         }
         return trainBeans;
     }
@@ -341,14 +222,7 @@ public class TrainModel extends AbstractModel {
      */
     public Collection<TrainBean> getAllTrains() {
         Collection<TrainBean> trainBeans = new ArrayList<TrainBean>();
-        EntityManager entityManager = null;
         try {
-            entityManager = AbstractModel.getEntityManager();
-            StationDAO stationDAO = new StationDAOImpl(entityManager);
-            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
-            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO);
             Collection<Train> trains = administratorService.getAllTrains();
             for (Train train: trains) {
                 TrainBean trainBean = new TrainBean();
@@ -362,11 +236,31 @@ public class TrainModel extends AbstractModel {
             log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             log.log(Level.ERROR, "Unknown error occurred: " + e);
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
         }
         return trainBeans;
+    }
+
+    public AdministratorService getAdministratorService() {
+        return administratorService;
+    }
+
+    public void setAdministratorService(AdministratorService administratorService) {
+        this.administratorService = administratorService;
+    }
+
+    public PassengerService getPassengerService() {
+        return passengerService;
+    }
+
+    public void setPassengerService(PassengerService passengerService) {
+        this.passengerService = passengerService;
+    }
+
+    public CommonService getCommonService() {
+        return commonService;
+    }
+
+    public void setCommonService(CommonService commonService) {
+        this.commonService = commonService;
     }
 }

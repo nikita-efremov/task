@@ -15,18 +15,12 @@ import java.util.TreeSet;
  */
 public class StationBean extends BaseBean {
 
-    private int id;
+    private int id = 0;
 
     @Pattern(regexp = "[A-Za-z]+", message="Station name must contain only english letters, one or more")
-    private String name;
+    private String name = "";
 
-    private Set<TimetableBean> timetables;
-
-    public StationBean() {
-        id = 0;
-        name = "";
-        timetables = new TreeSet<TimetableBean>();
-    }
+    private Set<TimetableBean> timetables = new TreeSet<TimetableBean>();
 
     public int getId() {
         return id;

@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.passenger;
 
+import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.model.PassengerModel;
 
@@ -27,7 +28,7 @@ public class PassengerLoginServlet extends HttpServlet {
      * Initialize servlet`s attribute - passengerModel
      */
     public void init() {
-        passengerModel = new PassengerModel();
+        passengerModel = ApplicationContext.getPassengerModel();
     }
 
     /**

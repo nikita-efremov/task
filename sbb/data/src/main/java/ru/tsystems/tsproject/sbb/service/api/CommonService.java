@@ -4,6 +4,9 @@ import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
+import ru.tsystems.tsproject.sbb.exception.PassengerNotRegisteredException;
+import ru.tsystems.tsproject.sbb.exception.StationNotExistsException;
+import ru.tsystems.tsproject.sbb.exception.TrainNotExistsException;
 
 /**
  *
@@ -23,8 +26,11 @@ public interface CommonService {
      *
      * @throws DAOException
      *         If error occurred in JPA layer
+     *
+     * @throws StationNotExistsException
+     *         If station not found
      */
-    public Station findStation(String stationName) throws DAOException;
+    public Station findStation(String stationName) throws StationNotExistsException, DAOException;
 
     /**
      * Searches passenger in system with using information, specified in param
@@ -36,19 +42,26 @@ public interface CommonService {
      *
      * @throws DAOException
      *         If error occurred in JPA layer
+     *
+     * @throws PassengerNotRegisteredException
+     *         if passenger is not found
      */
-    public Passenger findPassenger(String docNumber) throws DAOException;
+    public Passenger findPassenger(String docNumber) throws PassengerNotRegisteredException, DAOException;
 
     /**
      * Searches train in system with using information, specified in param
      *
-     * @param trainNumber
+     *
+     *  @param trainNumber
      *        Number of train to search
      *
      * @return train with full info
      *
      * @throws DAOException
      *         If error occurred in JPA layer
+     *
+     * @throws TrainNotExistsException
+     *         if train not found in system
      */
-    public Train findTrain(String trainNumber) throws DAOException;
+    public Train findTrain(String trainNumber) throws TrainNotExistsException, DAOException;
 }

@@ -17,26 +17,19 @@ public class PassengerBean extends BaseBean {
     private int id;
 
     @Pattern(regexp = "[A-Za-z]+", message="First name must contain only english letters, one or more")
-    private String firstName;
+    private String firstName = "";
 
     @Pattern(regexp = "[A-Za-z]+", message="Last name must contain only english letters, one or more")
-    private String lastName;
+    private String lastName = "";
 
     @Past(message = "Passenger birth date must be in the past")
     @NotNull(message = "Date format: dd-MM-yyyy")
     private Date birthDate;
 
     @Pattern(regexp = "[A-Za-z0-9]{10}", message="Document number must contain 10 symbols: only english letters and digits")
-    private String docNumber;
+    private String docNumber = "";
 
     private Set<TicketBean> tickets;
-
-    public PassengerBean() {
-        firstName = "";
-        docNumber = "";
-        lastName = "";
-    }
-
 
     public int getId() {
         return id;

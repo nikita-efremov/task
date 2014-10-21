@@ -16,24 +16,16 @@ public class TrainBean extends BaseBean {
     private int id;
 
     @Pattern(regexp = "[A-Za-z0-9]+", message = "Train number name must contain only english letters and digits, one or more")
-    private String number;
+    private String number = "";
 
-    private String seats;
+    private String seats = "";
 
     @Min(value = 1, message = "Train seat value must not be smaller, than 1")
     @Max(value = 999, message = "Train seat value must be bigger, than 999")
     @Pattern(regexp = "[0-9]{1,3}", message = "Train seats value must contain only digits")
-    private String totalSeats;
+    private String totalSeats = "";
 
     private Set<TimetableBean> timetables;
-
-    public TrainBean() {
-        number = "";
-        seats = "";
-        totalSeats = "";
-
-    }
-
 
     public int getId() {
         return id;

@@ -5,9 +5,7 @@ import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Ticket;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
-import ru.tsystems.tsproject.sbb.exception.PassengerAlreadyRegisteredException;
-import ru.tsystems.tsproject.sbb.exception.TrainAlreadyDepartedException;
-import ru.tsystems.tsproject.sbb.exception.TrainAlreadyFullException;
+import ru.tsystems.tsproject.sbb.exception.*;
 
 import java.util.Collection;
 import java.util.Date;
@@ -17,16 +15,16 @@ import java.util.Date;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public interface PassengerService {
+public interface PassengerService extends CommonService {
 
     /**
      * Finds all trains which are move from station $stationStart, departs to $stationEnd and trip time is between $start and $end
      *
-     * @param  stationStartID
-     *         ID of station at which train must depart
+     * @param  stationStartName
+     *         Name of station at which train must depart
      *
-     * @param  stationEndID
-     *         ID of station at which train must arrive
+     * @param  stationEndName
+     *         Name of station at which train must arrive
      *
      * @param  start
      *         Date from which train must depart
@@ -34,30 +32,29 @@ public interface PassengerService {
      * @param  end
      *         Date, to which train must arrive
      *
-     * @throws ru.tsystems.tsproject.sbb.dao.DAOException
+     * @throws StationNotExistsException
+     *         if station not found
+     *
+     * @throws DAOException
      *         If error occurred in JPA layer
      */
-    public Collection<Train> findTrainsByStationsAndDate(int stationStartID, int stationEndID, Date start, Date end) throws DAOException;
-
-    /**
-     * Finds all trains, which have stop in station $station
-     *
-     * @param  stationID
-     *         ID of station at which trains must be found
-     *
-     * @throws ru.tsystems.tsproject.sbb.dao.DAOException
-     *         If error occurred in JPA layer
-     */
-    public Collection<Train> getTrainsByStation(int stationID) throws DAOException;
+    public Collection<Train> findTrainsByStationsAndDate(String stationStartName, String stationEndName, Date start, Date end)
+            throws StationNotExistsException, DAOException;
 
     /**
      * Create ticket for passenger $passenger on train $train
      *
-     * @param  train
-     *         Train in ticket
+     * @param  trainNumber
+     *         Train number in ticket
      *
-     * @param  passenger
-     *         Passenger in ticket
+     * @param  docNumber
+     *         Document number of passenger in ticket
+     *
+     * @throws TrainNotExistsException
+     *         If train not found
+     *
+     * @throws PassengerNotRegisteredException
+     *         If passenger not found
      *
      * @throws TrainAlreadyFullException
      *         If in train there are no free seats
@@ -71,8 +68,8 @@ public interface PassengerService {
      * @throws DAOException
      *         If error occurred in JPA layer
      */
-    public Ticket purchaseTicket(Train train, Passenger passenger)
-            throws TrainAlreadyFullException, PassengerAlreadyRegisteredException, TrainAlreadyDepartedException, DAOException;
+    public Ticket purchaseTicket(String trainNumber, String docNumber)
+            throws TrainNotExistsException, PassengerNotRegisteredException, TrainAlreadyFullException, PassengerAlreadyRegisteredException, TrainAlreadyDepartedException, DAOException;
 
     /**
      * Creates passenger, if passenger with specified document number not exists
@@ -86,5 +83,5 @@ public interface PassengerService {
      * @throws DAOException
      *         If error occurred in JPA layer
      */
-    public void addPassenger(Passenger passenger) throws PassengerAlreadyRegisteredException, DAOException;
+    public Passenger addPassenger(Passenger passenger) throws PassengerAlreadyRegisteredException, DAOException;
 }

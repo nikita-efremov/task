@@ -29,8 +29,16 @@ import java.util.TreeSet;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class StationModel extends AbstractModel {
+public class StationModel {
     private static final Logger log = Logger.getLogger(StationModel.class);
+
+    private AdministratorService administratorService;
+    private CommonService commonService;
+
+    public StationModel(AdministratorService administratorService, CommonService commonService) {
+        this.administratorService = administratorService;
+        this.commonService = commonService;
+    }
 
     /**
      * Adds new station with name, specified in param.
@@ -42,22 +50,11 @@ public class StationModel extends AbstractModel {
      * @return result of processing
      */
     public StationBean addStation(StationBean stationBean) {
-        EntityManager entityManager = null;
         try {
-            entityManager = AbstractModel.getEntityManager();
-            StationDAO stationDAO = new StationDAOImpl(entityManager);
-            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
-            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            AdministratorService administratorService = new AdministratorServiceImpl(
-                    stationDAO, trainDAO, passengerDAO, timetableDAO);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
-
             Station station = new Station();
             station.setName(stationBean.getName());
 
-            administratorService.addStation(station);
-            station = commonService.findStation(station.getName());
+            station = administratorService.addStation(station);
 
             stationBean.setId(station.getId());
             stationBean.setName(station.getName());
@@ -70,10 +67,6 @@ public class StationModel extends AbstractModel {
         } catch (Exception e) {
             stationBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
         }
         return stationBean;
     }
@@ -88,22 +81,11 @@ public class StationModel extends AbstractModel {
      * @return result of processing
      */
     public StationBean findStation(StationBean stationBean) {
-        EntityManager entityManager = null;
         try {
-            entityManager = AbstractModel.getEntityManager();
-            StationDAO stationDAO = new StationDAOImpl(entityManager);
-            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
-            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-            CommonService commonService = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
-
             Station station = new Station();
             station.setName(stationBean.getName());
 
             station = commonService.findStation(station.getName());
-
-            if (station == null) {
-                throw new StationNotExistsException("Station with name " + stationBean.getName() + " not exists");
-            }
 
             stationBean.setId(station.getId());
             stationBean.setName(station.getName());
@@ -127,10 +109,6 @@ public class StationModel extends AbstractModel {
         } catch (Exception e) {
             stationBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
         }
         return stationBean;
     }
@@ -143,14 +121,7 @@ public class StationModel extends AbstractModel {
      */
     public Collection<StationBean> getAllStations() {
         Collection<StationBean> stationBeans = new ArrayList<StationBean>();
-        EntityManager entityManager = null;
         try {
-            entityManager = AbstractModel.getEntityManager();
-            StationDAO stationDAO = new StationDAOImpl(entityManager);
-            PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
-            TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-            TimetableDAO timetableDAO = new TimetableDAOImpl(entityManager);
-            AdministratorService administratorService = new AdministratorServiceImpl(stationDAO, trainDAO, passengerDAO, timetableDAO);
             Collection<Station> stations = administratorService.getAllStations();
             for (Station station: stations) {
                 StationBean stationBean = new StationBean();
@@ -162,11 +133,23 @@ public class StationModel extends AbstractModel {
             log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             log.log(Level.ERROR, "Unknown error occurred: " + e);
-        } finally {
-            if ((entityManager != null) && (entityManager.isOpen())) {
-                entityManager.close();
-            }
         }
         return stationBeans;
+    }
+
+    public AdministratorService getAdministratorService() {
+        return administratorService;
+    }
+
+    public void setAdministratorService(AdministratorService administratorService) {
+        this.administratorService = administratorService;
+    }
+
+    public CommonService getCommonService() {
+        return commonService;
+    }
+
+    public void setCommonService(CommonService commonService) {
+        this.commonService = commonService;
     }
 }

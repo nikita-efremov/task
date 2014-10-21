@@ -12,15 +12,10 @@ import javax.validation.constraints.Pattern;
 public class AdminLoginBean extends BaseBean {
 
     @Pattern(regexp = "[A-Za-z0-9]+", message="Login name must contain only english letters and digits, one or more")
-    private String login;
+    private String login = "";
 
     @Pattern(regexp = "[A-Za-z0-9]+", message="Password must contain only english letters and digits, one or more")
-    private String password;
-
-    public AdminLoginBean() {
-        login = "";
-        password = "";
-    }
+    private String password = "";
 
     public String getLogin() {
         return login;

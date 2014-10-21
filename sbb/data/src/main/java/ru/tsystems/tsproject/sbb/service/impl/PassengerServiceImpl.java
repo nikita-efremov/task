@@ -3,9 +3,8 @@ package ru.tsystems.tsproject.sbb.service.impl;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.entity.*;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
-import ru.tsystems.tsproject.sbb.exception.PassengerAlreadyRegisteredException;
-import ru.tsystems.tsproject.sbb.exception.TrainAlreadyDepartedException;
-import ru.tsystems.tsproject.sbb.exception.TrainAlreadyFullException;
+import ru.tsystems.tsproject.sbb.exception.*;
+import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.service.api.PassengerService;
 
 import java.util.*;
@@ -16,28 +15,29 @@ import java.util.*;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class PassengerServiceImpl implements PassengerService {
+public class PassengerServiceImpl extends CommonServiceImpl implements PassengerService {
 
-    private TrainDAO trainDAO;
-    private PassengerDAO passengerDAO;
     private TimetableDAO timetableDAO;
     private TicketDAO ticketDAO;
 
-    public PassengerServiceImpl(TrainDAO trainDAO,
+    public PassengerServiceImpl(StationDAO stationDAO,
+                                TrainDAO trainDAO,
                                 PassengerDAO passengerDAO,
                                 TimetableDAO timetableDAO,
                                 TicketDAO ticketDAO) {
-        this.trainDAO = trainDAO;
-        this.passengerDAO = passengerDAO;
+        super(stationDAO, trainDAO, passengerDAO);
         this.timetableDAO = timetableDAO;
         this.ticketDAO = ticketDAO;
     }
 
-    public Collection<Train> findTrainsByStationsAndDate(int stationStartID,
-                                                         int stationEndID,
+    public Collection<Train> findTrainsByStationsAndDate(String stationStartName,
+                                                         String stationEndName,
                                                          Date start,
-                                                         Date end) throws DAOException {
-        Collection<Train> directionUnImportantTrains = trainDAO.getTrainsByStationsAndDate(stationStartID, stationEndID, start, end);
+                                                         Date end) throws StationNotExistsException, DAOException {
+        Station stationStart = findStation(stationStartName);
+        Station stationEnd = findStation(stationEndName);
+        Collection<Train> directionUnImportantTrains = getTrainDAO().
+                getTrainsByStationsAndDate(stationStart.getId(), stationEnd.getId(), start, end);
         Collection<Train> directionImportantTrains = new LinkedList<Train>();
         Set<String> trains = new HashSet<String>();
         for (Train train: directionUnImportantTrains) {
@@ -46,10 +46,10 @@ public class PassengerServiceImpl implements PassengerService {
                 Date currentTrainStart = null;
                 Date currentTrainEnd = null;
                 for (Timetable timetable: trainTimetables) {
-                    if (timetable.getStation().getId() == stationStartID) {
+                    if (timetable.getStation().getId() == stationStart.getId()) {
                         currentTrainStart = timetable.getDate();
                     }
-                    if (timetable.getStation().getId() == stationEndID) {
+                    if (timetable.getStation().getId() == stationEnd.getId()) {
                         currentTrainEnd = timetable.getDate();
                     }
                 }
@@ -62,16 +62,14 @@ public class PassengerServiceImpl implements PassengerService {
         return directionImportantTrains;
     }
 
-    public Collection<Train> getTrainsByStation(int stationID) throws DAOException {
-        return timetableDAO.getTimetableByStation(stationID);
-    }
-
-    public Ticket purchaseTicket(Train train, Passenger passenger)
-            throws TrainAlreadyFullException, PassengerAlreadyRegisteredException, TrainAlreadyDepartedException, DAOException {
+    public Ticket purchaseTicket(String trainNumber, String docNumber)
+            throws TrainNotExistsException, PassengerNotRegisteredException, TrainAlreadyFullException, PassengerAlreadyRegisteredException, TrainAlreadyDepartedException, DAOException {
+        Train train = findTrain(trainNumber);
+        Passenger passenger = findPassenger(docNumber);
         if (train.getSeats() == 0) {
             throw new TrainAlreadyFullException("Train with number " + train.getNumber() + " does not have free seats");
         }
-        Collection<Passenger> trainPassengers = passengerDAO.getPassengersByTrain(train.getId());
+        Collection<Passenger> trainPassengers = getPassengerDAO().getPassengersByTrain(train.getId());
         for (Passenger trainPassenger: trainPassengers) {
             if ((trainPassenger.getFirstName().equals(passenger.getFirstName()))
                     && (trainPassenger.getLastName().equals(passenger.getLastName()))
@@ -96,7 +94,7 @@ public class PassengerServiceImpl implements PassengerService {
         ticket.setTrain(train);
         ticket.setPassenger(passenger);
         ticket.setTicketNumber(ticketNumber);
-        trainDAO.decreaseSeatAmount(train.getId());
+        getTrainDAO().decreaseSeatAmount(train.getId());
         ticketDAO.create(ticket);
 
         List<Ticket> tickets = new LinkedList<Ticket>(ticketDAO.getTicketByNumber(ticketNumber));
@@ -107,13 +105,14 @@ public class PassengerServiceImpl implements PassengerService {
         return ticket;
     }
 
-    public void addPassenger(Passenger passenger) throws PassengerAlreadyRegisteredException, DAOException {
-        Passenger foundPassenger = passengerDAO.getPassengerByDocumentNumber(passenger.getDocNumber());
+    public Passenger addPassenger(Passenger passenger) throws PassengerAlreadyRegisteredException, DAOException {
+        Passenger foundPassenger = getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber());
         if (foundPassenger != null) {
             throw new PassengerAlreadyRegisteredException("Passenger with document  number " + passenger.getDocNumber()
                     + " already registered in system");
         } else {
-            passengerDAO.create(passenger);
+            getPassengerDAO().create(passenger);
         }
+        return getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber());
     }
 }

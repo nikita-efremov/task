@@ -17,19 +17,14 @@ public class TimetableBean extends BaseBean implements Comparable<TimetableBean>
     private int id;
 
     @Pattern(regexp = "[A-Za-z0-9]+", message = "Train number name must contain only english letters and digits, one or more")
-    private String trainNumber;
+    private String trainNumber = "";
 
     @Pattern(regexp = "[A-Za-z]+", message = "Station name must contain only english letters, one or more")
-    private String stationName;
+    private String stationName = "";
 
     @Future(message = "Train departure date must be in future")
     @NotNull(message = "Date format: dd-MM-yyyy HH:mm")
     private Date date;
-
-    public TimetableBean() {
-        trainNumber = "";
-        stationName = "";
-    }
 
     public int getId() {
         return id;

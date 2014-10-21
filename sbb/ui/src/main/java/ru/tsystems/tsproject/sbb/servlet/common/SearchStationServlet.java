@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.common;
 
+import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
@@ -28,7 +29,7 @@ public class SearchStationServlet extends HttpServlet {
      * Initialize servlet`s attribute - stationModel
      */
     public void init() {
-        stationModel = new StationModel();
+        stationModel = ApplicationContext.getStationModel();
     }
 
     /**

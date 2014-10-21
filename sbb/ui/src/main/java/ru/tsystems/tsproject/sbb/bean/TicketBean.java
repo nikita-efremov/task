@@ -20,15 +20,10 @@ public class TicketBean extends BaseBean {
     private long ticketNumber;
 
     @Pattern(regexp = "[A-Za-z0-9]{10}", message="Document number must contain 10 symbols: only english letters and digits")
-    private String passengerDocNumber;
+    private String passengerDocNumber = "";
 
     @Pattern(regexp = "[A-Za-z0-9]+", message = "Train number name must contain only english letters and digits, one or more")
-    private String trainNumber;
-
-    public TicketBean() {
-        passengerDocNumber = "";
-        trainNumber = "";
-    }
+    private String trainNumber = "";
 
     public int getId() {
         return id;
