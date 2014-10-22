@@ -72,4 +72,22 @@ public class Timetable implements Comparable<Timetable> {
             return -1;
         }
     }
+
+    public boolean equals(Object o) {
+        if (super.equals(o)) {
+            return Boolean.TRUE;
+        }
+        if (o == null) {
+            return Boolean.FALSE;
+        }
+        if (this.getClass() != o.getClass()) {
+            return Boolean.FALSE;
+        } else {
+            Timetable otherTimetable = (Timetable)o;
+            return ((otherTimetable.getId() == this.getId())
+                    && (otherTimetable.getStation().getId() == this.getStation().getId())
+                    && (otherTimetable.getTrain().getId() == this.getTrain().getId())
+                    && (otherTimetable.getDate().equals(this.getDate())));
+        }
+    }
 }

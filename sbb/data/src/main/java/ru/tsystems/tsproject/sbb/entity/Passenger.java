@@ -1,10 +1,7 @@
 package ru.tsystems.tsproject.sbb.entity;
 
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -94,6 +91,28 @@ public class Passenger {
     }
 
     public void addTicket(Ticket ticket) {
+        if (tickets == null) {
+            tickets = new TreeSet<Ticket>();
+        }
         tickets.add(ticket);
+    }
+
+    public boolean equals(Object o) {
+        if (super.equals(o)) {
+            return Boolean.TRUE;
+        }
+        if (o == null) {
+            return Boolean.FALSE;
+        }
+        if (this.getClass() != o.getClass()) {
+            return Boolean.FALSE;
+        } else {
+            Passenger otherPassenger = (Passenger)o;
+            return ((otherPassenger.getId() == this.getId())
+                    && (otherPassenger.getDocNumber().equals(this.getDocNumber()))
+                    && (otherPassenger.getLastName().equals(this.getLastName()))
+                    && (otherPassenger.getFirstName().equals(this.getFirstName()))
+                    && (otherPassenger.getBirthDate().equals(this.getBirthDate())));
+        }
     }
 }

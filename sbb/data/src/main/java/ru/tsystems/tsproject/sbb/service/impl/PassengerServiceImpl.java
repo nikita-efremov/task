@@ -4,7 +4,6 @@ import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.entity.*;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.exception.*;
-import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.service.api.PassengerService;
 
 import java.util.*;
@@ -42,7 +41,7 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
         Set<String> trains = new HashSet<String>();
         for (Train train: directionUnImportantTrains) {
             if (!trains.contains(train.getNumber())) {
-                Collection<Timetable> trainTimetables = timetableDAO.getTimetableByTrain(train.getId());
+                Collection<Timetable> trainTimetables = train.getTimetables();
                 Date currentTrainStart = null;
                 Date currentTrainEnd = null;
                 for (Timetable timetable: trainTimetables) {
@@ -62,8 +61,9 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
         return directionImportantTrains;
     }
 
-    public Ticket purchaseTicket(String trainNumber, String docNumber)
-            throws TrainNotExistsException, PassengerNotRegisteredException, TrainAlreadyFullException, PassengerAlreadyRegisteredException, TrainAlreadyDepartedException, DAOException {
+    public Ticket purchaseTicket(String trainNumber, String docNumber) throws
+            TrainNotExistsException, PassengerNotExistsException, TrainAlreadyFullException,
+            PassengerAlreadyRegisteredOnTrainException, TrainAlreadyDepartedException, DAOException {
         Train train = findTrain(trainNumber);
         Passenger passenger = findPassenger(docNumber);
         if (train.getSeats() == 0) {
@@ -74,11 +74,11 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
             if ((trainPassenger.getFirstName().equals(passenger.getFirstName()))
                     && (trainPassenger.getLastName().equals(passenger.getLastName()))
                     && (trainPassenger.getBirthDate().equals(passenger.getBirthDate()))) {
-                throw new PassengerAlreadyRegisteredException("Passenger " + passenger.getFirstName() + " " + passenger.getLastName()
+                throw new PassengerAlreadyRegisteredOnTrainException("Passenger " + passenger.getFirstName() + " " + passenger.getLastName()
                         + " had been already registered on train " + train.getNumber());
             }
         }
-        TreeSet<Timetable> timetables = new TreeSet<Timetable>(timetableDAO.getTimetableByTrain(train.getId()));
+        TreeSet<Timetable> timetables = new TreeSet<Timetable>(train.getTimetables());
         if (timetables.size() > 0) {
             Date trainStartTime = timetables.first().getDate();
             Calendar calendar = Calendar.getInstance();
@@ -105,10 +105,10 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
         return ticket;
     }
 
-    public Passenger addPassenger(Passenger passenger) throws PassengerAlreadyRegisteredException, DAOException {
+    public Passenger addPassenger(Passenger passenger) throws PassengerAlreadyExistsException, DAOException {
         Passenger foundPassenger = getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber());
         if (foundPassenger != null) {
-            throw new PassengerAlreadyRegisteredException("Passenger with document  number " + passenger.getDocNumber()
+            throw new PassengerAlreadyExistsException("Passenger with document  number " + passenger.getDocNumber()
                     + " already registered in system");
         } else {
             getPassengerDAO().create(passenger);

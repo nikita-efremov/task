@@ -5,18 +5,11 @@ import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.TicketBean;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
-import ru.tsystems.tsproject.sbb.dao.api.*;
-import ru.tsystems.tsproject.sbb.dao.impl.*;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Ticket;
-import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.*;
 import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.service.api.PassengerService;
-import ru.tsystems.tsproject.sbb.service.impl.CommonServiceImpl;
-import ru.tsystems.tsproject.sbb.service.impl.PassengerServiceImpl;
-
-import javax.persistence.EntityManager;
 
 /**
  *
@@ -62,7 +55,7 @@ public class PassengerModel {
             passengerBean.setDocNumber(passenger.getDocNumber());
             passengerBean.setBirthDate(passenger.getBirthDate());
 
-        } catch (PassengerAlreadyRegisteredException e) {
+        } catch (PassengerAlreadyExistsException e) {
             passengerBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e);
         } catch (DAOException e) {
@@ -93,7 +86,7 @@ public class PassengerModel {
             passengerBean.setFirstName(passenger.getFirstName());
             passengerBean.setDocNumber(passenger.getDocNumber());
             passengerBean.setBirthDate(passenger.getBirthDate());
-        } catch (PassengerNotRegisteredException e) {
+        } catch (PassengerNotExistsException e) {
             passengerBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e);
         } catch (DAOException e) {
@@ -125,10 +118,10 @@ public class PassengerModel {
             ticketBean.setTrainNumber(ticket.getTrain().getNumber());
             ticketBean.setTicketNumber(ticket.getTicketNumber());
             ticketBean.setId(ticket.getId());
-        } catch (PassengerAlreadyRegisteredException e) {
+        } catch (PassengerAlreadyRegisteredOnTrainException e) {
             ticketBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e);
-        } catch (PassengerNotRegisteredException e) {
+        } catch (PassengerNotExistsException e) {
             ticketBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e);
         } catch (TrainAlreadyFullException e) {

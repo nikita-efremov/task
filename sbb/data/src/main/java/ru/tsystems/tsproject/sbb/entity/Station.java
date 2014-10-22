@@ -56,6 +56,9 @@ public class Station {
     }
 
     public void addTimetable(Timetable timetable) {
+        if (timetables == null) {
+            timetables = new TreeSet<Timetable>();
+        }
         timetables.add(timetable);
     }
 

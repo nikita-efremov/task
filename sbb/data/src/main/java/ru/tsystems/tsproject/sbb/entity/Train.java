@@ -71,6 +71,9 @@ public class Train {
     }
 
     public void addTimetable(Timetable timetable) {
+        if (timetables == null) {
+            timetables = new TreeSet<Timetable>();
+        }
         timetables.add(timetable);
     }
 
@@ -80,5 +83,22 @@ public class Train {
 
     public void setTotalSeats(int totalSeats) {
         this.totalSeats = totalSeats;
+    }
+
+    public boolean equals(Object o) {
+        if (super.equals(o)) {
+            return Boolean.TRUE;
+        }
+        if (o == null) {
+            return Boolean.FALSE;
+        }
+        if (this.getClass() != o.getClass()) {
+            return Boolean.FALSE;
+        } else {
+            Train otherTrain = (Train)o;
+            return ((otherTrain.getId() == this.getId())
+                    && (otherTrain.getNumber().equals(this.getNumber()))
+                    && (otherTrain.getTotalSeats() == this.getTotalSeats()));
+        }
     }
 }

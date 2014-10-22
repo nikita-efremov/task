@@ -1,7 +1,6 @@
 package ru.tsystems.tsproject.sbb.service.api;
 
 import ru.tsystems.tsproject.sbb.entity.Passenger;
-import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Ticket;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
@@ -53,13 +52,13 @@ public interface PassengerService extends CommonService {
      * @throws TrainNotExistsException
      *         If train not found
      *
-     * @throws PassengerNotRegisteredException
+     * @throws PassengerNotExistsException
      *         If passenger not found
      *
      * @throws TrainAlreadyFullException
      *         If in train there are no free seats
      *
-     * @throws PassengerAlreadyRegisteredException
+     * @throws PassengerAlreadyRegisteredOnTrainException
      *         If current passenger had been already registered on current train
      *
      * @throws TrainAlreadyDepartedException
@@ -68,8 +67,9 @@ public interface PassengerService extends CommonService {
      * @throws DAOException
      *         If error occurred in JPA layer
      */
-    public Ticket purchaseTicket(String trainNumber, String docNumber)
-            throws TrainNotExistsException, PassengerNotRegisteredException, TrainAlreadyFullException, PassengerAlreadyRegisteredException, TrainAlreadyDepartedException, DAOException;
+    public Ticket purchaseTicket(String trainNumber, String docNumber) throws
+            TrainNotExistsException, PassengerNotExistsException, TrainAlreadyFullException,
+            PassengerAlreadyRegisteredOnTrainException, TrainAlreadyDepartedException, DAOException;
 
     /**
      * Creates passenger, if passenger with specified document number not exists
@@ -77,11 +77,11 @@ public interface PassengerService extends CommonService {
      * @param  passenger
      *         Passenger in ticket
      *
-     * @throws PassengerAlreadyRegisteredException
+     * @throws PassengerAlreadyExistsException
      *         If current passenger had been already registered in system
      *
      * @throws DAOException
      *         If error occurred in JPA layer
      */
-    public Passenger addPassenger(Passenger passenger) throws PassengerAlreadyRegisteredException, DAOException;
+    public Passenger addPassenger(Passenger passenger) throws PassengerAlreadyExistsException, DAOException;
 }

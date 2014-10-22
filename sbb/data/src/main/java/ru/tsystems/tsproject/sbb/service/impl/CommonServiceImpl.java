@@ -4,14 +4,11 @@ import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Train;
-import ru.tsystems.tsproject.sbb.exception.PassengerNotRegisteredException;
+import ru.tsystems.tsproject.sbb.exception.PassengerNotExistsException;
 import ru.tsystems.tsproject.sbb.exception.StationNotExistsException;
 import ru.tsystems.tsproject.sbb.exception.TrainNotExistsException;
 import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *
@@ -49,10 +46,10 @@ public class CommonServiceImpl implements CommonService {
         return train;
     }
 
-    public Passenger findPassenger(String docNumber) throws DAOException, PassengerNotRegisteredException {
+    public Passenger findPassenger(String docNumber) throws DAOException, PassengerNotExistsException {
         Passenger passenger = passengerDAO.getPassengerByDocumentNumber(docNumber);
         if (passenger == null) {
-            throw new PassengerNotRegisteredException("Passenger with document number " + docNumber + " is not registered");
+            throw new PassengerNotExistsException("Passenger with document number " + docNumber + " is not registered");
         }
         return passenger;
     }

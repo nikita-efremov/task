@@ -4,7 +4,7 @@ import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
-import ru.tsystems.tsproject.sbb.exception.PassengerNotRegisteredException;
+import ru.tsystems.tsproject.sbb.exception.PassengerNotExistsException;
 import ru.tsystems.tsproject.sbb.exception.StationNotExistsException;
 import ru.tsystems.tsproject.sbb.exception.TrainNotExistsException;
 
@@ -43,10 +43,10 @@ public interface CommonService {
      * @throws DAOException
      *         If error occurred in JPA layer
      *
-     * @throws PassengerNotRegisteredException
+     * @throws PassengerNotExistsException
      *         if passenger is not found
      */
-    public Passenger findPassenger(String docNumber) throws PassengerNotRegisteredException, DAOException;
+    public Passenger findPassenger(String docNumber) throws PassengerNotExistsException, DAOException;
 
     /**
      * Searches train in system with using information, specified in param
