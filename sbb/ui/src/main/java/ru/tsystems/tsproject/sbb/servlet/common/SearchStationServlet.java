@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.common;
 
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
@@ -23,6 +24,7 @@ import java.util.Collection;
 
 public class SearchStationServlet extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(SearchStationServlet.class);
     private StationModel stationModel;
 
     /**
@@ -50,22 +52,20 @@ public class SearchStationServlet extends HttpServlet {
      *                                  could not be handled
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        StationBean stationBean = new StationBean();
+        stationBean.setName(request.getParameter("Station name"));
+        log.info("Servlet got bean: " + stationBean);
         String action = request.getParameter("stationSearchAction");
         if (action == null) {
             response.sendRedirect("/ui/common/searchStation.jsp");
         } else if (action.equals("back")) {
             response.sendRedirect("/ui/index.jsp");
         } else if (action.equals("watch timetable")) {
-            StationBean stationBean = new StationBean();
-            stationBean.setName(request.getParameter("Station name"));
             stationBean = stationModel.findStation(stationBean);
             request.setAttribute("stationBean", stationBean);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/stationTimetable.jsp");
             requestDispatcher.forward(request, response);
-
         } else {
-            StationBean stationBean = new StationBean();
-            stationBean.setName(request.getParameter("Station name"));
             stationBean.validate();
             if (stationBean.isValidationFailed()) {
                 request.setAttribute("searchResult", stationBean);

@@ -11,13 +11,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 02.10.14
- * Time: 11:35
- * To change this template use File | Settings | File Templates.
- */
 public class TrainDAOImpl extends AbstractDAOImpl<Train> implements TrainDAO {
 	
 	public TrainDAOImpl(EntityManager em) {

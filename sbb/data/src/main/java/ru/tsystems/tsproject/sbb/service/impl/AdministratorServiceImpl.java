@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.service.impl;
 
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
@@ -9,6 +10,7 @@ import ru.tsystems.tsproject.sbb.exception.*;
 import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
@@ -21,6 +23,7 @@ import java.util.Set;
  */
 public class AdministratorServiceImpl extends CommonServiceImpl implements AdministratorService {
 
+    private static final Logger log = Logger.getLogger(AdministratorServiceImpl.class);
     private TimetableDAO timetableDAO;
 
     public AdministratorServiceImpl(StationDAO stationDAO,
@@ -32,25 +35,33 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
     }
 
     public Station addStation(Station station) throws StationAlreadyExistsException, DAOException {
+        log.info("Start adding station with name: " + station.getName());
         if (getStationDAO().getStationByName(station.getName()) == null) {
             getStationDAO().create(station);
         } else {
             throw new StationAlreadyExistsException("Station with name " + station.getName() + " already exists");
         }
-        return getStationDAO().getStationByName(station.getName());
+        station = getStationDAO().getStationByName(station.getName());
+        log.info("Station added: " + station);
+        return station;
     }
 
     public Train addTrain(Train train) throws TrainAlreadyExistsException, DAOException {
+        log.info("Start adding train with number: " + train.getNumber() + " and totalSeats: " + train.getSeats());
         if (getTrainDAO().getTrainByNumber(train.getNumber()) == null) {
             getTrainDAO().create(train);
         } else {
             throw new TrainAlreadyExistsException("Train with number " + train.getNumber() + " already exists");
         }
-        return getTrainDAO().getTrainByNumber(train.getNumber());
+        train =  getTrainDAO().getTrainByNumber(train.getNumber());
+        log.info("Train added: " + train);
+        return train;
     }
 
     public void addTimetable(String trainNumber, String stationName, Date departureDate)
             throws TrainNotExistsException, StationNotExistsException, TrainStopAlreadyExistsException, DAOException {
+        log.info("Start adding timetable for train number: " + trainNumber
+                + " station name: " +  stationName + " and date: " + departureDate);
         Train train = findTrain(trainNumber);
         Station station = findStation(stationName);
 
@@ -67,18 +78,22 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
         timetable.setStation(station);
         timetable.setDate(departureDate);
         timetableDAO.create(timetable);
+        log.info("Timetable added");
     }
 
     public Collection<Passenger> getPassengersByTrain(String trainNumber) throws TrainNotExistsException, DAOException {
+        log.info("Start getting passengers by train number: " + trainNumber);
         Train train = findTrain(trainNumber);
         return getPassengerDAO().getPassengersByTrain(train.getId());
     }
 
     public Collection<Train> getAllTrains() throws DAOException {
+        log.info("Start getting all trains");
         return getTrainDAO().<Train>getAll();
     }
 
     public Collection<Station> getAllStations() throws DAOException {
+        log.info("Start getting all stations");
         return getStationDAO().<Station>getAll();
     }
 }

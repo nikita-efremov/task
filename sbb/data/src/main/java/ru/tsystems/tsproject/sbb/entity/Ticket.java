@@ -2,13 +2,6 @@ package ru.tsystems.tsproject.sbb.entity;
 
 import javax.persistence.*;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 01.10.14
- * Time: 17:50
- * To change this template use File | Settings | File Templates.
- */
 @Entity
 @Table(name = "ticket")
 public class Ticket implements Comparable<Ticket> {
@@ -69,5 +62,24 @@ public class Ticket implements Comparable<Ticket> {
         } else {
             return -1;
         }
+    }
+
+    @Override
+    public String toString() {
+        String trainString = "";
+        if (train != null) {
+            trainString = train.getNumber();
+        }
+        String passengerString = "";
+        if (passenger != null) {
+            passengerString = passenger.getDocNumber();
+        }
+
+        return "[Ticket: " +
+                "id=" + id + "," +
+                "ticketNumber=" + ticketNumber+ "," +
+                "trainNumber=" + trainString + "," +
+                "docNumber=" + passengerString + "," +
+                "]";
     }
 }

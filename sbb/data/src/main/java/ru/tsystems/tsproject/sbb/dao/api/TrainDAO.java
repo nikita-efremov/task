@@ -5,13 +5,6 @@ import ru.tsystems.tsproject.sbb.entity.Train;
 import java.util.Collection;
 import java.util.Date;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 02.10.14
- * Time: 22:42
- * To change this template use File | Settings | File Templates.
- */
 public interface TrainDAO extends CommonDAO <Train> {
 
     public Train getTrainByNumber(String trainNumber) throws DAOException;

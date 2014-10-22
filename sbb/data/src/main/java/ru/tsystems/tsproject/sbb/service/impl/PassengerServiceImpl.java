@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.service.impl;
 
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.entity.*;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
@@ -16,16 +17,14 @@ import java.util.*;
  */
 public class PassengerServiceImpl extends CommonServiceImpl implements PassengerService {
 
-    private TimetableDAO timetableDAO;
+    private static final Logger log = Logger.getLogger(PassengerServiceImpl.class);
     private TicketDAO ticketDAO;
 
     public PassengerServiceImpl(StationDAO stationDAO,
                                 TrainDAO trainDAO,
                                 PassengerDAO passengerDAO,
-                                TimetableDAO timetableDAO,
                                 TicketDAO ticketDAO) {
         super(stationDAO, trainDAO, passengerDAO);
-        this.timetableDAO = timetableDAO;
         this.ticketDAO = ticketDAO;
     }
 
@@ -33,6 +32,8 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
                                                          String stationEndName,
                                                          Date start,
                                                          Date end) throws StationNotExistsException, DAOException {
+        log.info("Start searching trains by stationStartName:" + stationStartName + " stationEndName:" + stationStartName
+                + " start date: " + start + " end date: " + end);
         Station stationStart = findStation(stationStartName);
         Station stationEnd = findStation(stationEndName);
         Collection<Train> directionUnImportantTrains = getTrainDAO().
@@ -58,12 +59,19 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
                 trains.add(train.getNumber());
             }
         }
+        StringBuilder trainString = new StringBuilder();
+        for (Train train: directionImportantTrains) {
+            trainString.append(",").append(train);
+        }
+        log.info("Found trains: " + trainString.toString());
         return directionImportantTrains;
     }
 
     public Ticket purchaseTicket(String trainNumber, String docNumber) throws
             TrainNotExistsException, PassengerNotExistsException, TrainAlreadyFullException,
             PassengerAlreadyRegisteredOnTrainException, TrainAlreadyDepartedException, DAOException {
+        log.info("Start purchasing ticket for passenger with docNumber: " + docNumber +
+                " for train with number: " + trainNumber);
         Train train = findTrain(trainNumber);
         Passenger passenger = findPassenger(docNumber);
         if (train.getSeats() == 0) {
@@ -102,10 +110,12 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
         if (tickets.size() > 0) {
             ticket = tickets.get(0);
         }
+        log.info("Ticket added: " + ticket);
         return ticket;
     }
 
     public Passenger addPassenger(Passenger passenger) throws PassengerAlreadyExistsException, DAOException {
+        log.info("Start adding " + passenger);
         Passenger foundPassenger = getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber());
         if (foundPassenger != null) {
             throw new PassengerAlreadyExistsException("Passenger with document  number " + passenger.getDocNumber()
@@ -113,6 +123,8 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
         } else {
             getPassengerDAO().create(passenger);
         }
-        return getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber());
+        passenger = getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber());
+        log.info("Passenger added: " + passenger);
+        return passenger;
     }
 }

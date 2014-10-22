@@ -45,4 +45,19 @@ public class StationBean extends BaseBean {
     public void setTimetables(Set<TimetableBean> timetables) {
         this.timetables = timetables;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder timetable = new StringBuilder();
+        if (timetables != null) {
+            for (TimetableBean timetableBean: timetables) {
+                timetable.append(timetableBean.toString()).append(",");
+            }
+        }
+        return "[StationBean: " +
+                "id=" + id + ", " +
+                "name=" + name + "," +
+                "timetables=" + timetable.toString()
+                + "]";
+    }
 }

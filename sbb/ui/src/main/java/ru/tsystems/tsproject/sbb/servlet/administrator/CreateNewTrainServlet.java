@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.administrator;
 
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
@@ -20,6 +21,7 @@ import java.io.IOException;
  */
 public class CreateNewTrainServlet extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(CreateNewTrainServlet.class);
     private TrainModel trainModel;
 
     /**
@@ -57,6 +59,7 @@ public class CreateNewTrainServlet extends HttpServlet {
             trainBean.setNumber(request.getParameter("Train number"));
             trainBean.setSeats(request.getParameter("Total seats"));
             trainBean.setTotalSeats(request.getParameter("Total seats"));
+            log.info("Servlet got bean: " + trainBean);
             trainBean.validate();
             if (trainBean.isValidationFailed()) {
                 request.setAttribute("createResult", trainBean);

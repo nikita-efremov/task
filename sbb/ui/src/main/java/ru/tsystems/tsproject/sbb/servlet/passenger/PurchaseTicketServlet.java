@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.passenger;
 
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.TicketBean;
@@ -20,6 +21,7 @@ import java.io.IOException;
  */
 public class PurchaseTicketServlet extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(PurchaseTicketServlet.class);
     private PassengerModel passengerModel;
 
     /**
@@ -56,6 +58,7 @@ public class PurchaseTicketServlet extends HttpServlet {
             TicketBean ticketBean = new TicketBean();
             ticketBean.setTrainNumber(request.getParameter("Train number"));
             ticketBean.setPassengerDocNumber((String)request.getSession().getAttribute("passDoc"));
+            log.info("Servlet got bean: " + ticketBean);
             ticketBean.validate("trainNumber");
             if (ticketBean.isValidationFailed()) {
                 request.setAttribute("purchaseResult", ticketBean);

@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.passenger;
 
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.model.PassengerModel;
@@ -22,6 +23,7 @@ import java.util.Date;
  */
 public class PassengerLoginServlet extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(PassengerLoginServlet.class);
     private PassengerModel passengerModel;
 
     /**
@@ -60,6 +62,7 @@ public class PassengerLoginServlet extends HttpServlet {
         } else {
             PassengerBean passengerBean = new PassengerBean();
             passengerBean.setDocNumber(request.getParameter("Document number"));
+            log.info("Servlet got bean: " + passengerBean);
 
             passengerBean.validate("docNumber");
             if (passengerBean.isValidationFailed()) {
@@ -68,7 +71,7 @@ public class PassengerLoginServlet extends HttpServlet {
                 requestDispatcher.forward(request, response);
             } else {
                 passengerBean = passengerModel.getPassenger(passengerBean);
-                request.setAttribute("createResult", passengerBean);
+                request.setAttribute("loginResult", passengerBean);
                 RequestDispatcher requestDispatcher;
                 if (passengerBean.isProcessingFailed()) {
                     requestDispatcher = request.getRequestDispatcher("/passengerLogin.jsp");
@@ -76,6 +79,7 @@ public class PassengerLoginServlet extends HttpServlet {
                     httpSession.setAttribute("user", passengerBean.getLastName() + " " + passengerBean.getFirstName().charAt(0) + ".");
                     httpSession.setAttribute("passDoc", passengerBean.getDocNumber());
                     httpSession.setMaxInactiveInterval(30*60);
+                    log.info("Passenger with docNumber=" + passengerBean.getDocNumber() + " logged in");
                     requestDispatcher = request.getRequestDispatcher("/index.jsp");
                 }
                 requestDispatcher.forward(request, response);

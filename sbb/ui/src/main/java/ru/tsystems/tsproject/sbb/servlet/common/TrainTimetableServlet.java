@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.common;
 
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
@@ -21,6 +22,7 @@ import java.util.Collection;
 
 public class TrainTimetableServlet extends HttpServlet {
 
+    private static Logger log = Logger.getLogger(TrainTimetableServlet.class);
     private TrainModel trainModel;
 
     /**
@@ -56,6 +58,7 @@ public class TrainTimetableServlet extends HttpServlet {
         } else {
             TrainBean trainBean = new TrainBean();
             trainBean.setNumber(request.getParameter("Train number"));
+            log.info("Servlet got bean: " + trainBean);
             trainBean = trainModel.findTrain(trainBean);
             request.setAttribute("trainBean", trainBean);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/trainTimetable.jsp");

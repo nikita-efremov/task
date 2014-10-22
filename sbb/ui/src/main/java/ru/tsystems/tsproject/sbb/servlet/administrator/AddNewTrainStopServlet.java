@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.administrator;
 
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
@@ -27,6 +28,7 @@ import java.util.Date;
 
 public class AddNewTrainStopServlet extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(AddNewTrainStopServlet.class);
     private TrainModel trainModel;
 
     /**
@@ -74,7 +76,7 @@ public class AddNewTrainStopServlet extends HttpServlet {
             timetableBean.setStationName(request.getParameter("Station name"));
             timetableBean.setDate(depDate);
             timetableBean.setTrainNumber(request.getParameter("Train number"));
-
+            log.info("Servlet got bean:" + timetableBean);
             timetableBean.validate();
             if (timetableBean.isValidationFailed()) {
                 request.setAttribute("timetableBean", timetableBean);

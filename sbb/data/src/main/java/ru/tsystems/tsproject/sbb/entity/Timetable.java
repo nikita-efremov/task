@@ -1,16 +1,10 @@
 package ru.tsystems.tsproject.sbb.entity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 01.10.14
- * Time: 17:52
- * To change this template use File | Settings | File Templates.
- */
 @Entity
 @Table(name = "timetable")
 public class Timetable implements Comparable<Timetable> {
@@ -89,5 +83,27 @@ public class Timetable implements Comparable<Timetable> {
                     && (otherTimetable.getTrain().getId() == this.getTrain().getId())
                     && (otherTimetable.getDate().equals(this.getDate())));
         }
+    }
+
+    @Override
+    public String toString() {
+        String dateString = "";
+        if (date != null) {
+           dateString = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(date);
+        }
+        String trainString = "";
+        if (train != null) {
+            trainString = train.getNumber();
+        }
+        String stationString = "";
+        if (station != null) {
+            stationString = station.getName();
+        }
+        return "[Timetable: " +
+                "id=" + id + "," +
+                "trainNumber=" + trainString + "," +
+                "stationName=" + stationString + "," +
+                "depDate=" + dateString +
+                "]";
     }
 }

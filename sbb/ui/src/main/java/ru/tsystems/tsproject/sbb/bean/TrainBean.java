@@ -4,13 +4,6 @@ import javax.validation.constraints.*;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 17.10.14
- * Time: 14:27
- * To change this template use File | Settings | File Templates.
- */
 public class TrainBean extends BaseBean {
 
     private int id;
@@ -25,7 +18,7 @@ public class TrainBean extends BaseBean {
     @Pattern(regexp = "[0-9]{1,3}", message = "Train seats value must contain only digits")
     private String totalSeats = "";
 
-    private Set<TimetableBean> timetables;
+    private Set<TimetableBean> timetables = new TreeSet<TimetableBean>();
 
     public int getId() {
         return id;
@@ -69,5 +62,22 @@ public class TrainBean extends BaseBean {
 
     public void setTimetables(Set<TimetableBean> timetables) {
         this.timetables = timetables;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder timetable = new StringBuilder();
+        if (timetables != null) {
+            for (TimetableBean timetableBean: timetables) {
+                timetable.append(timetableBean.toString()).append(",");
+            }
+        }
+        return "[TrainBean: " +
+                "id=" + id + ", " +
+                "number=" + number + "," +
+                "seats=" + seats + "," +
+                "totalSeats=" + totalSeats +
+                "timetables=" + timetable.toString()
+                + "]";
     }
 }

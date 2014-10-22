@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.common;
 
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TimetableBean;
@@ -26,6 +27,7 @@ import java.util.Date;
 
 public class SearchTrainByStationsAndDateServlet extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(SearchTrainByStationsAndDateServlet.class);
     private TrainModel trainModel;
 
     /**
@@ -82,6 +84,8 @@ public class SearchTrainByStationsAndDateServlet extends HttpServlet {
             TimetableBean endBean = new TimetableBean();
             endBean.setStationName(request.getParameter("Station end name"));
             endBean.setDate(endDate);
+
+            log.info("Servlet got beans: " + startBean + " " + endBean);
 
             startBean.validate("stationName");
             startBean.validate("date");

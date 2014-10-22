@@ -92,7 +92,7 @@ public class ApplicationContext {
 
     public static PassengerService getPassengerService() {
         if (passengerService == null) {
-            passengerService = new PassengerServiceImpl(getStationDAO(), getTrainDAO(), getPassengerDAO(), getTimetableDAO(), getTicketDAO());
+            passengerService = new PassengerServiceImpl(getStationDAO(), getTrainDAO(), getPassengerDAO(), getTicketDAO());
         }
         return passengerService;
     }

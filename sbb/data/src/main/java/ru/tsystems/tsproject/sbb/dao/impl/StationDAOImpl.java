@@ -9,13 +9,6 @@ import ru.tsystems.tsproject.sbb.dao.DAOException;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 02.10.14
- * Time: 11:28
- * To change this template use File | Settings | File Templates.
- */
 public class StationDAOImpl extends AbstractDAOImpl<Station> implements StationDAO {
 
     private static final Logger log = Logger.getLogger(StationDAOImpl.class);

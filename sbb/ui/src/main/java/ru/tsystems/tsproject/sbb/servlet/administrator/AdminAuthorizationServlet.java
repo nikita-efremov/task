@@ -54,6 +54,7 @@ public class AdminAuthorizationServlet extends HttpServlet {
                 String passExpected = getServletConfig().getInitParameter("password");
                 if ((loginExpected.equals(adminLoginBean.getLogin()))
                         && (passExpected.equals(adminLoginBean.getPassword()))) {
+                    log.info("Admin logged in system");
                     httpSession.setAttribute("user", "admin");
                     httpSession.setMaxInactiveInterval(30*60);
                     response.sendRedirect("/ui/administrator/administratorMain.jsp");

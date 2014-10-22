@@ -8,13 +8,6 @@ import ru.tsystems.tsproject.sbb.dao.DAOException;
 import javax.persistence.*;
 import java.util.Collection;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 02.10.14
- * Time: 12:57
- * To change this template use File | Settings | File Templates.
- */
 public class TicketDAOImpl extends AbstractDAOImpl<Ticket> implements TicketDAO {
 
 	public TicketDAOImpl(EntityManager em) {

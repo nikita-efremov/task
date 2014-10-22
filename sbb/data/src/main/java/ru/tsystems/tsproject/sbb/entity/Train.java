@@ -5,14 +5,6 @@ import javax.validation.constraints.Pattern;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 01.10.14
- * Time: 17:44
- * To change this template use File | Settings | File Templates.
- */
-
 @Entity
 @Table(name = "train")
 public class Train {
@@ -60,10 +52,9 @@ public class Train {
 
     public Set<Timetable> getTimetables() {
 		if (timetables == null) {
-			return new TreeSet<Timetable>();
-		} else {
-			return timetables;
+            timetables = new TreeSet<Timetable>();
 		}
+        return timetables;
     }
 
     public void setTimetables(TreeSet<Timetable> timetables) {
@@ -100,5 +91,22 @@ public class Train {
                     && (otherTrain.getNumber().equals(this.getNumber()))
                     && (otherTrain.getTotalSeats() == this.getTotalSeats()));
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder timetableString = new StringBuilder();
+        if (timetables != null) {
+            for (Timetable timetable: timetables) {
+                timetableString.append(timetable.toString()).append(",");
+            }
+        }
+        return "[Train: " +
+                "id=" + id + ", " +
+                "number=" + number + "," +
+                "seats=" + seats + "," +
+                "totalSeats=" + totalSeats +
+                "timetables=" + timetableString.toString()
+                + "]";
     }
 }

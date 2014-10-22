@@ -6,13 +6,6 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 01.10.14
- * Time: 17:35
- * To change this template use File | Settings | File Templates.
- */
 @Entity
 @Table(name = "passenger")
 public class Passenger {
@@ -80,10 +73,9 @@ public class Passenger {
 
     public Set<Ticket> getTickets() {
 		if (tickets == null) {
-			return new HashSet<Ticket>();
-		} else {
-			return tickets;
+			tickets = new HashSet<Ticket>();
 		}
+        return tickets;
     }
 
     public void setTickets(HashSet<Ticket> tickets) {
@@ -114,5 +106,23 @@ public class Passenger {
                     && (otherPassenger.getFirstName().equals(this.getFirstName()))
                     && (otherPassenger.getBirthDate().equals(this.getBirthDate())));
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder ticketsString = new StringBuilder();
+        if (tickets != null) {
+            for (Ticket ticket: tickets) {
+                ticketsString.append(ticket.toString()).append(",");
+            }
+        }
+        return "[Passenger: " +
+                "id=" + id + ", " +
+                "docNumber=" + docNumber + "," +
+                "lastName=" + lastName + "," +
+                "firstName=" + firstName + "," +
+                "birthDate=" + birthDate + "," +
+                "tickets=" + ticketsString.toString()
+                + "]";
     }
 }

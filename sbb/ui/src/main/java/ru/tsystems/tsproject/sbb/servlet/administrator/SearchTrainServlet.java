@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.administrator;
 
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
@@ -23,6 +24,7 @@ import java.util.Set;
 
 public class SearchTrainServlet extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(SearchTrainServlet.class);
     private TrainModel trainModel;
 
     /**
@@ -51,28 +53,25 @@ public class SearchTrainServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("trainSearchAction");
+        TrainBean trainBean = new TrainBean();
+        trainBean.setNumber(request.getParameter("Train number"));
+        log.info("Servlet got bean: " + trainBean);
         if (action == null) {
             response.sendRedirect("/ui/administrator/train/searchTrain.jsp");
         } else if (action.equals("back")) {
             response.sendRedirect("/ui/administrator/administratorMain.jsp");
         } else if (action.equals("watch passengers")) {
-            TrainBean trainBean = new TrainBean();
-            trainBean.setNumber(request.getParameter("Train number"));
             Collection<PassengerBean> passengerBeanSet = trainModel.findTrainPassengers(trainBean);
             request.setAttribute("trainPassengers", passengerBeanSet);
             request.setAttribute("trainBean", trainBean);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/passengers/passengersOnTrain.jsp");
             requestDispatcher.forward(request, response);
         } else if (action.equals("watch timetable")) {
-            TrainBean trainBean = new TrainBean();
-            trainBean.setNumber(request.getParameter("Train number"));
             trainBean = trainModel.findTrain(trainBean);
             request.setAttribute("trainBean", trainBean);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/timetable/trainTimetable.jsp");
             requestDispatcher.forward(request, response);
         } else {
-            TrainBean trainBean = new TrainBean();
-            trainBean.setNumber(request.getParameter("Train number"));
             trainBean.validate("number");
             if (trainBean.isValidationFailed()) {
                 request.setAttribute("searchResult", trainBean);

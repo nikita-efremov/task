@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.servlet.passenger;
 
+import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
@@ -24,6 +25,7 @@ import java.util.Date;
  */
 public class RegisterPassengerServlet extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(RegisterPassengerServlet.class);
     private PassengerModel passengerModel;
 
     /**
@@ -71,6 +73,7 @@ public class RegisterPassengerServlet extends HttpServlet {
             passengerBean.setFirstName(request.getParameter("First name"));
             passengerBean.setDocNumber(request.getParameter("Document number"));
             passengerBean.setBirthDate(birthDate);
+            log.info("Servlet got bean: " + passengerBean);
 
             passengerBean.validate();
             if (passengerBean.isValidationFailed()) {

@@ -47,12 +47,6 @@
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminActionResolver</servlet-name>
-        <display-name>AdminActionResolver</display-name>
-        <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AdminActionResolverServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CreateNewStation</servlet-name>
         <display-name>CreateNewStation</display-name>
         <description></description>
@@ -87,12 +81,6 @@
         <display-name>ViewAllTrains</display-name>
         <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.ViewAllTrainsServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CommonActionResolver</servlet-name>
-        <display-name>CommonActionResolver</display-name>
-        <description></description>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.CommonActionResolverServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchStationServlet</servlet-name>
@@ -137,10 +125,6 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminActionResolver</servlet-name>
-        <url-pattern>/administrator/AdminActionResolver</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>CreateNewStation</servlet-name>
         <url-pattern>/administrator/station/CreateNewStation</url-pattern>
     </servlet-mapping>
@@ -163,10 +147,6 @@
     <servlet-mapping>
         <servlet-name>ViewAllTrains</servlet-name>
         <url-pattern>/administrator/train/ViewAllTrains</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CommonActionResolver</servlet-name>
-        <url-pattern>/CommonAction</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchStationServlet</servlet-name>

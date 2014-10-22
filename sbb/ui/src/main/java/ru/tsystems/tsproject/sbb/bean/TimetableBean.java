@@ -3,15 +3,10 @@ package ru.tsystems.tsproject.sbb.bean;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 17.10.14
- * Time: 14:28
- * To change this template use File | Settings | File Templates.
- */
 public class TimetableBean extends BaseBean implements Comparable<TimetableBean> {
 
     private int id;
@@ -69,4 +64,17 @@ public class TimetableBean extends BaseBean implements Comparable<TimetableBean>
        }
     }
 
+    @Override
+    public String toString() {
+        String dateString = "";
+        if (date != null) {
+            dateString = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(date);
+        }
+        return "[Timetable: " +
+                "id=" + id + "," +
+                "trainNumber=" + trainNumber + "," +
+                "stationName=" + stationName + "," +
+                "depDate=" + dateString +
+                "]";
+    }
 }

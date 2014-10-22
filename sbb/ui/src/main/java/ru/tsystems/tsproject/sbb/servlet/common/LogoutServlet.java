@@ -9,13 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 15.10.14
- * Time: 20:27
- * To change this template use File | Settings | File Templates.
- */
 public class LogoutServlet extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(LogoutServlet.class);

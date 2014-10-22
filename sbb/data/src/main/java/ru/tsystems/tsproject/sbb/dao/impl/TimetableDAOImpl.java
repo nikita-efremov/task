@@ -9,13 +9,6 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 03.10.14
- * Time: 11:11
- * To change this template use File | Settings | File Templates.
- */
 public class TimetableDAOImpl extends AbstractDAOImpl<Timetable> implements TimetableDAO {
 
 	public TimetableDAOImpl(EntityManager em) {

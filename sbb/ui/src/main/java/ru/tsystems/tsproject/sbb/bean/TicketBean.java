@@ -3,14 +3,8 @@ package ru.tsystems.tsproject.sbb.bean;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import java.text.SimpleDateFormat;
 
-/**
- * Created with IntelliJ IDEA.
- * User: herr
- * Date: 17.10.14
- * Time: 15:36
- * To change this template use File | Settings | File Templates.
- */
 public class TicketBean extends BaseBean {
 
     private int id;
@@ -55,5 +49,15 @@ public class TicketBean extends BaseBean {
 
     public void setTrainNumber(String trainNumber) {
         this.trainNumber = trainNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "[Ticket: " +
+                "id=" + id + "," +
+                "ticketNumber=" + ticketNumber + "," +
+                "trainNumber=" + trainNumber + "," +
+                "docNumber=" + passengerDocNumber + "," +
+                "]";
     }
 }

@@ -41,7 +41,7 @@ public class PassengerServiceImplTest {
 
     @InjectMocks
     private PassengerService passengerService = new PassengerServiceImpl(
-            stationDAO, trainDAO, passengerDAO, timetableDAO, ticketDAO);
+            stationDAO, trainDAO, passengerDAO, ticketDAO);
 
     @Test(expected = StationNotExistsException.class)
     public void testFindTrainsByStationsAndDate_StartStationNotFound() throws Exception {
