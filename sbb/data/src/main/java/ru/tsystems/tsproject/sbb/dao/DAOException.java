@@ -1,7 +1,13 @@
 package ru.tsystems.tsproject.sbb.dao;
 
+/**
+ * Exception which will contain all exceptions, which will appear in DAO-classes
+ */
 public class DAOException extends Exception {
 
+    /**
+     * Enum with code of occurred error
+     */
     private ErrorCode errorCode;
 
     public DAOException(String message) {

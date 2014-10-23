@@ -11,7 +11,10 @@ import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 
-
+/**
+ * Implementation of interface CommonDAO
+ * @param <T>
+ */
 public abstract class AbstractDAOImpl <T> implements CommonDAO <T> {
 	private final EntityManager entityManager;
 	
@@ -19,6 +22,11 @@ public abstract class AbstractDAOImpl <T> implements CommonDAO <T> {
 		this.entityManager = entityManager;
 	}
 
+    /**
+     * Getting current wildcard class
+     * @return Class
+     * Current wildcard class
+     */
     private Class getTClass() {
         Class currentClass = this.getClass();
         ParameterizedType type = (ParameterizedType)currentClass.getGenericSuperclass();

@@ -1,5 +1,8 @@
 package ru.tsystems.tsproject.sbb.dao;
 
+/**
+ * Enum for codes of errors, which may appear in DAO-classes
+ */
 public enum ErrorCode {
     TRANSACTION_NOT_FOUND,
     NON_UNIQUE_FIELD,

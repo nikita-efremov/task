@@ -9,6 +9,9 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * PassengerDAO interface implementation. Also extends AbstractDAOImpl class with wildcard class = Passenger
+ */
 public class PassengerDAOImpl extends AbstractDAOImpl<Passenger> implements PassengerDAO {
 
 	public PassengerDAOImpl(EntityManager em) {

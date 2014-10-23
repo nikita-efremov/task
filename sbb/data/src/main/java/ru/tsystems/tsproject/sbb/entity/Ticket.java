@@ -2,6 +2,10 @@ package ru.tsystems.tsproject.sbb.entity;
 
 import javax.persistence.*;
 
+/**
+ * Class represents JPA entity - Ticket. It is mapped on table ticket
+ */
+
 @Entity
 @Table(name = "ticket")
 public class Ticket implements Comparable<Ticket> {

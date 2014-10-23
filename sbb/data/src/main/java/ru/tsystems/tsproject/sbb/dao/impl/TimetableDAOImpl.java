@@ -9,6 +9,9 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * TimetableDAO interface implementation. Also extends AbstractDAOImpl class with wildcard class = Timetable
+ */
 public class TimetableDAOImpl extends AbstractDAOImpl<Timetable> implements TimetableDAO {
 
 	public TimetableDAOImpl(EntityManager em) {
@@ -63,7 +66,7 @@ public class TimetableDAOImpl extends AbstractDAOImpl<Timetable> implements Time
         }
     }
 
-    public List getTimetableByTrain(int trainID) throws DAOException {
+    public Collection getTimetableByTrain(int trainID) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
             Query query = entityManager.createQuery(

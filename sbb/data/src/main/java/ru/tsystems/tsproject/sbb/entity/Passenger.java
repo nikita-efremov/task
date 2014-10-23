@@ -6,6 +6,9 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
+/**
+ * Class represents JPA entity - Passenger. It is mapped on table passenger
+ */
 @Entity
 @Table(name = "passenger")
 public class Passenger {

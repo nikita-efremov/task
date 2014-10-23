@@ -9,6 +9,9 @@ import ru.tsystems.tsproject.sbb.dao.DAOException;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * StationDAO interface implementation. Also extends AbstractDAOImpl class with wildcard class = Station
+ */
 public class StationDAOImpl extends AbstractDAOImpl<Station> implements StationDAO {
 
     private static final Logger log = Logger.getLogger(StationDAOImpl.class);

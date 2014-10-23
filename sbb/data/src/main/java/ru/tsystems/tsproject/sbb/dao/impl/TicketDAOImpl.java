@@ -7,14 +7,18 @@ import ru.tsystems.tsproject.sbb.dao.DAOException;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
+/**
+ * TicketDAO interface implementation. Also extends AbstractDAOImpl class with wildcard class = Ticket
+ */
 public class TicketDAOImpl extends AbstractDAOImpl<Ticket> implements TicketDAO {
 
 	public TicketDAOImpl(EntityManager em) {
 		super(em);
 	}
 
-    public Collection getTicketByNumber(long ticketNumber) throws DAOException {
+    public Ticket getTicketByNumber(long ticketNumber) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
             Query query = entityManager.createQuery(
@@ -23,7 +27,12 @@ public class TicketDAOImpl extends AbstractDAOImpl<Ticket> implements TicketDAO 
                             + " where ticketNumber = :ticketNumber"
             )
                     .setParameter("ticketNumber", ticketNumber);
-            return query.getResultList();
+            List tickets = query.getResultList();
+            if (tickets.size() != 0) {
+                return  (Ticket)tickets.get(0);
+            } else {
+                return null;
+            }
         } catch (IllegalArgumentException e) {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());

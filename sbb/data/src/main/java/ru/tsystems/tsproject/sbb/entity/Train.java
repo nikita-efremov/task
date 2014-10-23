@@ -5,6 +5,10 @@ import javax.validation.constraints.Pattern;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * Class represents JPA entity - Train. It is mapped on table train
+ */
+
 @Entity
 @Table(name = "train")
 public class Train {

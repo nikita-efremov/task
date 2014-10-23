@@ -11,6 +11,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * TrainDAO interface implementation. Also extends AbstractDAOImpl class with wildcard class = Train
+ */
 public class TrainDAOImpl extends AbstractDAOImpl<Train> implements TrainDAO {
 	
 	public TrainDAOImpl(EntityManager em) {

@@ -5,6 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Class represents JPA entity - Timetable. It is mapped on table timetable
+ */
+
 @Entity
 @Table(name = "timetable")
 public class Timetable implements Comparable<Timetable> {

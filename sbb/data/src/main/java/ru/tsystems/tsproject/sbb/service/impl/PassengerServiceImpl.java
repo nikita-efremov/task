@@ -105,11 +105,8 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
         getTrainDAO().decreaseSeatAmount(train.getId());
         ticketDAO.create(ticket);
 
-        List<Ticket> tickets = new LinkedList<Ticket>(ticketDAO.getTicketByNumber(ticketNumber));
+        ticket = ticketDAO.getTicketByNumber(ticketNumber);
 
-        if (tickets.size() > 0) {
-            ticket = tickets.get(0);
-        }
         log.info("Ticket added: " + ticket);
         return ticket;
     }
