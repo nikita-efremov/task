@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.servlet.common;
 
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.ValidationBean;
+import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TimetableBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
@@ -87,11 +89,11 @@ public class SearchTrainByStationsAndDateServlet extends HttpServlet {
 
             log.info("Servlet got beans: " + startBean + " " + endBean);
 
-            startBean.validate("stationName");
-            startBean.validate("date");
-            endBean.validate("stationName");
-            endBean.validate("date");
-            if ((startBean.isValidationFailed()) || (endBean.isValidationFailed())) {
+            ValidationBean validationBeanStart = Validator.validate(startBean, "stationName", "date");
+            ValidationBean validationBeanEnd = Validator.validate(endBean, "stationName", "date");
+            if ((validationBeanStart.isValidationFailed()) || (validationBeanEnd.isValidationFailed())) {
+                request.setAttribute("validationBeanStart", validationBeanStart);
+                request.setAttribute("validationBeanEnd", validationBeanEnd);
                 request.setAttribute("startBean", startBean);
                 request.setAttribute("endBean", endBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStationDateTrain.jsp");

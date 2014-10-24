@@ -2,9 +2,14 @@
 <%@ page import="ru.tsystems.tsproject.sbb.bean.TimetableBean" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
 <% TrainBean bean = (TrainBean)request.getAttribute("trainBean");
     if (bean == null) {
         bean = new TrainBean();
+    }
+    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
+    if (validationBean == null) {
+        validationBean = new ValidationBean();
     }
 %>
 
@@ -100,7 +105,7 @@
     </table>
     <table id="validationMessages">
         <tr>
-            <td></td>
+            <td><%=validationBean.getValidationMessage()%></td>
         </tr>
         <tr>
             <td></td>

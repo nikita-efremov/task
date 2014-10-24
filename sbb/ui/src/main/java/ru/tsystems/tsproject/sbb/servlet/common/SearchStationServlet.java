@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.servlet.common;
 
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.ValidationBean;
+import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
@@ -66,8 +68,9 @@ public class SearchStationServlet extends HttpServlet {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/stationTimetable.jsp");
             requestDispatcher.forward(request, response);
         } else {
-            stationBean.validate();
-            if (stationBean.isValidationFailed()) {
+            ValidationBean validationBean = Validator.validate(stationBean);
+            if (validationBean.isValidationFailed()) {
+                request.setAttribute("validationBean", validationBean);
                 request.setAttribute("searchResult", stationBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStation.jsp");
                 requestDispatcher.forward(request, response);

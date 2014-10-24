@@ -1,8 +1,13 @@
 <%@ page import="ru.tsystems.tsproject.sbb.bean.TimetableBean" %>
+<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
 <%  String trainNumber = (String) request.getAttribute("trainNumber");
     TimetableBean bean = (TimetableBean)request.getAttribute("timetableBean");
     if (bean == null) {
         bean = new TimetableBean();
+    }
+    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
+    if (validationBean == null) {
+        validationBean = new ValidationBean();
     }
 %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -73,13 +78,13 @@
             <TR>
                 <TD>Station name:</TD>
                 <TD>
-                    <INPUT TYPE="text" NAME="Station name" value="">
+                    <INPUT TYPE="text" NAME="Station name" value="<%=bean.getStationName()%>">
                 </TD>
             </TR>
             <TR>
                 <TD>Departure date:</TD>
                 <TD>
-                    <INPUT TYPE="datetime-local" NAME="Departure date" value="">
+                    <INPUT TYPE="datetime-local" NAME="Departure date" value="<%=bean.getDate()%>">
                 </TD>
             </TR>
         </table>
@@ -93,7 +98,7 @@
         </table>
         <table id="validationMessages">
             <tr>
-                <td><%=bean.getValidationMessage()%></td>
+                <td><%=validationBean.getValidationMessage()%></td>
             </tr>
             <tr>
                 <td><%=bean.getProcessingErrorMessage()%></td>

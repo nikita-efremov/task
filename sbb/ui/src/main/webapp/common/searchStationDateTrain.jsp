@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="ru.tsystems.tsproject.sbb.bean.TimetableBean" %>
+<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
 <% TimetableBean startBean = (TimetableBean)request.getAttribute("startBean");
     if (startBean == null) {
         startBean = new TimetableBean();
@@ -7,6 +8,14 @@
     TimetableBean endBean = (TimetableBean)request.getAttribute("endBean");
     if (endBean == null) {
         endBean = new TimetableBean();
+    }
+    ValidationBean validationBeanStart = (ValidationBean)request.getAttribute("validationBeanStart");
+    if (validationBeanStart == null) {
+        validationBeanStart = new ValidationBean();
+    }
+    ValidationBean validationBeanEnd = (ValidationBean)request.getAttribute("validationBeanEnd");
+    if (validationBeanEnd == null) {
+        validationBeanEnd = new ValidationBean();
     }
 
 %>
@@ -109,10 +118,10 @@
         </table>
         <table id="validationMessages">
             <tr>
-                <td><%=startBean.getValidationMessage()%></td>
+                <td><%=validationBeanStart.getValidationMessage()%></td>
             </tr>
             <tr>
-                <td><%=endBean.getValidationMessage()%></td>
+                <td><%=validationBeanEnd.getValidationMessage()%></td>
             </tr>
             <tr>
                 <td><%=startBean.getProcessingErrorMessage()%></td>

@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.servlet.passenger;
 
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.ValidationBean;
+import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.PassengerModel;
@@ -74,10 +76,10 @@ public class RegisterPassengerServlet extends HttpServlet {
             passengerBean.setDocNumber(request.getParameter("Document number"));
             passengerBean.setBirthDate(birthDate);
             log.info("Servlet got bean: " + passengerBean);
-
-            passengerBean.validate();
-            if (passengerBean.isValidationFailed()) {
+            ValidationBean validationBean = Validator.validate(passengerBean);
+            if (validationBean.isValidationFailed()) {
                 request.setAttribute("createResult", passengerBean);
+                request.setAttribute("validationBean", validationBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/register.jsp");
                 requestDispatcher.forward(request, response);
             } else {

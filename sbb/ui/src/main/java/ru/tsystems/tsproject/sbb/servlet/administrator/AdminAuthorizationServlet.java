@@ -1,6 +1,8 @@
 package ru.tsystems.tsproject.sbb.servlet.administrator;
 
 import org.apache.log4j.Logger;
+import ru.tsystems.tsproject.sbb.ValidationBean;
+import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.AdminLoginBean;
 
 import javax.servlet.RequestDispatcher;
@@ -44,9 +46,10 @@ public class AdminAuthorizationServlet extends HttpServlet {
             AdminLoginBean adminLoginBean = new AdminLoginBean();
             adminLoginBean.setLogin(request.getParameter("login"));
             adminLoginBean.setPassword(request.getParameter("password"));
-            adminLoginBean.validate();
-            if (adminLoginBean.isValidationFailed()) {
+            ValidationBean validationBean = Validator.validate(adminLoginBean);
+            if (validationBean.isValidationFailed()) {
                 request.setAttribute("loginResult", adminLoginBean);
+                request.setAttribute("validationBean", validationBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/adminAuthorization.jsp");
                 requestDispatcher.forward(request, response);
             } else {
@@ -59,7 +62,8 @@ public class AdminAuthorizationServlet extends HttpServlet {
                     httpSession.setMaxInactiveInterval(30*60);
                     response.sendRedirect("/ui/administrator/administratorMain.jsp");
                 } else {
-                    adminLoginBean.setValidationMessage("Invalid credentials");
+                    validationBean.setValidationMessage("Invalid credentials");
+                    request.setAttribute("validationBean", validationBean);
                     request.setAttribute("loginResult", adminLoginBean);
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/adminAuthorization.jsp");
                     requestDispatcher.forward(request, response);

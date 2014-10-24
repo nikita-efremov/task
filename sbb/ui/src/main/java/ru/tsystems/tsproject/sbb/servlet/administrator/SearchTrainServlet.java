@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.servlet.administrator;
 
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.ValidationBean;
+import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
@@ -72,8 +74,9 @@ public class SearchTrainServlet extends HttpServlet {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/timetable/trainTimetable.jsp");
             requestDispatcher.forward(request, response);
         } else {
-            trainBean.validate("number");
-            if (trainBean.isValidationFailed()) {
+            ValidationBean validationBean = Validator.validate(trainBean, "number");
+            if (validationBean.isValidationFailed()) {
+                request.setAttribute("validationBean", validationBean);
                 request.setAttribute("searchResult", trainBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/train/searchTrain.jsp");
                 requestDispatcher.forward(request, response);

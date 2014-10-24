@@ -1,8 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="ru.tsystems.tsproject.sbb.bean.TicketBean" %>
+<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
 <% TicketBean bean = (TicketBean)request.getAttribute("purchaseResult");
     if (bean == null) {
         bean = new TicketBean();
+    }
+    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
+    if (validationBean == null) {
+        validationBean = new ValidationBean();
     }
 %>
 <html>
@@ -86,7 +91,7 @@
         </table>
         <table id="validationMessages">
             <tr>
-                <td><%=bean.getValidationMessage()%></td>
+                <td><%=validationBean.getValidationMessage()%></td>
             </tr>
             <tr>
                 <td><%=bean.getProcessingErrorMessage()%></td>

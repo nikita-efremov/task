@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.servlet.administrator;
 
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.ValidationBean;
+import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.model.StationModel;
 import javax.servlet.RequestDispatcher;
@@ -55,8 +57,9 @@ public class CreateNewStationServlet extends HttpServlet {
             StationBean stationBean = new StationBean();
             stationBean.setName(request.getParameter("Station name"));
             log.info("Servlet got bean: " + stationBean);
-            stationBean.validate();
-            if (stationBean.isValidationFailed()) {
+            ValidationBean validationBean = Validator.validate(stationBean);
+            if (validationBean.isValidationFailed()) {
+                request.setAttribute("validationBean", validationBean);
                 request.setAttribute("createResult", stationBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/station/createNewStation.jsp");
                 requestDispatcher.forward(request, response);

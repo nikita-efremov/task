@@ -96,7 +96,7 @@
     </table>
     <table id="validationMessages">
         <tr>
-            <td><%=bean.getValidationMessage()%></td>
+            <td></td>
         </tr>
         <tr>
             <td><%=bean.getProcessingErrorMessage()%></td>

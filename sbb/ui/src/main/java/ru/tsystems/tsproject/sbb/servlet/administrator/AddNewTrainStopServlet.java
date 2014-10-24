@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.servlet.administrator;
 
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.ValidationBean;
+import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TimetableBean;
@@ -77,10 +79,11 @@ public class AddNewTrainStopServlet extends HttpServlet {
             timetableBean.setDate(depDate);
             timetableBean.setTrainNumber(request.getParameter("Train number"));
             log.info("Servlet got bean:" + timetableBean);
-            timetableBean.validate();
-            if (timetableBean.isValidationFailed()) {
+            ValidationBean validationBean = Validator.validate(timetableBean);
+            if (validationBean.isValidationFailed()) {
                 request.setAttribute("timetableBean", timetableBean);
                 request.setAttribute("trainNumber", request.getParameter("Train number"));
+                request.setAttribute("validationBean", validationBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/timetable/addNewTimetable.jsp");
                 requestDispatcher.forward(request, response);
             } else {

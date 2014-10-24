@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.servlet.administrator;
 
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.ValidationBean;
+import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.StationModel;
@@ -60,8 +62,9 @@ public class CreateNewTrainServlet extends HttpServlet {
             trainBean.setSeats(request.getParameter("Total seats"));
             trainBean.setTotalSeats(request.getParameter("Total seats"));
             log.info("Servlet got bean: " + trainBean);
-            trainBean.validate();
-            if (trainBean.isValidationFailed()) {
+            ValidationBean validationBean = Validator.validate(trainBean);
+            if (validationBean.isValidationFailed()) {
+                request.setAttribute("validationBean", validationBean);
                 request.setAttribute("createResult", trainBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/train/createNewTrain.jsp");
                 requestDispatcher.forward(request, response);
