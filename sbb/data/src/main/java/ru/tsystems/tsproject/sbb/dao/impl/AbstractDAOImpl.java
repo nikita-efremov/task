@@ -36,21 +36,7 @@ public abstract class AbstractDAOImpl <T> implements CommonDAO <T> {
     public <T> void create(T t) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            EntityTransaction entityTransaction = entityManager.getTransaction();
-            try {
-                entityTransaction.begin();
-                entityManager.persist(t);
-                entityTransaction.commit();
-            } finally {
-                if (entityTransaction.isActive()) {
-                    entityTransaction.rollback();
-                }
-            }
-        } catch (IllegalStateException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.STATE_ERROR);
-            throw daoException;
+            entityManager.persist(t);
         } catch (IllegalArgumentException e) {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
@@ -65,16 +51,6 @@ public abstract class AbstractDAOImpl <T> implements CommonDAO <T> {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
             daoException.setErrorCode(ErrorCode.NON_UNIQUE_FIELD);
-            throw daoException;
-        } catch (RollbackException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.COMMIT_ERROR);
-            throw daoException;
-        } catch (PersistenceException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.JPA_ERROR);
             throw daoException;
         } catch (Exception e) {
             DAOException daoException = new DAOException(e.getMessage());
@@ -156,21 +132,7 @@ public abstract class AbstractDAOImpl <T> implements CommonDAO <T> {
     public <T> void update(T t) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            EntityTransaction entityTransaction = entityManager.getTransaction();
-            try {
-                entityTransaction.begin();
-                entityManager.merge(t);
-                entityTransaction.commit();
-            } finally {
-                if (entityTransaction.isActive()) {
-                    entityTransaction.rollback();
-                }
-            }
-        } catch (IllegalStateException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.STATE_ERROR);
-            throw daoException;
+            entityManager.merge(t);
         } catch (IllegalArgumentException e) {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
@@ -180,16 +142,6 @@ public abstract class AbstractDAOImpl <T> implements CommonDAO <T> {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
             daoException.setErrorCode(ErrorCode.TRANSACTION_NOT_FOUND);
-            throw daoException;
-        } catch (RollbackException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.COMMIT_ERROR);
-            throw daoException;
-        } catch (PersistenceException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.JPA_ERROR);
             throw daoException;
         } catch (Exception e) {
             DAOException daoException = new DAOException(e.getMessage());
@@ -202,36 +154,17 @@ public abstract class AbstractDAOImpl <T> implements CommonDAO <T> {
     public <T> void delete(int tID) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
-            EntityTransaction entityTransaction = entityManager.getTransaction();
-            try {
-                entityTransaction.begin();
-                T t = get(tID);
-                entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
-                entityTransaction.commit();
-            } finally {
-                if (entityTransaction.isActive()) {
-                    entityTransaction.rollback();
-                }
-            }
-        } catch (IllegalStateException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.STATE_ERROR);
-            throw daoException;
+            T t = get(tID);
+            entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
         } catch (IllegalArgumentException e) {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
             daoException.setErrorCode(ErrorCode.ARGUMENT_ERROR);
             throw daoException;
-        } catch (RollbackException e) {
+        } catch (TransactionRequiredException e) {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.COMMIT_ERROR);
-            throw daoException;
-        } catch (PersistenceException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.JPA_ERROR);
+            daoException.setErrorCode(ErrorCode.TRANSACTION_NOT_FOUND);
             throw daoException;
         } catch (Exception e) {
             DAOException daoException = new DAOException(e.getMessage());

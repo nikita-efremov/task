@@ -125,15 +125,8 @@ public class TrainDAOImpl extends AbstractDAOImpl<Train> implements TrainDAO {
         try {
             Train train = get(trainID);
             EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
             train.setSeats(train.getSeats() - 1);
             entityManager.merge(train);
-            entityManager.getTransaction().commit();
-        } catch (IllegalStateException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.STATE_ERROR);
-            throw daoException;
         } catch (IllegalArgumentException e) {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
@@ -143,16 +136,6 @@ public class TrainDAOImpl extends AbstractDAOImpl<Train> implements TrainDAO {
             DAOException daoException = new DAOException(e.getMessage());
             daoException.initCause(e.getCause());
             daoException.setErrorCode(ErrorCode.TRANSACTION_NOT_FOUND);
-            throw daoException;
-        } catch (RollbackException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.COMMIT_ERROR);
-            throw daoException;
-        } catch (PersistenceException e) {
-            DAOException daoException = new DAOException(e.getMessage());
-            daoException.initCause(e.getCause());
-            daoException.setErrorCode(ErrorCode.JPA_ERROR);
             throw daoException;
         } catch (Exception e) {
             DAOException daoException = new DAOException(e.getMessage());

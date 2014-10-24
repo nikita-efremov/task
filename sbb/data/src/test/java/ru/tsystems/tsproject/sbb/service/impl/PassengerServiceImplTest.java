@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import ru.tsystems.tsproject.sbb.dao.DAOTransactionManager;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.dao.impl.*;
 import ru.tsystems.tsproject.sbb.entity.*;
@@ -25,6 +26,9 @@ import static org.mockito.Mockito.*;
 public class PassengerServiceImplTest {
 
     @Mock
+    private DAOTransactionManager daoTransactionManager = new DAOTransactionManager(null);
+
+    @Mock
     private StationDAO stationDAO = new StationDAOImpl(null);
 
     @Mock
@@ -41,7 +45,7 @@ public class PassengerServiceImplTest {
 
     @InjectMocks
     private PassengerService passengerService = new PassengerServiceImpl(
-            stationDAO, trainDAO, passengerDAO, ticketDAO);
+            daoTransactionManager, stationDAO, trainDAO, passengerDAO, ticketDAO);
 
     @Test(expected = StationNotExistsException.class)
     public void testFindTrainsByStationsAndDate_StartStationNotFound() throws Exception {

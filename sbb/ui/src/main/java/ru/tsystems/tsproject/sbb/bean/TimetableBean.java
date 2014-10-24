@@ -57,8 +57,6 @@ public class TimetableBean extends BaseBean implements Comparable<TimetableBean>
     public int compareTo(TimetableBean other) {
        if (this.date.after(other.date)) {
            return 1;
-       } else if (this.date.equals(other.date)){
-           return 0;
        } else {
            return -1;
        }

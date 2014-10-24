@@ -1,6 +1,7 @@
 <%@ page import="ru.tsystems.tsproject.sbb.bean.TrainBean" %>
 <%@ page import="ru.tsystems.tsproject.sbb.bean.TimetableBean" %>
 <%@ page import="java.util.Set" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <% TrainBean bean = (TrainBean)request.getAttribute("trainBean");
     if (bean == null) {
         bean = new TrainBean();
@@ -85,7 +86,7 @@
         %>
         <tr>
             <td><%=timetableBean.getStationName()%></td>
-            <td><%=timetableBean.getDate()%></td>
+            <td><%=new SimpleDateFormat("dd-MM-yyyy HH:mm").format(timetableBean.getDate())%></td>
         </tr>
         <%
                 }
