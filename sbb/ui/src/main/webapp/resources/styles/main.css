@@ -3,6 +3,7 @@ body {
     background-color: #e8ece6;
     margin: 0;
     text-align: center;
+    color: #000;
 }
 
 /*header with logo and text*/
@@ -117,6 +118,8 @@ a:hover	{
 /*input information block*/
 .inputBlock {
     font-size: 25px;
+    font-family: sans-serif
+    font-weight: normal;
     background-color: rgba(95, 255, 43, 0.12);
     border-style: solid;
     width: 50%;
@@ -126,8 +129,12 @@ a:hover	{
     box-shadow: 0 0 5px 2px rgba(0,0,0,.35)
 }
 
-.inputBlock table { /*table with input fields*/
+.inputBlock form { /*table with input fields*/
     padding: 3% 0 0;
+}
+
+.inputBlock table { /*table with input fields*/
+    padding: 0 0;
     font-size: 20px;
     margin-left: auto;
     margin-right: auto;
@@ -182,4 +189,38 @@ a:hover	{
     border: 1px solid black;
     padding: 0 1%;
 }
+
+/*for js   */
+
+label {
+    font-weight: 100;
+}
+
+.tooltip-inner {
+    white-space: pre;
+}
+
+.inputBlockV2 {
+    font-size: 25px;
+    font-family: sans-serif
+    font-weight: normal;
+    background-color: rgba(95, 255, 43, 0.12);
+    border-style: solid;
+    width: 50%;
+    height: 50%;
+    text-align: center;
+    margin: 3% auto;
+    padding: 1% 1%;
+    box-shadow: 0 0 5px 2px rgba(0,0,0,.35)
+}
+
+.inputBlockV2 .col-sm-8 { /*table with input fields*/
+    font-size: 15px;
+    margin: 5% 25%;
+    padding: 0 0;
+    text-align: center;
+}
+
+
+
 

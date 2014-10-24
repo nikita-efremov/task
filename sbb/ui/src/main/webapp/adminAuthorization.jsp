@@ -10,11 +10,18 @@
         validationBean = new ValidationBean();
     }
 %>
-<html>
+<html lang="en">
 <head>
-    <title>Administrator authorization</title>
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css"/>
+    <meta charset="UTF-8">
+    <title>Example of Twitter Bootstrap 3 Tooltip</title>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css">
+    <script src="<%=request.getContextPath()%>/resources/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrap/js/bootstrap.min.js"></script>
+
 </head>
+
 <body>
 <div id="mainHeader">
     <span id = "title-pic">
@@ -46,41 +53,40 @@
     </table>
 </div>
 
-<div class = inputBlock>
-    <label>To continue work as administrator, please fill the following fields:  </label>
-    <form method="post" action="authorization">
-        <table id = "inputData">
-            <TR>
-                <TD>Login</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="login" value="">
-                </TD>
-            </TR>
-            <TR>
-                <TD>Password</TD>
-                <TD>
-                    <INPUT TYPE="password" NAME="password" value="">
-                </TD>
-            </TR>
-        </table>
-        <table id="inputControls">
-            <tr>
-                <td>
-                    <INPUT TYPE="submit" value="Login" name="loginAction">
-                    <INPUT TYPE="submit" value="Back" name="loginAction">
-                </td>
-            </tr>
-        </table>
-        <table id="validationMessages">
-            <tr>
-                <td><%=validationBean.getValidationMessage()%></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
-    </form>
+<div class = inputBlockV2>
+    <label>To continue work as administrator, please fill the following fields: </label>
+    <div class="col-sm-8">
+        <form class="form-horizontal" role="form" method="post" action="authorization" >
+            <div class="form-group">
+                <label for="login" class="col-sm-2 control-label">Login</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="login" placeholder="Login" name = "login">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control" id="password" placeholder="Password" name = "password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-6">
+                    <button type="submit" name="loginAction" value="Login" class="btn btn-success">Login</button>
+                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
+                </div>
+            </div>
+            <table id="validationMessages">
+                <tr>
+                    <td><%=validationBean.getValidationMessage()%></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 </div>
 
+<script src="<%=request.getContextPath()%>/resources/js/adminLogin.js"></script>
 </body>
 </html>
