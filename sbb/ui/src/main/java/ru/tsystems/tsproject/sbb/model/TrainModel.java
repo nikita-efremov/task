@@ -166,6 +166,9 @@ public class TrainModel {
     public TimetableBean addTrainStop(TimetableBean timetableBean) {
         try {
             administratorService.addTimetable(timetableBean.getTrainNumber(), timetableBean.getStationName(), timetableBean.getDate());
+        } catch (StationNotExistsException e) {
+            timetableBean.setProcessingErrorMessage(e.getMessage());
+            log.log(Level.ERROR, e.getMessage() + " - " + e);
         } catch (TrainNotExistsException e) {
             timetableBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e.getMessage() + " - " + e);

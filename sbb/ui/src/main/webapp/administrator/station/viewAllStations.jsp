@@ -64,45 +64,41 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>All stations</label>
-    <table id = "resultData">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-        </tr>
-        <%
-            List list = (List)request.getAttribute("allStations");
-            if(list!=null)
-            {
-                for(int i=0 ; i< list.size();i++)
-                {
-                    StationBean bean =(StationBean) list.get(i);
-        %>
-        <tr>
-            <td><%=bean.getId()%></td>
-            <td><%=bean.getName()%></td>
-        </tr>
-        <%
-                }
-            }
-        %>
-    </table>
-    <table id="inputControls">
-        <tr>
-            <td>
-                <INPUT TYPE="button" VALUE="back" onClick="history.go(-1);">
-            </td>
-        </tr>
-    </table>
-    <table id="validationMessages">
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-    </table>
+    <div class="col-sm-8">
+        <div class="form-group">
+            <table id = "resultData">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+                <%
+                    List list = (List)request.getAttribute("allStations");
+                    if(list!=null)
+                    {
+                        for(int i=0 ; i< list.size();i++)
+                        {
+                            StationBean bean =(StationBean) list.get(i);
+                %>
+                <tr>
+                    <td><%=bean.getId()%></td>
+                    <td><%=bean.getName()%></td>
+                </tr>
+                <%
+                        }
+                    }
+                %>
+            </table>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
+            </div>
+        </div>
+        <table id="validationMessages">
+        </table>
+    </div>
 </div>
 
 </body>

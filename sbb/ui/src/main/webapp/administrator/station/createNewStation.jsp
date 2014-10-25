@@ -73,35 +73,34 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>To create a new station, please fill the following fields: </label>
-    <form method="post" action="CreateNewStation">
-        <table id = "inputData">
-            <tr>
-                <td>Station name:</TD>
-                <td>
-                    <input type="text" name="Station name" value="<%=bean.getName()%>">
-                </td>
-            </tr>
-        </table>
-        <table id="inputControls">
-            <tr>
-                <td>
-                    <INPUT TYPE="submit" value="create" name="stationCreateAction">
-                    <INPUT TYPE="submit" value="back" name="stationCreateAction">
-                </td>
-            </tr>
-        </table>
-        <table id="validationMessages">
-            <tr>
-                <td><%=validationBean.getValidationMessage()%></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
-    </form>
-</div>
+    <div class="col-sm-8">
+        <form class="form-horizontal" role="form" method="post" action="CreateNewStation" id = "stationForm">
+            <div class="form-group">
+                <label for="Station_name" class="col-sm-4 control-label">Station name:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Station_name" placeholder="Station name" name = "Station_name" value = "<%=bean.getName()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <button type="submit" name="stationCreateAction" value="create" class="btn btn-success">Create</button>
+                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/administrator/administratorMain.jsp'" value='Back'>
+                </div>
+            </div>
 
+            <table id="validationMessages">
+                <tr>
+                    <td><%=validationBean.getValidationMessage()%></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script src="<%=request.getContextPath()%>/resources/js/custom/stationValidation.js"></script>
 </body>
 </html>

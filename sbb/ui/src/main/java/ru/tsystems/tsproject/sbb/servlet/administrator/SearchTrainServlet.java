@@ -56,7 +56,7 @@ public class SearchTrainServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("trainSearchAction");
         TrainBean trainBean = new TrainBean();
-        trainBean.setNumber(request.getParameter("Train number"));
+        trainBean.setNumber(request.getParameter("Train_number"));
         log.info("Servlet got bean: " + trainBean);
         if (action == null) {
             response.sendRedirect("/ui/administrator/train/searchTrain.jsp");

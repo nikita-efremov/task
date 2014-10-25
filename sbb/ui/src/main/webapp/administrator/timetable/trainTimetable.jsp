@@ -77,46 +77,42 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>Timetable of train number <%=bean.getNumber()%> </label>
-    <table id = "resultData">
-        <tr>
-            <th>Station name</th>
-            <th>Departure date</th>
-        </tr>
-        <%
-            Set set = (Set)bean.getTimetables();
-            if(set != null)
-            {
-                for (Object o: set) {
-                    TimetableBean timetableBean = (TimetableBean)o;
+    <div class="col-sm-8">
+        <div class="form-group">
+            <table id = "resultData">
+                <tr>
+                    <th>Station name</th>
+                    <th>Departure date</th>
+                </tr>
+                <%
+                    Set set = (Set)bean.getTimetables();
+                    if(set != null)
+                    {
+                        for (Object o: set) {
+                            TimetableBean timetableBean = (TimetableBean)o;
 
-        %>
-        <tr>
-            <td><%=timetableBean.getStationName()%></td>
-            <td><%=new SimpleDateFormat("dd-MM-yyyy HH:mm").format(timetableBean.getDate())%></td>
-        </tr>
-        <%
-                }
-            }
-        %>
-    </table>
-    <table id="inputControls">
-        <tr>
-            <td>
-                <input type=button onClick="location.href='<%=request.getContextPath()%>/administrator/train/AddNewTrainStop?trainTimetableAction=add new stop&Train number=<%=bean.getNumber()%>'" value='add new stop'>
-                <INPUT TYPE="button" VALUE="back" onClick="history.go(-1);">
-            </td>
-        </tr>
-    </table>
-    <table id="validationMessages">
-        <tr>
-            <td><%=validationBean.getValidationMessage()%></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-    </table>
+                %>
+                <tr>
+                    <td><%=timetableBean.getStationName()%></td>
+                    <td><%=new SimpleDateFormat("dd-MM-yyyy HH:mm").format(timetableBean.getDate())%></td>
+                </tr>
+                <%
+                        }
+                    }
+                %>
+            </table>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <input type=button class = "btn btn-success" onClick="location.href='<%=request.getContextPath()%>/administrator/train/AddNewTrainStop?trainTimetableAction=add new stop&Train_number=<%=bean.getNumber()%>'" value='add new stop'>
+                <input type=button class="btn btn-default" onClick="history.go(-1);" value='Back'>
+            </div>
+        </div>
+        <table id="validationMessages">
+        </table>
+    </div>
 </div>
 
 </body>

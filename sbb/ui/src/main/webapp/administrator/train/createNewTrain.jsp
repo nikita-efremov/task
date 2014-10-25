@@ -73,41 +73,40 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>To create a new train, please fill the following fields: </label>
-    <form method="post" action="CreateNewTrain">
-        <table id = "inputData">
-            <TR>
-                <TD>Train number:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Train number" value="<%=bean.getNumber()%>">
-                </TD>
-            </TR>
-            <TR>
-                <TD>Total seats:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Total seats" value="<%=bean.getTotalSeats()%>">
-                </TD>
-            </TR>
-        </table>
-        <table id="inputControls">
-            <tr>
-                <td>
-                    <INPUT TYPE="submit" value="create" name="trainCreateAction">
-                    <INPUT TYPE="submit" value="back" name="trainCreateAction">
-                </td>
-            </tr>
-        </table>
-        <table id="validationMessages">
-            <tr>
-                <td><%=validationBean.getValidationMessage()%></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
-    </form>
-</div>
+    <div class="col-sm-8">
+        <form class="form-horizontal" role="form" method="post" action="CreateNewTrain" id = "createTrainForm">
+            <div class="form-group">
+                <label for="Train_number" class="col-sm-4 control-label">Train number:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Train_number" placeholder="Train number" name = "Train_number" value = "<%=bean.getNumber()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Total_seats" class="col-sm-4 control-label">Total seats:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Total_seats" placeholder="Total seats" name = "Total_seats" value = "<%=bean.getSeats()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <button type="submit" name="trainCreateAction" value="create" class="btn btn-success">Create</button>
+                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/administrator/train/trainsIndex.jsp'" value='Back'>
+                </div>
+            </div>
 
+            <table id="validationMessages">
+                <tr>
+                    <td><%=validationBean.getValidationMessage()%></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script src="<%=request.getContextPath()%>/resources/js/custom/trainCreateValidation.js"></script>
 </body>
 </html>

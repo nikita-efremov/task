@@ -79,7 +79,7 @@
 <div class = inputBlockV2>
     <label>To purchase ticket, please fill the following fields: </label>
     <div class="col-sm-8">
-        <form class="form-horizontal" role="form" method="post" action="TicketPurchase" id = "purchaseForm">
+        <form class="form-horizontal" role="form" method="post" action="TicketPurchase" id = "trainSearchForm">
             <div class="form-group">
                 <label for="Train_number" class="col-sm-4 control-label">Train number:</label>
                 <div class="col-sm-7">
@@ -105,6 +105,6 @@
     </div>
 </div>
 
-<script src="<%=request.getContextPath()%>/resources/js/custom/purchaseValidation.js"></script>
+<script src="<%=request.getContextPath()%>/resources/js/custom/trainSearchValidation.js"></script>
 </body>
 </html>

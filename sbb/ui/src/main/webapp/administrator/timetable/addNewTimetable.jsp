@@ -74,44 +74,46 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>To create a new stop for train number <%=trainNumber%>, please fill the following fields: </label>
-    <form method="post" action="AddNewTrainStop">
-        <table id = "inputData">
-            <tr>
-                <INPUT TYPE="text" NAME="Train number" value="<%=trainNumber%>" hidden="hidden">
-            </tr>
-            <TR>
-                <TD>Station name:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Station name" value="<%=bean.getStationName()%>">
-                </TD>
-            </TR>
-            <TR>
-                <TD>Departure date:</TD>
-                <TD>
-                    <INPUT TYPE="datetime-local" NAME="Departure date" value="<%=bean.getDate()%>">
-                </TD>
-            </TR>
-        </table>
-        <table id="inputControls">
-            <tr>
-                <td>
-                    <INPUT TYPE="submit" value="add" name="stopAddAction">
-                    <INPUT TYPE="submit" value="back" name="stopAddAction">
-                </td>
-            </tr>
-        </table>
-        <table id="validationMessages">
-            <tr>
-                <td><%=validationBean.getValidationMessage()%></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
-    </form>
-</div>
+    <div class="col-sm-8">
+        <form class="form-horizontal" role="form" method="post" action="AddNewTrainStop" id = "createStopForm">
+            <div class="form-group" hidden="hidden">
+                <label for="Train_number" class="col-sm-4 control-label">Train number:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Train_number" placeholder="Train number" name = "Train_number" value = "<%=trainNumber%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Station_name" class="col-sm-4 control-label">Station name:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Station_name" placeholder="Station name" name = "Station_name" value = "<%=bean.getStationName()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Departure_date" class="col-sm-4 control-label">Departure date:</label>
+                <div class="col-sm-7">
+                    <input type="datetime-local" class="form-control" id="Departure_date" placeholder="Departure date" name = "Departure_date" value = "<%=bean.getDate()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <button type="submit" name="stopAddAction" value="add" class="btn btn-success">Add</button>
+                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/administrator/train/AddNewTrainStop?stopAddAction=back&Train_number=<%=bean.getTrainNumber()%>'" value='Back'>
+                </div>
+            </div>
 
+            <table id="validationMessages">
+                <tr>
+                    <td><%=validationBean.getValidationMessage()%></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script src="<%=request.getContextPath()%>/resources/js/custom/trainStopValidation.js"></script>
 </body>
 </html>

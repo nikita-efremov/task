@@ -65,33 +65,35 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>Station has been created successfully</label>
-    <table id = "resultData">
-        <TR>
-            <TD>id:</TD>
-            <TD><%=bean.getId()%></TD>
-        </TR>
-        <TR>
-            <TD>name:</TD>
-            <TD><%=bean.getName()%></TD>
-        </TR>
-    </table>
-    <table id="inputControls">
-        <tr>
-            <td>
-                <input type=button onClick="location.href='<%=request.getContextPath()%>/administrator/administratorMain.jsp'" value='back'>
-            </td>
-        </tr>
-    </table>
-    <table id="validationMessages">
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td><%=bean.getProcessingErrorMessage()%></td>
-        </tr>
-    </table>
+    <div class="col-sm-8">
+        <div class="form-group">
+            <table id = "resultData">
+                <TR>
+                    <TD>id:</TD>
+                    <TD><%=bean.getId()%></TD>
+                </TR>
+                <TR>
+                    <TD>name:</TD>
+                    <TD><%=bean.getName()%></TD>
+                </TR>
+            </table>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <input type=button class="btn btn-primary" onClick="location.href='<%=request.getContextPath()%>/administrator/administratorMain.jsp'" value='Exit'>
+            </div>
+        </div>
+        <table id="validationMessages">
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td><%=bean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 </body>

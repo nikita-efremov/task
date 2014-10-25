@@ -60,13 +60,13 @@ public class AddNewTrainStopServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("stopAddAction");
         if (action == null) {
-            request.setAttribute("trainNumber", request.getParameter("Train number"));
+            request.setAttribute("trainNumber", request.getParameter("Train_number"));
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/timetable/addNewTimetable.jsp");
             requestDispatcher.forward(request, response);
         } else if (action.equals("back")) {
             response.sendRedirect("/ui/administrator/administratorMain.jsp");
         } else {
-            String depDateString = request.getParameter("Departure date");
+            String depDateString = request.getParameter("Departure_date");
             Date depDate;
             try {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -75,14 +75,14 @@ public class AddNewTrainStopServlet extends HttpServlet {
                 depDate = null;
             }
             TimetableBean timetableBean = new TimetableBean();
-            timetableBean.setStationName(request.getParameter("Station name"));
+            timetableBean.setStationName(request.getParameter("Station_name"));
             timetableBean.setDate(depDate);
-            timetableBean.setTrainNumber(request.getParameter("Train number"));
+            timetableBean.setTrainNumber(request.getParameter("Train_number"));
             log.info("Servlet got bean:" + timetableBean);
             ValidationBean validationBean = Validator.validate(timetableBean);
             if (validationBean.isValidationFailed()) {
                 request.setAttribute("timetableBean", timetableBean);
-                request.setAttribute("trainNumber", request.getParameter("Train number"));
+                request.setAttribute("trainNumber", request.getParameter("Train_number"));
                 request.setAttribute("validationBean", validationBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/timetable/addNewTimetable.jsp");
                 requestDispatcher.forward(request, response);
@@ -90,12 +90,12 @@ public class AddNewTrainStopServlet extends HttpServlet {
                 timetableBean = trainModel.addTrainStop(timetableBean);
                 if (timetableBean.isProcessingFailed()) {
                     request.setAttribute("timetableBean", timetableBean);
-                    request.setAttribute("trainNumber", request.getParameter("Train number"));
+                    request.setAttribute("trainNumber", request.getParameter("Train_number"));
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/timetable/addNewTimetable.jsp");
                     requestDispatcher.forward(request, response);
                 } else {
                     TrainBean trainBean = new TrainBean();
-                    trainBean.setNumber(request.getParameter("Train number"));
+                    trainBean.setNumber(request.getParameter("Train_number"));
                     trainBean = trainModel.findTrain(trainBean);
                     request.setAttribute("trainBean", trainBean);
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/administrator/timetable/trainTimetable.jsp");

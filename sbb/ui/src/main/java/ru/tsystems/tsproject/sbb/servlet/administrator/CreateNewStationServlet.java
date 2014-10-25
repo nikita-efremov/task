@@ -55,7 +55,7 @@ public class CreateNewStationServlet extends HttpServlet {
             response.sendRedirect("/ui/administrator/administratorMain.jsp");
         } else {
             StationBean stationBean = new StationBean();
-            stationBean.setName(request.getParameter("Station name"));
+            stationBean.setName(request.getParameter("Station_name"));
             log.info("Servlet got bean: " + stationBean);
             ValidationBean validationBean = Validator.validate(stationBean);
             if (validationBean.isValidationFailed()) {

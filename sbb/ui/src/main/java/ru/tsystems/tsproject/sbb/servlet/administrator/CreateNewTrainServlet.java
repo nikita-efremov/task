@@ -58,9 +58,9 @@ public class CreateNewTrainServlet extends HttpServlet {
             response.sendRedirect("/ui/administrator/administratorMain.jsp");
         } else {
             TrainBean trainBean = new TrainBean();
-            trainBean.setNumber(request.getParameter("Train number"));
-            trainBean.setSeats(request.getParameter("Total seats"));
-            trainBean.setTotalSeats(request.getParameter("Total seats"));
+            trainBean.setNumber(request.getParameter("Train_number"));
+            trainBean.setSeats(request.getParameter("Total_seats"));
+            trainBean.setTotalSeats(request.getParameter("Total_seats"));
             log.info("Servlet got bean: " + trainBean);
             ValidationBean validationBean = Validator.validate(trainBean);
             if (validationBean.isValidationFailed()) {
