@@ -55,7 +55,7 @@ public class SearchStationServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         StationBean stationBean = new StationBean();
-        stationBean.setName(request.getParameter("Station name"));
+        stationBean.setName(request.getParameter("Station_name"));
         log.info("Servlet got bean: " + stationBean);
         String action = request.getParameter("stationSearchAction");
         if (action == null) {

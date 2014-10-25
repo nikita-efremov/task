@@ -20,7 +20,7 @@ $(document).ready(function() {
                         message: 'Station must be more than 3 and less than 30 characters long'
                     },
                     regexp: {
-                        regexp: /^[a-zA-Z0-9]+$/,
+                        regexp: /^[a-zA-Z]+$/,
                         message: 'Station name can only consist of english alphabetical'
                     },
                     different: {
@@ -41,7 +41,7 @@ $(document).ready(function() {
                         message: 'Station name must be more than 3 and less than 30 characters long'
                     },
                     regexp: {
-                        regexp: /^[a-zA-Z0-9]+$/,
+                        regexp: /^[a-zA-Z]+$/,
                         message: 'Station name can only consist of english alphabetical'
                     },
                     different: {

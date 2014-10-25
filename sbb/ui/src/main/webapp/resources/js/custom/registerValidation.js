@@ -1,6 +1,5 @@
-
 $(document).ready(function() {
-    $('#loginForm').bootstrapValidator({
+    $('#registerForm').bootstrapValidator({
         // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -8,39 +7,37 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            login: {
-                message: 'The login is not valid',
+            First_name: {
+                message: 'First name is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The username is required and cannot be empty'
+                        message: 'First name is required and cannot be empty'
                     },
                     stringLength: {
-                        min: 5,
+                        min: 2,
                         max: 30,
-                        message: 'The username must be more than 5 and less than 30 characters long'
+                        message: 'First name must be more than 2 and less than 30 characters long'
                     },
                     regexp: {
-                        regexp: /^[a-zA-Z0-9]+$/,
-                        message: 'The username can only consist of alphabetical and number'
-                    },
-                    different: {
-                        field: 'password',
-                        message: 'The username and password cannot be the same as each other'
+                        regexp: /^[a-zA-Z]+$/,
+                        message: 'First name can only consist of english alphabetical'
                     }
                 }
             },
-            password: {
+            Last_name: {
+                message: 'Last name is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The password is required and cannot be empty'
-                    },
-                    different: {
-                        field: 'login',
-                        message: 'The password cannot be the same as username'
+                        message: 'Last name is required and cannot be empty'
                     },
                     stringLength: {
-                        min: 6,
-                        message: 'The password must have at least 6 characters'
+                        min: 2,
+                        max: 30,
+                        message: 'Last name must be more than 2 and less than 30 characters long'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z]+$/,
+                        message: 'Last name can only consist of english alphabetical'
                     }
                 }
             },
@@ -60,7 +57,19 @@ $(document).ready(function() {
                         message: 'Last name can only consist of english alphabetical and number'
                     }
                 }
+            },
+            Birth_date: {
+                validators: {
+                    notEmpty: {
+                        message: 'The date of birth is required'
+                    },
+                    dateTime: {
+                        format: 'dd-MM-yyyy',
+                        message: 'The date of birth is not valid'
+                    }
+                }
             }
         }
     });
 });
+

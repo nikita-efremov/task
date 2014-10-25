@@ -4,7 +4,13 @@
 <html>
 <head>
     <title>Found trains</title>
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css">
+
+    <script src="<%=request.getContextPath()%>/resources/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrapValidator/bootstrapValidator.js"></script>
 </head>
 <body>
 <div id="mainHeader">
@@ -61,45 +67,47 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>Found trains</label>
-    <table id = "resultData">
-        <tr>
-            <th>Number</th>
-            <th>Seats</th>
-            <th>Total seats</th>
-            <th>Watch timetable</th>
-        </tr>
-        <%
-            List list = (List)request.getAttribute("foundTrains");
-            if(list!=null)
-            {
-                for(int i=0 ; i< list.size();i++)
-                {
-                    TrainBean bean =(TrainBean) list.get(i);
-        %>
-        <tr>
-            <td><%=bean.getNumber()%></td>
-            <td><%=bean.getSeats()%></td>
-            <td><%=bean.getTotalSeats()%></td>
-            <td>
-                <a href="<%=request.getContextPath()%>/common/TrainTimetable?trainSearchAction=watch timetable&Train number=<%=bean.getNumber()%>">watch</a>
-            </td>
-        </tr>
-        <%
-                }
-            }
-        %>
-    </table>
-    <table id="inputControls">
-        <tr>
-            <td>
-                <INPUT TYPE="button" VALUE="back" onClick="history.go(-1);">
-            </td>
-        </tr>
-    </table>
-    <table id="validationMessages">
-    </table>
+    <div class="col-sm-8">
+        <div class="form-group">
+            <table id = "resultData">
+                <tr>
+                    <th>Number</th>
+                    <th>Seats</th>
+                    <th>Total seats</th>
+                    <th>Watch timetable</th>
+                </tr>
+                <%
+                    List list = (List)request.getAttribute("foundTrains");
+                    if(list!=null)
+                    {
+                        for(int i=0 ; i< list.size();i++)
+                        {
+                            TrainBean bean =(TrainBean) list.get(i);
+                %>
+                <tr>
+                    <td><%=bean.getNumber()%></td>
+                    <td><%=bean.getSeats()%></td>
+                    <td><%=bean.getTotalSeats()%></td>
+                    <td>
+                        <a href="<%=request.getContextPath()%>/common/TrainTimetable?trainSearchAction=watch timetable&Train number=<%=bean.getNumber()%>">watch</a>
+                    </td>
+                </tr>
+                <%
+                        }
+                    }
+                %>
+            </table>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
+            </div>
+        </div>
+        <table id="validationMessages">
+        </table>
+    </div>
 </div>
 
 </body>

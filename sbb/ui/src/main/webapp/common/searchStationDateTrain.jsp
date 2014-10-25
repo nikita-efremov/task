@@ -137,6 +137,6 @@
     </div>
 </div>
 
-<script src="<%=request.getContextPath()%>/resources/js/custom/trainSearchValidation.js"></script>
+<script src="<%=request.getContextPath()%>/resources/js/custom/complexTrainSearchValidation.js"></script>
 </body>
 </html>

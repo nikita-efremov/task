@@ -58,7 +58,7 @@ public class PurchaseTicketServlet extends HttpServlet {
             response.sendRedirect("/ui/index.jsp");
         } else {
             TicketBean ticketBean = new TicketBean();
-            ticketBean.setTrainNumber(request.getParameter("Train number"));
+            ticketBean.setTrainNumber(request.getParameter("Train_number"));
             ticketBean.setPassengerDocNumber((String)request.getSession().getAttribute("passDoc"));
             log.info("Servlet got bean: " + ticketBean);
             ValidationBean validationBean = Validator.validate(ticketBean, "trainNumber");

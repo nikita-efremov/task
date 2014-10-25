@@ -13,7 +13,13 @@
 <html>
 <head>
     <title>Passenger register page</title>
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css">
+
+    <script src="<%=request.getContextPath()%>/resources/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrapValidator/bootstrapValidator.js"></script>
 </head>
 <body>
 <div id="mainHeader">
@@ -70,53 +76,52 @@
     </table>
 </div>
 
-<div class = inputBlock>
-    <label>To find trains by station name, please fill the following fields: </label>
-    <form method="post" action="RegisterPassenger">
-        <table id = "inputData">
-            <TR>
-                <TD>First name:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="First name" value="<%=bean.getFirstName()%>">
-                </TD>
-            </TR>
-            <TR>
-                <TD>Last name:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Last name" value="<%=bean.getLastName()%>">
-                </TD>
-            </TR>
-            <TR>
-                <TD>Birth date:</TD>
-                <TD>
-                    <INPUT TYPE="date" NAME="Birth date" value="<%=bean.getBirthDate()%>">
-                </TD>
-            </TR>
-            <TR>
-                <TD>Document number:</TD>
-                <TD>
-                    <INPUT TYPE="text" NAME="Document number" value="<%=bean.getDocNumber()%>">
-                </TD>
-            </TR>
-        </table>
-        <table id="inputControls">
-            <tr>
-                <td>
-                    <INPUT TYPE="submit" value="register" name="passengerRegisterAction">
-                    <INPUT TYPE="submit" value="back" name="passengerRegisterAction">
-                </td>
-            </tr>
-        </table>
-        <table id="validationMessages">
-            <tr>
-                <td><%=validationBean.getValidationMessage()%></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
-    </form>
+<div class = inputBlockV2>
+    <label>To register in system, please fill the following fields: </label>
+    <div class="col-sm-8">
+        <form class="form-horizontal" role="form" method="post" action="RegisterPassenger" id = "registerForm">
+            <div class="form-group">
+                <label for="First_name" class="col-sm-4 control-label">First name:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="First_name" placeholder="First name" name = "First_name" value = "<%=bean.getFirstName()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Last_name" class="col-sm-4 control-label">Last name:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Last_name" placeholder="Last name" name = "Last_name" value = "<%=bean.getLastName()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Birth_date" class="col-sm-4 control-label">Birth date:</label>
+                <div class="col-sm-7">
+                    <input type="date" class="form-control" id="Birth_date" placeholder="Birth date" name = "Birth_date" value = "<%=bean.getBirthDate()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Document_number" class="col-sm-4 control-label">Document number:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Document_number" placeholder="Document number" name = "Document_number" value = "<%=bean.getDocNumber()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <button type="submit" name="passengerRegisterAction" value="register" class="btn btn-success">Register</button>
+                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
+                </div>
+            </div>
+            <table id="validationMessages">
+                <tr>
+                    <td><%=validationBean.getValidationMessage()%></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 </div>
 
+<script src="<%=request.getContextPath()%>/resources/js/custom/registerValidation.js"></script>
 </body>
 </html>

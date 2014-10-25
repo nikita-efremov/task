@@ -62,7 +62,7 @@ public class RegisterPassengerServlet extends HttpServlet {
             response.sendRedirect("/ui/index.jsp");
         } else {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String birthDateString = request.getParameter("Birth date");
+            String birthDateString = request.getParameter("Birth_date");
             Date birthDate;
             try {
                 birthDate = simpleDateFormat.parse(birthDateString);
@@ -71,9 +71,9 @@ public class RegisterPassengerServlet extends HttpServlet {
             }
 
             PassengerBean passengerBean = new PassengerBean();
-            passengerBean.setLastName(request.getParameter("Last name"));
-            passengerBean.setFirstName(request.getParameter("First name"));
-            passengerBean.setDocNumber(request.getParameter("Document number"));
+            passengerBean.setLastName(request.getParameter("Last_name"));
+            passengerBean.setFirstName(request.getParameter("First_name"));
+            passengerBean.setDocNumber(request.getParameter("Document_number"));
             passengerBean.setBirthDate(birthDate);
             log.info("Servlet got bean: " + passengerBean);
             ValidationBean validationBean = Validator.validate(passengerBean);

@@ -63,7 +63,7 @@ public class PassengerLoginServlet extends HttpServlet {
             response.sendRedirect("/ui/index.jsp");
         } else {
             PassengerBean passengerBean = new PassengerBean();
-            passengerBean.setDocNumber(request.getParameter("Document number"));
+            passengerBean.setDocNumber(request.getParameter("Document_number"));
             log.info("Servlet got bean: " + passengerBean);
             ValidationBean validationBean = Validator.validate(passengerBean, "docNumber");
             if (validationBean.isValidationFailed()) {

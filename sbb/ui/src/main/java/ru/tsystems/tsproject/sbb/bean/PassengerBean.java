@@ -20,7 +20,7 @@ public class PassengerBean extends BaseBean {
 
     @Past(message = "Passenger birth date must be in the past")
     @NotNull(message = "Date format: dd-MM-yyyy")
-    private Date birthDate = Calendar.getInstance().getTime();
+    private Date birthDate;
 
     @Pattern(regexp = "[A-Za-z0-9]{10}", message="Document number must contain 10 symbols: only english letters and digits")
     private String docNumber = "";

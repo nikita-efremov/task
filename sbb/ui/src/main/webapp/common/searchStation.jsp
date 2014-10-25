@@ -13,7 +13,13 @@
 <html>
 <head>
     <title>Station search</title>
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css">
+
+    <script src="<%=request.getContextPath()%>/resources/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrapValidator/bootstrapValidator.js"></script>
 </head>
 <body>
 <div id="mainHeader">
@@ -70,38 +76,37 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>To find trains by station name, please fill the following fields: </label>
-    <form method="post" action="SearchStation">
-        <table id = "inputData">
-            <tr>
-                <td>Station name:</TD>
-                <td>
-                    <input type="text" name="Station name" value="<%=bean.getName()%>">
-                </td>
-            </tr>
-        </table>
-        <table id="inputControls">
-            <tr>
-                <td>
-                <input type="submit" value="search" name="stationSearchAction">
-                <input type="submit" value="back" name="stationSearchAction">
-                <% if (bean.getId() > 0) { %>
-                    <input type="submit" value="watch timetable" name="stationSearchAction">
-                <% } %>
-                </td>
-            </tr>
-        </table>
-        <table id="validationMessages">
-            <tr>
-                <td><%=validationBean.getValidationMessage()%></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
-    </form>
-</div>
+    <div class="col-sm-8">
+        <form class="form-horizontal" role="form" method="post" action="SearchStation" id = "stationSearchForm">
+            <div class="form-group">
+                <label for="Station_name" class="col-sm-4 control-label">Station name:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Station_name" placeholder="Station name" name = "Station_name" value = "<%=bean.getName()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <button type="submit" name="stationSearchAction" value="search" class="btn btn-success">Search</button>
+                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='back'>
+                    <% if (bean.getId() > 0) { %>
+                    <input type=button class="btn btn-success" onClick="location.href='<%=request.getContextPath()%>/common/SearchStation?stationSearchAction=watch timetable&Station_name=<%=bean.getName()%>'" value='watch timetable'>
+                    <% } %>
+                </div>
+            </div>
 
+            <table id="validationMessages">
+                <tr>
+                    <td><%=validationBean.getValidationMessage()%></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script src="<%=request.getContextPath()%>/resources/js/custom/stationSearchValidation.js"></script>
 </body>
 </html>

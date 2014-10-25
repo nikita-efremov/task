@@ -13,7 +13,13 @@
 <html>
 <head>
     <title>Passenger login page</title>
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css">
+
+    <script src="<%=request.getContextPath()%>/resources/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrapValidator/bootstrapValidator.js"></script>
 </head>
 <body>
 <div id="mainHeader">
@@ -70,35 +76,36 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>To login in system, please fill the following fields: </label>
-    <form method="post" action="PassengerLogin">
-        <table id = "inputData">
-            <tr>
-                <td>Document number:</TD>
-                <td>
-                    <input type="text" name="Document number" value="">
-                </td>
-            </tr>
-        </table>
-        <table id="inputControls">
-            <tr>
-                <td>
-                    <INPUT TYPE="submit" value="Login" name="loginAction">
-                    <INPUT TYPE="submit" value="Back" name="loginAction">
-                </td>
-            </tr>
-        </table>
-        <table id="validationMessages">
-            <tr>
-                <td><%=validationBean.getValidationMessage()%></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
-    </form>
+    <div class="col-sm-8">
+        <form class="form-horizontal" role="form" method="post" action="PassengerLogin" id = "loginForm">
+            <div class="form-group">
+                <label for="Document_number" class="col-sm-4 control-label">Document number:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Document_number" placeholder="Document number" name = "Document_number" value = "<%=bean.getDocNumber()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <button type="submit" name="loginAction" value="Login" class="btn btn-success">Login</button>
+                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='back'>
+
+                </div>
+            </div>
+
+            <table id="validationMessages">
+                <tr>
+                    <td><%=validationBean.getValidationMessage()%></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 </div>
 
+<script src="<%=request.getContextPath()%>/resources/js/custom/loginValidation.js"></script>
 </body>
 </html>

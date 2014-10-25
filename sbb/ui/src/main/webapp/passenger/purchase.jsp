@@ -13,7 +13,13 @@
 <html>
 <head>
     <title>Ticket purchasing</title>
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css">
+
+    <script src="<%=request.getContextPath()%>/resources/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrapValidator/bootstrapValidator.js"></script>
 </head>
 <body>
 <div id="mainHeader">
@@ -70,35 +76,35 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>To purchase ticket, please fill the following fields: </label>
-    <form method="post" action="TicketPurchase">
-        <table id = "inputData">
-            <tr>
-                <td>Train number:</TD>
-                <td>
-                    <input type="text" name="Train number" value="<%=bean.getTrainNumber()%>">
-                </td>
-            </tr>
-        </table>
-        <table id="inputControls">
-            <tr>
-                <td>
-                    <INPUT TYPE="submit" value="Purchase" name="purchaseAction">
-                    <INPUT TYPE="submit" value="Back" name="purchaseAction">
-                </td>
-            </tr>
-        </table>
-        <table id="validationMessages">
-            <tr>
-                <td><%=validationBean.getValidationMessage()%></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
-    </form>
+    <div class="col-sm-8">
+        <form class="form-horizontal" role="form" method="post" action="TicketPurchase" id = "purchaseForm">
+            <div class="form-group">
+                <label for="Train_number" class="col-sm-4 control-label">Train number:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Train_number" placeholder="Train number" name = "Train_number" value = "<%=bean.getTrainNumber()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <button type="submit" name="purchaseAction" value="Purchase" class="btn btn-success">Purchase</button>
+                    <input type=button class="btn btn-default" onClick="history.go(-1);" value='Back'>
+                </div>
+            </div>
+
+            <table id="validationMessages">
+                <tr>
+                    <td><%=validationBean.getValidationMessage()%></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 </div>
 
+<script src="<%=request.getContextPath()%>/resources/js/custom/purchaseValidation.js"></script>
 </body>
 </html>

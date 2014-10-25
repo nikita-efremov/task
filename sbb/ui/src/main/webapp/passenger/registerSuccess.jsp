@@ -10,7 +10,13 @@
 <html>
 <head>
     <title>Register Success</title>
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css">
+
+    <script src="<%=request.getContextPath()%>/resources/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrapValidator/bootstrapValidator.js"></script>
 </head>
 <body>
 <div id="mainHeader">
@@ -67,41 +73,43 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>You have been registered successfully</label>
-    <table id = "resultData">
-        <TR>
-            <TD>First name:</TD>
-            <TD> <%=bean.getFirstName()%> </TD>
-        </TR>
-        <TR>
-            <TD>Last name:</TD>
-            <TD> <%=bean.getLastName()%> </TD>
-        </TR>
-        <TR>
-            <TD>Document number:</TD>
-            <TD> <%=bean.getDocNumber()%> </TD>
-        </TR>
-        <TR>
-            <TD>Birth date:</TD>
-            <TD> <%=new SimpleDateFormat("dd-MM-yyyy").format(bean.getBirthDate())%> </TD>
-        </TR>
-    </table>
-    <table id="inputControls">
-        <tr>
-            <td>
-                <input type=button onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='back'>
-            </td>
-        </tr>
-    </table>
-    <table id="validationMessages">
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td><%=bean.getProcessingErrorMessage()%></td>
-        </tr>
-    </table>
+    <div class="col-sm-8">
+        <div class="form-group">
+            <table id = "resultData">
+                <TR>
+                    <TD>First name:</TD>
+                    <TD> <%=bean.getFirstName()%> </TD>
+                </TR>
+                <TR>
+                    <TD>Last name:</TD>
+                    <TD> <%=bean.getLastName()%> </TD>
+                </TR>
+                <TR>
+                    <TD>Document number:</TD>
+                    <TD> <%=bean.getDocNumber()%> </TD>
+                </TR>
+                <TR>
+                    <TD>Birth date:</TD>
+                    <TD> <%=new SimpleDateFormat("dd-MM-yyyy").format(bean.getBirthDate())%> </TD>
+                </TR>
+            </table>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <input type=button class="btn btn-primary" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Exit'>
+            </div>
+        </div>
+        <table id="validationMessages">
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td><%=bean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 </body>

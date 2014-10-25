@@ -17,7 +17,13 @@
 <html>
 <head>
     <title>Station timetable</title>
-    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css">
+
+    <script src="<%=request.getContextPath()%>/resources/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrapValidator/bootstrapValidator.js"></script>
 </head>
 <body>
 <div id="mainHeader">
@@ -74,44 +80,46 @@
     </table>
 </div>
 
-<div class = inputBlock>
+<div class = inputBlockV2>
     <label>Timetable of station name <%=bean.getName()%>:</label>
-    <table id = "resultData">
-        <tr>
-            <th>Train number</th>
-            <th>Departure date</th>
-        </tr>
-        <%
-            Set set = (Set)bean.getTimetables();
-            if(set != null)
-            {
-                for (Object o: set) {
-                    TimetableBean timetableBean = (TimetableBean)o;
-            %>
-        <tr>
-            <td><%=timetableBean.getTrainNumber()%></td>
-            <td><%=new SimpleDateFormat("dd-MM-yyyy HH:mm").format(timetableBean.getDate())%></td>
-        </tr>
-        <%
-                }
-            }
-        %>
-    </table>
-    <table id="inputControls">
-        <tr>
-            <td>
-                <INPUT TYPE="button" VALUE="back" onClick="history.go(-1);">
-            </td>
-        </tr>
-    </table>
-    <table id="validationMessages">
-        <tr>
-            <td><%=validationBean.getValidationMessage()%></td>
-        </tr>
-        <tr>
-            <td><%=bean.getProcessingErrorMessage()%></td>
-        </tr>
-    </table>
+    <div class="col-sm-8">
+        <div class="form-group">
+            <table id = "resultData">
+                <tr>
+                    <th>Train number</th>
+                    <th>Departure date</th>
+                </tr>
+                <%
+                    Set set = (Set)bean.getTimetables();
+                    if(set != null)
+                    {
+                        for (Object o: set) {
+                            TimetableBean timetableBean = (TimetableBean)o;
+                %>
+                <tr>
+                    <td><%=timetableBean.getTrainNumber()%></td>
+                    <td><%=new SimpleDateFormat("dd-MM-yyyy HH:mm").format(timetableBean.getDate())%></td>
+                </tr>
+                <%
+                        }
+                    }
+                %>
+            </table>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
+            </div>
+        </div>
+        <table id="validationMessages">
+            <tr>
+                <td><%=validationBean.getValidationMessage()%></td>
+            </tr>
+            <tr>
+                <td><%=bean.getProcessingErrorMessage()%></td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 </body>
