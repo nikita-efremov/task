@@ -89,10 +89,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-10">
                     <button type="submit" name="stationSearchAction" value="search" class="btn btn-success">Search</button>
-                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='back'>
-                    <% if (bean.getId() > 0) { %>
-                    <input type=button class="btn btn-success" onClick="location.href='<%=request.getContextPath()%>/common/SearchStation?stationSearchAction=watch timetable&Station_name=<%=bean.getName()%>'" value='watch timetable'>
-                    <% } %>
+                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
                 </div>
             </div>
 

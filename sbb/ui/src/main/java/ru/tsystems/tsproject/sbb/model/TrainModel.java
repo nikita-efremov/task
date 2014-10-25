@@ -3,6 +3,7 @@ package ru.tsystems.tsproject.sbb.model;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
+import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TimetableBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
@@ -183,6 +184,37 @@ public class TrainModel {
             log.log(Level.ERROR, "Unknown error occurred: " + e);
         }
         return timetableBean;
+    }
+
+    /**
+     * Gets collection of trains, which have stop on specified station
+     * If error occurs, method will add error message and error flag to output parameter
+     *
+     * @return collection of trains
+     */
+    public Collection<TrainBean> findTrainsByStation(StationBean stationBean) {
+        Collection<TrainBean> trainBeans = new ArrayList<TrainBean>();
+        try {
+            Collection<Train> trains = passengerService.findTrainsByStation(stationBean.getName());
+            for (Train train: trains) {
+                TrainBean trainBean = new TrainBean();
+                trainBean.setId(train.getId());
+                trainBean.setNumber(train.getNumber());
+                trainBean.setSeats(String.valueOf(train.getSeats()));
+                trainBean.setTotalSeats(String.valueOf(train.getTotalSeats()));
+                trainBeans.add(trainBean);
+            }
+        } catch (StationNotExistsException e) {
+            stationBean.setProcessingErrorMessage(e.getMessage());
+            log.log(Level.ERROR, e.getMessage() + " - " + e);
+        } catch (DAOException e) {
+            stationBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
+            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (Exception e) {
+            stationBean.setProcessingErrorMessage("Unknown error occurred");
+            log.log(Level.ERROR, "Unknown error occurred: " + e);
+        }
+        return trainBeans;
     }
 
     /**

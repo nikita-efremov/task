@@ -48,6 +48,27 @@ public class PassengerServiceImplTest {
             daoTransactionManager, stationDAO, trainDAO, passengerDAO, ticketDAO);
 
     @Test(expected = StationNotExistsException.class)
+    public void testFindTrainsByStation_StationNotFound() throws Exception {
+        String stationName = "Novgorod";
+
+        when(stationDAO.getStationByName(stationName)).thenReturn(null);
+        passengerService.findTrainsByStation(stationName);
+    }
+
+    @Test
+    public void testFindTrainsByStation_Success() throws Exception {
+        int stationID = 546;
+        String stationName = "Novgorod";
+        Station station = new Station();
+        station.setId(stationID);
+        station.setName(stationName);
+
+        when(stationDAO.getStationByName(stationName)).thenReturn(station);
+        passengerService.findTrainsByStation(stationName);
+        verify(trainDAO).getTrainsByStation(stationID);
+    }
+
+    @Test(expected = StationNotExistsException.class)
     public void testFindTrainsByStationsAndDate_StartStationNotFound() throws Exception {
         String stationStartName = "Novgorod";
         String stationEndName = "Krasnodar";

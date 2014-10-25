@@ -22,6 +22,17 @@ public interface TrainDAO extends CommonDAO <Train> {
     public Train getTrainByNumber(String trainNumber) throws DAOException;
 
     /**
+     * Get operation: trains will be found by taking stop on specified station
+     * @param stationID
+     * Station primary key - database ID
+     * @return Collection
+     * Found trains
+     * @throws DAOException
+     * All exceptions thrown in method will be converted to DAOException
+     */
+    public Collection getTrainsByStation(int stationID) throws DAOException;
+
+    /**
      * Get operation: trains will be found by departure station primary key or arrival station primary key,
      * and train departure dates must be between specified dateStart and dateEnd
      * @param stationStartID

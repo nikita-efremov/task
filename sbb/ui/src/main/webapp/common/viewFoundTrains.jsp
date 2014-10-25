@@ -76,7 +76,8 @@
                     <th>Number</th>
                     <th>Seats</th>
                     <th>Total seats</th>
-                    <th>Watch timetable</th>
+                    <th>Timetable</th>
+                    <th>Ticket</th>
                 </tr>
                 <%
                     List list = (List)request.getAttribute("foundTrains");
@@ -91,7 +92,10 @@
                     <td><%=bean.getSeats()%></td>
                     <td><%=bean.getTotalSeats()%></td>
                     <td>
-                        <a href="<%=request.getContextPath()%>/common/TrainTimetable?trainSearchAction=watch timetable&Train number=<%=bean.getNumber()%>">watch</a>
+                        <a href="<%=request.getContextPath()%>/common/TrainTimetable?trainSearchAction=watch timetable&Train_number=<%=bean.getNumber()%>">watch</a>
+                    </td>
+                    <td>
+                        <a href="<%=request.getContextPath()%>/passenger/TicketPurchase?purchaseAction=Purchase&Train_number=<%=bean.getNumber()%>">purchase</a>
                     </td>
                 </tr>
                 <%

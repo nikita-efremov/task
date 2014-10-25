@@ -32,6 +32,20 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
         this.ticketDAO = ticketDAO;
     }
 
+    public Collection<Train> findTrainsByStation(String stationName) throws StationNotExistsException, DAOException {
+        log.info("Start searching trains by stationName:" + stationName);
+        Station station = findStation(stationName);
+
+        Collection<Train> foundTrains = getTrainDAO().getTrainsByStation(station.getId());
+
+        StringBuilder trainString = new StringBuilder();
+        for (Train train: foundTrains) {
+            trainString.append(",").append(train);
+        }
+        log.info("Found trains: " + trainString.toString());
+        return foundTrains;
+    }
+
     public Collection<Train> findTrainsByStationsAndDate(String stationStartName,
                                                          String stationEndName,
                                                          Date start,

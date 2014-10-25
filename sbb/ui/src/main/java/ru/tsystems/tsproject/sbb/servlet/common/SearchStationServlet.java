@@ -27,13 +27,13 @@ import java.util.Collection;
 public class SearchStationServlet extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(SearchStationServlet.class);
-    private StationModel stationModel;
+    private TrainModel trainModel;
 
     /**
-     * Initialize servlet`s attribute - stationModel
+     * Initialize servlet`s attribute - trainModel
      */
     public void init() {
-        stationModel = ApplicationContext.getStationModel();
+        trainModel = ApplicationContext.getTrainModel();
     }
 
     /**
@@ -62,11 +62,6 @@ public class SearchStationServlet extends HttpServlet {
             response.sendRedirect("/ui/common/searchStation.jsp");
         } else if (action.equals("back")) {
             response.sendRedirect("/ui/index.jsp");
-        } else if (action.equals("watch timetable")) {
-            stationBean = stationModel.findStation(stationBean);
-            request.setAttribute("stationBean", stationBean);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/stationTimetable.jsp");
-            requestDispatcher.forward(request, response);
         } else {
             ValidationBean validationBean = Validator.validate(stationBean);
             if (validationBean.isValidationFailed()) {
@@ -75,10 +70,16 @@ public class SearchStationServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStation.jsp");
                 requestDispatcher.forward(request, response);
             } else {
-                stationBean = stationModel.findStation(stationBean);
-                request.setAttribute("searchResult", stationBean);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStation.jsp");
-                requestDispatcher.forward(request, response);
+                Collection<TrainBean> trains = trainModel.findTrainsByStation(stationBean);
+                if (stationBean.isProcessingFailed()) {
+                    request.setAttribute("searchResult", stationBean);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/searchStation.jsp");
+                    requestDispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("foundTrains", trains);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/common/viewFoundTrains.jsp");
+                    requestDispatcher.forward(request, response);
+                }
             }
         }
     }

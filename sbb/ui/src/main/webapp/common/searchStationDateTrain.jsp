@@ -115,7 +115,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-10">
-                    <button type="submit" name="stationDateTrainSearchAction" value="search trains" class="btn btn-success">search trains</button>
+                    <button type="submit" name="stationDateTrainSearchAction" value="search trains" class="btn btn-success">Search trains</button>
                     <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
                 </div>
             </div>

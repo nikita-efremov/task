@@ -17,6 +17,21 @@ import java.util.Date;
 public interface PassengerService extends CommonService {
 
     /**
+     * Finds all trains which have stop specified station
+     *
+     * @param  stationName
+     *         Name of station at which train must have stop
+     *
+     * @throws StationNotExistsException
+     *         if station not found
+     *
+     * @throws DAOException
+     *         If error occurred in JPA layer
+     */
+    public Collection<Train> findTrainsByStation(String stationName)
+            throws StationNotExistsException, DAOException;
+
+    /**
      * Finds all trains which are move from station $stationStart, departs to $stationEnd and trip time is between $start and $end
      *
      * @param  stationStartName

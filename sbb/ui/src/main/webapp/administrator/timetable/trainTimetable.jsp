@@ -106,7 +106,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-1 col-sm-10">
-                <input type=button class = "btn btn-success" onClick="location.href='<%=request.getContextPath()%>/administrator/train/AddNewTrainStop?trainTimetableAction=add new stop&Train_number=<%=bean.getNumber()%>'" value='add new stop'>
+                <input type=button class = "btn btn-success" onClick="location.href='<%=request.getContextPath()%>/administrator/train/AddNewTrainStop?trainTimetableAction=add new stop&Train_number=<%=bean.getNumber()%>'" value='Add new stop'>
                 <input type=button class="btn btn-default" onClick="history.go(-1);" value='Back'>
             </div>
         </div>

@@ -57,7 +57,7 @@ public class TrainTimetableServlet extends HttpServlet {
             response.sendRedirect("/ui/index.jsp");
         } else {
             TrainBean trainBean = new TrainBean();
-            trainBean.setNumber(request.getParameter("Train number"));
+            trainBean.setNumber(request.getParameter("Train_number"));
             log.info("Servlet got bean: " + trainBean);
             trainBean = trainModel.findTrain(trainBean);
             request.setAttribute("trainBean", trainBean);

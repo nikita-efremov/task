@@ -69,6 +69,54 @@ public class TrainDAOImpl extends AbstractDAOImpl<Train> implements TrainDAO {
         }
     }
 
+    public Collection getTrainsByStation(int stationID) throws DAOException {
+        try {
+            EntityManager entityManager = getEntityManager();
+            Query query = entityManager.createQuery(
+                    "select t.train"
+                            + " from Timetable t INNER JOIN t.train Train"
+                            + " where t.station.id = :stationID"
+            )
+                    .setParameter("stationID", stationID);
+            return query.getResultList();
+        } catch (IllegalArgumentException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode(ErrorCode.ARGUMENT_ERROR);
+            throw daoException;
+        } catch (TransactionRequiredException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode(ErrorCode.TRANSACTION_NOT_FOUND);
+            throw daoException;
+        } catch (QueryTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode(ErrorCode.QUERY_TIMEOUT);
+            throw daoException;
+        } catch (PessimisticLockException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode(ErrorCode.LOCK_CONFLICT);
+            throw daoException;
+        } catch (LockTimeoutException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode(ErrorCode.LOCK_TIMEOUT);
+            throw daoException;
+        } catch (PersistenceException e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode(ErrorCode.JPA_ERROR);
+            throw daoException;
+        } catch (Exception e) {
+            DAOException daoException = new DAOException(e.getMessage());
+            daoException.initCause(e.getCause());
+            daoException.setErrorCode(ErrorCode.UNKNOWN_ERROR);
+            throw daoException;
+        }
+    }
+
     public Collection getTrainsByStationsAndDate(int stationStartID, int stationEndID, Date dateStart, Date dateEnd) throws DAOException {
         try {
             EntityManager entityManager = getEntityManager();
