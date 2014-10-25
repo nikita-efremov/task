@@ -22,11 +22,10 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * Servlet launches searching new train by specifies stations and date, than it analyzes result and send to view
+ * Servlet, which gets and proceeds requests of searching trains by stations and date
  * @author  Nikita Efremov
  * @since   1.0
  */
-
 public class SearchTrainByStationsAndDateServlet extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(SearchTrainByStationsAndDateServlet.class);
@@ -40,7 +39,8 @@ public class SearchTrainByStationsAndDateServlet extends HttpServlet {
     }
 
     /**
-     * Method proceeds both GET and POST requests. It launches train searching, analyses result of searching, send result to view
+     * Method proceeds both GET and POST requests. It proceeds request of searching trains by stations and date
+     * and after proceeding sends result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

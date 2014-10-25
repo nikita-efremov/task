@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet launches creating new station, than it analyzes result and send to view
+ * Servlet, which gets and proceeds requests of creation new station
  * @author  Nikita Efremov
  * @since   1.0
  */
@@ -31,7 +31,8 @@ public class CreateNewStationServlet extends HttpServlet {
     }
 
     /**
-     * Method proceeds both GET and POST requests. It launches station creation, analyses result of creation, send result to view
+     * Method proceeds both GET and POST requests. It proceeds request of adding a new station
+     * and after proceeding sends result to view
      * @param request   an {@link HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

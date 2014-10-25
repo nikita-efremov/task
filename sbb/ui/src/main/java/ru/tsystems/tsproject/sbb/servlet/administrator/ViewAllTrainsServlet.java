@@ -15,11 +15,10 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
- * Servlet gets all trains and sends it to the view
+ * Servlet, which gets and proceeds requests of getting all trains
  * @author  Nikita Efremov
  * @since   1.0
  */
-
 public class ViewAllTrainsServlet extends HttpServlet {
 
     private TrainModel trainModel;
@@ -32,7 +31,8 @@ public class ViewAllTrainsServlet extends HttpServlet {
     }
 
     /**
-     * Method proceeds both GET and POST requests. It gets all trains and sends it to view
+     * Method proceeds both GET and POST requests. It proceeds request of getting all trains
+     * and after proceeding sends result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

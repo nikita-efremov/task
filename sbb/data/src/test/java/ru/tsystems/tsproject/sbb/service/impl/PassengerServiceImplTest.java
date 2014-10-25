@@ -20,6 +20,8 @@ import static org.mockito.Mockito.*;
 
 /**
  * Test of PassengerServiceImpl
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 
 @RunWith(MockitoJUnitRunner.class)

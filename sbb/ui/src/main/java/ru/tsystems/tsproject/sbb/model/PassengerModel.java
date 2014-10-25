@@ -12,12 +12,11 @@ import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.service.api.PassengerService;
 
 /**
- *
- * Class implements model behaviour of mvc pattern of object passenger
+ * Part of a controller which launches appropriate service method, related to passenger,
+ * and makes mapping from view bean class to service bean class and conversely
  * @author  Nikita Efremov
  * @since   1.0
  */
-
 public class PassengerModel {
 
     private static final Logger log = Logger.getLogger(PassengerModel.class);
@@ -31,13 +30,14 @@ public class PassengerModel {
     }
 
     /**
-     * Adds new passenger with last name, first name, document number and birth date, specified in param.
+     * Method for adding new passenger with last name, first name, document number and birth date, specified in param.
      * If error occurs, method will add error message and error flag to output parameter
      *
      * @param  passengerBean
      *         Passenger instance with default id value and specified last name, first name, document number and birth date
      *
-     * @return result of processing
+     * @return PassengerBean
+     *         result of processing
      */
     public PassengerBean addPassenger(PassengerBean passengerBean) {
         try {
@@ -75,7 +75,8 @@ public class PassengerModel {
      * @param  passengerBean
      *         Passenger instance with default id value and specified last name, first name, document number and birth date
      *
-     * @return result of processing
+     * @return PassengerBean
+     *         result of processing
      */
     public PassengerBean getPassenger(PassengerBean passengerBean) {
         try {
@@ -100,15 +101,17 @@ public class PassengerModel {
     }
 
     /**
-     * Searches passenger by document number, searches train by train number specified in param, and then purchases ticket for passenger
-     * only if train has free seats, passengers with same name and birth date is not registered on this train
+     * Searches passenger by document number, searches train by train number specified in param,
+     * and then purchases ticket for passenger only if train has free seats,
+     * passengers with same name and birth date is not registered on this train
      * and departure time bigger than current time at least on 10 minutes
      * If error occurs, method will add error message and error flag to output parameter
      *
      * @param  ticketBean
      *         Passenger instance with default id value and specified last name, first name, document number and birth date
      *
-     * @return result of processing
+     * @return TicketBean
+     *         result of processing
      */
     public TicketBean purchaseTicket(TicketBean ticketBean) {
         try {

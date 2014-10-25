@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- *
  * interface for making administrator actions in system
  * @author  Nikita Efremov
  * @since   1.0
@@ -19,7 +18,7 @@ import java.util.Date;
 public interface AdministratorService extends CommonService {
 
     /**
-     * Adds new station with name, specified in @param station
+     * Adds new station with name, specified in param
      *
      * @param  station
      *         Station instance with default id value and specified name
@@ -35,7 +34,7 @@ public interface AdministratorService extends CommonService {
      * Adds new train with name, specified in param
      *
      * @param train
-     *        Train instance with specified if, name and timetable
+     *        Train instance with default id, specified number and seats value
      *
      * @throws  TrainAlreadyExistsException
      *          If train with specified name already exists

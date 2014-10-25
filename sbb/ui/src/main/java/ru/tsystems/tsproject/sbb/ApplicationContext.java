@@ -17,6 +17,11 @@ import javax.persistence.CacheRetrieveMode;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
+/**
+ * Class which contains objects, which used by on request processing. All objects are created lazily and only once
+ * @author  Nikita Efremov
+ * @since   1.0
+ */
 public class ApplicationContext {
 
     private static volatile EntityManager entityManager;

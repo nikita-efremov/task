@@ -7,6 +7,8 @@ import javax.validation.constraints.Pattern;
 
 /**
  * Class represents JPA entity - Station. It is mapped on table station
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 
 @Entity

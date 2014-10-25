@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Filter redirects all unauthorized passengers lo login page. If user is authorized, it redirects it to default page
+ * Filter redirects all unauthorized passengers lo passenger login page.
+ * If passenger is authorized, it redirects to next filter
  * @author  Nikita Efremov
  * @since   1.0
  */
@@ -24,6 +25,17 @@ public class LoginPassengerFilter implements Filter {
     public void destroy() {
     }
 
+    /**
+     * Method filters users to authorized and unauthorized.
+     * Authorized will be redirected to the next filter, if it exists, or target servlet.
+     * Unauthorized users will be redirected passenger login page
+     * @param servletRequest
+     *        Servlet request
+     * @param servletResponse
+     *        Servlet response
+     * @param filterChain
+     *        Filters collection
+     */
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession httpSession = httpServletRequest.getSession();

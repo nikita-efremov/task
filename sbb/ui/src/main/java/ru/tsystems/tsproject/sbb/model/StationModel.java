@@ -24,8 +24,8 @@ import java.util.TreeSet;
 
 
 /**
- *
- * Class implements model behaviour of mvc pattern of object station
+ * Part of a controller which launches appropriate service method, related to station,
+ * and makes mapping from view bean class to service bean class and conversely
  * @author  Nikita Efremov
  * @since   1.0
  */
@@ -47,7 +47,8 @@ public class StationModel {
      * @param  stationBean
      *         StationBean instance with default id value and specified name
      *
-     * @return result of processing
+     * @return StationBean
+     *         result of processing
      */
     public StationBean addStation(StationBean stationBean) {
         try {
@@ -78,7 +79,8 @@ public class StationModel {
      * @param  stationBean
      *         TrainBean instance with default id value and specified name
      *
-     * @return result of processing
+     * @return StationBean
+     *         result of processing
      */
     public StationBean findStation(StationBean stationBean) {
         try {
@@ -117,7 +119,8 @@ public class StationModel {
      * Gets collection of all stations, which exist in system
      * If error occurs, method will add error message and error flag to output parameter
      *
-     * @return collection of stations
+     * @return Collection<StationBean>
+     *         collection of stations
      */
     public Collection<StationBean> getAllStations() {
         Collection<StationBean> stationBeans = new ArrayList<StationBean>();

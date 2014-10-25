@@ -7,6 +7,8 @@ import java.util.Collection;
 
 /**
  * DAO-class for entity Passenger. Extends CommonDAO interface with wildcard class = Passenger
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public interface PassengerDAO extends CommonDAO <Passenger> {
 

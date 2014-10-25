@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Servlet launches purchasing ticket process, than it analyzes result and send to view
+ * Servlet, which gets and proceeds requests of ticket purchasing
  * @author  Nikita Efremov
  * @since   1.0
  */
@@ -34,7 +34,8 @@ public class PurchaseTicketServlet extends HttpServlet {
     }
 
     /**
-     * Method proceeds both GET and POST requests. It launches passenger login process, analyses result of creation, send result to view
+     * Method proceeds both GET and POST requests. It proceeds request of ticket purchasing
+     * and after proceeding sends result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

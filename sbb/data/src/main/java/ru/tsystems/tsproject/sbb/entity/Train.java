@@ -7,6 +7,8 @@ import java.util.TreeSet;
 
 /**
  * Class represents JPA entity - Train. It is mapped on table train
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 
 @Entity

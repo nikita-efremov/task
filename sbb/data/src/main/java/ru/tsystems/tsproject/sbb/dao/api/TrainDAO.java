@@ -7,6 +7,8 @@ import java.util.Date;
 
 /**
  * DAO-class for entity Train. Extends CommonDAO interface with wildcard class = Train
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public interface TrainDAO extends CommonDAO <Train> {
 

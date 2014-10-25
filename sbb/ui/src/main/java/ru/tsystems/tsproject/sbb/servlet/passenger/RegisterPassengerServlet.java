@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Servlet launches passenger creation process, than it analyzes result and send to view
+ * Servlet, which gets and proceeds requests of passenger registering
  * @author  Nikita Efremov
  * @since   1.0
  */
@@ -38,7 +38,8 @@ public class RegisterPassengerServlet extends HttpServlet {
     }
 
     /**
-     * Method proceeds both GET and POST requests. It launches passenger registering, analyses result of creation, send result to view
+     * Method proceeds both GET and POST requests. It proceeds request of passenger registering
+     * and after proceeding sends result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

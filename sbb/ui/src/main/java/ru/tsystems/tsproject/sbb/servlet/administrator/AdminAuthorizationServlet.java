@@ -10,13 +10,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-
+/**
+ * Servlet, which gets and proceeds requests of admin authorization
+ * @author  Nikita Efremov
+ * @since   1.0
+ */
 public class AdminAuthorizationServlet extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(AdminAuthorizationServlet.class);
 
     /**
-     * Method proceeds both GET and POST requests. It analyze login and password from login page, which was inputted by user.
+     * Method proceeds both GET and POST requests. It proceeds request of admin authorization
+     * and after proceeding sends result to view
      * If credentials is valid, method adds "user" attribute to HttpSession object
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made

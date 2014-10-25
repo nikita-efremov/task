@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.dao;
 
 /**
  * Exception which will contain all exceptions, which will appear in DAO-classes
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public class DAOException extends Exception {
 

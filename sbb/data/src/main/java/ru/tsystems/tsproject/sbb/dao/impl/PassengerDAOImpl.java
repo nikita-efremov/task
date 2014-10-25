@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * PassengerDAO interface implementation. Also extends AbstractDAOImpl class with wildcard class = Passenger
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public class PassengerDAOImpl extends AbstractDAOImpl<Passenger> implements PassengerDAO {
 

@@ -25,12 +25,11 @@ import javax.persistence.EntityManager;
 import java.util.*;
 
 /**
- *
- * Class implements model behaviour of mvc pattern of object train
+ * Part of a controller which launches appropriate service method, related to train,
+ * and makes mapping from view bean class to service bean class and conversely
  * @author  Nikita Efremov
  * @since   1.0
  */
-
 public class TrainModel {
 
     private static final Logger log = Logger.getLogger(TrainModel.class);
@@ -52,7 +51,8 @@ public class TrainModel {
      * @param  trainBean
      *         TrainBean instance with default id value and specified name
      *
-     * @return result of processing
+     * @return TrainBean
+     *         result of processing
      */
     public TrainBean addTrain(TrainBean trainBean) {
         try {
@@ -87,7 +87,8 @@ public class TrainModel {
      * @param  trainBean
      *         TrainBean instance with default id value and specified name
      *
-     * @return result of processing
+     * @return TrainBean
+     *         result of processing
      */
     public TrainBean findTrain(TrainBean trainBean) {
         try {
@@ -128,7 +129,8 @@ public class TrainModel {
      * @param  trainBean
      *         TrainBean instance with default id value and specified name
      *
-     * @return result of processing
+     * @return Collection<PassengerBean>
+     *         result of processing
      */
     public Collection<PassengerBean> findTrainPassengers(TrainBean trainBean) {
         Collection<PassengerBean> passengerBeanSet = new LinkedList<PassengerBean>();
@@ -162,7 +164,8 @@ public class TrainModel {
      * @param  timetableBean
      *         TrainBean instance with default id value and specified name
      *
-     * @return result of processing
+     * @return TimetableBean
+     *         result of processing
      */
     public TimetableBean addTrainStop(TimetableBean timetableBean) {
         try {
@@ -190,7 +193,8 @@ public class TrainModel {
      * Gets collection of trains, which have stop on specified station
      * If error occurs, method will add error message and error flag to output parameter
      *
-     * @return collection of trains
+     * @return Collection<TrainBean>
+     *         collection of trains
      */
     public Collection<TrainBean> findTrainsByStation(StationBean stationBean) {
         Collection<TrainBean> trainBeans = new ArrayList<TrainBean>();
@@ -221,7 +225,8 @@ public class TrainModel {
      * Gets collection of trains, which have stops on specified stations and specified dates
      * If error occurs, method will add error message and error flag to output parameter
      *
-     * @return collection of trains
+     * @return Collection<TrainBean>
+     *         collection of trains
      */
     public Collection<TrainBean> findTrainsByStationsAndDate(TimetableBean startBean, TimetableBean endBean) {
         Collection<TrainBean> trainBeans = new ArrayList<TrainBean>();
@@ -253,7 +258,8 @@ public class TrainModel {
      * Gets collection of all trains, which exist in system
      * If error occurs, method will add error message and error flag to output parameter
      *
-     * @return collection of trains
+     * @return Collection<TrainBean>
+     *         collection of trains
      */
     public Collection<TrainBean> getAllTrains() {
         Collection<TrainBean> trainBeans = new ArrayList<TrainBean>();

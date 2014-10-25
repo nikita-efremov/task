@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.dao;
 
 /**
  * Enum for codes of errors, which may appear in DAO-classes
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public enum ErrorCode {
     TRANSACTION_NOT_FOUND,

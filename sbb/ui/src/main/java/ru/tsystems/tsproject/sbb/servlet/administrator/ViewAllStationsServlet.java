@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
- * Servlet gets all stations and sends it to the view
+ * Servlet, which gets and proceeds requests of getting all stations
  * @author  Nikita Efremov
  * @since   1.0
  */
@@ -30,7 +30,8 @@ public class ViewAllStationsServlet extends HttpServlet {
     }
 
     /**
-     * Method proceeds both GET and POST requests. It gets all stations and sends it to view
+     * Method proceeds both GET and POST requests. It proceeds request of getting all stations
+     * and after proceeding sends result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

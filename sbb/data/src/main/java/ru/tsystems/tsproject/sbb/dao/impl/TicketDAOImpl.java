@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * TicketDAO interface implementation. Also extends AbstractDAOImpl class with wildcard class = Ticket
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public class TicketDAOImpl extends AbstractDAOImpl<Ticket> implements TicketDAO {
 

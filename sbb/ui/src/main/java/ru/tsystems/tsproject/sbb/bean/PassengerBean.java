@@ -8,6 +8,11 @@ import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * View bean class which contents information about passenger. It is using for representing data on view layer
+ * @author  Nikita Efremov
+ * @since   1.0
+ */
 public class PassengerBean extends BaseBean {
 
     private int id;

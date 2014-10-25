@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * DAO-class for entity Timetable. Extends CommonDAO interface with wildcard class = Timetable
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public interface TimetableDAO extends CommonDAO <Timetable> {
 

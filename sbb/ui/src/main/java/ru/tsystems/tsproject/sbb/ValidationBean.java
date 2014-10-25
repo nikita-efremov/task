@@ -1,8 +1,21 @@
 package ru.tsystems.tsproject.sbb;
 
+/**
+ * Class, which contains validation messages and validation flag.
+ * It is using for representing validation errors on view layer
+ * @author  Nikita Efremov
+ * @since   1.0
+ */
 public class ValidationBean {
 
+    /**
+     * Text of validation errors
+     */
     private String validationMessage = "";
+
+    /**
+     * Flag which shows, failed validation or not
+     */
     private boolean validationFailed = Boolean.FALSE;
 
     public String getValidationMessage() {

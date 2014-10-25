@@ -8,8 +8,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- *
- * Bean class which contents information about the station
+ * View bean class which contents information about the station. It is using for representing data on view layer
  * @author  Nikita Efremov
  * @since   1.0
  */

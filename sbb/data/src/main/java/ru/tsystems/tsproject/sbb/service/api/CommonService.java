@@ -9,7 +9,6 @@ import ru.tsystems.tsproject.sbb.exception.StationNotExistsException;
 import ru.tsystems.tsproject.sbb.exception.TrainNotExistsException;
 
 /**
- *
  * interface for making actions both for clients and administrators together
  * @author  Nikita Efremov
  * @since   1.0
@@ -17,7 +16,7 @@ import ru.tsystems.tsproject.sbb.exception.TrainNotExistsException;
 public interface CommonService {
 
     /**
-     * Searches station in system with using information, specified in param
+     * Searches station in system with using information, specified in param. Method expects, that station exists
      *
      * @param stationName
      *        Name of the station to search
@@ -33,7 +32,7 @@ public interface CommonService {
     public Station findStation(String stationName) throws StationNotExistsException, DAOException;
 
     /**
-     * Searches passenger in system with using information, specified in param
+     * Searches passenger in system with using information, specified in param. Method expects, that passenger exists
      *
      * @param docNumber
      *        Document number of passenger to search
@@ -49,10 +48,9 @@ public interface CommonService {
     public Passenger findPassenger(String docNumber) throws PassengerNotExistsException, DAOException;
 
     /**
-     * Searches train in system with using information, specified in param
+     * Searches train in system with using information, specified in param. Method expects, that train exists
      *
-     *
-     *  @param trainNumber
+     * @param trainNumber
      *        Number of train to search
      *
      * @return train with full info

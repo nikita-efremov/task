@@ -14,6 +14,8 @@ import java.util.Collection;
 /**
  * Implementation of interface CommonDAO
  * @param <T>
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public abstract class AbstractDAOImpl <T> implements CommonDAO <T> {
 	private final EntityManager entityManager;

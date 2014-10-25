@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * TimetableDAO interface implementation. Also extends AbstractDAOImpl class with wildcard class = Timetable
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public class TimetableDAOImpl extends AbstractDAOImpl<Timetable> implements TimetableDAO {
 

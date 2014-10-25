@@ -9,12 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Servlet, which gets and proceeds logout requests
+ * @author  Nikita Efremov
+ * @since   1.0
+ */
 public class LogoutServlet extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(LogoutServlet.class);
 
     /**
-     * Method proceeds both GET and POST requests. It removes user attribute from current http session
+     * Method proceeds both GET and POST requests. It removes user attributes from current http session
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

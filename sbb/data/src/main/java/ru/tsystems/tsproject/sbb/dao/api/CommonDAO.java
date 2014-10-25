@@ -9,6 +9,8 @@ import java.util.Collection;
  * Base class for all other DAO-classes with all CRUD-operations
  * @param <T>
  *     Entity class, which DAO will extend this base class
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 
 public interface CommonDAO <T> {

@@ -5,6 +5,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import java.text.SimpleDateFormat;
 
+/**
+ * View bean class which contents information about the ticket. It is using for representing data on view layer
+ * @author  Nikita Efremov
+ * @since   1.0
+ */
 public class TicketBean extends BaseBean {
 
     private int id;

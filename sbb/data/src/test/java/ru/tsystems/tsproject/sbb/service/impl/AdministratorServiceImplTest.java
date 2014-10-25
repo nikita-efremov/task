@@ -28,6 +28,8 @@ import java.util.Date;
 
 /**
  * Test of AdministratorServiceImpl
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 
 @RunWith(MockitoJUnitRunner.class)

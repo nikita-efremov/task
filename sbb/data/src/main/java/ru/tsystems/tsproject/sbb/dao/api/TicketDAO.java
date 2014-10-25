@@ -7,6 +7,8 @@ import java.util.Collection;
 
 /**
  * DAO-class for entity Ticket. Extends CommonDAO interface with wildcard class = Ticket
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public interface TicketDAO extends CommonDAO <Ticket> {
 

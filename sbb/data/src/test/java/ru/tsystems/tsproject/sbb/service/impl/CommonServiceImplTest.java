@@ -25,6 +25,8 @@ import java.util.Date;
 
 /**
  * Test of CommonServiceImpl
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 @RunWith(MockitoJUnitRunner.class)
 public class CommonServiceImplTest {

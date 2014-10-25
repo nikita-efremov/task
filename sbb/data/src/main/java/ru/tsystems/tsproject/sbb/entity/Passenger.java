@@ -8,6 +8,8 @@ import javax.validation.constraints.Pattern;
 
 /**
  * Class represents JPA entity - Passenger. It is mapped on table passenger
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 @Entity
 @Table(name = "passenger")

@@ -7,6 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * View bean class which contents information about the timetable. It is using for representing data on view layer
+ * @author  Nikita Efremov
+ * @since   1.0
+ */
 public class TimetableBean extends BaseBean implements Comparable<TimetableBean> {
 
     private int id;

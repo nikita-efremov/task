@@ -19,11 +19,10 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
- * Servlet launches searching new train, than it analyzes result and send to view
+ * Servlet, which gets and proceeds requests of train searching and viewing
  * @author  Nikita Efremov
  * @since   1.0
  */
-
 public class SearchTrainServlet extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(SearchTrainServlet.class);
@@ -37,7 +36,8 @@ public class SearchTrainServlet extends HttpServlet {
     }
 
     /**
-     * Method proceeds both GET and POST requests. It launches train creation, analyses result of creation, send result to view
+     * Method proceeds both GET and POST requests. It proceeds request of searching and viewing train
+     * and after proceeding sends result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet launches creating new train, than it analyzes result and send to view
+ * Servlet, which gets and proceeds requests of train creation
  * @author  Nikita Efremov
  * @since   1.0
  */
@@ -34,7 +34,8 @@ public class CreateNewTrainServlet extends HttpServlet {
     }
 
     /**
-     * Method proceeds both GET and POST requests. It launches train creation, analyses result of creation, send result to view
+     * Method proceeds both GET and POST requests. It proceeds request of adding a new train
+     * and after proceeding sends result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

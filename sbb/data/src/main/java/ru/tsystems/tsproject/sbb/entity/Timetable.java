@@ -7,6 +7,8 @@ import java.util.Date;
 
 /**
  * Class represents JPA entity - Timetable. It is mapped on table timetable
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 
 @Entity

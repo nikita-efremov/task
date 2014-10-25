@@ -5,6 +5,8 @@ import ru.tsystems.tsproject.sbb.dao.DAOException;
 
 /**
  * DAO-class for entity Station. Extends CommonDAO interface with wildcard class = Station
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public interface StationDAO extends CommonDAO <Station> {
 

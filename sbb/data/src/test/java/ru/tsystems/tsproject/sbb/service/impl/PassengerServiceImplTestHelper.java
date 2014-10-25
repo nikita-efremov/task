@@ -6,7 +6,11 @@ import ru.tsystems.tsproject.sbb.entity.Train;
 
 import java.util.Calendar;
 
-
+/**
+ * Helper class for PassengerServiceImplTest. It creates test data
+ * @author  Nikita Efremov
+ * @since   1.0
+ */
 public class PassengerServiceImplTestHelper {
 
     public static Train getAppropriateTrain(Station startStation, Station endStation) {

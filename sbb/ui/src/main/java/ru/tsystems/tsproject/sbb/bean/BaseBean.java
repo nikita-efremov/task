@@ -4,14 +4,21 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * Abstract bean class which contents validation and processing error messages and flags
+ * Base class for other view beans. It contents processing error message and processing error flag
  * @author  Nikita Efremov
  * @since   1.0
  */
 public abstract class BaseBean {
     private static final Logger log = Logger.getLogger(BaseBean.class);
 
+    /**
+     * Text of error, which occurred during processing on service layer
+     */
     private String processingErrorMessage = "";
+
+    /**
+     * Flag of having error during processing on service layer
+     */
     private boolean processingFailed = Boolean.FALSE;
 
     public String getProcessingErrorMessage() {

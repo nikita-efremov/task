@@ -8,11 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet which forwards all request to the default administrator page
+ * Servlet, which redirects to administrator default page
  * @author  Nikita Efremov
  * @since   1.0
  */
-
 public class AdminRedirectServlet extends HttpServlet {
 
     /**

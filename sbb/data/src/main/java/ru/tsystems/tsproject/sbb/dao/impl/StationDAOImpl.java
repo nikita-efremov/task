@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * StationDAO interface implementation. Also extends AbstractDAOImpl class with wildcard class = Station
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public class StationDAOImpl extends AbstractDAOImpl<Station> implements StationDAO {
 

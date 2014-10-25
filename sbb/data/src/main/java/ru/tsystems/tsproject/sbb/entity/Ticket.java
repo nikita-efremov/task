@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 /**
  * Class represents JPA entity - Ticket. It is mapped on table ticket
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 
 @Entity

@@ -15,11 +15,10 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
- * Servlet launches searching train with getting its timetable, than it analyzes result and send to view
+ * Servlet, which gets and proceeds requests of getting train timetable
  * @author  Nikita Efremov
  * @since   1.0
  */
-
 public class TrainTimetableServlet extends HttpServlet {
 
     private static Logger log = Logger.getLogger(TrainTimetableServlet.class);
@@ -33,7 +32,8 @@ public class TrainTimetableServlet extends HttpServlet {
     }
 
     /**
-     * Method proceeds both GET and POST requests. It launches train and its time table searching, analyses result of creation, send result to view
+     * Method proceeds both GET and POST requests. It proceeds request of getting train timetable
+     * and after proceeding sends result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

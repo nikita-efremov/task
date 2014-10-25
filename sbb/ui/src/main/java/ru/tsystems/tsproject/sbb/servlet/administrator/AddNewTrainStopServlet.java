@@ -23,11 +23,10 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * Servlet launches adding new timetable for train, than it analyzes result and send to view
+ * Servlet, which gets and proceeds requests of adding a new stop for train
  * @author  Nikita Efremov
  * @since   1.0
  */
-
 public class AddNewTrainStopServlet extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(AddNewTrainStopServlet.class);
@@ -41,7 +40,8 @@ public class AddNewTrainStopServlet extends HttpServlet {
     }
 
     /**
-     * Method proceeds both GET and POST requests. It launches adding new timetable for train, analyses result of creation, send result to view
+     * Method proceeds both GET and POST requests. It proceeds request of adding a new stop for train
+     * and after proceeding sends result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

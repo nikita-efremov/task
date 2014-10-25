@@ -13,6 +13,8 @@ import java.util.List;
 
 /**
  * TrainDAO interface implementation. Also extends AbstractDAOImpl class with wildcard class = Train
+ * @author  Nikita Efremov
+ * @since   1.0
  */
 public class TrainDAOImpl extends AbstractDAOImpl<Train> implements TrainDAO {
 	

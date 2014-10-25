@@ -4,6 +4,11 @@ import javax.validation.constraints.*;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * View bean class which contents information about the train. It is using for representing data on view layer
+ * @author  Nikita Efremov
+ * @since   1.0
+ */
 public class TrainBean extends BaseBean {
 
     private int id;

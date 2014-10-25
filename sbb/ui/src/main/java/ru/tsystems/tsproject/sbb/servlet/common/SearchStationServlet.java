@@ -19,11 +19,10 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
- * Servlet launches searching new station, than it analyzes result and send to view
+ * Servlet, which gets and proceeds requests of station timetable searching
  * @author  Nikita Efremov
  * @since   1.0
  */
-
 public class SearchStationServlet extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(SearchStationServlet.class);
@@ -37,7 +36,8 @@ public class SearchStationServlet extends HttpServlet {
     }
 
     /**
-     * Method proceeds both GET and POST requests. It launches station searching, analyses result of searching, send result to view
+     * Method proceeds both GET and POST requests. It proceeds request of station timetable searching
+     * and after proceeding sends result to view
      * @param request   an {@link javax.servlet.http.HttpServletRequest} object that
      *                  contains the request the client has made
      *                  of the servlet

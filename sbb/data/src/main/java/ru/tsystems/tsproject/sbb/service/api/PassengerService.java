@@ -32,7 +32,7 @@ public interface PassengerService extends CommonService {
             throws StationNotExistsException, DAOException;
 
     /**
-     * Finds all trains which are move from station $stationStart, departs to $stationEnd and trip time is between $start and $end
+     * Finds all trains which are move from stationStart, departs to stationEnd and trip time is between start and end
      *
      * @param  stationStartName
      *         Name of station at which train must depart
@@ -56,7 +56,7 @@ public interface PassengerService extends CommonService {
             throws StationNotExistsException, DAOException;
 
     /**
-     * Create ticket for passenger $passenger on train $train
+     * Create ticket for specified passenger on specified train
      *
      * @param  trainNumber
      *         Train number in ticket
