@@ -64,27 +64,28 @@ public class SearchTrainByStationsAndDateServlet extends HttpServlet {
             response.sendRedirect("/ui/index.jsp");
         } else {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-            String startDateString = request.getParameter("Start date");
-            String endDateString = request.getParameter("End date");
+
             Date startDate;
             Date endDate;
             try {
+                String startDateString = request.getParameter("Start_date");
                 startDate = simpleDateFormat.parse(startDateString);
             } catch (ParseException e) {
                 startDate = null;
             }
             try {
+                String endDateString = request.getParameter("End_date");
                 endDate = simpleDateFormat.parse(endDateString);
             } catch (ParseException e) {
                 endDate = null;
             }
 
             TimetableBean startBean = new TimetableBean();
-            startBean.setStationName(request.getParameter("Station start name"));
+            startBean.setStationName(request.getParameter("Station_start_name"));
             startBean.setDate(startDate);
 
             TimetableBean endBean = new TimetableBean();
-            endBean.setStationName(request.getParameter("Station end name"));
+            endBean.setStationName(request.getParameter("Station_end_name"));
             endBean.setDate(endDate);
 
             log.info("Servlet got beans: " + startBean + " " + endBean);

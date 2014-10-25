@@ -13,13 +13,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Example of Twitter Bootstrap 3 Tooltip</title>
+    <title>Administrator authorization page</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap-theme.min.css">
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css">
+
     <script src="<%=request.getContextPath()%>/resources/js/jquery/jquery-2.1.1.min.js"></script>
     <script src="<%=request.getContextPath()%>/resources/js/bootstrap/js/bootstrap.min.js"></script>
-
+    <script src="<%=request.getContextPath()%>/resources/js/bootstrapValidator/bootstrapValidator.js"></script>
 </head>
 
 <body>
@@ -56,16 +57,16 @@
 <div class = inputBlockV2>
     <label>To continue work as administrator, please fill the following fields: </label>
     <div class="col-sm-8">
-        <form class="form-horizontal" role="form" method="post" action="authorization" >
+        <form class="form-horizontal" role="form" method="post" action="authorization" id = "loginForm">
             <div class="form-group">
-                <label for="login" class="col-sm-2 control-label">Login</label>
-                <div class="col-sm-6">
+                <label for="login" class="col-sm-4 control-label">Login</label>
+                <div class="col-sm-7">
                     <input type="text" class="form-control" id="login" placeholder="Login" name = "login">
                 </div>
             </div>
             <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-6">
+                <label for="password" class="col-sm-4 control-label">Password</label>
+                <div class="col-sm-7">
                     <input type="password" class="form-control" id="password" placeholder="Password" name = "password">
                 </div>
             </div>
@@ -87,6 +88,6 @@
     </div>
 </div>
 
-<script src="<%=request.getContextPath()%>/resources/js/adminLogin.js"></script>
+<script src="<%=request.getContextPath()%>/resources/js/custom/loginValidation.js"></script>
 </body>
 </html>
