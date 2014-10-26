@@ -101,7 +101,7 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
             for (Passenger trainPassenger: trainPassengers) {
                 if ((trainPassenger.getFirstName().equals(passenger.getFirstName()))
                         && (trainPassenger.getLastName().equals(passenger.getLastName()))
-                        && (trainPassenger.getBirthDate().equals(passenger.getBirthDate()))) {
+                        && (trainPassenger.getBirthDate().getTime() == passenger.getBirthDate().getTime())) {
                     throw new PassengerAlreadyRegisteredOnTrainException("Passenger " + passenger.getFirstName() + " " + passenger.getLastName()
                             + " had been already registered on train " + train.getNumber());
                 }
