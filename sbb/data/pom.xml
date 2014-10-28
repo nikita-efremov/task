@@ -5,11 +5,11 @@
     <parent>
         <groupId>ru.tsystems.tsproject</groupId>
         <artifactId>sbb</artifactId>
-        <version>1.0</version>
+        <version>2.0</version>
     </parent>
     <groupId>ru.tsystems.tsproject.sbb</groupId>
     <artifactId>data</artifactId>
-    <version>1.0</version>
+    <version>2.0</version>
     <name>data</name>
     <url>http://maven.apache.org</url>
     <properties>

@@ -1,8 +1,14 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
 
-<web-app>
+    <session-config>
+        <cookie-config>
+            <name>CUSTOM_JSESSIONID</name>
+        </cookie-config>
+    </session-config>
     <display-name>Archetype Created Web Application</display-name>
     <filter>
         <filter-name>AuthFilter</filter-name>
@@ -22,14 +28,10 @@
     </filter-mapping>
     <servlet>
         <servlet-name>AdministratorServlet</servlet-name>
-        <display-name>AdministratorServlet</display-name>
-        <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AdminRedirectServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminLogin</servlet-name>
-        <display-name>AdminLogin</display-name>
-        <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AdminAuthorizationServlet</servlet-class>
         <init-param>
             <param-name>login</param-name>
@@ -42,74 +44,54 @@
     </servlet>
     <servlet>
         <servlet-name>AdminLogout</servlet-name>
-        <display-name>AdminLogout</display-name>
-        <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateNewStation</servlet-name>
-        <display-name>CreateNewStation</display-name>
-        <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.CreateNewStationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewAllStations</servlet-name>
-        <display-name>ViewAllStations</display-name>
-        <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.ViewAllStationsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateNewTrain</servlet-name>
-        <display-name>CreateNewTrain</display-name>
-        <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.CreateNewTrainServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchTrain</servlet-name>
-        <display-name>SearchTrain</display-name>
-        <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.SearchTrainServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddTrainStop</servlet-name>
-        <display-name>AddTrainStop</display-name>
-        <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AddNewTrainStopServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewAllTrains</servlet-name>
-        <display-name>ViewAllTrains</display-name>
-        <description></description>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.ViewAllTrainsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchStationServlet</servlet-name>
-        <display-name>SearchStationServlet</display-name>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.SearchStationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchTrainByStationsAndDateServlet</servlet-name>
-        <display-name>SearchTrainByStationsAndDateServlet</display-name>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.SearchTrainByStationsAndDateServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>WatchTrainTimetableServlet</servlet-name>
-        <display-name>WatchTrainTimetableServlet</display-name>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.TrainTimetableServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisterPassenger</servlet-name>
-        <display-name>RegisterPassenger</display-name>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.passenger.RegisterPassengerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginPassengerServlet</servlet-name>
-        <display-name>LoginPassengerServlet</display-name>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.passenger.PassengerLoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PurchaseTicketServlet</servlet-name>
-        <display-name>PurchaseTicketServlet</display-name>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.passenger.PurchaseTicketServlet</servlet-class>
     </servlet>
     <servlet-mapping>
