@@ -33,7 +33,6 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
     }
 
     public Collection<Train> findTrainsByStation(String stationName) throws StationNotExistsException, DAOException {
-        System.out.print("ipp9999 ====================================");
         log.info("Start searching trains by stationName:" + stationName);
         Station station = findStation(stationName);
 

@@ -1,10 +1,9 @@
 package ru.tsystems.tsproject.sbb.servlet.passenger;
 
 import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
-import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.TicketBean;
 import ru.tsystems.tsproject.sbb.model.PassengerModel;
 
@@ -13,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -30,7 +28,7 @@ public class PurchaseTicketServlet extends HttpServlet {
      * Initialize servlet`s attribute - passengerModel
      */
     public void init() {
-        passengerModel = ApplicationContext.getPassengerModel();
+        passengerModel = CustomApplicationContext.getPassengerModel();
     }
 
     /**

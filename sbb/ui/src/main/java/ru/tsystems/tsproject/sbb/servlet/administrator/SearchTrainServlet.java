@@ -1,7 +1,7 @@
 package ru.tsystems.tsproject.sbb.servlet.administrator;
 
 import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
@@ -10,13 +10,11 @@ import ru.tsystems.tsproject.sbb.model.TrainModel;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Servlet, which gets and proceeds requests of train searching and viewing
@@ -32,7 +30,7 @@ public class SearchTrainServlet extends HttpServlet {
      * Initialize servlet`s attribute - trainModel
      */
     public void init() {
-        trainModel = ApplicationContext.getTrainModel();
+        trainModel = CustomApplicationContext.getTrainModel();
     }
 
     /**

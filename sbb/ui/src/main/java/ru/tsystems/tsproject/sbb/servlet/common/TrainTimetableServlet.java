@@ -1,8 +1,7 @@
 package ru.tsystems.tsproject.sbb.servlet.common;
 
 import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.ApplicationContext;
-import ru.tsystems.tsproject.sbb.bean.PassengerBean;
+import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
 
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
 
 /**
  * Servlet, which gets and proceeds requests of getting train timetable
@@ -28,7 +26,7 @@ public class TrainTimetableServlet extends HttpServlet {
      * Initialize servlet`s attribute - trainModel
      */
     public void init() {
-        trainModel = ApplicationContext.getTrainModel();
+        trainModel = CustomApplicationContext.getTrainModel();
     }
 
     /**

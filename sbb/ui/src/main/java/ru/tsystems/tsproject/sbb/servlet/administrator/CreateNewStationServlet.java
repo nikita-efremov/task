@@ -1,7 +1,7 @@
 package ru.tsystems.tsproject.sbb.servlet.administrator;
 
 import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
@@ -27,7 +27,7 @@ public class CreateNewStationServlet extends HttpServlet {
      * Initialize servlet`s attribute - stationModel
      */
     public void init() {
-        stationModel = ApplicationContext.getStationModel();
+        stationModel = CustomApplicationContext.getStationModel();
     }
 
     /**

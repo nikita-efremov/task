@@ -1,12 +1,10 @@
 package ru.tsystems.tsproject.sbb.servlet.administrator;
 
 import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
-import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
-import ru.tsystems.tsproject.sbb.model.StationModel;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
 
 import javax.servlet.RequestDispatcher;
@@ -30,7 +28,7 @@ public class CreateNewTrainServlet extends HttpServlet {
      * Initialize servlet`s attribute - trainModel
      */
     public void init() {
-        trainModel = ApplicationContext.getTrainModel();
+        trainModel = CustomApplicationContext.getTrainModel();
     }
 
     /**

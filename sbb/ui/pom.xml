@@ -38,7 +38,7 @@
                 <version>1.5</version>
                 <configuration>
                     <resourceBundles>
-                        <resourceBundle>ru.tsystems.tsproject.sbb:data:1.0</resourceBundle>
+                        <resourceBundle>ru.tsystems.tsproject.sbb:data:2.0</resourceBundle>
                     </resourceBundles>
                     <outputDirectory>${project.build.directory}/shared-resources</outputDirectory>
                 </configuration>

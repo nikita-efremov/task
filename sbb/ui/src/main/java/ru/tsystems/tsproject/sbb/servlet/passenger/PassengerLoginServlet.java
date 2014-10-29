@@ -1,7 +1,7 @@
 package ru.tsystems.tsproject.sbb.servlet.passenger;
 
 import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
@@ -14,9 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Servlet, which gets and proceeds requests of passenger authorization
@@ -32,7 +29,7 @@ public class PassengerLoginServlet extends HttpServlet {
      * Initialize servlet`s attribute - passengerModel
      */
     public void init() {
-        passengerModel = ApplicationContext.getPassengerModel();
+        passengerModel = CustomApplicationContext.getPassengerModel();
     }
 
     /**

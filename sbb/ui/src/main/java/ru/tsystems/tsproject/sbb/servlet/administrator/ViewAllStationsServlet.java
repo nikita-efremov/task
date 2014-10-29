@@ -1,8 +1,7 @@
 package ru.tsystems.tsproject.sbb.servlet.administrator;
 
-import ru.tsystems.tsproject.sbb.ApplicationContext;
+import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
-import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.model.StationModel;
 
 import javax.servlet.RequestDispatcher;
@@ -26,7 +25,7 @@ public class ViewAllStationsServlet extends HttpServlet {
      * Initialize servlet`s attribute - stationModel
      */
     public void init() {
-        stationModel = ApplicationContext.getStationModel();
+        stationModel = CustomApplicationContext.getStationModel();
     }
 
     /**

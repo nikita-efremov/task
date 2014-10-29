@@ -1,13 +1,14 @@
 package ru.tsystems.tsproject.sbb.servlet.common;
 
 import org.apache.log4j.Logger;
-import ru.tsystems.tsproject.sbb.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
-import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
-import ru.tsystems.tsproject.sbb.model.StationModel;
+import ru.tsystems.tsproject.sbb.model.TestClass;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
 
 import javax.servlet.RequestDispatcher;
@@ -23,16 +24,21 @@ import java.util.Collection;
  * @author  Nikita Efremov
  * @since   1.0
  */
+@Component
 public class SearchStationServlet extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(SearchStationServlet.class);
+
     private TrainModel trainModel;
+
+    @Autowired
+    private TestClass testClass;
 
     /**
      * Initialize servlet`s attribute - trainModel
      */
     public void init() {
-        trainModel = ApplicationContext.getTrainModel();
+        trainModel = CustomApplicationContext.getTrainModel();
     }
 
     /**
@@ -57,6 +63,11 @@ public class SearchStationServlet extends HttpServlet {
         StationBean stationBean = new StationBean();
         stationBean.setName(request.getParameter("Station_name"));
         log.info("Servlet got bean: " + stationBean);
+        if (testClass == null) {
+            log.warn("Autowiring error");
+        } else {
+            log.info("autowire success: " + testClass.getSs());
+        }
         String action = request.getParameter("stationSearchAction");
         if (action == null) {
             response.sendRedirect("/ui/common/searchStation.jsp");
@@ -124,6 +135,22 @@ public class SearchStationServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    public TrainModel getTrainModel() {
+        return trainModel;
+    }
+
+    public void setTrainModel(TrainModel trainModel) {
+        this.trainModel = trainModel;
+    }
+
+    public TestClass getTestClass() {
+        return testClass;
+    }
+
+    public void setTestClass(TestClass testClass) {
+        this.testClass = testClass;
     }
 }
 

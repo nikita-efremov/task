@@ -1,5 +1,8 @@
 package ru.tsystems.tsproject.sbb;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import ru.tsystems.tsproject.sbb.dao.DAOTransactionManager;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.dao.impl.*;
@@ -13,7 +16,6 @@ import ru.tsystems.tsproject.sbb.service.impl.AdministratorServiceImpl;
 import ru.tsystems.tsproject.sbb.service.impl.CommonServiceImpl;
 import ru.tsystems.tsproject.sbb.service.impl.PassengerServiceImpl;
 
-import javax.persistence.CacheRetrieveMode;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
@@ -22,7 +24,7 @@ import javax.persistence.Persistence;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class ApplicationContext {
+public class CustomApplicationContext {
 
     private static volatile EntityManager entityManager;
     private static volatile DAOTransactionManager daoTransactionManager;
@@ -43,7 +45,7 @@ public class ApplicationContext {
 
     public static EntityManager getEntityManager() {
         if (entityManager == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (entityManager == null) {
                     entityManager = Persistence.createEntityManagerFactory("jpa-hibernate").createEntityManager();
                 }
@@ -54,7 +56,7 @@ public class ApplicationContext {
 
     public static DAOTransactionManager getDaoTransactionManager() {
         if (daoTransactionManager == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (daoTransactionManager == null) {
                     daoTransactionManager = new DAOTransactionManager(getEntityManager());
                 }
@@ -65,7 +67,7 @@ public class ApplicationContext {
 
     public static TrainDAO getTrainDAO() {
         if (trainDAO == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (trainDAO == null) {
                     trainDAO = new TrainDAOImpl(getEntityManager());
                 }
@@ -76,7 +78,7 @@ public class ApplicationContext {
 
     public static StationDAO getStationDAO() {
         if (stationDAO == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (stationDAO == null) {
                     stationDAO = new StationDAOImpl(getEntityManager());
                 }
@@ -87,7 +89,7 @@ public class ApplicationContext {
 
     public static PassengerDAO getPassengerDAO() {
         if (passengerDAO == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (passengerDAO == null) {
                     passengerDAO = new PassengerDAOImpl(getEntityManager());
                 }
@@ -98,7 +100,7 @@ public class ApplicationContext {
 
     public static TicketDAO getTicketDAO() {
         if (ticketDAO == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (ticketDAO == null) {
                     ticketDAO = new TicketDAOImpl(getEntityManager());
                 }
@@ -109,7 +111,7 @@ public class ApplicationContext {
 
     public static TimetableDAO getTimetableDAO() {
         if (timetableDAO == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (timetableDAO == null) {
                     timetableDAO = new TimetableDAOImpl(getEntityManager());
                 }
@@ -120,7 +122,7 @@ public class ApplicationContext {
 
     public static CommonService getCommonService() {
         if (commonService == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (commonService == null) {
                     commonService = new CommonServiceImpl(getStationDAO(), getTrainDAO(), getPassengerDAO());
                 }
@@ -131,7 +133,7 @@ public class ApplicationContext {
 
     public static AdministratorService getAdministratorService() {
         if (administratorService == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (administratorService == null) {
                     administratorService = new AdministratorServiceImpl(getDaoTransactionManager(), getStationDAO(), getTrainDAO(), getPassengerDAO(), getTimetableDAO());
                 }
@@ -142,7 +144,7 @@ public class ApplicationContext {
 
     public static PassengerService getPassengerService() {
         if (passengerService == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (passengerService == null) {
                     passengerService = new PassengerServiceImpl(getDaoTransactionManager(), getStationDAO(), getTrainDAO(), getPassengerDAO(), getTicketDAO());
                 }
@@ -153,7 +155,7 @@ public class ApplicationContext {
 
     public static TrainModel getTrainModel() {
         if (trainModel == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (trainModel == null) {
                     trainModel = new TrainModel(getAdministratorService(), getPassengerService(), getCommonService());
                 }
@@ -164,7 +166,7 @@ public class ApplicationContext {
 
     public static StationModel getStationModel() {
         if (stationModel == null) {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (stationModel == null) {
                     stationModel = new StationModel(getAdministratorService(), getCommonService());
                 }
@@ -175,7 +177,7 @@ public class ApplicationContext {
 
     public static PassengerModel getPassengerModel() {
         if (passengerModel == null)  {
-            synchronized (ApplicationContext.class) {
+            synchronized (CustomApplicationContext.class) {
                 if (passengerModel == null)  {
                     passengerModel = new PassengerModel(getCommonService(), getPassengerService());
                 }
