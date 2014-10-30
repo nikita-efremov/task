@@ -15,6 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Controller, which gets and proceeds requests of passenger authorization
+ * @author  Nikita Efremov
+ * @since   2.0
+ */
 @Controller
 public class PassengerLoginController {
 

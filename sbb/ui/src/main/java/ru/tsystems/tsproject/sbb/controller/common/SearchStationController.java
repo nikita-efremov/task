@@ -15,7 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
-
+/**
+ * Controller, which gets and proceeds requests of station timetable searching
+ * @author  Nikita Efremov
+ * @since   2.0
+ */
 @Controller
 public class SearchStationController {
 

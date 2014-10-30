@@ -8,11 +8,12 @@
 
 	<context:component-scan base-package="ru.tsystems.tsproject.sbb.controller.common" />
     <context:component-scan base-package="ru.tsystems.tsproject.sbb.controller.passenger" />
+    <context:component-scan base-package="ru.tsystems.tsproject.sbb.controller.administrator" />
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
-            <value>/WEB-INF/pages/</value>
+            <value>/</value>
         </property>
 		<property name="suffix">
 			<value>.jsp</value>

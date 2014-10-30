@@ -14,6 +14,7 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -26,6 +27,7 @@
         <filter-name>PassengerLoginFIlter</filter-name>
         <filter-class>ru.tsystems.tsproject.sbb.filter.LoginPassengerFilter</filter-class>
     </filter>
+
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/administrator/*</url-pattern>
@@ -34,74 +36,7 @@
         <filter-name>PassengerLoginFIlter</filter-name>
         <url-pattern>/passenger/*</url-pattern>
     </filter-mapping>
-    <servlet>
-        <servlet-name>AdministratorServlet</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AdminRedirectServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AdminLogin</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AdminAuthorizationServlet</servlet-class>
-        <init-param>
-            <param-name>login</param-name>
-            <param-value>admin</param-value>
-        </init-param>
-        <init-param>
-            <param-name>password</param-name>
-            <param-value>qwerty</param-value>
-        </init-param>
-    </servlet>
-    <servlet>
-        <servlet-name>AdminLogout</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CreateNewStation</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.CreateNewStationServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ViewAllStations</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.ViewAllStationsServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CreateNewTrain</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.CreateNewTrainServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchTrain</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.SearchTrainServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AddTrainStop</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.AddNewTrainStopServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ViewAllTrains</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.administrator.ViewAllTrainsServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchStationServlet</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.SearchStationServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchTrainByStationsAndDateServlet</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.SearchTrainByStationsAndDateServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>WatchTrainTimetableServlet</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.common.TrainTimetableServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>RegisterPassenger</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.passenger.RegisterPassengerServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LoginPassengerServlet</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.passenger.PassengerLoginServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PurchaseTicketServlet</servlet-name>
-        <servlet-class>ru.tsystems.tsproject.sbb.servlet.passenger.PurchaseTicketServlet</servlet-class>
-    </servlet>
+
     <servlet>
         <servlet-name>mvc-dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -109,65 +44,5 @@
     <servlet-mapping>
         <servlet-name>mvc-dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdministratorServlet</servlet-name>
-        <url-pattern>/administrator/</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdminLogin</servlet-name>
-        <url-pattern>/authorization</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdminLogout</servlet-name>
-        <url-pattern>/logout2</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateNewStation</servlet-name>
-        <url-pattern>/administrator/station/CreateNewStation</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewAllStations</servlet-name>
-        <url-pattern>/administrator/station/ViewAllStations</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateNewTrain</servlet-name>
-        <url-pattern>/administrator/train/CreateNewTrain</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchTrain</servlet-name>
-        <url-pattern>/administrator/train/SearchTrain</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddTrainStop</servlet-name>
-        <url-pattern>/administrator/train/AddNewTrainStop</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewAllTrains</servlet-name>
-        <url-pattern>/administrator/train/ViewAllTrains</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchStationServlet</servlet-name>
-        <url-pattern>/common/SearchStation2</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchTrainByStationsAndDateServlet</servlet-name>
-        <url-pattern>/common/SearchStationDateTrain2</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>WatchTrainTimetableServlet</servlet-name>
-        <url-pattern>/common/TrainTimetable2</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>RegisterPassenger</servlet-name>
-        <url-pattern>/RegisterPassenger2</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoginPassengerServlet</servlet-name>
-        <url-pattern>/PassengerLogin2</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PurchaseTicketServlet</servlet-name>
-        <url-pattern>/passenger/TicketPurchase2</url-pattern>
     </servlet-mapping>
 </web-app>

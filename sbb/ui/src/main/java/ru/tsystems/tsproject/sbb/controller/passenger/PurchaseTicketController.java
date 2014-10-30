@@ -10,10 +10,14 @@ import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.TicketBean;
 import ru.tsystems.tsproject.sbb.model.PassengerModel;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Controller, which gets and proceeds requests of ticket purchasing
+ * @author  Nikita Efremov
+ * @since   2.0
+ */
 @Controller
 public class PurchaseTicketController {
 

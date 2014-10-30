@@ -23,13 +23,6 @@
 
      <bean id = "testClassBean" class="ru.tsystems.tsproject.sbb.model.TestClass"></bean>
 
-     <bean id = "searchStationBean" class="ru.tsystems.tsproject.sbb.servlet.common.SearchStationServlet">
-        <property name="testClass" ref="testClassBean"></property>
-    </bean>
-
-    <bean id = "newController" class="ru.tsystems.tsproject.sbb.servlet.NewController">
-        <property name="testClass" ref="testClassBean"></property>
-    </bean>
 
 
 </beans>

@@ -11,6 +11,11 @@ import ru.tsystems.tsproject.sbb.model.TrainModel;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Controller, which gets and proceeds requests of getting train timetable
+ * @author  Nikita Efremov
+ * @since   2.0
+ */
 @Controller
 public class TrainTimetableController {
 

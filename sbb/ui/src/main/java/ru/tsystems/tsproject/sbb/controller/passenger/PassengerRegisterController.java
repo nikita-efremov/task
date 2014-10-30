@@ -17,6 +17,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Controller, which gets and proceeds requests of passenger registering
+ * @author  Nikita Efremov
+ * @since   2.0
+ */
 @Controller
 public class PassengerRegisterController {
 
