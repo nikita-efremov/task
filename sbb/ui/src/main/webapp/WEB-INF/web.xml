@@ -102,6 +102,14 @@
         <servlet-name>PurchaseTicketServlet</servlet-name>
         <servlet-class>ru.tsystems.tsproject.sbb.servlet.passenger.PurchaseTicketServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>mvc-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mvc-dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdministratorServlet</servlet-name>
         <url-pattern>/administrator/</url-pattern>
@@ -112,7 +120,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminLogout</servlet-name>
-        <url-pattern>/logout</url-pattern>
+        <url-pattern>/logout2</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateNewStation</servlet-name>
@@ -140,26 +148,26 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchStationServlet</servlet-name>
-        <url-pattern>/common/SearchStation</url-pattern>
+        <url-pattern>/common/SearchStation2</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchTrainByStationsAndDateServlet</servlet-name>
-        <url-pattern>/common/SearchStationDateTrain</url-pattern>
+        <url-pattern>/common/SearchStationDateTrain2</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>WatchTrainTimetableServlet</servlet-name>
-        <url-pattern>/common/TrainTimetable</url-pattern>
+        <url-pattern>/common/TrainTimetable2</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RegisterPassenger</servlet-name>
-        <url-pattern>/RegisterPassenger</url-pattern>
+        <url-pattern>/RegisterPassenger2</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginPassengerServlet</servlet-name>
-        <url-pattern>/PassengerLogin</url-pattern>
+        <url-pattern>/PassengerLogin2</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PurchaseTicketServlet</servlet-name>
-        <url-pattern>/passenger/TicketPurchase</url-pattern>
+        <url-pattern>/passenger/TicketPurchase2</url-pattern>
     </servlet-mapping>
 </web-app>

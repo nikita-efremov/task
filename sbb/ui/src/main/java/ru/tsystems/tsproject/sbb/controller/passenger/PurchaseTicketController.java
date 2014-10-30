@@ -1,0 +1,53 @@
+package ru.tsystems.tsproject.sbb.controller.passenger;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.tsystems.tsproject.sbb.CustomApplicationContext;
+import ru.tsystems.tsproject.sbb.ValidationBean;
+import ru.tsystems.tsproject.sbb.Validator;
+import ru.tsystems.tsproject.sbb.bean.TicketBean;
+import ru.tsystems.tsproject.sbb.model.PassengerModel;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@Controller
+public class PurchaseTicketController {
+
+    private static final Logger log = Logger.getLogger(PurchaseTicketController.class);
+    private PassengerModel passengerModel = CustomApplicationContext.getPassengerModel();
+
+    @RequestMapping("/passenger/TicketPurchase")
+    public String purchase(HttpServletRequest request,
+                           HttpServletResponse response,
+                           ModelMap model) {
+        String action = request.getParameter("purchaseAction");
+        if (action == null) {
+            return "redirect:/passenger/purchase";
+        } else if (action.equals("Back")) {
+            return "redirect:/index.jsp";
+        } else {
+            TicketBean ticketBean = new TicketBean();
+            ticketBean.setTrainNumber(request.getParameter("Train_number"));
+            ticketBean.setPassengerDocNumber((String)request.getSession().getAttribute("passDoc"));
+            log.info("Servlet got bean: " + ticketBean);
+            ValidationBean validationBean = Validator.validate(ticketBean, "trainNumber");
+            if (validationBean.isValidationFailed()) {
+                request.setAttribute("validationBean", validationBean);
+                request.setAttribute("purchaseResult", ticketBean);
+                return "/passenger/purchase";
+            } else {
+                ticketBean = passengerModel.purchaseTicket(ticketBean);
+                request.setAttribute("purchaseResult", ticketBean);
+                if (ticketBean.isProcessingFailed()) {
+                    return "/passenger/purchase";
+                } else {
+                    return "/passenger/purchaseSuccess";
+                }
+            }
+        }
+    }
+}

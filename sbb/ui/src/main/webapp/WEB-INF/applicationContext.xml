@@ -19,12 +19,17 @@
        http://www.springframework.org/schema/task
        http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
-     <context:component-scan base-package="ru.tsystems.tsproject.sbb.servlet.common"/>
+     <context:component-scan base-package="ru.tsystems.tsproject.sbb.controller"/>
 
      <bean id = "testClassBean" class="ru.tsystems.tsproject.sbb.model.TestClass"></bean>
 
      <bean id = "searchStationBean" class="ru.tsystems.tsproject.sbb.servlet.common.SearchStationServlet">
         <property name="testClass" ref="testClassBean"></property>
     </bean>
+
+    <bean id = "newController" class="ru.tsystems.tsproject.sbb.servlet.NewController">
+        <property name="testClass" ref="testClassBean"></property>
+    </bean>
+
 
 </beans>
