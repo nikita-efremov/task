@@ -1,19 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="ru.tsystems.tsproject.sbb.bean.AdminLoginBean" %>
-<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
-<% AdminLoginBean bean = (AdminLoginBean)request.getAttribute("loginResult");
-    if (bean == null) {
-        bean = new AdminLoginBean();
-    }
-    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
-    if (validationBean == null) {
-        validationBean = new ValidationBean();
-    }
-%>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Administrator authorization page</title>
+    <title>Page is not ready</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap-theme.min.css">
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css">
@@ -22,7 +10,6 @@
     <script src="<%=request.getContextPath()%>/resources/js/bootstrap/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/resources/js/bootstrapValidator/bootstrapValidator.js"></script>
 </head>
-
 <body>
 <div id="mainHeader">
     <span id = "title-pic">
@@ -31,6 +18,27 @@
     <span id = "title">
         <label>SBB railways</label>
     </span>
+</div>
+
+<div id = "userPanel">
+    <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+    <div id = "userInfo">
+        <security:authorize access="isAuthenticated()">
+            You are logged as: <security:authentication property="principal.username" />
+        </security:authorize>
+        <security:authorize access="! isAuthenticated()">
+            You are not logged on system
+        </security:authorize>
+    </div>
+    <div id = "userControls">
+        <security:authorize access="isAuthenticated()">
+            <a href="<%=request.getContextPath()%>/logout">Logout</a>
+        </security:authorize>
+        <security:authorize access="! isAuthenticated()">
+            <a href="<%=request.getContextPath()%>/login.jsp">Login</a>
+            <a href="<%=request.getContextPath()%>/register.jsp">Register</a>
+        </security:authorize>
+    </div>
 </div>
 
 <div id="commonOptions">
@@ -54,40 +62,16 @@
     </table>
 </div>
 
+<h1></h1>
 <div class = inputBlockV2>
-    <label>To continue work as administrator, please fill the following fields: </label>
+    <label>Sorry, access denied for your current user</label>
     <div class="col-sm-8">
-        <form class="form-horizontal" role="form" method="post" action="authorization" id = "loginForm">
-            <div class="form-group">
-                <label for="login" class="col-sm-4 control-label">Login</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="login" placeholder="Login" name = "login">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="password" class="col-sm-4 control-label">Password</label>
-                <div class="col-sm-7">
-                    <input type="password" class="form-control" id="password" placeholder="Password" name = "password">
-                </div>
-            </div>
             <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-10">
-                    <button type="submit" name="loginAction" value="Login" class="btn btn-success">Login</button>
-                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
+                    <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
                 </div>
             </div>
-            <table id="validationMessages">
-                <tr>
-                    <td><%=validationBean.getValidationMessage()%></td>
-                </tr>
-                <tr>
-                    <td><%=bean.getProcessingErrorMessage()%></td>
-                </tr>
-            </table>
-        </form>
     </div>
 </div>
-
-<script src="<%=request.getContextPath()%>/resources/js/custom/loginValidation.js"></script>
 </body>
 </html>

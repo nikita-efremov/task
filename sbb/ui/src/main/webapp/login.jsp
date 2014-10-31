@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="ru.tsystems.tsproject.sbb.bean.PassengerBean" %>
 <%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
@@ -32,26 +33,23 @@
 </div>
 
 <div id = "userPanel">
-    <%
-        String userName = (String)request.getSession().getAttribute("user");
-        if (userName == null) {
-            userName = "unauthorized user";
-        }
-    %>
+    <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
     <div id = "userInfo">
-        <% if (request.getSession().getAttribute("user") != null) { %>
-        <label>You are logged as: <%=userName%></label>
-        <% } else { %>
-        <label>You are not logged in system</label>
-        <% } %>
+        <security:authorize access="isAuthenticated()">
+            You are logged as: <security:authentication property="principal.username" />
+        </security:authorize>
+        <security:authorize access="! isAuthenticated()">
+            You are not logged on system
+        </security:authorize>
     </div>
     <div id = "userControls">
-        <% if (request.getSession().getAttribute("user") != null) { %>
-        <a href="<%=request.getContextPath()%>/logout">Logout</a>
-        <% } else { %>
-        <a href="<%=request.getContextPath()%>/passengerLogin.jsp">Login</a>
-        <a href="<%=request.getContextPath()%>/register.jsp">Register</a>
-        <% } %>
+        <security:authorize access="isAuthenticated()">
+            <a href="<%=request.getContextPath()%>/logout">Logout</a>
+        </security:authorize>
+        <security:authorize access="! isAuthenticated()">
+            <a href="<%=request.getContextPath()%>/login.jsp">Login</a>
+            <a href="<%=request.getContextPath()%>/register.jsp">Register</a>
+        </security:authorize>
     </div>
 </div>
 
@@ -79,18 +77,29 @@
 <div class = inputBlockV2>
     <label>To login in system, please fill the following fields: </label>
     <div class="col-sm-8">
-        <form class="form-horizontal" role="form" method="post" action="PassengerLogin" id = "loginForm">
+        <form class="form-horizontal" role="form" method="post" action="<%=request.getContextPath()%>/j_spring_security_check" id = "loginForm">
             <div class="form-group">
-                <label for="Document_number" class="col-sm-4 control-label">Document number:</label>
+                <label for="j_username" class="col-sm-4 control-label">Username:</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="Document_number" placeholder="Document number" name = "Document_number" value = "<%=bean.getDocNumber()%>">
+                    <input type="text" class="form-control" id="j_username" placeholder="Username" name = "j_username" value = "<%=bean.getDocNumber()%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="j_password" class="col-sm-4 control-label">Password:</label>
+                <div class="col-sm-7">
+                    <input type="password" class="form-control" id="j_password" placeholder="Password" name = "j_password" value = "">
+                </div>
+            </div>
+            <div class="form-group" hidden="hidden">
+                <label for="_spring_security_remember_me" class="col-sm-4 control-label">Remember me:</label>
+                <div class="col-sm-7">
+                    <input type="checkbox" class="form-control" id = "_spring_security_remember_me" name = "_spring_security_remember_me">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-10">
                     <button type="submit" name="loginAction" value="Login" class="btn btn-success">Login</button>
                     <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
-
                 </div>
             </div>
 
@@ -100,6 +109,14 @@
                 </tr>
                 <tr>
                     <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
+                <tr>
+                    <% if ((request.getParameter("error") != null) && (request.getParameter("error").equals("true"))) { %>
+                    <td>Invalid credentials!</td>
+                    <% }  %>
                 </tr>
             </table>
         </form>

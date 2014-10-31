@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.controller.common;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,7 @@ public class SearchStationController {
     @RequestMapping("/common/SearchStation")
     public String searchStation(HttpServletRequest request,
                                HttpServletResponse response, ModelMap model) {
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         StationBean stationBean = new StationBean();
         stationBean.setName(request.getParameter("Station_name"));
         log.info("Servlet got bean: " + stationBean);

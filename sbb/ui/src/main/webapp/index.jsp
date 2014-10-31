@@ -20,26 +20,23 @@
 </div>
 
 <div id = "userPanel">
-    <%
-        String userName = (String)request.getSession().getAttribute("user");
-        if (userName == null) {
-            userName = "unauthorized user";
-        }
-    %>
+    <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
     <div id = "userInfo">
-        <% if (request.getSession().getAttribute("user") != null) { %>
-        <label>You are logged as: <%=userName%></label>
-        <% } else { %>
-        <label>You are not logged in system</label>
-        <% } %>
+        <security:authorize access="isAuthenticated()">
+            You are logged as: <security:authentication property="principal.username" />
+        </security:authorize>
+        <security:authorize access="! isAuthenticated()">
+            You are not logged on system
+        </security:authorize>
     </div>
     <div id = "userControls">
-        <% if (request.getSession().getAttribute("user") != null) { %>
-        <a href="<%=request.getContextPath()%>/logout">Logout</a>
-        <% } else { %>
-        <a href="<%=request.getContextPath()%>/passengerLogin.jsp">Login</a>
-        <a href="<%=request.getContextPath()%>/register.jsp">Register</a>
-        <% } %>
+        <security:authorize access="isAuthenticated()">
+            <a href="<%=request.getContextPath()%>/logout">Logout</a>
+        </security:authorize>
+        <security:authorize access="! isAuthenticated()">
+            <a href="<%=request.getContextPath()%>/login.jsp">Login</a>
+            <a href="<%=request.getContextPath()%>/register.jsp">Register</a>
+        </security:authorize>
     </div>
 </div>
 

@@ -65,10 +65,6 @@ public class PassengerRegisterController {
                 if (passengerBean.isProcessingFailed()) {
                     return "register";
                 } else {
-                    HttpSession httpSession = request.getSession();
-                    httpSession.setAttribute("user", passengerBean.getLastName() + " " + passengerBean.getFirstName().charAt(0) + ".");
-                    httpSession.setAttribute("passDoc", passengerBean.getDocNumber());
-                    httpSession.setMaxInactiveInterval(30*60);
                     return "/passenger/registerSuccess";
                 }
             }
