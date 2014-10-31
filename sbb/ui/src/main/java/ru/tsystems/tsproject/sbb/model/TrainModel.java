@@ -33,19 +33,16 @@ import java.util.*;
  * @author  Nikita Efremov
  * @since   1.0
  */
+@Component
 public class TrainModel {
 
     private static final Logger log = Logger.getLogger(TrainModel.class);
 
+    @Autowired
     private AdministratorService administratorService;
-    private PassengerService passengerService;
-    private CommonService commonService;
 
-    public TrainModel(AdministratorService administratorService, PassengerService passengerService, CommonService commonService) {
-        this.administratorService = administratorService;
-        this.passengerService = passengerService;
-        this.commonService = commonService;
-    }
+    @Autowired
+    private PassengerService passengerService;
 
     /**
      * Adds new train with number, seats and totalSeats specified in param.
@@ -95,7 +92,7 @@ public class TrainModel {
      */
     public TrainBean findTrain(TrainBean trainBean) {
         try {
-            Train train = commonService.findTrain(trainBean.getNumber());
+            Train train = administratorService.findTrain(trainBean.getNumber());
 
             trainBean.setId(train.getId());
             trainBean.setNumber(train.getNumber());
@@ -298,13 +295,5 @@ public class TrainModel {
 
     public void setPassengerService(PassengerService passengerService) {
         this.passengerService = passengerService;
-    }
-
-    public CommonService getCommonService() {
-        return commonService;
-    }
-
-    public void setCommonService(CommonService commonService) {
-        this.commonService = commonService;
     }
 }

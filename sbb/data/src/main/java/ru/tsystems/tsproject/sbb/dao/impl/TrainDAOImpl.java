@@ -1,6 +1,7 @@
 package ru.tsystems.tsproject.sbb.dao.impl;
 
 
+import org.springframework.stereotype.Repository;
 import ru.tsystems.tsproject.sbb.dao.ErrorCode;
 import ru.tsystems.tsproject.sbb.dao.api.TrainDAO;
 import ru.tsystems.tsproject.sbb.entity.Train;
@@ -16,11 +17,8 @@ import java.util.List;
  * @author  Nikita Efremov
  * @since   1.0
  */
+@Repository
 public class TrainDAOImpl extends AbstractDAOImpl<Train> implements TrainDAO {
-	
-	public TrainDAOImpl(EntityManager em) {
-		super(em);
-	}
 
     public Train getTrainByNumber(String trainNumber) throws DAOException {
         try {

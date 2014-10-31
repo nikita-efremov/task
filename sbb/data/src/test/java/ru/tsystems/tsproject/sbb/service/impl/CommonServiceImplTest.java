@@ -32,16 +32,16 @@ import java.util.Date;
 public class CommonServiceImplTest {
 
     @Mock
-    private StationDAO stationDAO = new StationDAOImpl(null);
+    private StationDAO stationDAO = new StationDAOImpl();
 
     @Mock
-    private TrainDAO trainDAO = new TrainDAOImpl(null);
+    private TrainDAO trainDAO = new TrainDAOImpl();
 
     @Mock
-    private PassengerDAO passengerDAO = new PassengerDAOImpl(null);
+    private PassengerDAO passengerDAO = new PassengerDAOImpl();
 
     @InjectMocks
-    private CommonService commonServiceImpl = new CommonServiceImpl(stationDAO, trainDAO, passengerDAO);
+    private CommonService commonServiceImpl = new CommonServiceImpl();
 
     @Test
     public void testFindStation_SearchSuccess() throws Exception {

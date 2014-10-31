@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.model;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.TicketBean;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
@@ -17,17 +19,13 @@ import ru.tsystems.tsproject.sbb.service.api.PassengerService;
  * @author  Nikita Efremov
  * @since   1.0
  */
+@Component
 public class PassengerModel {
 
     private static final Logger log = Logger.getLogger(PassengerModel.class);
 
-    private CommonService commonService;
+    @Autowired
     private PassengerService passengerService;
-
-    public PassengerModel(CommonService commonService, PassengerService passengerService) {
-        this.commonService = commonService;
-        this.passengerService = passengerService;
-    }
 
     /**
      * Method for adding new passenger with last name, first name, document number and birth date, specified in param.
@@ -80,7 +78,7 @@ public class PassengerModel {
      */
     public PassengerBean getPassenger(PassengerBean passengerBean) {
         try {
-            Passenger passenger = commonService.findPassenger(passengerBean.getDocNumber());
+            Passenger passenger = passengerService.findPassenger(passengerBean.getDocNumber());
 
             passengerBean.setId(passenger.getId());
             passengerBean.setLastName(passenger.getLastName());
@@ -144,14 +142,6 @@ public class PassengerModel {
             log.log(Level.ERROR, "Unknown error occurred: " + e);
         }
         return ticketBean;
-    }
-
-    public CommonService getCommonService() {
-        return commonService;
-    }
-
-    public void setCommonService(CommonService commonService) {
-        this.commonService = commonService;
     }
 
     public PassengerService getPassengerService() {

@@ -1,10 +1,10 @@
 package ru.tsystems.tsproject.sbb.controller.administrator;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.model.StationModel;
 
@@ -21,7 +21,9 @@ import java.util.Collection;
 public class ViewAllStationsController {
 
     private static final Logger log = Logger.getLogger(ViewAllStationsController.class);
-    private StationModel stationModel = CustomApplicationContext.getStationModel();
+
+    @Autowired
+    private StationModel stationModel;
 
     @RequestMapping("/administrator/station/ViewAllStations")
     public String viewStations(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {

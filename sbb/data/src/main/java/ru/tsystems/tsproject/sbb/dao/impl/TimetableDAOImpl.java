@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.dao.impl;
 
+import org.springframework.stereotype.Repository;
 import ru.tsystems.tsproject.sbb.dao.ErrorCode;
 import ru.tsystems.tsproject.sbb.dao.api.TimetableDAO;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
@@ -14,11 +15,8 @@ import java.util.List;
  * @author  Nikita Efremov
  * @since   1.0
  */
+@Repository
 public class TimetableDAOImpl extends AbstractDAOImpl<Timetable> implements TimetableDAO {
-
-	public TimetableDAOImpl(EntityManager em) {
-		super(em);
-	}
 
     public Collection getTimetableByStation(int stationID) throws DAOException {
         try {

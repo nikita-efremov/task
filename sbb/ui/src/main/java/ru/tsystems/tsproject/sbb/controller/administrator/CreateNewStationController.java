@@ -1,10 +1,10 @@
 package ru.tsystems.tsproject.sbb.controller.administrator;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
@@ -22,7 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 public class CreateNewStationController {
 
     private static final Logger log = Logger.getLogger(CreateNewStationController.class);
-    private StationModel stationModel = CustomApplicationContext.getStationModel();
+
+    @Autowired
+    private StationModel stationModel;
 
     @RequestMapping("/administrator/station/CreateNewStation")
     public String addStation(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {

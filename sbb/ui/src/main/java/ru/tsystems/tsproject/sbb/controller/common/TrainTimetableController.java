@@ -1,10 +1,10 @@
 package ru.tsystems.tsproject.sbb.controller.common;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
 
@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 public class TrainTimetableController {
 
     private final static Logger log = Logger.getLogger(TrainTimetableController.class);
-    private TrainModel trainModel = CustomApplicationContext.getTrainModel();
+
+    @Autowired
+    private TrainModel trainModel;
 
     @RequestMapping("/common/TrainTimetable")
     public String searchTrainTimetable(HttpServletRequest request,

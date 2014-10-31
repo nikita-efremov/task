@@ -19,10 +19,6 @@
        http://www.springframework.org/schema/task
        http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
-     <context:component-scan base-package="ru.tsystems.tsproject.sbb.controller"/>
-
-     <bean id = "testClassBean" class="ru.tsystems.tsproject.sbb.model.TestClass"></bean>
-
-
+     <context:component-scan base-package="ru.tsystems.tsproject.sbb"/>
 
 </beans>

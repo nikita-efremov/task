@@ -1,10 +1,10 @@
 package ru.tsystems.tsproject.sbb.controller.administrator;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
@@ -24,7 +24,9 @@ import java.util.Collection;
 public class SearchTrainController {
 
     private static final Logger log = Logger.getLogger(SearchTrainController.class);
-    private TrainModel trainModel = CustomApplicationContext.getTrainModel();
+
+    @Autowired
+    private TrainModel trainModel;
 
     @RequestMapping("/administrator/train/SearchTrain")
     public String searchTrain(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {

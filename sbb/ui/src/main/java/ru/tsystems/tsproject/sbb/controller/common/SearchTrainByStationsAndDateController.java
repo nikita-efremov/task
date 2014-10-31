@@ -1,17 +1,16 @@
 package ru.tsystems.tsproject.sbb.controller.common;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.tsystems.tsproject.sbb.CustomApplicationContext;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.TimetableBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
@@ -29,7 +28,8 @@ public class SearchTrainByStationsAndDateController {
 
     private static final Logger log = Logger.getLogger(SearchTrainByStationsAndDateController.class);
 
-    private TrainModel trainModel = CustomApplicationContext.getTrainModel();
+    @Autowired
+    private TrainModel trainModel;
 
     @RequestMapping("/common/SearchStationDateTrain")
     public String searchTrains(HttpServletRequest request,

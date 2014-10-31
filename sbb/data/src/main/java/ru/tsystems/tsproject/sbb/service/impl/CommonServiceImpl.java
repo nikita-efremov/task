@@ -1,6 +1,9 @@
 package ru.tsystems.tsproject.sbb.service.impl;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
@@ -17,22 +20,21 @@ import ru.tsystems.tsproject.sbb.dao.DAOException;
  * @author  Nikita Efremov
  * @since   1.0
  */
+@Service
 public class CommonServiceImpl implements CommonService {
 
     private static final Logger log = Logger.getLogger(CommonServiceImpl.class);
 
+    @Autowired
     private StationDAO stationDAO;
+
+    @Autowired
     private TrainDAO trainDAO;
+
+    @Autowired
     private PassengerDAO passengerDAO;
 
-    public CommonServiceImpl(StationDAO stationDAO,
-                             TrainDAO trainDAO,
-                             PassengerDAO passengerDAO) {
-        this.stationDAO = stationDAO;
-        this.trainDAO = trainDAO;
-        this.passengerDAO = passengerDAO;
-    }
-
+    @Transactional
     public Station findStation(String stationName) throws StationNotExistsException, DAOException {
         log.info("Start search station with name: " + stationName);
         Station station = stationDAO.getStationByName(stationName);
@@ -43,6 +45,7 @@ public class CommonServiceImpl implements CommonService {
         return station;
     }
 
+    @Transactional
     public Train findTrain(String trainNumber) throws TrainNotExistsException, DAOException {
         log.info("Start search train with number: " + trainNumber);
         Train train = trainDAO.getTrainByNumber(trainNumber);
@@ -53,6 +56,7 @@ public class CommonServiceImpl implements CommonService {
         return train;
     }
 
+    @Transactional
     public Passenger findPassenger(String docNumber) throws DAOException, PassengerNotExistsException {
         log.info("Start search passenger with document number: " + docNumber);
         Passenger passenger = passengerDAO.getPassengerByDocumentNumber(docNumber);

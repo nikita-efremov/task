@@ -1,5 +1,7 @@
 package ru.tsystems.tsproject.sbb.dao.impl;
 
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.stereotype.Repository;
 import ru.tsystems.tsproject.sbb.dao.ErrorCode;
 import ru.tsystems.tsproject.sbb.dao.api.CommonDAO;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
@@ -17,12 +19,12 @@ import java.util.Collection;
  * @author  Nikita Efremov
  * @since   1.0
  */
+@Repository
+@ImportResource("classpath:/META-INF/jpa-context.xml")
 public abstract class AbstractDAOImpl <T> implements CommonDAO <T> {
-	private final EntityManager entityManager;
-	
-	public AbstractDAOImpl(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
+
+    @PersistenceContext(unitName = "jpa-hibernate")
+	private EntityManager entityManager;
 
     /**
      * Getting current wildcard class
@@ -175,8 +177,12 @@ public abstract class AbstractDAOImpl <T> implements CommonDAO <T> {
             throw daoException;
         }
     }
-	
-	protected EntityManager getEntityManager() {
-		return entityManager;
-	}
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 }

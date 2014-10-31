@@ -1,6 +1,7 @@
 package ru.tsystems.tsproject.sbb.dao.impl;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 import ru.tsystems.tsproject.sbb.dao.ErrorCode;
 import ru.tsystems.tsproject.sbb.dao.api.StationDAO;
 import ru.tsystems.tsproject.sbb.entity.Station;
@@ -14,14 +15,10 @@ import java.util.List;
  * @author  Nikita Efremov
  * @since   1.0
  */
+@Repository
 public class StationDAOImpl extends AbstractDAOImpl<Station> implements StationDAO {
 
     private static final Logger log = Logger.getLogger(StationDAOImpl.class);
-
-	public StationDAOImpl(EntityManager em) {
-		super(em);
-	}
-
 
     public Station getStationByName(String name) throws DAOException {
         try {

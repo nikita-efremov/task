@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.tsystems.tsproject.sbb.dao.DAOTransactionManager;
 import ru.tsystems.tsproject.sbb.dao.api.PassengerDAO;
 import ru.tsystems.tsproject.sbb.dao.api.StationDAO;
 import ru.tsystems.tsproject.sbb.dao.api.TimetableDAO;
@@ -36,23 +35,19 @@ import java.util.Date;
 public class AdministratorServiceImplTest {
 
     @Mock
-    private DAOTransactionManager daoTransactionManager = new DAOTransactionManager(null);
+    private StationDAO stationDAO = new StationDAOImpl();
 
     @Mock
-    private StationDAO stationDAO = new StationDAOImpl(null);
+    private TrainDAO trainDAO = new TrainDAOImpl();
 
     @Mock
-    private TrainDAO trainDAO = new TrainDAOImpl(null);
+    private PassengerDAO passengerDAO = new PassengerDAOImpl();
 
     @Mock
-    private PassengerDAO passengerDAO = new PassengerDAOImpl(null);
-
-    @Mock
-    private TimetableDAO timetableDAO = new TimetableDAOImpl(null);
+    private TimetableDAO timetableDAO = new TimetableDAOImpl();
 
     @InjectMocks
-    private AdministratorService administratorService = new AdministratorServiceImpl(daoTransactionManager,
-            stationDAO, trainDAO, passengerDAO, timetableDAO);
+    private AdministratorService administratorService = new AdministratorServiceImpl();
 
     @Test
     public void testAddStation_Success() throws Exception {

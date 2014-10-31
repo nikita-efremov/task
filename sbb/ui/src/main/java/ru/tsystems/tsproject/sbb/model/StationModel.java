@@ -2,6 +2,8 @@ package ru.tsystems.tsproject.sbb.model;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TimetableBean;
 import ru.tsystems.tsproject.sbb.dao.api.*;
@@ -29,16 +31,12 @@ import java.util.TreeSet;
  * @author  Nikita Efremov
  * @since   1.0
  */
+@Component
 public class StationModel {
     private static final Logger log = Logger.getLogger(StationModel.class);
 
+    @Autowired
     private AdministratorService administratorService;
-    private CommonService commonService;
-
-    public StationModel(AdministratorService administratorService, CommonService commonService) {
-        this.administratorService = administratorService;
-        this.commonService = commonService;
-    }
 
     /**
      * Adds new station with name, specified in param.
@@ -87,7 +85,7 @@ public class StationModel {
             Station station = new Station();
             station.setName(stationBean.getName());
 
-            station = commonService.findStation(station.getName());
+            station = administratorService.findStation(station.getName());
 
             stationBean.setId(station.getId());
             stationBean.setName(station.getName());
@@ -146,13 +144,5 @@ public class StationModel {
 
     public void setAdministratorService(AdministratorService administratorService) {
         this.administratorService = administratorService;
-    }
-
-    public CommonService getCommonService() {
-        return commonService;
-    }
-
-    public void setCommonService(CommonService commonService) {
-        this.commonService = commonService;
     }
 }
