@@ -102,6 +102,18 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="Password" class="col-sm-4 control-label">Password:</label>
+                <div class="col-sm-7">
+                    <input type="password" class="form-control" id="Password" placeholder="Password" name = "Password" value = "">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Confirm_Password" class="col-sm-4 control-label">Confirm password:</label>
+                <div class="col-sm-7">
+                    <input type="password" class="form-control" id="Confirm_Password" placeholder="Confirm password" name = "Confirm_Password" value = "">
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-10">
                     <button type="submit" name="passengerRegisterAction" value="register" class="btn btn-success">Register</button>
                     <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>

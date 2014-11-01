@@ -76,6 +76,10 @@
         <div class="form-group">
             <table id = "resultData">
                 <TR>
+                    <TD>Username:</TD>
+                    <TD> <%=bean.getDocNumber()%> </TD>
+                </TR>
+                <TR>
                     <TD>First name:</TD>
                     <TD> <%=bean.getFirstName()%> </TD>
                 </TR>

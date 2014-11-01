@@ -68,6 +68,46 @@ $(document).ready(function() {
                         message: 'The date of birth is not valid'
                     }
                 }
+            },
+            Password: {
+                validators: {
+                    notEmpty: {
+                        message: 'The password is required and cannot be empty'
+                    },
+                    identical: {
+                        field: 'Confirm_Password',
+                        message: 'The password and its confirm are not the same'
+                    },
+                    stringLength: {
+                        min: 6,
+                        msx: 16,
+                        message: 'The password must have at least 6 and not more than 16 characters'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z0-9]+$/,
+                        message: 'Password can only consist of english alphabetical and number'
+                    }
+                }
+            },
+            Confirm_Password: {
+                validators: {
+                    notEmpty: {
+                        message: 'The password confirm is required and cannot be empty'
+                    },
+                    identical: {
+                        field: 'Password',
+                        message: 'The password and its confirm are not the same'
+                    },
+                    stringLength: {
+                        min: 6,
+                        msx: 16,
+                        message: 'The password confirm must have at least 6 and not more than 16 characters'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z0-9]+$/,
+                        message: 'Password confirm can only consist of english alphabetical and number'
+                    }
+                }
             }
         }
     });

@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.controller.passenger;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -61,12 +62,14 @@ public class PassengerRegisterController {
             } catch (ParseException e) {
                 birthDate = null;
             }
+            String password = request.getParameter("Password");
 
             PassengerBean passengerBean = new PassengerBean();
             passengerBean.setLastName(request.getParameter("Last_name"));
             passengerBean.setFirstName(request.getParameter("First_name"));
             passengerBean.setDocNumber(request.getParameter("Document_number"));
             passengerBean.setBirthDate(birthDate);
+            passengerBean.setPassword(password);
             log.info("Servlet got bean: " + passengerBean);
             ValidationBean validationBean = Validator.validate(passengerBean);
             if (validationBean.isValidationFailed()) {
@@ -81,7 +84,7 @@ public class PassengerRegisterController {
                 } else {
                     UserDetails userDetails = userDetailsService.loadUserByUsername(passengerBean.getDocNumber());
                     UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                            userDetails, "zxcvbn", userDetails.getAuthorities());
+                            userDetails, password, userDetails.getAuthorities());
                     authenticationManager.authenticate(auth);
 
                     if(auth.isAuthenticated()) {

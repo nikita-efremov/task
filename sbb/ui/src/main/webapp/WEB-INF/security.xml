@@ -19,11 +19,13 @@
 
     <authentication-manager alias="customAuthenticationManager">
         <authentication-provider>
+            <password-encoder hash="md5"/>
             <user-service>
-                <user name="admin" password="qwerty" authorities="ROLE_ADMIN"/>
+                <user name="admin" password="d8578edf8458ce06fbc5bb76a58c5ca4" authorities="ROLE_ADMIN"/>
             </user-service>
         </authentication-provider>
         <authentication-provider user-service-ref="userDetailsServiceImpl">
+            <password-encoder hash="md5"/>
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

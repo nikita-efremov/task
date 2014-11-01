@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.model;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,14 @@ public class PassengerModel {
      */
     public PassengerBean addPassenger(PassengerBean passengerBean) {
         try {
+            String passwordHash = DigestUtils.md5Hex(passengerBean.getPassword());
+
             Passenger passenger = new Passenger();
             passenger.setLastName(passengerBean.getLastName());
             passenger.setFirstName(passengerBean.getFirstName());
             passenger.setDocNumber(passengerBean.getDocNumber());
             passenger.setBirthDate(passengerBean.getBirthDate());
+            passenger.setPassword(passwordHash);
 
             passenger = passengerService.addPassenger(passenger);
 
@@ -52,6 +56,7 @@ public class PassengerModel {
             passengerBean.setFirstName(passenger.getFirstName());
             passengerBean.setDocNumber(passenger.getDocNumber());
             passengerBean.setBirthDate(passenger.getBirthDate());
+            passengerBean.setPassword(passenger.getPassword());
 
         } catch (PassengerAlreadyExistsException e) {
             passengerBean.setProcessingErrorMessage(e.getMessage());

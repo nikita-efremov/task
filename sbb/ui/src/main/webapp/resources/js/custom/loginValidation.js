@@ -93,7 +93,12 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         min: 6,
-                        message: 'The password must have at least 6 characters'
+                        max: 16,
+                        message: 'The password must have at least 6 and not more than 16 characters'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z0-9]+$/,
+                        message: 'Password can only consist of english alphabetical and number'
                     }
                 }
             }

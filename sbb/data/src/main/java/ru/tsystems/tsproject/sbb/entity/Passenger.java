@@ -36,6 +36,9 @@ public class Passenger {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "passenger")
     private Set<Ticket> tickets;
 
+    @Column(name = "password")
+    private String password;
+
     public int getId() {
         return id;
     }
@@ -92,6 +95,14 @@ public class Passenger {
             tickets = new TreeSet<Ticket>();
         }
         tickets.add(ticket);
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public boolean equals(Object o) {

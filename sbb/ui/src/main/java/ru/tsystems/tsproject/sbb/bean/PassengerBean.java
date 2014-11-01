@@ -2,6 +2,7 @@ package ru.tsystems.tsproject.sbb.bean;
 
 import ru.tsystems.tsproject.sbb.entity.Ticket;
 
+import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +32,9 @@ public class PassengerBean extends BaseBean {
     private String docNumber = "";
 
     private Set<TicketBean> tickets = new TreeSet<TicketBean>();
+
+    @Pattern(regexp = "[A-Za-z0-9]{6,16}", message="Password must contain only english letters and digits, from 6 to 16 symbols")
+    private String password;
 
     public int getId() {
         return id;
@@ -82,6 +86,14 @@ public class PassengerBean extends BaseBean {
 
     public void setTickets(Set<TicketBean> tickets) {
         this.tickets = tickets;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

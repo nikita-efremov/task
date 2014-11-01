@@ -44,6 +44,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
         roles.add(new SimpleGrantedAuthority("ROLE_PASSENGER"));
 
-        return new User(passenger.getDocNumber(), "zxcvbn", roles);
+        return new User(passenger.getDocNumber(), passenger.getPassword(), roles);
     }
 }
