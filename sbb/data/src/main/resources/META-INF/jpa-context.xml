@@ -24,7 +24,7 @@
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml" />
         <property name="persistenceUnitName" value="jpa-hibernate"/>
-        <property name="dataSource" ref="dataSource" />
+        <property name="jtaDataSource" ref="dataSource" />
         <property name="packagesToScan" value="ru.tsystems.tsproject.sbb.dao" />
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
@@ -35,25 +35,15 @@
         </property>
     </bean>
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3307/test" />
-        <property name="username" value="nikita" />
-        <property name="password" value="qwerty" />
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:jboss/datasources/mySQLDS"/>
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <!--context:component-scan base-package="ru.tsystems.tsproject.sbb.dao">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
-    </context:component-scan-->
+    <bean class="org.springframework.transaction.jta.JtaTransactionManager" id="transactionManager"/>
 
-    <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
-
-    <!--tx:annotation-driven mode="aspectj"
-                          transaction-manager="transactionManager" /-->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
     <context:spring-configured />
     <context:annotation-config />
