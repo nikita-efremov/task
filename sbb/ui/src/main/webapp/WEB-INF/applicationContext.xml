@@ -20,9 +20,13 @@
        http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
      <context:component-scan base-package="ru.tsystems.tsproject.sbb"/>
-
+    <!--needs to display auth data in jsp -->
     <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
+    <bean id = "userDetailsServiceImpl" class="ru.tsystems.tsproject.sbb.UserDetailsServiceImpl"/>
+    <bean id = "passengerRegisterController" class="ru.tsystems.tsproject.sbb.controller.passenger.PassengerRegisterController">
+        <property name = "userDetailsService" ref="userDetailsServiceImpl"/>
+    </bean>
     <import resource="security.xml" />
 
 </beans>

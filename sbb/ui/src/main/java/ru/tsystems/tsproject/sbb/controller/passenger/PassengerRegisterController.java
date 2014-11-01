@@ -2,6 +2,12 @@ package ru.tsystems.tsproject.sbb.controller.passenger;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +35,14 @@ public class PassengerRegisterController {
 
     @Autowired
     private PassengerModel passengerModel;
+
+    @Autowired
+    @Qualifier("userDetailsServiceImpl")
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    @Qualifier("customAuthenticationManager")
+    protected AuthenticationManager authenticationManager;
 
     @RequestMapping("/RegisterPassenger")
     public String register(HttpServletRequest request,
@@ -65,9 +79,21 @@ public class PassengerRegisterController {
                 if (passengerBean.isProcessingFailed()) {
                     return "register";
                 } else {
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(passengerBean.getDocNumber());
+                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                            userDetails, "zxcvbn", userDetails.getAuthorities());
+                    authenticationManager.authenticate(auth);
+
+                    if(auth.isAuthenticated()) {
+                        SecurityContextHolder.getContext().setAuthentication(auth);
+                    }
                     return "/passenger/registerSuccess";
                 }
             }
         }
+    }
+
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 }

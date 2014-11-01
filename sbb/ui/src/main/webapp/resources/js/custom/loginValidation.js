@@ -68,9 +68,9 @@ $(document).ready(function() {
                         message: 'The username is required and cannot be empty'
                     },
                     stringLength: {
-                        min: 10,
-                        max: 30,
-                        message: 'The username must be more than 10 and less than 30 characters long'
+                        min: 5,
+                        max: 10,
+                        message: 'The username must be more than 5 and less than 10 characters long'
                     },
                     regexp: {
                         regexp: /^[a-zA-Z0-9]+$/,

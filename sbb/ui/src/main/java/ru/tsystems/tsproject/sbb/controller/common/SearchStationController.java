@@ -33,7 +33,6 @@ public class SearchStationController {
     @RequestMapping("/common/SearchStation")
     public String searchStation(HttpServletRequest request,
                                HttpServletResponse response, ModelMap model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         StationBean stationBean = new StationBean();
         stationBean.setName(request.getParameter("Station_name"));
         log.info("Servlet got bean: " + stationBean);

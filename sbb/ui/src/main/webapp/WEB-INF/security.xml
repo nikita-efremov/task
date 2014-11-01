@@ -17,10 +17,10 @@
         <!--remember-me user-service-ref="userDetailsServiceImpl"/-->
     </http>
 
-    <authentication-manager>
+    <authentication-manager alias="customAuthenticationManager">
         <authentication-provider>
             <user-service>
-                <user name="adminadmin" password="qwerty" authorities="ROLE_ADMIN"/>
+                <user name="admin" password="qwerty" authorities="ROLE_ADMIN"/>
             </user-service>
         </authentication-provider>
         <authentication-provider user-service-ref="userDetailsServiceImpl">

@@ -2,6 +2,7 @@ package ru.tsystems.tsproject.sbb.controller.passenger;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class PurchaseTicketController {
         } else {
             TicketBean ticketBean = new TicketBean();
             ticketBean.setTrainNumber(request.getParameter("Train_number"));
-            ticketBean.setPassengerDocNumber((String)request.getSession().getAttribute("passDoc"));
+            ticketBean.setPassengerDocNumber(SecurityContextHolder.getContext().getAuthentication().getName());
             log.info("Servlet got bean: " + ticketBean);
             ValidationBean validationBean = Validator.validate(ticketBean, "trainNumber");
             if (validationBean.isValidationFailed()) {
