@@ -33,7 +33,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Trains<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <security:authorize access="hasRole('ROLE_ADMIN')">
-                                <li><a href="<%=request.getContextPath()%>/administrator/train/createNewTrain.jsp">Add new</a></li>
+                                <li><a href="<%=request.getContextPath()%>/administrator/train/createNewTrain">Add new</a></li>
                                 <li><a href="<%=request.getContextPath()%>/administrator/train/searchTrain.jsp">Search by number</a></li>
                                 <li><a href="<%=request.getContextPath()%>/administrator/train/ViewAllTrains">Watch all</a></li>
                                 <li class="divider"></li>

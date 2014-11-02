@@ -7,7 +7,7 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            Train_number: {
+            number: {
                 message: 'Train number is not valid',
                 validators: {
                     notEmpty: {
@@ -24,7 +24,7 @@ $(document).ready(function() {
                     }
                 }
             },
-            Total_seats: {
+            totalSeats: {
                 message: 'Total seats is not valid',
                 validators: {
                     integer: {
