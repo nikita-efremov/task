@@ -27,7 +27,7 @@ public class CreateNewStationController {
     private StationModel stationModel;
 
     @RequestMapping("/administrator/station/CreateNewStation")
-    public String addStation(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+    public String addStation(HttpServletRequest request) {
         String action = request.getParameter("stationCreateAction");
         if (action == null) {
             return "redirect:/administrator/station/createNewStation.jsp";

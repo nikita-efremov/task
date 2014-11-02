@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminRedirectController {
 
     @RequestMapping("/administrator")
-    public String redirect(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+    public String redirect() {
         return "redirect:/administrator/administratorMain.jsp";
     }
 }

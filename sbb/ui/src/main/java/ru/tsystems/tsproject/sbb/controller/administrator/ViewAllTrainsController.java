@@ -26,7 +26,7 @@ public class ViewAllTrainsController {
     private TrainModel trainModel;
 
     @RequestMapping("/administrator/train/ViewAllTrains")
-    public String viewTrains(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+    public String viewTrains(HttpServletRequest request) {
         Collection<TrainBean> trains = trainModel.getAllTrains();
         request.setAttribute("allTrains", trains);
         return "/administrator/train/viewAllTrains";

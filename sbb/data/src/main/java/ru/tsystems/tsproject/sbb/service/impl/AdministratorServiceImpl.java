@@ -101,4 +101,10 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
         log.info("Start getting all stations");
         return getStationDAO().<Station>getAll();
     }
+
+    @Transactional
+    public Collection<Passenger> getAllPassengers() throws DAOException {
+        log.info("Start getting all passengers");
+        return getPassengerDAO().<Station>getAll();
+    }
 }

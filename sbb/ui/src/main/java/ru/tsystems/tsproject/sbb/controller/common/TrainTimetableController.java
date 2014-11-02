@@ -25,8 +25,7 @@ public class TrainTimetableController {
     private TrainModel trainModel;
 
     @RequestMapping("/common/TrainTimetable")
-    public String searchTrainTimetable(HttpServletRequest request,
-                                       HttpServletResponse response, ModelMap model) {
+    public String searchTrainTimetable(HttpServletRequest request) {
         String action = request.getParameter("trainSearchAction");
         if (action == null) {
             return "redirect:/index.jsp";

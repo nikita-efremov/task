@@ -28,9 +28,7 @@ public class PurchaseTicketController {
     private PassengerModel passengerModel;
 
     @RequestMapping("/passenger/TicketPurchase")
-    public String purchase(HttpServletRequest request,
-                           HttpServletResponse response,
-                           ModelMap model) {
+    public String purchase(HttpServletRequest request) {
         String action = request.getParameter("purchaseAction");
         if (action == null) {
             return "redirect:/passenger/purchase";

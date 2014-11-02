@@ -46,8 +46,7 @@ public class PassengerRegisterController {
     protected AuthenticationManager authenticationManager;
 
     @RequestMapping("/RegisterPassenger")
-    public String register(HttpServletRequest request,
-                           HttpServletResponse response, ModelMap model) {
+    public String register(HttpServletRequest request) {
         String action = request.getParameter("passengerRegisterAction");
         if (action == null) {
             return "redirect:/register.jsp";

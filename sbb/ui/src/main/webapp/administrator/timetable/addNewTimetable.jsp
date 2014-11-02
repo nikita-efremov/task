@@ -64,6 +64,9 @@
                 <a class="top_home_link" href="<%=request.getContextPath()%>/administrator/station/stationsIndex.jsp">Stations</a>
             </td>
             <td class="common_link_td">
+                <a class="top_home_link" href="<%=request.getContextPath()%>/administrator/passengers/ViewAllPassengers">Passengers</a>
+            </td>
+            <td class="common_link_td">
                 <a class="top_home_link" href="<%=request.getContextPath()%>/index.jsp">Back to passenger options</a>
             </td>
         </tr>

@@ -105,4 +105,14 @@ public interface AdministratorService extends CommonService {
      *         If error occurred in JPA layer
      */
     public Collection<Train> getAllTrains() throws DAOException;
+
+    /**
+     * Gets collection of all exists passengers
+     *
+     * @return collection of passengers
+     *
+     * @throws DAOException
+     *         If error occurred in JPA layer
+     */
+    public Collection<Passenger> getAllPassengers() throws DAOException;
 }

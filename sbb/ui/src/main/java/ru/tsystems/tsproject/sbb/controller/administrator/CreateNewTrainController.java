@@ -27,7 +27,7 @@ public class CreateNewTrainController {
     private TrainModel trainModel;
 
     @RequestMapping("/administrator/train/CreateNewTrain")
-    public String addTrain(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+    public String addTrain(HttpServletRequest request) {
         String action = request.getParameter("trainCreateAction");
         if (action == null) {
             return "redirect:/administrator/train/createNewTrain.jsp";

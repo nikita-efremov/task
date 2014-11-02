@@ -32,8 +32,7 @@ public class SearchTrainByStationsAndDateController {
     private TrainModel trainModel;
 
     @RequestMapping("/common/SearchStationDateTrain")
-    public String searchTrains(HttpServletRequest request,
-                                HttpServletResponse response, ModelMap model) {
+    public String searchTrains(HttpServletRequest request) {
         String action = request.getParameter("stationDateTrainSearchAction");
         if (action == null) {
             return "redirect:/common/searchStationDateTrain.jsp";

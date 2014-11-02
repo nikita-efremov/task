@@ -29,7 +29,7 @@ public class SearchTrainController {
     private TrainModel trainModel;
 
     @RequestMapping("/administrator/train/SearchTrain")
-    public String searchTrain(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+    public String searchTrain(HttpServletRequest request) {
         String action = request.getParameter("trainSearchAction");
         TrainBean trainBean = new TrainBean();
         trainBean.setNumber(request.getParameter("Train_number"));

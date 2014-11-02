@@ -31,7 +31,7 @@ public class AddNewTrainStopController {
     private TrainModel trainModel;
 
     @RequestMapping("/administrator/train/AddNewTrainStop")
-    public String addStrop(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+    public String addStrop(HttpServletRequest request) {
         String action = request.getParameter("stopAddAction");
         if (action == null) {
             request.setAttribute("trainNumber", request.getParameter("Train_number"));

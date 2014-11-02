@@ -6,13 +6,19 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
+import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TicketBean;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
+import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Ticket;
 import ru.tsystems.tsproject.sbb.exception.*;
+import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
 import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.service.api.PassengerService;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Part of a controller which launches appropriate service method, related to passenger,
@@ -27,6 +33,9 @@ public class PassengerModel {
 
     @Autowired
     private PassengerService passengerService;
+
+    @Autowired
+    private AdministratorService administratorService;
 
     /**
      * Method for adding new passenger with last name, first name, document number and birth date, specified in param.
@@ -147,6 +156,33 @@ public class PassengerModel {
             log.log(Level.ERROR, "Unknown error occurred: " + e);
         }
         return ticketBean;
+    }
+
+    /**
+     * Gets collection of all passengers, which exist in system
+     * If error occurs, method will add error message and error flag to output parameter
+     *
+     * @return Collection<PassengerBean>
+     *         collection of passengers
+     */
+    public Collection<PassengerBean> getAllPassengers() {
+        Collection<PassengerBean> passengerBeans = new ArrayList<PassengerBean>();
+        try {
+            Collection<Passenger> passengers = administratorService.getAllPassengers();
+            for (Passenger passenger: passengers) {
+                PassengerBean passengerBean = new PassengerBean();
+                passengerBean.setDocNumber(passenger.getDocNumber());
+                passengerBean.setFirstName(passenger.getFirstName());
+                passengerBean.setLastName(passenger.getLastName());
+                passengerBean.setBirthDate(passenger.getBirthDate());
+                passengerBeans.add(passengerBean);
+            }
+        } catch (DAOException e) {
+            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (Exception e) {
+            log.log(Level.ERROR, "Unknown error occurred: " + e);
+        }
+        return passengerBeans;
     }
 
     public PassengerService getPassengerService() {

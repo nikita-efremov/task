@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Choose administrator action</title>
+    <title>All passengers</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/js/bootstrap/css/bootstrap-theme.min.css">
     <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/resources/styles/main.css">
@@ -62,9 +64,36 @@
     </table>
 </div>
 
-<h2 align = "center">Welcome to SBB administrator system</h2>
+<div class = inputBlockV2>
+    <label>All passengers</label>
+    <div class="col-sm-8">
+        <div class="form-group">
+            <table id = "resultData">
+                <tr>
+                    <th>Document number</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Birth date</th>
+                </tr>
+                <c:forEach var="passenger" items="${passengers}">
+                <tr>
+                    <td>${passenger.docNumber}</td>
+                    <td>${passenger.firstName}</td>
+                    <td>${passenger.lastName}</td>
+                    <td><fmt:formatDate type="date" value = "${passenger.birthDate}"/></td>
+                </tr>
+            </c:forEach>
+            </table>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
+            </div>
+        </div>
+        <table id="validationMessages">
+        </table>
+    </div>
+</div>
 
 </body>
 </html>
-
-
