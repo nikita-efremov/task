@@ -19,6 +19,7 @@ import ru.tsystems.tsproject.sbb.service.api.PassengerService;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * Part of a controller which launches appropriate service method, related to passenger,
@@ -110,6 +111,40 @@ public class PassengerModel {
             log.log(Level.ERROR, "Unknown error occurred: " + e);
         }
         return passengerBean;
+    }
+
+    /**
+     * Searches passenger by document number, specified in param. Then, it returns collection of all passenger tickets
+     * If error occurs, method will add error message and error flag to output parameter
+     *
+     * @param  passengerBean
+     *         Passenger instance with default id value and specified last name, first name, document number and birth date
+     *
+     * @return Collection<TicketBean>
+     *         collection of found tickets
+     */
+    public Collection<TicketBean> getPassengerTickets(PassengerBean passengerBean) {
+        Collection<TicketBean> ticketBeans = new LinkedList<TicketBean>();
+        try {
+            Passenger passenger = passengerService.findPassenger(passengerBean.getDocNumber());
+            Collection<Ticket> tickets = passenger.getTickets();
+            for (Ticket ticket: tickets) {
+                TicketBean ticketBean = new TicketBean();
+                ticketBean.setTicketNumber(ticket.getTicketNumber());
+                ticketBean.setTrainNumber(ticket.getTrain().getNumber());
+                ticketBeans.add(ticketBean);
+            }
+        } catch (PassengerNotExistsException e) {
+            passengerBean.setProcessingErrorMessage(e.getMessage());
+            log.log(Level.ERROR, e);
+        } catch (DAOException e) {
+            passengerBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
+            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (Exception e) {
+            passengerBean.setProcessingErrorMessage("Unknown error occurred");
+            log.log(Level.ERROR, "Unknown error occurred: " + e);
+        }
+        return ticketBeans;
     }
 
     /**
