@@ -88,61 +88,66 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>To register in system, please fill the following fields: </label>
-    <div class="col-sm-8">
-        <form class="form-horizontal" role="form" method="post" action="RegisterPassenger" id = "registerForm">
-            <div class="form-group">
-                <label for="First_name" class="col-sm-4 control-label">First name:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="First_name" placeholder="First name" name = "First_name" value = "<%=bean.getFirstName()%>">
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Register</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <label>To register in system, please fill the following fields: </label>
+            <form class="form-horizontal" role="form" method="post" action="RegisterPassenger" id = "registerForm">
+                <div class="form-group">
+                    <label for="First_name" class="col-sm-4 control-label">First name:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="First_name" placeholder="First name" name = "First_name" value = "<%=bean.getFirstName()%>">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="Last_name" class="col-sm-4 control-label">Last name:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="Last_name" placeholder="Last name" name = "Last_name" value = "<%=bean.getLastName()%>">
+                <div class="form-group">
+                    <label for="Last_name" class="col-sm-4 control-label">Last name:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="Last_name" placeholder="Last name" name = "Last_name" value = "<%=bean.getLastName()%>">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="Birth_date" class="col-sm-4 control-label">Birth date:</label>
-                <div class="col-sm-7">
-                    <input type="date" class="form-control" id="Birth_date" placeholder="Birth date" name = "Birth_date" value = "<%=bean.getBirthDate()%>">
+                <div class="form-group">
+                    <label for="Birth_date" class="col-sm-4 control-label">Birth date:</label>
+                    <div class="col-sm-7">
+                        <input type="date" class="form-control" id="Birth_date" placeholder="Birth date" name = "Birth_date" value = "<%=bean.getBirthDate()%>">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="Document_number" class="col-sm-4 control-label">Document number:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="Document_number" placeholder="Document number" name = "Document_number" value = "<%=bean.getDocNumber()%>">
+                <div class="form-group">
+                    <label for="Document_number" class="col-sm-4 control-label">Document number:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="Document_number" placeholder="Document number" name = "Document_number" value = "<%=bean.getDocNumber()%>">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="Password" class="col-sm-4 control-label">Password:</label>
-                <div class="col-sm-7">
-                    <input type="password" class="form-control" id="Password" placeholder="Password" name = "Password" value = "">
+                <div class="form-group">
+                    <label for="Password" class="col-sm-4 control-label">Password:</label>
+                    <div class="col-sm-7">
+                        <input type="password" class="form-control" id="Password" placeholder="Password" name = "Password" value = "">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="Confirm_Password" class="col-sm-4 control-label">Confirm password:</label>
-                <div class="col-sm-7">
-                    <input type="password" class="form-control" id="Confirm_Password" placeholder="Confirm password" name = "Confirm_Password" value = "">
+                <div class="form-group">
+                    <label for="Confirm_Password" class="col-sm-4 control-label">Confirm password:</label>
+                    <div class="col-sm-7">
+                        <input type="password" class="form-control" id="Confirm_Password" placeholder="Confirm password" name = "Confirm_Password" value = "">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <button type="submit" name="passengerRegisterAction" value="register" class="btn btn-success">Register</button>
-                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <button type="submit" name="passengerRegisterAction" value="register" class="btn btn-success">Register</button>
+                        <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
+                    </div>
                 </div>
-            </div>
-            <table id="validationMessages">
-                <tr>
-                    <td><%=validationBean.getValidationMessage()%></td>
-                </tr>
-                <tr>
-                    <td><%=bean.getProcessingErrorMessage()%></td>
-                </tr>
-            </table>
-        </form>
+                <table id="validationMessages">
+                    <tr>
+                        <td><%=validationBean.getValidationMessage()%></td>
+                    </tr>
+                    <tr>
+                        <td><%=bean.getProcessingErrorMessage()%></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
 </div>
 

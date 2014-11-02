@@ -89,52 +89,57 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>To login in system, please fill the following fields: </label>
-    <div class="col-sm-8">
-        <form class="form-horizontal" role="form" method="post" action="<%=request.getContextPath()%>/j_spring_security_check" id = "loginForm">
-            <div class="form-group">
-                <label for="j_username" class="col-sm-4 control-label">Username:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="j_username" placeholder="Username" name = "j_username" value = "<%=bean.getDocNumber()%>">
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Login</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <label>To login in system, please fill the following fields: </label>
+            <form class="form-horizontal" role="form" method="post" action="<%=request.getContextPath()%>/j_spring_security_check" id = "loginForm">
+                <div class="form-group">
+                    <label for="j_username" class="col-sm-4 control-label">Username:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="j_username" placeholder="Username" name = "j_username" value = "<%=bean.getDocNumber()%>">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="j_password" class="col-sm-4 control-label">Password:</label>
-                <div class="col-sm-7">
-                    <input type="password" class="form-control" id="j_password" placeholder="Password" name = "j_password" value = "">
+                <div class="form-group">
+                    <label for="j_password" class="col-sm-4 control-label">Password:</label>
+                    <div class="col-sm-7">
+                        <input type="password" class="form-control" id="j_password" placeholder="Password" name = "j_password" value = "">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group" hidden="hidden">
-                <label for="_spring_security_remember_me" class="col-sm-4 control-label">Remember me:</label>
-                <div class="col-sm-7">
-                    <input type="checkbox" class="form-control" id = "_spring_security_remember_me" name = "_spring_security_remember_me">
+                <div class="form-group" hidden="hidden">
+                    <label for="_spring_security_remember_me" class="col-sm-4 control-label">Remember me:</label>
+                    <div class="col-sm-7">
+                        <input type="checkbox" class="form-control" id = "_spring_security_remember_me" name = "_spring_security_remember_me">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <button type="submit" name="loginAction" value="Login" class="btn btn-success">Login</button>
-                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <button type="submit" name="loginAction" value="Login" class="btn btn-success">Login</button>
+                        <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
+                    </div>
                 </div>
-            </div>
 
-            <table id="validationMessages">
-                <tr>
-                    <td><%=validationBean.getValidationMessage()%></td>
-                </tr>
-                <tr>
-                    <td><%=bean.getProcessingErrorMessage()%></td>
-                </tr>
-                <tr>
-                    <td><%=bean.getProcessingErrorMessage()%></td>
-                </tr>
-                <tr>
-                    <% if ((request.getParameter("error") != null) && (request.getParameter("error").equals("true"))) { %>
-                    <td>Invalid credentials!</td>
-                    <% }  %>
-                </tr>
-            </table>
-        </form>
+                <table id="validationMessages">
+                    <tr>
+                        <td><%=validationBean.getValidationMessage()%></td>
+                    </tr>
+                    <tr>
+                        <td><%=bean.getProcessingErrorMessage()%></td>
+                    </tr>
+                    <tr>
+                        <td><%=bean.getProcessingErrorMessage()%></td>
+                    </tr>
+                    <tr>
+                        <% if ((request.getParameter("error") != null) && (request.getParameter("error").equals("true"))) { %>
+                        <td>Invalid credentials!</td>
+                        <% }  %>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
 </div>
 

@@ -92,42 +92,46 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>Passengers of train number <%=bean.getNumber()%></label>
-    <div class="col-sm-8">
-        <div class="form-group">
-            <table id = "resultData">
-                <tr>
-                    <th>Document number</th>
-                    <th>Full name</th>
-                    <th>Birth date</th>
-                </tr>
-                <%
-                    List list = (List)request.getAttribute("trainPassengers");
-                    if(list != null)
-                    {
-                        for (Object o: list) {
-                            PassengerBean passengerBean = (PassengerBean)o;
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Passengers of train number <%=bean.getNumber()%></h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <div class="form-group">
+                <table id = "resultData">
+                    <tr>
+                        <th>Document number</th>
+                        <th>Full name</th>
+                        <th>Birth date</th>
+                    </tr>
+                    <%
+                        List list = (List)request.getAttribute("trainPassengers");
+                        if(list != null)
+                        {
+                            for (Object o: list) {
+                                PassengerBean passengerBean = (PassengerBean)o;
 
-                %>
-                <tr>
-                    <td><%=passengerBean.getDocNumber()%></td>
-                    <td><%=passengerBean.getLastName()%> <%=passengerBean.getFirstName()%></td>
-                    <td><%=new SimpleDateFormat("dd-MM-yyyy").format(passengerBean.getBirthDate())%></td>
-                </tr>
-                <%
+                    %>
+                    <tr>
+                        <td><%=passengerBean.getDocNumber()%></td>
+                        <td><%=passengerBean.getLastName()%> <%=passengerBean.getFirstName()%></td>
+                        <td><%=new SimpleDateFormat("dd-MM-yyyy").format(passengerBean.getBirthDate())%></td>
+                    </tr>
+                    <%
+                            }
                         }
-                    }
-                %>
+                    %>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
+                </div>
+            </div>
+            <table id="validationMessages">
             </table>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-10">
-                <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
-            </div>
-        </div>
-        <table id="validationMessages">
-        </table>
     </div>
 </div>
 

@@ -83,38 +83,43 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>You have been purchased ticket successfully. Ticket Data:</label>
-    <div class="col-sm-8">
-        <div class="form-group">
-            <table id = "resultData">
-                <TR>
-                    <TD>Ticket number:</TD>
-                    <TD> <%=bean.getTicketNumber()%> </TD>
-                </TR>
-                <TR>
-                    <TD>Train number:</TD>
-                    <TD> <%=bean.getTrainNumber()%> </TD>
-                </TR>
-                <TR>
-                    <TD>Document number:</TD>
-                    <TD> <%=bean.getPassengerDocNumber()%> </TD>
-                </TR>
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Ticket purchase success</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <label>You have been purchased ticket successfully. Ticket Data:</label>
+            <div class="form-group">
+                <table id = "resultData">
+                    <TR>
+                        <TD>Ticket number:</TD>
+                        <TD> <%=bean.getTicketNumber()%> </TD>
+                    </TR>
+                    <TR>
+                        <TD>Train number:</TD>
+                        <TD> <%=bean.getTrainNumber()%> </TD>
+                    </TR>
+                    <TR>
+                        <TD>Document number:</TD>
+                        <TD> <%=bean.getPassengerDocNumber()%> </TD>
+                    </TR>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <input type=button class="btn btn-primary" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Exit'>
+                </div>
+            </div>
+            <table id="validationMessages">
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
             </table>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-10">
-                <input type=button class="btn btn-primary" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Exit'>
-            </div>
-        </div>
-        <table id="validationMessages">
-            <tr>
-                <td></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
     </div>
 </div>
 

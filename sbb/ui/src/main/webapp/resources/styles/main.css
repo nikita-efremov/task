@@ -227,6 +227,31 @@ label {
     margin-left: 10px;
 }
 
+.inputBlockV3 {  /*bootstrap panel form*/
+    height: auto;
+    text-align: center;
+    margin: 3% auto;
+    width: 50%;
+}
+
+.inputBlockV3 .col-sm-8 {
+    float: none;
+    font-size: 15px;
+    margin: 0 auto;
+    padding: 0 0;
+    text-align: center;
+}
+
+.inputBlockV3 .col-sm-8 > label { /*table with input fields*/
+    font-size: 18px;
+    padding-bottom: 0
+}
+
+.col-sm-8 form {
+    padding-top: 30px;
+}
+
+
 
 
 

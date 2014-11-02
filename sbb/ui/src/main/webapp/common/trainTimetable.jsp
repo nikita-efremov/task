@@ -92,47 +92,51 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>Timetable of train number <%=bean.getNumber()%></label>
-    <div class="col-sm-8">
-        <div class="form-group">
-            <table id = "resultData">
-                <tr>
-                    <th>Station name</th>
-                    <th>Departure date</th>
-                </tr>
-                <%
-                    Set set = (Set)bean.getTimetables();
-                    if(set != null)
-                    {
-                        for (Object o: set) {
-                            TimetableBean timetableBean = (TimetableBean)o;
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Timetable of train number <%=bean.getNumber()%></h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <div class="form-group">
+                <table id = "resultData">
+                    <tr>
+                        <th>Station name</th>
+                        <th>Departure date</th>
+                    </tr>
+                    <%
+                        Set set = (Set)bean.getTimetables();
+                        if(set != null)
+                        {
+                            for (Object o: set) {
+                                TimetableBean timetableBean = (TimetableBean)o;
 
-                %>
-                <tr>
-                    <td><%=timetableBean.getStationName()%></td>
-                    <td><%=new SimpleDateFormat("dd-MM-yyyy HH:mm").format(timetableBean.getDate())%></td>
-                </tr>
-                <%
+                    %>
+                    <tr>
+                        <td><%=timetableBean.getStationName()%></td>
+                        <td><%=new SimpleDateFormat("dd-MM-yyyy HH:mm").format(timetableBean.getDate())%></td>
+                    </tr>
+                    <%
+                            }
                         }
-                    }
-                %>
+                    %>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
+                </div>
+            </div>
+
+            <table id="validationMessages">
+                <tr>
+                    <td><%=validationBean.getValidationMessage()%></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
             </table>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-10">
-                <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
-            </div>
-        </div>
-
-        <table id="validationMessages">
-            <tr>
-                <td><%=validationBean.getValidationMessage()%></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
     </div>
 </div>
 

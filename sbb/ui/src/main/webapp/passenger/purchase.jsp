@@ -88,32 +88,37 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>To purchase ticket, please fill the following fields: </label>
-    <div class="col-sm-8">
-        <form class="form-horizontal" role="form" method="post" action="TicketPurchase" id = "trainSearchForm">
-            <div class="form-group">
-                <label for="Train_number" class="col-sm-4 control-label">Train number:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="Train_number" placeholder="Train number" name = "Train_number" value = "<%=bean.getTrainNumber()%>">
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Ticket purchasing</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <label>To purchase ticket, please fill the following fields: </label>
+            <form class="form-horizontal" role="form" method="post" action="TicketPurchase" id = "trainSearchForm">
+                <div class="form-group">
+                    <label for="Train_number" class="col-sm-4 control-label">Train number:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="Train_number" placeholder="Train number" name = "Train_number" value = "<%=bean.getTrainNumber()%>">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <button type="submit" name="purchaseAction" value="Purchase" class="btn btn-success">Purchase</button>
-                    <input type=button class="btn btn-default" onClick="history.go(-1);" value='Back'>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <button type="submit" name="purchaseAction" value="Purchase" class="btn btn-success">Purchase</button>
+                        <input type=button class="btn btn-default" onClick="history.go(-1);" value='Back'>
+                    </div>
                 </div>
-            </div>
 
-            <table id="validationMessages">
-                <tr>
-                    <td><%=validationBean.getValidationMessage()%></td>
-                </tr>
-                <tr>
-                    <td><%=bean.getProcessingErrorMessage()%></td>
-                </tr>
-            </table>
-        </form>
+                <table id="validationMessages">
+                    <tr>
+                        <td><%=validationBean.getValidationMessage()%></td>
+                    </tr>
+                    <tr>
+                        <td><%=bean.getProcessingErrorMessage()%></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
 </div>
 

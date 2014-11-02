@@ -97,55 +97,60 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>To find trains by stations and dates, please fill the following fields: </label>
-    <div class="col-sm-8">
-        <form id = "trainSearchForm" class="form-horizontal" role="form" method="post" action="SearchStationDateTrain" >
-            <div class="form-group">
-                <label for="Station_start_name" class="col-sm-4 control-label">Station start name:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="Station_start_name" placeholder="Station start name" name = "Station_start_name" value="<%=startBean.getStationName()%>">
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Train search</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <label>To find trains by stations and dates, please fill the following fields: </label>
+            <form id = "trainSearchForm" class="form-horizontal" role="form" method="post" action="SearchStationDateTrain" >
+                <div class="form-group">
+                    <label for="Station_start_name" class="col-sm-4 control-label">Station start name:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="Station_start_name" placeholder="Station start name" name = "Station_start_name" value="<%=startBean.getStationName()%>">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="Start_date" class="col-sm-4 control-label">Start date after:</label>
-                <div class="col-sm-7">
-                    <input type="datetime-local" class="form-control" id="Start_date" placeholder="Start date" name = "Start_date" value="<%=startBean.getDate()%>">
+                <div class="form-group">
+                    <label for="Start_date" class="col-sm-4 control-label">Start date after:</label>
+                    <div class="col-sm-7">
+                        <input type="datetime-local" class="form-control" id="Start_date" placeholder="Start date" name = "Start_date" value="<%=startBean.getDate()%>">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="Station_end_name" class="col-sm-4 control-label">Station end name:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="Station_end_name" placeholder="Station end name" name = "Station_end_name" value="<%=endBean.getStationName()%>">
+                <div class="form-group">
+                    <label for="Station_end_name" class="col-sm-4 control-label">Station end name:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="Station_end_name" placeholder="Station end name" name = "Station_end_name" value="<%=endBean.getStationName()%>">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="End_date" class="col-sm-4 control-label">End date before:</label>
-                <div class="col-sm-7">
-                    <input type="datetime-local" class="form-control" id="End_date" placeholder="End date" name = "End_date" value="<%=endBean.getDate()%>">
+                <div class="form-group">
+                    <label for="End_date" class="col-sm-4 control-label">End date before:</label>
+                    <div class="col-sm-7">
+                        <input type="datetime-local" class="form-control" id="End_date" placeholder="End date" name = "End_date" value="<%=endBean.getDate()%>">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <button type="submit" name="stationDateTrainSearchAction" value="search trains" class="btn btn-success">Search trains</button>
-                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <button type="submit" name="stationDateTrainSearchAction" value="search trains" class="btn btn-success">Search trains</button>
+                        <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Back'>
+                    </div>
                 </div>
-            </div>
-            <table id="validationMessages">
-                <tr>
-                    <td><%=validationBeanStart.getValidationMessage()%></td>
-                </tr>
-                <tr>
-                    <td><%=validationBeanEnd.getValidationMessage()%></td>
-                </tr>
-                <tr>
-                    <td><%=startBean.getProcessingErrorMessage()%></td>
-                </tr>
-                <tr>
-                    <td><%=endBean.getProcessingErrorMessage()%></td>
-                </tr>
-            </table>
-        </form>
+                <table id="validationMessages">
+                    <tr>
+                        <td><%=validationBeanStart.getValidationMessage()%></td>
+                    </tr>
+                    <tr>
+                        <td><%=validationBeanEnd.getValidationMessage()%></td>
+                    </tr>
+                    <tr>
+                        <td><%=startBean.getProcessingErrorMessage()%></td>
+                    </tr>
+                    <tr>
+                        <td><%=endBean.getProcessingErrorMessage()%></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
 </div>
 

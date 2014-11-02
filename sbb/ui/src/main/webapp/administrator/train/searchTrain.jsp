@@ -88,55 +88,60 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>To search a train, please fill the following fields: </label>
-    <div class="col-sm-8">
-        <form class="form-horizontal" role="form" method="post" action="SearchTrain" id = "trainSearchForm">
-            <div class="form-group">
-                <label for="Train_number" class="col-sm-4 control-label">Train number:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="Train_number" placeholder="Train number" name = "Train_number" value = "<%=bean.getNumber()%>">
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Train search</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <label>To search a train, please fill the following fields: </label>
+            <form class="form-horizontal" role="form" method="post" action="SearchTrain" id = "trainSearchForm">
+                <div class="form-group">
+                    <label for="Train_number" class="col-sm-4 control-label">Train number:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="Train_number" placeholder="Train number" name = "Train_number" value = "<%=bean.getNumber()%>">
+                    </div>
                 </div>
-            </div>
-            <% if (!bean.getSeats().equals("")) { %>
-            <div class="form-group">
-                <label for="Seats" class="col-sm-4 control-label">Seats:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="Seats" placeholder="Seats" name = "Seats" value = "<%=bean.getSeats()%>" disabled = "disabled">
+                <% if (!bean.getSeats().equals("")) { %>
+                <div class="form-group">
+                    <label for="Seats" class="col-sm-4 control-label">Seats:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="Seats" placeholder="Seats" name = "Seats" value = "<%=bean.getSeats()%>" disabled = "disabled">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="Total_seats" class="col-sm-4 control-label">Total seats:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="Total_seats" placeholder="Total seats" name = "Total_seats" value = "<%=bean.getTotalSeats()%>"  disabled = "disabled">
+                <div class="form-group">
+                    <label for="Total_seats" class="col-sm-4 control-label">Total seats:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="Total_seats" placeholder="Total seats" name = "Total_seats" value = "<%=bean.getTotalSeats()%>"  disabled = "disabled">
+                    </div>
                 </div>
-            </div>
-            <% } %>
-            <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <button type="submit" name="trainSearchAction" value="search" class="btn btn-success">Search</button>
-                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/administrator/train/SearchTrain?trainSearchAction=back&Train_number=<%=bean.getNumber()%>'" value='Back'>
+                <% } %>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <button type="submit" name="trainSearchAction" value="search" class="btn btn-success">Search</button>
+                        <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/administrator/train/SearchTrain?trainSearchAction=back&Train_number=<%=bean.getNumber()%>'" value='Back'>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <% if (!bean.getSeats().equals("")) { %>
-                    <input type=button class="btn btn-success" onClick="location.href='<%=request.getContextPath()%>/administrator/train/SearchTrain?trainSearchAction=watch passengers&Train_number=<%=bean.getNumber()%>'" value='Watch passengers'>
-                    <input type=button class="btn btn-success" onClick="location.href='<%=request.getContextPath()%>/administrator/train/SearchTrain?trainSearchAction=watch timetable&Train_number=<%=bean.getNumber()%>'" value='Watch timetable'>
-                    <% } %>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <% if (!bean.getSeats().equals("")) { %>
+                        <input type=button class="btn btn-success" onClick="location.href='<%=request.getContextPath()%>/administrator/train/SearchTrain?trainSearchAction=watch passengers&Train_number=<%=bean.getNumber()%>'" value='Watch passengers'>
+                        <input type=button class="btn btn-success" onClick="location.href='<%=request.getContextPath()%>/administrator/train/SearchTrain?trainSearchAction=watch timetable&Train_number=<%=bean.getNumber()%>'" value='Watch timetable'>
+                        <% } %>
+                    </div>
                 </div>
-            </div>
 
-            <table id="validationMessages">
-                <tr>
-                    <td><%=validationBean.getValidationMessage()%></td>
-                </tr>
-                <tr>
-                    <td><%=bean.getProcessingErrorMessage()%></td>
-                </tr>
-            </table>
-        </form>
+                <table id="validationMessages">
+                    <tr>
+                        <td><%=validationBean.getValidationMessage()%></td>
+                    </tr>
+                    <tr>
+                        <td><%=bean.getProcessingErrorMessage()%></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
 </div>
 <script src="<%=request.getContextPath()%>/resources/js/custom/trainSearchValidation.js"></script>

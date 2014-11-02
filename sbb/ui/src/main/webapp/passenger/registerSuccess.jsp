@@ -85,46 +85,51 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>You have been registered successfully</label>
-    <div class="col-sm-8">
-        <div class="form-group">
-            <table id = "resultData">
-                <TR>
-                    <TD>Username:</TD>
-                    <TD> <%=bean.getDocNumber()%> </TD>
-                </TR>
-                <TR>
-                    <TD>First name:</TD>
-                    <TD> <%=bean.getFirstName()%> </TD>
-                </TR>
-                <TR>
-                    <TD>Last name:</TD>
-                    <TD> <%=bean.getLastName()%> </TD>
-                </TR>
-                <TR>
-                    <TD>Document number:</TD>
-                    <TD> <%=bean.getDocNumber()%> </TD>
-                </TR>
-                <TR>
-                    <TD>Birth date:</TD>
-                    <TD> <%=new SimpleDateFormat("dd-MM-yyyy").format(bean.getBirthDate())%> </TD>
-                </TR>
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Register success</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <label>You have been registered successfully</label>
+            <div class="form-group">
+                <table id = "resultData">
+                    <TR>
+                        <TD>Username:</TD>
+                        <TD> <%=bean.getDocNumber()%> </TD>
+                    </TR>
+                    <TR>
+                        <TD>First name:</TD>
+                        <TD> <%=bean.getFirstName()%> </TD>
+                    </TR>
+                    <TR>
+                        <TD>Last name:</TD>
+                        <TD> <%=bean.getLastName()%> </TD>
+                    </TR>
+                    <TR>
+                        <TD>Document number:</TD>
+                        <TD> <%=bean.getDocNumber()%> </TD>
+                    </TR>
+                    <TR>
+                        <TD>Birth date:</TD>
+                        <TD> <%=new SimpleDateFormat("dd-MM-yyyy").format(bean.getBirthDate())%> </TD>
+                    </TR>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <input type=button class="btn btn-primary" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Exit'>
+                </div>
+            </div>
+            <table id="validationMessages">
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
             </table>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-10">
-                <input type=button class="btn btn-primary" onClick="location.href='<%=request.getContextPath()%>/index.jsp'" value='Exit'>
-            </div>
-        </div>
-        <table id="validationMessages">
-            <tr>
-                <td></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
     </div>
 </div>
 

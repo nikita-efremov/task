@@ -80,34 +80,39 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>Station has been created successfully</label>
-    <div class="col-sm-8">
-        <div class="form-group">
-            <table id = "resultData">
-                <TR>
-                    <TD>id:</TD>
-                    <TD><%=bean.getId()%></TD>
-                </TR>
-                <TR>
-                    <TD>name:</TD>
-                    <TD><%=bean.getName()%></TD>
-                </TR>
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Station creation</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <label>Station has been created successfully:</label>
+            <div class="form-group">
+                <table id = "resultData">
+                    <TR>
+                        <TD>id:</TD>
+                        <TD><%=bean.getId()%></TD>
+                    </TR>
+                    <TR>
+                        <TD>name:</TD>
+                        <TD><%=bean.getName()%></TD>
+                    </TR>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <input type=button class="btn btn-primary" onClick="location.href='<%=request.getContextPath()%>/administrator/administratorMain.jsp'" value='Exit'>
+                </div>
+            </div>
+            <table id="validationMessages">
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><%=bean.getProcessingErrorMessage()%></td>
+                </tr>
             </table>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-10">
-                <input type=button class="btn btn-primary" onClick="location.href='<%=request.getContextPath()%>/administrator/administratorMain.jsp'" value='Exit'>
-            </div>
-        </div>
-        <table id="validationMessages">
-            <tr>
-                <td></td>
-            </tr>
-            <tr>
-                <td><%=bean.getProcessingErrorMessage()%></td>
-            </tr>
-        </table>
     </div>
 </div>
 

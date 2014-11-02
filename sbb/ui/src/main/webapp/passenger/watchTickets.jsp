@@ -79,30 +79,35 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>Your tickets</label>
-    <div class="col-sm-8">
-        <div class="form-group">
-            <table id = "resultData">
-                <tr>
-                    <th>Ticket number</th>
-                    <th>Train number</th>
-                </tr>
-                <c:forEach var="ticket" items="${tickets}">
-                <tr>
-                    <td>${ticket.ticketNumber}</td>
-                    <td>${ticket.trainNumber}</td>
-                </tr>
-            </c:forEach>
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Ticket search</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <label>Your tickets</label>
+            <div class="form-group">
+                <table id = "resultData">
+                    <tr>
+                        <th>Ticket number</th>
+                        <th>Train number</th>
+                    </tr>
+                    <c:forEach var="ticket" items="${tickets}">
+                    <tr>
+                        <td>${ticket.ticketNumber}</td>
+                        <td>${ticket.trainNumber}</td>
+                    </tr>
+                </c:forEach>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
+                </div>
+            </div>
+            <table id="validationMessages">
             </table>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-10">
-                <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
-            </div>
-        </div>
-        <table id="validationMessages">
-        </table>
     </div>
 </div>
 

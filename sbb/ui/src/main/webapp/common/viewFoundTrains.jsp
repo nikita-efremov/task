@@ -79,50 +79,54 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>Found trains</label>
-    <div class="col-sm-8">
-        <div class="form-group">
-            <table id = "resultData">
-                <tr>
-                    <th>Number</th>
-                    <th>Seats</th>
-                    <th>Total seats</th>
-                    <th>Timetable</th>
-                    <th>Ticket</th>
-                </tr>
-                <%
-                    List list = (List)request.getAttribute("foundTrains");
-                    if(list!=null)
-                    {
-                        for(int i=0 ; i< list.size();i++)
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Found trains</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <div class="form-group">
+                <table id = "resultData">
+                    <tr>
+                        <th>Number</th>
+                        <th>Seats</th>
+                        <th>Total seats</th>
+                        <th>Timetable</th>
+                        <th>Ticket</th>
+                    </tr>
+                    <%
+                        List list = (List)request.getAttribute("foundTrains");
+                        if(list!=null)
                         {
-                            TrainBean bean =(TrainBean) list.get(i);
-                %>
-                <tr>
-                    <td><%=bean.getNumber()%></td>
-                    <td><%=bean.getSeats()%></td>
-                    <td><%=bean.getTotalSeats()%></td>
-                    <td>
-                        <a href="<%=request.getContextPath()%>/common/TrainTimetable?trainSearchAction=watch timetable&Train_number=<%=bean.getNumber()%>">watch</a>
-                    </td>
-                    <td>
-                        <a href="<%=request.getContextPath()%>/passenger/TicketPurchase?purchaseAction=Purchase&Train_number=<%=bean.getNumber()%>">purchase</a>
-                    </td>
-                </tr>
-                <%
+                            for(int i=0 ; i< list.size();i++)
+                            {
+                                TrainBean bean =(TrainBean) list.get(i);
+                    %>
+                    <tr>
+                        <td><%=bean.getNumber()%></td>
+                        <td><%=bean.getSeats()%></td>
+                        <td><%=bean.getTotalSeats()%></td>
+                        <td>
+                            <a href="<%=request.getContextPath()%>/common/TrainTimetable?trainSearchAction=watch timetable&Train_number=<%=bean.getNumber()%>">watch</a>
+                        </td>
+                        <td>
+                            <a href="<%=request.getContextPath()%>/passenger/TicketPurchase?purchaseAction=Purchase&Train_number=<%=bean.getNumber()%>">purchase</a>
+                        </td>
+                    </tr>
+                    <%
+                            }
                         }
-                    }
-                %>
+                    %>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
+                </div>
+            </div>
+            <table id="validationMessages">
             </table>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-10">
-                <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
-            </div>
-        </div>
-        <table id="validationMessages">
-        </table>
     </div>
 </div>
 

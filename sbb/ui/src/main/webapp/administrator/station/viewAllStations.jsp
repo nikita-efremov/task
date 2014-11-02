@@ -79,40 +79,44 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>All stations</label>
-    <div class="col-sm-8">
-        <div class="form-group">
-            <table id = "resultData">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                </tr>
-                <%
-                    List list = (List)request.getAttribute("allStations");
-                    if(list!=null)
-                    {
-                        for(int i=0 ; i< list.size();i++)
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">All stations</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <div class="form-group">
+                <table id = "resultData">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                    <%
+                        List list = (List)request.getAttribute("allStations");
+                        if(list!=null)
                         {
-                            StationBean bean =(StationBean) list.get(i);
-                %>
-                <tr>
-                    <td><%=bean.getId()%></td>
-                    <td><%=bean.getName()%></td>
-                </tr>
-                <%
+                            for(int i=0 ; i< list.size();i++)
+                            {
+                                StationBean bean =(StationBean) list.get(i);
+                    %>
+                    <tr>
+                        <td><%=bean.getId()%></td>
+                        <td><%=bean.getName()%></td>
+                    </tr>
+                    <%
+                            }
                         }
-                    }
-                %>
+                    %>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
+                </div>
+            </div>
+            <table id="validationMessages">
             </table>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-10">
-                <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
-            </div>
-        </div>
-        <table id="validationMessages">
-        </table>
     </div>
 </div>
 

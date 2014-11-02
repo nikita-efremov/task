@@ -88,32 +88,39 @@
     </nav>
 </div>
 
-<div class = inputBlockV2>
-    <label>To create a new station, please fill the following fields: </label>
-    <div class="col-sm-8">
-        <form class="form-horizontal" role="form" method="post" action="CreateNewStation" id = "stationForm">
-            <div class="form-group">
-                <label for="Station_name" class="col-sm-4 control-label">Station name:</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" id="Station_name" placeholder="Station name" name = "Station_name" value = "<%=bean.getName()%>">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <button type="submit" name="stationCreateAction" value="create" class="btn btn-success">Create</button>
-                    <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/administrator/administratorMain.jsp'" value='Back'>
-                </div>
-            </div>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 
-            <table id="validationMessages">
-                <tr>
-                    <td><%=validationBean.getValidationMessage()%></td>
-                </tr>
-                <tr>
-                    <td><%=bean.getProcessingErrorMessage()%></td>
-                </tr>
-            </table>
-        </form>
+<div class="panel panel-primary inputBlockV3">
+    <div class="panel-heading">
+        <h3 class="panel-title">Station creation</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <label>To create a new station, please fill the following fields: </label>
+            <form:form class="form-horizontal" role="form" method="post" action="CreateNewStation" id = "stationForm">
+                <div class="form-group">
+                    <label for="Station_name" class="col-sm-4 control-label">Station name:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="Station_name" placeholder="Station name" name = "Station_name" value = "<%=bean.getName()%>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <button type="submit" name="stationCreateAction" value="create" class="btn btn-success">Create</button>
+                        <input type=button class="btn btn-default" onClick="location.href='<%=request.getContextPath()%>/administrator/administratorMain.jsp'" value='Back'>
+                    </div>
+                </div>
+                <table id="validationMessages">
+                    <tr>
+                        <td><%=validationBean.getValidationMessage()%></td>
+                    </tr>
+                    <tr>
+                        <td><%=bean.getProcessingErrorMessage()%></td>
+                    </tr>
+                </table>
+            </form:form>
+        </div>
     </div>
 </div>
 <script src="<%=request.getContextPath()%>/resources/js/custom/stationValidation.js"></script>
