@@ -20,46 +20,61 @@
     </span>
 </div>
 
-<div id = "userPanel">
+<div id="userPanelV2">
     <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-    <div id = "userInfo">
-        <security:authorize access="isAuthenticated()">
-            You are logged as: <security:authentication property="principal.username" />
-        </security:authorize>
-        <security:authorize access="! isAuthenticated()">
-            You are not logged on system
-        </security:authorize>
-    </div>
-    <div id = "userControls">
-        <security:authorize access="isAuthenticated()">
-            <a href="<%=request.getContextPath()%>/logout">Logout</a>
-        </security:authorize>
-        <security:authorize access="! isAuthenticated()">
-            <a href="<%=request.getContextPath()%>/login.jsp">Login</a>
-            <a href="<%=request.getContextPath()%>/register.jsp">Register</a>
-        </security:authorize>
-    </div>
-</div>
-
-<div id="adminOptions">
-    <table id="adminOptionsTable">
-        <tbody>
-        <tr class="optionButtonsTR">
-            <td class="common_link_td">
-                <a class="top_home_link" href="<%=request.getContextPath()%>/administrator/train/trainsIndex.jsp">Trains</a>
-            </td>
-            <td class="common_link_td">
-                <a class="top_home_link" href="<%=request.getContextPath()%>/administrator/station/stationsIndex.jsp">Stations</a>
-            </td>
-            <td class="common_link_td">
-                <a class="top_home_link" href="<%=request.getContextPath()%>/administrator/passengers/ViewAllPassengers">Passengers</a>
-            </td>
-            <td class="common_link_td">
-                <a class="top_home_link" href="<%=request.getContextPath()%>/index.jsp">Back to passenger options</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav nav-pills">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Trains<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <security:authorize access="hasRole('ROLE_ADMIN')">
+                                <li><a href="<%=request.getContextPath()%>/administrator/train/createNewTrain.jsp">Add new</a></li>
+                                <li><a href="<%=request.getContextPath()%>/administrator/train/searchTrain.jsp">Search by number</a></li>
+                                <li><a href="<%=request.getContextPath()%>/administrator/train/ViewAllTrains">Watch all</a></li>
+                                <li class="divider"></li>
+                            </security:authorize>
+                            <li><a href="<%=request.getContextPath()%>/common/searchStation.jsp">Search by station</a></li>
+                            <li><a href="<%=request.getContextPath()%>/common/searchStationDateTrain.jsp">Search by stations and date</a></li>
+                        </ul>
+                    </li>
+                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stations<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="<%=request.getContextPath()%>/administrator/station/createNewStation.jsp">Add new</a></li>
+                                <li><a href="<%=request.getContextPath()%>/administrator/station/ViewAllStations">Watch all</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="<%=request.getContextPath()%>/administrator/passengers/ViewAllPassengers">Passengers</a></li>
+                    </security:authorize>
+                    <security:authorize access="hasAnyRole('ROLE_PASSENGER', 'ROLE_ANONYMOUS')">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tickets<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="<%=request.getContextPath()%>/passenger/purchase.jsp">Purchase</a></li>
+                                <li><a href="<%=request.getContextPath()%>/passenger/WatchTickets">Search my tickets</a></li>
+                            </ul>
+                        </li>
+                    </security:authorize>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <security:authorize access="isAuthenticated()">
+                            You are logged as: <security:authentication property="principal.username" />
+                            <button type="button" onclick="location.href='<%=request.getContextPath()%>/logout'" class="btn btn-primary navbar-btn">Logout</button>
+                        </security:authorize>
+                        <security:authorize access="! isAuthenticated()">
+                            You are not logged on system
+                            <button type="button" onclick="location.href='<%=request.getContextPath()%>/login.jsp'" class="btn btn-success navbar-btn">Login</button>
+                            <button type="button" onclick="location.href='<%=request.getContextPath()%>/register.jsp'" class="btn btn-primary navbar-btn">Register</button>
+                        </security:authorize>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 </div>
 
 <div class = "additionalOptionsList">

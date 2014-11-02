@@ -22,7 +22,7 @@ body {
 
 #title {
     position: absolute;
-    top: 2%;
+    top: 5px;
     left: 43%;
 }
 
@@ -221,6 +221,10 @@ label {
     margin: 5% auto;
     padding: 0 0;
     text-align: center;
+}
+
+.navbar-btn {      /*login, logout, register buttons*/
+    margin-left: 10px;
 }
 
 
