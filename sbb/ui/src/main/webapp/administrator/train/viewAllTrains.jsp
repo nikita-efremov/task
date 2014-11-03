@@ -1,8 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@ page import="java.util.List" %>
-<%@ page import="ru.tsystems.tsproject.sbb.bean.TrainBean" %>
+
 <html>
 <head>
     <title>All trains</title>
@@ -97,30 +96,20 @@
                         <th>Timetable</th>
                         <th>Passengers</th>
                     </tr>
-                    <%
-                        List list = (List)request.getAttribute("allTrains");
-                        if(list!=null)
-                        {
-                            for(int i=0 ; i< list.size();i++)
-                            {
-                                TrainBean bean =(TrainBean) list.get(i);
-                    %>
-                    <tr>
-                        <td><%=bean.getId()%></td>
-                        <td><%=bean.getNumber()%></td>
-                        <td><%=bean.getSeats()%></td>
-                        <td><%=bean.getTotalSeats()%></td>
-                        <td>
-                            <a href="${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch timetable&Train_number=<%=bean.getNumber()%>">watch</a>
-                        </td>
-                        <td>
-                            <a href="${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch passengers&Train_number=<%=bean.getNumber()%>">watch</a>
-                        </td>
-                    </tr>
-                    <%
-                            }
-                        }
-                    %>
+                    <c:forEach var="train" items="${allTrains}">
+                        <tr>
+                            <td>${train.id}</td>
+                            <td>${train.number}</td>
+                            <td>${train.seats}</td>
+                            <td>${train.totalSeats}</td>
+                            <td>
+                                <a href="${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch timetable&Train_number=${train.number}">watch</a>
+                            </td>
+                            <td>
+                                <a href="${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch passengers&Train_number=${train.number}">watch</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
             <div class="form-group">

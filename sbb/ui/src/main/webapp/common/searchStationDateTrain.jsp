@@ -3,26 +3,7 @@
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@ page import="ru.tsystems.tsproject.sbb.bean.TimetableBean" %>
-<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
-<% TimetableBean startBean = (TimetableBean)request.getAttribute("startBean");
-    if (startBean == null) {
-        startBean = new TimetableBean();
-    }
-    TimetableBean endBean = (TimetableBean)request.getAttribute("endBean");
-    if (endBean == null) {
-        endBean = new TimetableBean();
-    }
-    ValidationBean validationBeanStart = (ValidationBean)request.getAttribute("validationBeanStart");
-    if (validationBeanStart == null) {
-        validationBeanStart = new ValidationBean();
-    }
-    ValidationBean validationBeanEnd = (ValidationBean)request.getAttribute("validationBeanEnd");
-    if (validationBeanEnd == null) {
-        validationBeanEnd = new ValidationBean();
-    }
 
-%>
 <html>
 <head>
     <title>Search trains by stations and date</title>
@@ -108,29 +89,29 @@
     <div class="panel-body">
         <div class="col-sm-8">
             <label>To find trains by stations and dates, please fill the following fields: </label>
-            <form id = "trainSearchForm" class="form-horizontal" role="form" method="post" action="SearchStationDateTrain" >
+            <form:form commandName="complexTrainSearchBean" id = "trainSearchForm" class="form-horizontal" role="form" method="post" action="SearchStationDateTrain" >
                 <div class="form-group">
-                    <label for="Station_start_name" class="col-sm-4 control-label">Station start name:</label>
+                    <label for="stationStartName" class="col-sm-4 control-label">Station start name:</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" id="Station_start_name" placeholder="Station start name" name = "Station_start_name" value="<%=startBean.getStationName()%>">
+                        <form:input path="stationStartName" type="text" class="form-control" id="stationStartName" placeholder="Station start name"  value="${complexTrainSearchBean.stationStartName}"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="Start_date" class="col-sm-4 control-label">Start date after:</label>
+                    <label for="startDate" class="col-sm-4 control-label">Start date after:</label>
                     <div class="col-sm-7">
-                        <input type="datetime-local" class="form-control" id="Start_date" placeholder="Start date" name = "Start_date" value="<%=startBean.getDate()%>">
+                        <form:input path="startDate" type="datetime-local" class="form-control" id="startDate" placeholder="Start date" value="<fmt:formatDate value='${complexTrainSearchBean.startDate}' pattern='yyyy-MM-dd'T'HH:mm' />"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="Station_end_name" class="col-sm-4 control-label">Station end name:</label>
+                    <label for="stationEndName" class="col-sm-4 control-label">Station end name:</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" id="Station_end_name" placeholder="Station end name" name = "Station_end_name" value="<%=endBean.getStationName()%>">
+                        <form:input path="stationEndName" type="text" class="form-control" id="stationEndName" placeholder="Station end name" value="${complexTrainSearchBean.stationEndName}"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="End_date" class="col-sm-4 control-label">End date before:</label>
+                    <label for="endDate" class="col-sm-4 control-label">End date before:</label>
                     <div class="col-sm-7">
-                        <input type="datetime-local" class="form-control" id="End_date" placeholder="End date" name = "End_date" value="<%=endBean.getDate()%>">
+                        <form:input path="endDate" type="datetime-local" class="form-control" id="endDate" placeholder="End date" value="<fmt:formatDate value='${complexTrainSearchBean.endDate}' pattern='yyyy-MM-dd'T'HH:mm' />"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -141,19 +122,13 @@
                 </div>
                 <table id="validationMessages">
                     <tr>
-                        <td><%=validationBeanStart.getValidationMessage()%></td>
+                        <td>${validationBean.validationMessage}</td>
                     </tr>
                     <tr>
-                        <td><%=validationBeanEnd.getValidationMessage()%></td>
-                    </tr>
-                    <tr>
-                        <td><%=startBean.getProcessingErrorMessage()%></td>
-                    </tr>
-                    <tr>
-                        <td><%=endBean.getProcessingErrorMessage()%></td>
+                        <td>${complexTrainSearchBean.processingErrorMessage}</td>
                     </tr>
                 </table>
-            </form>
+            </form:form>
         </div>
     </div>
 </div>

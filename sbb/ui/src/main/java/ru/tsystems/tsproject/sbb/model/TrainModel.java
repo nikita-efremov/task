@@ -5,10 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import ru.tsystems.tsproject.sbb.bean.PassengerBean;
-import ru.tsystems.tsproject.sbb.bean.StationBean;
-import ru.tsystems.tsproject.sbb.bean.TimetableBean;
-import ru.tsystems.tsproject.sbb.bean.TrainBean;
+import ru.tsystems.tsproject.sbb.bean.*;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.dao.impl.*;
@@ -228,11 +225,14 @@ public class TrainModel {
      * @return Collection<TrainBean>
      *         collection of trains
      */
-    public Collection<TrainBean> findTrainsByStationsAndDate(TimetableBean startBean, TimetableBean endBean) {
+    public Collection<TrainBean> findTrainsByStationsAndDate(ComplexTrainSearchBean  complexTrainSearchBean) {
         Collection<TrainBean> trainBeans = new ArrayList<TrainBean>();
         try {
             Collection<Train> trains = passengerService.findTrainsByStationsAndDate(
-                    startBean.getStationName(), endBean.getStationName(), startBean.getDate(), endBean.getDate());
+                    complexTrainSearchBean.getStationStartName(),
+                    complexTrainSearchBean.getStationEndName(),
+                    complexTrainSearchBean.getStartDate(),
+                    complexTrainSearchBean.getEndDate());
             for (Train train: trains) {
                 TrainBean trainBean = new TrainBean();
                 trainBean.setId(train.getId());
@@ -242,13 +242,13 @@ public class TrainModel {
                 trainBeans.add(trainBean);
             }
         } catch (StationNotExistsException e) {
-            startBean.setProcessingErrorMessage(e.getMessage());
+            complexTrainSearchBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e.getMessage() + " - " + e);
         } catch (DAOException e) {
-            startBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
+            complexTrainSearchBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
             log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
-            startBean.setProcessingErrorMessage("Unknown error occurred");
+            complexTrainSearchBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
         }
         return trainBeans;

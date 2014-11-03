@@ -1,20 +1,6 @@
-<%@ page import="ru.tsystems.tsproject.sbb.bean.TrainBean" %>
-<%@ page import="ru.tsystems.tsproject.sbb.bean.TimetableBean" %>
-<%@ page import="java.util.Set" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
-<% TrainBean bean = (TrainBean)request.getAttribute("trainBean");
-    if (bean == null) {
-        bean = new TrainBean();
-    }
-    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
-    if (validationBean == null) {
-        validationBean = new ValidationBean();
-    }
-%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -96,7 +82,7 @@
 
 <div class="panel panel-primary inputBlockV3">
     <div class="panel-heading">
-        <h3 class="panel-title">Timetable of train number <%=bean.getNumber()%> </h3>
+        <h3 class="panel-title">Timetable of train number ${trainBean.number} </h3>
     </div>
     <div class="panel-body">
         <div class="col-sm-8">
@@ -106,27 +92,17 @@
                         <th>Station name</th>
                         <th>Departure date</th>
                     </tr>
-                    <%
-                        Set set = (Set)bean.getTimetables();
-                        if(set != null)
-                        {
-                            for (Object o: set) {
-                                TimetableBean timetableBean = (TimetableBean)o;
-
-                    %>
-                    <tr>
-                        <td><%=timetableBean.getStationName()%></td>
-                        <td><%=new SimpleDateFormat("dd-MM-yyyy HH:mm").format(timetableBean.getDate())%></td>
-                    </tr>
-                    <%
-                            }
-                        }
-                    %>
+                    <c:forEach var = "timetable" items = "${trainBean.timetables}">
+                        <tr>
+                            <td>${timetable.stationName}</td>
+                            <td><fmt:formatDate type="both" value = "${timetable.date}"/></td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-10">
-                    <input type=button class = "btn btn-success" onClick="location.href='${contextPath}/administrator/train/addNewTrainStop?Train_number=<%=bean.getNumber()%>'" value='Add new stop'>
+                    <input type=button class = "btn btn-success" onClick="location.href='${contextPath}/administrator/train/addNewTrainStop?Train_number=${trainBean.number}'" value='Add new stop'>
                     <input type=button class="btn btn-default" onClick="history.go(-1);" value='Back'>
                 </div>
             </div>

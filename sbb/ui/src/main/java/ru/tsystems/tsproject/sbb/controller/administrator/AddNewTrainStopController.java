@@ -8,16 +8,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.ValidationBean;
-import ru.tsystems.tsproject.sbb.Validator;
-import ru.tsystems.tsproject.sbb.bean.StationBean;
+import ru.tsystems.tsproject.sbb.validation.ValidationBean;
+import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.bean.TimetableBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

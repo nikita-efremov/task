@@ -5,17 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.ValidationBean;
-import ru.tsystems.tsproject.sbb.Validator;
+import ru.tsystems.tsproject.sbb.validation.ValidationBean;
+import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.bean.TicketBean;
-import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.PassengerModel;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Controller, which gets and proceeds requests of ticket purchasing
@@ -35,31 +33,37 @@ public class PurchaseTicketController {
         return new ModelAndView("/passenger/purchase", "ticketBean", new TicketBean());
     }
 
-    @RequestMapping("/passenger/TicketPurchase")
-    public String purchase(HttpServletRequest request) {
-        String action = request.getParameter("purchaseAction");
-        if (action == null) {
-            return "redirect:/passenger/purchase";
-        } else if (action.equals("Back")) {
-            return "redirect:/index.jsp";
+    @RequestMapping(value = "/passenger/TicketPurchase",
+            method = RequestMethod.GET,
+            params = "purchaseAction=Purchase")
+    public String purchaseFromTrainList(@RequestParam("trainNumber") String trainNumber, ModelMap modelMap) {
+        TicketBean ticketBean = new TicketBean();
+        ticketBean.setTrainNumber(trainNumber);
+        ticketBean.setPassengerDocNumber(SecurityContextHolder.getContext().getAuthentication().getName());
+        return makePurchase(ticketBean, modelMap);
+    }
+
+    @RequestMapping(value = "/passenger/TicketPurchase",
+            method = RequestMethod.POST)
+    public String purchaseFromSpecialForm(@ModelAttribute("ticketBean") TicketBean ticketBean, ModelMap modelMap) {
+        ticketBean.setPassengerDocNumber(SecurityContextHolder.getContext().getAuthentication().getName());
+        return makePurchase(ticketBean, modelMap);
+    }
+
+    private String makePurchase(TicketBean ticketBean, ModelMap modelMap) {
+        log.info("Servlet got bean: " + ticketBean);
+        ValidationBean validationBean = Validator.validate(ticketBean, "trainNumber");
+        if (validationBean.isValidationFailed()) {
+            modelMap.addAttribute("validationBean", validationBean);
+            modelMap.addAttribute("ticketBean", ticketBean);
+            return "/passenger/purchase";
         } else {
-            TicketBean ticketBean = new TicketBean();
-            ticketBean.setTrainNumber(request.getParameter("Train_number"));
-            ticketBean.setPassengerDocNumber(SecurityContextHolder.getContext().getAuthentication().getName());
-            log.info("Servlet got bean: " + ticketBean);
-            ValidationBean validationBean = Validator.validate(ticketBean, "trainNumber");
-            if (validationBean.isValidationFailed()) {
-                request.setAttribute("validationBean", validationBean);
-                request.setAttribute("purchaseResult", ticketBean);
+            ticketBean = passengerModel.purchaseTicket(ticketBean);
+            modelMap.addAttribute("ticketBean", ticketBean);
+            if (ticketBean.isProcessingFailed()) {
                 return "/passenger/purchase";
             } else {
-                ticketBean = passengerModel.purchaseTicket(ticketBean);
-                request.setAttribute("purchaseResult", ticketBean);
-                if (ticketBean.isProcessingFailed()) {
-                    return "/passenger/purchase";
-                } else {
-                    return "/passenger/purchaseSuccess";
-                }
+                return "/passenger/purchaseSuccess";
             }
         }
     }

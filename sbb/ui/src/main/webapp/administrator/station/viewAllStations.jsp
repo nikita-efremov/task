@@ -1,8 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@page import="ru.tsystems.tsproject.sbb.bean.StationBean" %>
-<%@ page import="java.util.List" %>
+
 <html>
 <head>
     <title>All stations</title>
@@ -93,22 +92,12 @@
                         <th>ID</th>
                         <th>Name</th>
                     </tr>
-                    <%
-                        List list = (List)request.getAttribute("allStations");
-                        if(list!=null)
-                        {
-                            for(int i=0 ; i< list.size();i++)
-                            {
-                                StationBean bean =(StationBean) list.get(i);
-                    %>
-                    <tr>
-                        <td><%=bean.getId()%></td>
-                        <td><%=bean.getName()%></td>
-                    </tr>
-                    <%
-                            }
-                        }
-                    %>
+                    <c:forEach var="station" items="${allStations}">
+                        <tr>
+                            <td>${station.id}</td>
+                            <td>${station.name}</td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
             <div class="form-group">

@@ -2,21 +2,18 @@ package ru.tsystems.tsproject.sbb.controller.common;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.ValidationBean;
-import ru.tsystems.tsproject.sbb.Validator;
+import ru.tsystems.tsproject.sbb.validation.ValidationBean;
+import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
 /**
@@ -38,29 +35,21 @@ public class SearchStationController {
     }
 
     @RequestMapping("/common/SearchStation")
-    public String searchStation(HttpServletRequest request) {
-        StationBean stationBean = new StationBean();
-        stationBean.setName(request.getParameter("Station_name"));
+    public String searchStation(@ModelAttribute("stationBean") StationBean stationBean, ModelMap modelMap) {
         log.info("Servlet got bean: " + stationBean);
-
-        String action = request.getParameter("stationSearchAction");
-        if (action == null) {
-            return "redirect:common/searchStation.jsp";
+        ValidationBean validationBean = Validator.validate(stationBean);
+        if (validationBean.isValidationFailed()) {
+            modelMap.addAttribute("validationBean", validationBean);
+            modelMap.addAttribute("stationBean", stationBean);
+            return "/common/searchStation";
         } else {
-            ValidationBean validationBean = Validator.validate(stationBean);
-            if (validationBean.isValidationFailed()) {
-                request.setAttribute("validationBean", validationBean);
-                request.setAttribute("searchResult", stationBean);
-                return "/common/searchStation";
+            Collection<TrainBean> trains = trainModel.findTrainsByStation(stationBean);
+            if (stationBean.isProcessingFailed()) {
+                modelMap.addAttribute("stationBean", stationBean);
+                return "common/searchStation";
             } else {
-                Collection<TrainBean> trains = trainModel.findTrainsByStation(stationBean);
-                if (stationBean.isProcessingFailed()) {
-                    request.setAttribute("searchResult", stationBean);
-                    return "common/searchStation";
-                } else {
-                    request.setAttribute("foundTrains", trains);
-                    return "common/viewFoundTrains";
-                }
+                modelMap.addAttribute("foundTrains", trains);
+                return "common/viewFoundTrains";
             }
         }
     }

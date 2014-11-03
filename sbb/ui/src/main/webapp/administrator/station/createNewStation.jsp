@@ -4,17 +4,7 @@
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@page import="ru.tsystems.tsproject.sbb.bean.StationBean" %>
-<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
-<% StationBean bean = (StationBean)request.getAttribute("createResult");
-    if (bean == null) {
-        bean = new StationBean();
-    }
-    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
-    if (validationBean == null) {
-        validationBean = new ValidationBean();
-    }
-%>
+
 <html>
 <head>
     <title>Creating new staion</title>
@@ -100,11 +90,11 @@
     <div class="panel-body">
         <div class="col-sm-8">
             <label>To create a new station, please fill the following fields: </label>
-            <form:form class="form-horizontal" role="form" method="post" action="CreateNewStation" id = "stationForm">
+            <form:form commandName="stationBean" class="form-horizontal" role="form" method="post" action="CreateNewStation" id = "stationForm">
                 <div class="form-group">
-                    <label for="Station_name" class="col-sm-4 control-label">Station name:</label>
+                    <label for="name" class="col-sm-4 control-label">Station name:</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" id="Station_name" placeholder="Station name" name = "Station_name" value = "<%=bean.getName()%>">
+                        <form:input path="name" type="text" class="form-control" id="name" placeholder="Station name" value = "${stationBean.name}"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -115,10 +105,10 @@
                 </div>
                 <table id="validationMessages">
                     <tr>
-                        <td><%=validationBean.getValidationMessage()%></td>
+                        <td>${validationBean.validationMessage}</td>
                     </tr>
                     <tr>
-                        <td><%=bean.getProcessingErrorMessage()%></td>
+                        <td>${stationBean.processingErrorMessage}</td>
                     </tr>
                 </table>
             </form:form>

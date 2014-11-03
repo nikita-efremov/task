@@ -1,18 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<%@page import="ru.tsystems.tsproject.sbb.bean.PassengerBean" %>
-<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
-<% PassengerBean bean = (PassengerBean)request.getAttribute("createResult");
-    if (bean == null) {
-        bean = new PassengerBean();
-    }
-    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
-    if (validationBean == null) {
-        validationBean = new ValidationBean();
-    }
-%>
 <html>
 <head>
     <title>Passenger register page</title>
@@ -98,41 +88,41 @@
     <div class="panel-body">
         <div class="col-sm-8">
             <label>To register in system, please fill the following fields: </label>
-            <form class="form-horizontal" role="form" method="post" action="RegisterPassenger" id = "registerForm">
+            <form:form commandName="passengerBean" class="form-horizontal" role="form" method="post" action="RegisterPassenger" id = "registerForm">
                 <div class="form-group">
-                    <label for="First_name" class="col-sm-4 control-label">First name:</label>
+                    <label for="firstName" class="col-sm-4 control-label">First name:</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" id="First_name" placeholder="First name" name = "First_name" value = "<%=bean.getFirstName()%>">
+                        <form:input path="firstName" type="text" class="form-control" id="firstName" placeholder="First name" value = "${passengerBean.firstName}"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="Last_name" class="col-sm-4 control-label">Last name:</label>
+                    <label for="lastName" class="col-sm-4 control-label">Last name:</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" id="Last_name" placeholder="Last name" name = "Last_name" value = "<%=bean.getLastName()%>">
+                        <form:input path="lastName" type="text" class="form-control" id="lastName" placeholder="Last name" value = "${passengerBean.lastName}"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="Birth_date" class="col-sm-4 control-label">Birth date:</label>
+                    <label for="birthDate" class="col-sm-4 control-label">Birth date:</label>
                     <div class="col-sm-7">
-                        <input type="date" class="form-control" id="Birth_date" placeholder="Birth date" name = "Birth_date" value = "<%=bean.getBirthDate()%>">
+                        <form:input path="birthDate" type="date" class="form-control" id="birthDate" placeholder="Birth date" value = "<fmt:formatDate value='${passengerBean.birthDate}' pattern='yyyy-MM-dd' />"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="Document_number" class="col-sm-4 control-label">Document number:</label>
+                    <label for="docNumber" class="col-sm-4 control-label">Document number:</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" id="Document_number" placeholder="Document number" name = "Document_number" value = "<%=bean.getDocNumber()%>">
+                        <form:input path="docNumber" type="text" class="form-control" id="docNumber" placeholder="Document number" value = "${passengerBean.docNumber}"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="Password" class="col-sm-4 control-label">Password:</label>
+                    <label for="password" class="col-sm-4 control-label">Password:</label>
                     <div class="col-sm-7">
-                        <input type="password" class="form-control" id="Password" placeholder="Password" name = "Password" value = "">
+                        <form:input path="password" type="password" class="form-control" id="password" placeholder="Password" value = ""/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="Confirm_Password" class="col-sm-4 control-label">Confirm password:</label>
+                    <label for="confirmPassword" class="col-sm-4 control-label">Confirm password:</label>
                     <div class="col-sm-7">
-                        <input type="password" class="form-control" id="Confirm_Password" placeholder="Confirm password" name = "Confirm_Password" value = "">
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" name = "confirmPassword" value = "">
                     </div>
                 </div>
                 <div class="form-group">
@@ -143,13 +133,13 @@
                 </div>
                 <table id="validationMessages">
                     <tr>
-                        <td><%=validationBean.getValidationMessage()%></td>
+                        <td>${validationBean.validationMessage}</td>
                     </tr>
                     <tr>
-                        <td><%=bean.getProcessingErrorMessage()%></td>
+                        <td>${passengerBean.processingErrorMessage}</td>
                     </tr>
                 </table>
-            </form>
+            </form:form>
         </div>
     </div>
 </div>

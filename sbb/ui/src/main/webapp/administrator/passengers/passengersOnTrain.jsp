@@ -1,20 +1,6 @@
-<%@ page import="ru.tsystems.tsproject.sbb.bean.PassengerBean" %>
-<%@ page import="java.util.List" %>
-<%@ page import="ru.tsystems.tsproject.sbb.bean.TrainBean" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
-<% TrainBean bean = (TrainBean)request.getAttribute("trainBean");
-    if (bean == null) {
-        bean = new TrainBean();
-    }
-    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
-    if (validationBean == null) {
-        validationBean = new ValidationBean();
-    }
-%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
@@ -97,7 +83,7 @@
 
 <div class="panel panel-primary inputBlockV3">
     <div class="panel-heading">
-        <h3 class="panel-title">Passengers of train number <%=bean.getNumber()%></h3>
+        <h3 class="panel-title">Passengers of train number ${trainBean.number}</h3>
     </div>
     <div class="panel-body">
         <div class="col-sm-8">
@@ -108,23 +94,13 @@
                         <th>Full name</th>
                         <th>Birth date</th>
                     </tr>
-                    <%
-                        List list = (List)request.getAttribute("trainPassengers");
-                        if(list != null)
-                        {
-                            for (Object o: list) {
-                                PassengerBean passengerBean = (PassengerBean)o;
-
-                    %>
+                    <c:forEach var="passenger" items="${trainPassengers}">
                     <tr>
-                        <td><%=passengerBean.getDocNumber()%></td>
-                        <td><%=passengerBean.getLastName()%> <%=passengerBean.getFirstName()%></td>
-                        <td><%=new SimpleDateFormat("dd-MM-yyyy").format(passengerBean.getBirthDate())%></td>
+                        <td>${passenger.docNumber}</td>
+                        <td>${passenger.lastName} ${passenger.firstName}</td>
+                        <td><fmt:formatDate type="date" value = "${passenger.birthDate}"/></td>
                     </tr>
-                    <%
-                            }
-                        }
-                    %>
+                    </c:forEach>
                 </table>
             </div>
             <div class="form-group">

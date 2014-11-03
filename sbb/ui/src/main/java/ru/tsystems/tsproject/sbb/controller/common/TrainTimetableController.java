@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
 
@@ -24,20 +26,15 @@ public class TrainTimetableController {
     @Autowired
     private TrainModel trainModel;
 
-    @RequestMapping("/common/TrainTimetable")
-    public String searchTrainTimetable(HttpServletRequest request) {
-        String action = request.getParameter("trainSearchAction");
-        if (action == null) {
-            return "redirect:/index.jsp";
-        } else if (action.equals("back")) {
-            return "redirect:/index.jsp";
-        } else {
-            TrainBean trainBean = new TrainBean();
-            trainBean.setNumber(request.getParameter("Train_number"));
-            log.info("Servlet got bean: " + trainBean);
-            trainBean = trainModel.findTrain(trainBean);
-            request.setAttribute("trainBean", trainBean);
-            return "/common/trainTimetable";
-        }
+    @RequestMapping(value = "/common/TrainTimetable",
+            method = RequestMethod.GET,
+            params = "trainSearchAction=watch timetable")
+    public String watchTimetable(@RequestParam("Train_number") String trainNumber, ModelMap modelMap) {
+        TrainBean trainBean = new TrainBean();
+        trainBean.setNumber(trainNumber);
+        log.info("Servlet got bean: " + trainBean);
+        trainBean = trainModel.findTrain(trainBean);
+        modelMap.addAttribute("trainBean", trainBean);
+        return "/common/trainTimetable";
     }
 }

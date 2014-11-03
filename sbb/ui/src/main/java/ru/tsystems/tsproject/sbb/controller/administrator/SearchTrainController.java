@@ -4,17 +4,17 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.ValidationBean;
-import ru.tsystems.tsproject.sbb.Validator;
+import ru.tsystems.tsproject.sbb.validation.ValidationBean;
+import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
 /**
@@ -35,36 +35,39 @@ public class SearchTrainController {
         return new ModelAndView("/administrator/train/searchTrain", "trainBean", new TrainBean());
     }
 
-    @RequestMapping("/administrator/train/SearchTrain")
-    public String searchTrain(HttpServletRequest request) {
-        String action = request.getParameter("trainSearchAction");
+    @RequestMapping(value = "/administrator/train/SearchTrain",
+            method = RequestMethod.GET,
+            params = "trainSearchAction=watch passengers")
+    public String watchPassengers(@RequestParam("Train_number") String trainNumber, ModelMap modelMap) {
         TrainBean trainBean = new TrainBean();
-        trainBean.setNumber(request.getParameter("Train_number"));
+        trainBean.setNumber(trainNumber);
+        Collection<PassengerBean> passengerBeanSet = trainModel.findTrainPassengers(trainBean);
+        modelMap.addAttribute("trainPassengers", passengerBeanSet);
+        modelMap.addAttribute("trainBean", trainBean);
+        return "/administrator/passengers/passengersOnTrain";
+    }
+
+    @RequestMapping(value = "/administrator/train/SearchTrain",
+            method = RequestMethod.GET,
+            params = "trainSearchAction=watch timetable")
+    public String watchTimetable(@RequestParam("Train_number") String trainNumber, ModelMap modelMap) {
+        TrainBean trainBean = new TrainBean();
+        trainBean.setNumber(trainNumber);
+        trainBean = trainModel.findTrain(trainBean);
+        modelMap.addAttribute("trainBean", trainBean);
+        return "/administrator/timetable/trainTimetable";
+    }
+
+    @RequestMapping(value = "/administrator/train/SearchTrain", method = RequestMethod.POST)
+    public String searchTrain(@ModelAttribute("trainBean") TrainBean trainBean, ModelMap modelMap) {
         log.info("Servlet got bean: " + trainBean);
-        if (action == null) {
-            return "redirect:/administrator/train/searchTrain.jsp";
-        } else if (action.equals("back")) {
-            return "redirect:/administrator/administratorMain.jsp";
-        } else if (action.equals("watch passengers")) {
-            Collection<PassengerBean> passengerBeanSet = trainModel.findTrainPassengers(trainBean);
-            request.setAttribute("trainPassengers", passengerBeanSet);
-            request.setAttribute("trainBean", trainBean);
-            return "/administrator/passengers/passengersOnTrain";
-        } else if (action.equals("watch timetable")) {
-            trainBean = trainModel.findTrain(trainBean);
-            request.setAttribute("trainBean", trainBean);
-            return "/administrator/timetable/trainTimetable";
+        ValidationBean validationBean = Validator.validate(trainBean, "number");
+        if (validationBean.isValidationFailed()) {
+            modelMap.addAttribute("validationBean", validationBean);
         } else {
-            ValidationBean validationBean = Validator.validate(trainBean, "number");
-            if (validationBean.isValidationFailed()) {
-                request.setAttribute("validationBean", validationBean);
-                request.setAttribute("searchResult", trainBean);
-                return "/administrator/train/searchTrain";
-            } else {
-                trainBean = trainModel.findTrain(trainBean);
-                request.setAttribute("searchResult", trainBean);
-                return "/administrator/train/searchTrain";
-            }
+            trainBean = trainModel.findTrain(trainBean);
         }
+        modelMap.addAttribute("trainBean", trainBean);
+        return "/administrator/train/searchTrain";
     }
 }

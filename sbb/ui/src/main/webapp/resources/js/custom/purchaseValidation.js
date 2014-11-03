@@ -7,7 +7,7 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            number: {
+            trainNumber: {
                 message: 'Train number is not valid',
                 validators: {
                     notEmpty: {

@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb;
+package ru.tsystems.tsproject.sbb.validation;
 
 /**
  * Class, which contains validation messages and validation flag.

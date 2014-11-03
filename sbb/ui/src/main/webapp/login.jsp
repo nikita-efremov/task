@@ -4,17 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<%@ page import="ru.tsystems.tsproject.sbb.bean.PassengerBean" %>
-<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
-<% PassengerBean bean = (PassengerBean)request.getAttribute("loginResult");
-    if (bean == null) {
-        bean = new PassengerBean();
-    }
-    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
-    if (validationBean == null) {
-        validationBean = new ValidationBean();
-    }
-%>
 <html>
 <head>
     <title>Passenger login page</title>
@@ -104,7 +93,7 @@
                 <div class="form-group">
                     <label for="j_username" class="col-sm-4 control-label">Username:</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" id="j_username" placeholder="Username" name = "j_username" value = "<%=bean.getDocNumber()%>">
+                        <input type="text" class="form-control" id="j_username" placeholder="Username" name = "j_username" value = "">
                     </div>
                 </div>
                 <div class="form-group">
@@ -128,18 +117,9 @@
 
                 <table id="validationMessages">
                     <tr>
-                        <td><%=validationBean.getValidationMessage()%></td>
-                    </tr>
-                    <tr>
-                        <td><%=bean.getProcessingErrorMessage()%></td>
-                    </tr>
-                    <tr>
-                        <td><%=bean.getProcessingErrorMessage()%></td>
-                    </tr>
-                    <tr>
-                        <% if ((request.getParameter("error") != null) && (request.getParameter("error").equals("true"))) { %>
-                        <td>Invalid credentials!</td>
-                        <% }  %>
+                        <c:if test="${param.error == 'true'}">
+                            <td>Invalid credentials!</td>
+                        </c:if>
                     </tr>
                 </table>
             </form>

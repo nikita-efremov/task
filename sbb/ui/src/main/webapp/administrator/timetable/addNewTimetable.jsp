@@ -1,15 +1,3 @@
-<%@ page import="ru.tsystems.tsproject.sbb.bean.TimetableBean" %>
-<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
-<%  String trainNumber = (String) request.getAttribute("trainNumber");
-    TimetableBean bean = (TimetableBean)request.getAttribute("timetableBean");
-    if (bean == null) {
-        bean = new TimetableBean();
-    }
-    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
-    if (validationBean == null) {
-        validationBean = new ValidationBean();
-    }
-%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
@@ -99,7 +87,7 @@
     </div>
     <div class="panel-body">
         <div class="col-sm-8">
-            <label>To create a new stop for train number <%=trainNumber%>, please fill the following fields: </label>
+            <label>To create a new stop for train number ${trainBean.number}, please fill the following fields: </label>
             <form:form commandName="timetableBean" class="form-horizontal" role="form" method="post" action="AddNewTrainStop" id = "createStopForm">
                 <div class="form-group" hidden="hidden">
                     <label for="trainNumber" class="col-sm-4 control-label">Train number:</label>

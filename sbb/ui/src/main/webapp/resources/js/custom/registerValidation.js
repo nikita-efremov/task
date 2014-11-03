@@ -7,7 +7,7 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            First_name: {
+            firstName: {
                 message: 'First name is not valid',
                 validators: {
                     notEmpty: {
@@ -24,7 +24,7 @@ $(document).ready(function() {
                     }
                 }
             },
-            Last_name: {
+            lastName: {
                 message: 'Last name is not valid',
                 validators: {
                     notEmpty: {
@@ -41,7 +41,7 @@ $(document).ready(function() {
                     }
                 }
             },
-            Document_number: {
+            docNumber: {
                 message: 'Document number is not valid',
                 validators: {
                     notEmpty: {
@@ -58,7 +58,7 @@ $(document).ready(function() {
                     }
                 }
             },
-            Birth_date: {
+            birthDate: {
                 validators: {
                     notEmpty: {
                         message: 'The date of birth is required'
@@ -69,13 +69,13 @@ $(document).ready(function() {
                     }
                 }
             },
-            Password: {
+            password: {
                 validators: {
                     notEmpty: {
                         message: 'The password is required and cannot be empty'
                     },
                     identical: {
-                        field: 'Confirm_Password',
+                        field: 'confirmPassword',
                         message: 'The password and its confirm are not the same'
                     },
                     stringLength: {
@@ -89,13 +89,13 @@ $(document).ready(function() {
                     }
                 }
             },
-            Confirm_Password: {
+            confirmPassword: {
                 validators: {
                     notEmpty: {
                         message: 'The password confirm is required and cannot be empty'
                     },
                     identical: {
-                        field: 'Password',
+                        field: 'password',
                         message: 'The password and its confirm are not the same'
                     },
                     stringLength: {

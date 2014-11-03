@@ -1,4 +1,6 @@
-package ru.tsystems.tsproject.sbb;
+package ru.tsystems.tsproject.sbb.validation;
+
+import ru.tsystems.tsproject.sbb.validation.ValidationBean;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

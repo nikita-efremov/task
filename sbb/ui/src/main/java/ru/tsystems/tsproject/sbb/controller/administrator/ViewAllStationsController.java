@@ -26,9 +26,9 @@ public class ViewAllStationsController {
     private StationModel stationModel;
 
     @RequestMapping("/administrator/station/ViewAllStations")
-    public String viewStations(HttpServletRequest request) {
+    public String viewStations(ModelMap modelMap) {
         Collection<StationBean> stations = stationModel.getAllStations();
-        request.setAttribute("allStations", stations);
+        modelMap.addAttribute("allStations", stations);
         return "/administrator/station/viewAllStations";
     }
 }

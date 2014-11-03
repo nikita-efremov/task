@@ -3,17 +3,7 @@
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@page import="ru.tsystems.tsproject.sbb.bean.TrainBean" %>
-<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
-<% TrainBean bean = (TrainBean)request.getAttribute("searchResult");
-    if (bean == null) {
-        bean = new TrainBean();
-    }
-    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
-    if (validationBean == null) {
-        validationBean = new ValidationBean();
-    }
-%>
+
 <html>
 <head>
     <title>Train search</title>
@@ -99,52 +89,53 @@
     <div class="panel-body">
         <div class="col-sm-8">
             <label>To search a train, please fill the following fields: </label>
-            <form class="form-horizontal" role="form" method="post" action="SearchTrain" id = "trainSearchForm">
+            <form:form commandName="trainBean" class="form-horizontal" role="form" method="post" action="SearchTrain" id = "trainSearchForm">
                 <div class="form-group">
-                    <label for="Train_number" class="col-sm-4 control-label">Train number:</label>
+                    <label for="number" class="col-sm-4 control-label">Train number:</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" id="Train_number" placeholder="Train number" name = "Train_number" value = "<%=bean.getNumber()%>">
+                        <form:input path="number" type="text" class="form-control" id="number" placeholder="Train number" value = "${trainBean.number}"/>
                     </div>
                 </div>
-                <% if (!bean.getSeats().equals("")) { %>
-                <div class="form-group">
-                    <label for="Seats" class="col-sm-4 control-label">Seats:</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control" id="Seats" placeholder="Seats" name = "Seats" value = "<%=bean.getSeats()%>" disabled = "disabled">
+                <c:if test="${!empty trainBean.seats}">
+                    <div class="form-group">
+                        <label for="seats" class="col-sm-4 control-label">Seats:</label>
+                        <div class="col-sm-7">
+                            <form:input path="seats" type="text" class="form-control" id="seats" placeholder="Seats" value = "${trainBean.seats}" disabled = "true"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="Total_seats" class="col-sm-4 control-label">Total seats:</label>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control" id="Total_seats" placeholder="Total seats" name = "Total_seats" value = "<%=bean.getTotalSeats()%>"  disabled = "disabled">
+                    <div class="form-group">
+                        <label for="totalSeats" class="col-sm-4 control-label">Total seats:</label>
+                        <div class="col-sm-7">
+                            <form:input path="totalSeats" type="text" class="form-control" id="totalSeats" placeholder="Total seats" value = "${trainBean.totalSeats}"  disabled = "true"/>
+                        </div>
                     </div>
-                </div>
-                <% } %>
+                </c:if>
+
                 <div class="form-group">
                     <div class="col-sm-offset-1 col-sm-10">
                         <button type="submit" name="trainSearchAction" value="search" class="btn btn-success">Search</button>
-                        <input type=button class="btn btn-default" onClick="location.href='${contextPath}/administrator/train/SearchTrain?trainSearchAction=back&Train_number=<%=bean.getNumber()%>'" value='Back'>
+                        <input type=button class="btn btn-default" onClick="location.href='${contextPath}/administrator/administratorMain.jsp'" value='Back'>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-offset-1 col-sm-10">
-                        <% if (!bean.getSeats().equals("")) { %>
-                        <input type=button class="btn btn-success" onClick="location.href='${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch passengers&Train_number=<%=bean.getNumber()%>'" value='Watch passengers'>
-                        <input type=button class="btn btn-success" onClick="location.href='${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch timetable&Train_number=<%=bean.getNumber()%>'" value='Watch timetable'>
-                        <% } %>
+                        <c:if test="${!empty trainBean.seats}">
+                            <input type=button class="btn btn-success" onClick="location.href='${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch passengers&Train_number=${trainBean.number}'" value='Watch passengers'>
+                            <input type=button class="btn btn-success" onClick="location.href='${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch timetable&Train_number=${trainBean.number}'" value='Watch timetable'>
+                        </c:if>
                     </div>
                 </div>
 
                 <table id="validationMessages">
                     <tr>
-                        <td><%=validationBean.getValidationMessage()%></td>
+                        <td>${validationBean.validationMessage}</td>
                     </tr>
                     <tr>
-                        <td><%=bean.getProcessingErrorMessage()%></td>
+                        <td>${trainBean.processingErrorMessage}</td>
                     </tr>
                 </table>
-            </form>
+            </form:form>
         </div>
     </div>
 </div>

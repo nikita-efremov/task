@@ -2,9 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@page import="ru.tsystems.tsproject.sbb.bean.StationBean" %>
-<% StationBean bean = (StationBean)request.getAttribute("createResult");
-%>
+
 <html>
 <head>
     <title>Station create success</title>
@@ -94,11 +92,11 @@
                 <table id = "resultData">
                     <TR>
                         <TD>id:</TD>
-                        <TD><%=bean.getId()%></TD>
+                        <TD>${stationBean.id}</TD>
                     </TR>
                     <TR>
                         <TD>name:</TD>
-                        <TD><%=bean.getName()%></TD>
+                        <TD>${stationBean.name}</TD>
                     </TR>
                 </table>
             </div>
@@ -112,7 +110,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td><%=bean.getProcessingErrorMessage()%></td>
+                    <td>${stationBean.processingErrorMessage}</td>
                 </tr>
             </table>
         </div>

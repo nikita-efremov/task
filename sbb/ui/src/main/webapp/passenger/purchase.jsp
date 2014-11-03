@@ -3,17 +3,7 @@
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@ page import="ru.tsystems.tsproject.sbb.bean.TicketBean" %>
-<%@ page import="ru.tsystems.tsproject.sbb.ValidationBean" %>
-<% TicketBean bean = (TicketBean)request.getAttribute("purchaseResult");
-    if (bean == null) {
-        bean = new TicketBean();
-    }
-    ValidationBean validationBean = (ValidationBean)request.getAttribute("validationBean");
-    if (validationBean == null) {
-        validationBean = new ValidationBean();
-    }
-%>
+
 <html>
 <head>
     <title>Ticket purchasing</title>
@@ -99,11 +89,11 @@
     <div class="panel-body">
         <div class="col-sm-8">
             <label>To purchase ticket, please fill the following fields: </label>
-            <form class="form-horizontal" role="form" method="post" action="TicketPurchase" id = "trainSearchForm">
+            <form:form commandName="ticketBean" class="form-horizontal" role="form" method="post" action="TicketPurchase" id = "trainSearchForm">
                 <div class="form-group">
-                    <label for="Train_number" class="col-sm-4 control-label">Train number:</label>
+                    <label for="trainNumber" class="col-sm-4 control-label">Train number:</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" id="Train_number" placeholder="Train number" name = "Train_number" value = "<%=bean.getTrainNumber()%>">
+                        <form:input path="trainNumber" type="text" class="form-control" id="trainNumber" placeholder="Train number" value = "${ticketBean.trainNumber}"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -115,17 +105,17 @@
 
                 <table id="validationMessages">
                     <tr>
-                        <td><%=validationBean.getValidationMessage()%></td>
+                        <td>${validationBean.validationMessage}</td>
                     </tr>
                     <tr>
-                        <td><%=bean.getProcessingErrorMessage()%></td>
+                        <td>${ticketBean.processingErrorMessage}</td>
                     </tr>
                 </table>
-            </form>
+            </form:form>
         </div>
     </div>
 </div>
 
-<script src="${contextPath}/resources/js/custom/trainSearchValidation.js"></script>
+<script src="${contextPath}/resources/js/custom/purchaseValidation.js"></script>
 </body>
 </html>

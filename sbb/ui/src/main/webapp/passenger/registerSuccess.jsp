@@ -1,14 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@page import="ru.tsystems.tsproject.sbb.bean.PassengerBean" %>
-<%@ page import="java.util.Calendar" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<% PassengerBean bean = (PassengerBean)request.getAttribute("createResult");
-    if (bean == null) {
-        bean = new PassengerBean();
-    }
-%>
+
 <html>
 <head>
     <title>Register Success</title>
@@ -98,23 +92,23 @@
                 <table id = "resultData">
                     <TR>
                         <TD>Username:</TD>
-                        <TD> <%=bean.getDocNumber()%> </TD>
+                        <TD>${passengerBean.docNumber}</TD>
                     </TR>
                     <TR>
                         <TD>First name:</TD>
-                        <TD> <%=bean.getFirstName()%> </TD>
+                        <TD>${passengerBean.firstName}</TD>
                     </TR>
                     <TR>
                         <TD>Last name:</TD>
-                        <TD> <%=bean.getLastName()%> </TD>
+                        <TD>${passengerBean.lastName}</TD>
                     </TR>
                     <TR>
                         <TD>Document number:</TD>
-                        <TD> <%=bean.getDocNumber()%> </TD>
+                        <TD>${passengerBean.docNumber}</TD>
                     </TR>
                     <TR>
                         <TD>Birth date:</TD>
-                        <TD> <%=new SimpleDateFormat("dd-MM-yyyy").format(bean.getBirthDate())%> </TD>
+                        <td><fmt:formatDate type="date" value = "${passengerBean.birthDate}"/></td>
                     </TR>
                 </table>
             </div>
@@ -124,12 +118,6 @@
                 </div>
             </div>
             <table id="validationMessages">
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><%=bean.getProcessingErrorMessage()%></td>
-                </tr>
             </table>
         </div>
     </div>

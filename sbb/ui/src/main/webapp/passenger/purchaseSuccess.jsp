@@ -1,12 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@ page import="ru.tsystems.tsproject.sbb.bean.TicketBean" %>
-<% TicketBean bean = (TicketBean)request.getAttribute("purchaseResult");
-    if (bean == null) {
-        bean = new TicketBean();
-    }
-%>
+
 <html>
 <head>
     <title>Purchase Success</title>
@@ -96,15 +91,15 @@
                 <table id = "resultData">
                     <TR>
                         <TD>Ticket number:</TD>
-                        <TD> <%=bean.getTicketNumber()%> </TD>
+                        <TD>${ticketBean.ticketNumber}</TD>
                     </TR>
                     <TR>
                         <TD>Train number:</TD>
-                        <TD> <%=bean.getTrainNumber()%> </TD>
+                        <TD>${ticketBean.trainNumber}</TD>
                     </TR>
                     <TR>
                         <TD>Document number:</TD>
-                        <TD> <%=bean.getPassengerDocNumber()%> </TD>
+                        <TD>${ticketBean.passengerDocNumber}</TD>
                     </TR>
                 </table>
             </div>
@@ -114,12 +109,6 @@
                 </div>
             </div>
             <table id="validationMessages">
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><%=bean.getProcessingErrorMessage()%></td>
-                </tr>
             </table>
         </div>
     </div>

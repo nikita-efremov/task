@@ -1,9 +1,9 @@
 package ru.tsystems.tsproject.sbb.controller.passenger;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,19 +11,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.ValidationBean;
-import ru.tsystems.tsproject.sbb.Validator;
+import ru.tsystems.tsproject.sbb.validation.ValidationBean;
+import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
-import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.PassengerModel;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -48,57 +46,42 @@ public class PassengerRegisterController {
     @Qualifier("customAuthenticationManager")
     protected AuthenticationManager authenticationManager;
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        simpleDateFormat.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, true));
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView initPassengerBean() {
         return new ModelAndView("/register", "passengerBean", new PassengerBean());
     }
 
     @RequestMapping("/RegisterPassenger")
-    public String register(HttpServletRequest request) {
-        String action = request.getParameter("passengerRegisterAction");
-        if (action == null) {
-            return "redirect:/register.jsp";
-        } else if (action.equals("back")) {
-            return "redirect:/index.jsp";
+    public String register(@ModelAttribute("passengerBean") PassengerBean passengerBean, ModelMap modelMap) {
+        log.info("Servlet got bean: " + passengerBean);
+        String password = passengerBean.getPassword();
+        ValidationBean validationBean = Validator.validate(passengerBean);
+        if (validationBean.isValidationFailed()) {
+            modelMap.addAttribute("passengerBean", passengerBean);
+            modelMap.addAttribute("validationBean", validationBean);
+            return "register";
         } else {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String birthDateString = request.getParameter("Birth_date");
-            Date birthDate;
-            try {
-                birthDate = simpleDateFormat.parse(birthDateString);
-            } catch (ParseException e) {
-                birthDate = null;
-            }
-            String password = request.getParameter("Password");
-
-            PassengerBean passengerBean = new PassengerBean();
-            passengerBean.setLastName(request.getParameter("Last_name"));
-            passengerBean.setFirstName(request.getParameter("First_name"));
-            passengerBean.setDocNumber(request.getParameter("Document_number"));
-            passengerBean.setBirthDate(birthDate);
-            passengerBean.setPassword(password);
-            log.info("Servlet got bean: " + passengerBean);
-            ValidationBean validationBean = Validator.validate(passengerBean);
-            if (validationBean.isValidationFailed()) {
-                request.setAttribute("createResult", passengerBean);
-                request.setAttribute("validationBean", validationBean);
+            passengerBean = passengerModel.addPassenger(passengerBean);
+            modelMap.addAttribute("passengerBean", passengerBean);
+            if (passengerBean.isProcessingFailed()) {
                 return "register";
             } else {
-                passengerBean = passengerModel.addPassenger(passengerBean);
-                request.setAttribute("createResult", passengerBean);
-                if (passengerBean.isProcessingFailed()) {
-                    return "register";
-                } else {
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(passengerBean.getDocNumber());
-                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                            userDetails, password, userDetails.getAuthorities());
-                    authenticationManager.authenticate(auth);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(passengerBean.getDocNumber());
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                        userDetails, password, userDetails.getAuthorities());
+                authenticationManager.authenticate(auth);
 
-                    if(auth.isAuthenticated()) {
-                        SecurityContextHolder.getContext().setAuthentication(auth);
-                    }
-                    return "/passenger/registerSuccess";
+                if(auth.isAuthenticated()) {
+                    SecurityContextHolder.getContext().setAuthentication(auth);
                 }
+                return "/passenger/registerSuccess";
             }
         }
     }

@@ -8,7 +8,7 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            Station_start_name: {
+            stationStartName: {
                 message: 'Station name is not valid',
                 validators: {
                     notEmpty: {
@@ -24,12 +24,12 @@ $(document).ready(function() {
                         message: 'Station name can only consist of english alphabetical'
                     },
                     different: {
-                        field: 'Station_end_name',
+                        field: 'stationEndName',
                         message: 'The start station name and end station name cannot be the same as each other'
                     }
                 }
             },
-            Station_end_name: {
+            stationEndName: {
                 message: 'Station name is not valid',
                 validators: {
                     notEmpty: {
@@ -45,12 +45,12 @@ $(document).ready(function() {
                         message: 'Station name can only consist of english alphabetical'
                     },
                     different: {
-                        field: 'Station_start_name',
+                        field: 'stationStartName',
                         message: 'The start station name and end station name cannot be the same as each other'
                     }
                 }
             },
-            Start_date: {
+            startDate: {
                 message: 'Start date is not valid',
                 validators: {
                     notEmpty: {
@@ -61,12 +61,12 @@ $(document).ready(function() {
                         message: 'Start date is not valid'
                     },
                     different: {
-                        field: 'End_date',
+                        field: 'endDate',
                         message: 'Start date and end date cannot be the same as each other'
                     }
                 }
             },
-            End_date: {
+            endDate: {
                 message: 'End date is not valid',
                 validators: {
                     notEmpty: {
@@ -77,7 +77,7 @@ $(document).ready(function() {
                         message: 'End date is not valid'
                     },
                     different: {
-                        field: 'Start_date',
+                        field: 'startDate',
                         message: 'Start date and end date cannot be the same as each other'
                     }
                 }

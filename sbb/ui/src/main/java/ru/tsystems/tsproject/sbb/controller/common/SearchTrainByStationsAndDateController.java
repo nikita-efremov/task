@@ -2,20 +2,21 @@ package ru.tsystems.tsproject.sbb.controller.common;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.ValidationBean;
-import ru.tsystems.tsproject.sbb.Validator;
-import ru.tsystems.tsproject.sbb.bean.TimetableBean;
+import ru.tsystems.tsproject.sbb.validation.ValidationBean;
+import ru.tsystems.tsproject.sbb.validation.Validator;
+import ru.tsystems.tsproject.sbb.bean.ComplexTrainSearchBean;
 import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.TrainModel;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -33,67 +34,34 @@ public class SearchTrainByStationsAndDateController {
     @Autowired
     private TrainModel trainModel;
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        simpleDateFormat.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, true));
+    }
+
     @RequestMapping(value = "/common/searchStationDateTrain", method = RequestMethod.GET)
     public ModelAndView initTimetableBean() {
-        ModelAndView modelAndView = new ModelAndView("/common/searchStationDateTrain");
-        modelAndView.addObject("timetableBeanStart", new TimetableBean());
-        modelAndView.addObject("timetableBeanEnd", new TimetableBean());
-        return modelAndView;
+        return new ModelAndView("/common/searchStationDateTrain", "complexTrainSearchBean", new ComplexTrainSearchBean());
     }
 
     @RequestMapping("/common/SearchStationDateTrain")
-    public String searchTrains(HttpServletRequest request) {
-        String action = request.getParameter("stationDateTrainSearchAction");
-        if (action == null) {
-            return "redirect:/common/searchStationDateTrain.jsp";
-        } else if (action.equals("back")) {
-            return "redirect:/index.jsp";
+    public String searchTrains(@ModelAttribute("complexTrainSearchBean") ComplexTrainSearchBean complexTrainSearchBean, ModelMap modelMap) {
+        log.info("Servlet got beans " + complexTrainSearchBean);
+        ValidationBean validationBean = Validator.validate(complexTrainSearchBean);
+        if (validationBean.isValidationFailed()) {
+            modelMap.addAttribute("validationBean", validationBean);
+            modelMap.addAttribute("complexTrainSearchBean", complexTrainSearchBean);
+            return "/common/searchStationDateTrain";
         } else {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-
-            Date startDate;
-            Date endDate;
-            try {
-                String startDateString = request.getParameter("Start_date");
-                startDate = simpleDateFormat.parse(startDateString);
-            } catch (ParseException e) {
-                startDate = null;
-            }
-            try {
-                String endDateString = request.getParameter("End_date");
-                endDate = simpleDateFormat.parse(endDateString);
-            } catch (ParseException e) {
-                endDate = null;
-            }
-
-            TimetableBean startBean = new TimetableBean();
-            startBean.setStationName(request.getParameter("Station_start_name"));
-            startBean.setDate(startDate);
-
-            TimetableBean endBean = new TimetableBean();
-            endBean.setStationName(request.getParameter("Station_end_name"));
-            endBean.setDate(endDate);
-
-            log.info("Servlet got beans: " + startBean + " " + endBean);
-
-            ValidationBean validationBeanStart = Validator.validate(startBean, "stationName", "date");
-            ValidationBean validationBeanEnd = Validator.validate(endBean, "stationName", "date");
-            if ((validationBeanStart.isValidationFailed()) || (validationBeanEnd.isValidationFailed())) {
-                request.setAttribute("validationBeanStart", validationBeanStart);
-                request.setAttribute("validationBeanEnd", validationBeanEnd);
-                request.setAttribute("startBean", startBean);
-                request.setAttribute("endBean", endBean);
+            Collection<TrainBean> trains = trainModel.findTrainsByStationsAndDate(complexTrainSearchBean);
+            if (complexTrainSearchBean.isProcessingFailed()) {
+                modelMap.addAttribute("complexTrainSearchBean", complexTrainSearchBean);
                 return "/common/searchStationDateTrain";
             } else {
-                Collection<TrainBean> trains = trainModel.findTrainsByStationsAndDate(startBean, endBean);
-                if ((startBean.isProcessingFailed()) || (endBean.isProcessingFailed())) {
-                    request.setAttribute("startBean", startBean);
-                    request.setAttribute("endBean", endBean);
-                    return "/common/searchStationDateTrain";
-                } else {
-                    request.setAttribute("foundTrains", trains);
-                    return "/common/viewFoundTrains";
-                }
+                modelMap.addAttribute("foundTrains", trains);
+                return "/common/viewFoundTrains";
             }
         }
     }
