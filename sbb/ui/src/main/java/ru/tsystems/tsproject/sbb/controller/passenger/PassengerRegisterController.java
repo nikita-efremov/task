@@ -66,12 +66,12 @@ public class PassengerRegisterController {
         if (validationBean.isValidationFailed()) {
             modelMap.addAttribute("passengerBean", passengerBean);
             modelMap.addAttribute("validationBean", validationBean);
-            return "register";
+            return "/register";
         } else {
             passengerBean = passengerModel.addPassenger(passengerBean);
             modelMap.addAttribute("passengerBean", passengerBean);
             if (passengerBean.isProcessingFailed()) {
-                return "register";
+                return "/register";
             } else {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(passengerBean.getDocNumber());
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
