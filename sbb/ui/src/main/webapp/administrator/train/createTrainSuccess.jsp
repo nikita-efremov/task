@@ -33,19 +33,19 @@
                         <ul class="dropdown-menu" role="menu">
                             <security:authorize access="hasRole('ROLE_ADMIN')">
                                 <li><a href="${contextPath}/administrator/train/createNewTrain">Add new</a></li>
-                                <li><a href="${contextPath}/administrator/train/searchTrain.jsp">Search by number</a></li>
+                                <li><a href="${contextPath}/administrator/train/searchTrain">Search by number</a></li>
                                 <li><a href="${contextPath}/administrator/train/ViewAllTrains">Watch all</a></li>
                                 <li class="divider"></li>
                             </security:authorize>
-                            <li><a href="${contextPath}/common/searchStation.jsp">Search by station</a></li>
-                            <li><a href="${contextPath}/common/searchStationDateTrain.jsp">Search by stations and date</a></li>
+                            <li><a href="${contextPath}/common/searchStation">Search by station</a></li>
+                            <li><a href="${contextPath}/common/searchStationDateTrain">Search by stations and date</a></li>
                         </ul>
                     </li>
                     <security:authorize access="hasRole('ROLE_ADMIN')">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stations<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="${contextPath}/administrator/station/createNewStation.jsp">Add new</a></li>
+                                <li><a href="${contextPath}/administrator/station/createNewStation">Add new</a></li>
                                 <li><a href="${contextPath}/administrator/station/ViewAllStations">Watch all</a></li>
                             </ul>
                         </li>
@@ -55,7 +55,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tickets<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="${contextPath}/passenger/purchase.jsp">Purchase</a></li>
+                                <li><a href="${contextPath}/passenger/purchase">Purchase</a></li>
                                 <li><a href="${contextPath}/passenger/WatchTickets">Search my tickets</a></li>
                             </ul>
                         </li>
@@ -70,7 +70,7 @@
                         <security:authorize access="! isAuthenticated()">
                             You are not logged on system
                             <button type="button" onclick="location.href='${contextPath}/login.jsp'" class="btn btn-success navbar-btn">Login</button>
-                            <button type="button" onclick="location.href='${contextPath}/register.jsp'" class="btn btn-primary navbar-btn">Register</button>
+                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-primary navbar-btn">Register</button>
                         </security:authorize>
                     </li>
                 </ul>

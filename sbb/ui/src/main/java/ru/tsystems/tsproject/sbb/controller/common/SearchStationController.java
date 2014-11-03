@@ -7,6 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.StationBean;
@@ -29,6 +31,11 @@ public class SearchStationController {
 
     @Autowired
     private TrainModel trainModel;
+
+    @RequestMapping(value = "/common/searchStation", method = RequestMethod.GET)
+    public ModelAndView initStationBean() {
+        return new ModelAndView("/common/searchStation", "stationBean", new StationBean());
+    }
 
     @RequestMapping("/common/SearchStation")
     public String searchStation(HttpServletRequest request) {

@@ -6,9 +6,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.TicketBean;
+import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.PassengerModel;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +29,11 @@ public class PurchaseTicketController {
 
     @Autowired
     private PassengerModel passengerModel;
+
+    @RequestMapping(value = "/passenger/purchase", method = RequestMethod.GET)
+    public ModelAndView initTicketBean() {
+        return new ModelAndView("/passenger/purchase", "ticketBean", new TicketBean());
+    }
 
     @RequestMapping("/passenger/TicketPurchase")
     public String purchase(HttpServletRequest request) {

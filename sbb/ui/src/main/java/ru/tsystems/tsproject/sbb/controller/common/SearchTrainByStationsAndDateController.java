@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.TimetableBean;
@@ -30,6 +32,14 @@ public class SearchTrainByStationsAndDateController {
 
     @Autowired
     private TrainModel trainModel;
+
+    @RequestMapping(value = "/common/searchStationDateTrain", method = RequestMethod.GET)
+    public ModelAndView initTimetableBean() {
+        ModelAndView modelAndView = new ModelAndView("/common/searchStationDateTrain");
+        modelAndView.addObject("timetableBeanStart", new TimetableBean());
+        modelAndView.addObject("timetableBeanEnd", new TimetableBean());
+        return modelAndView;
+    }
 
     @RequestMapping("/common/SearchStationDateTrain")
     public String searchTrains(HttpServletRequest request) {

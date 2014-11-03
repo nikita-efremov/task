@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
@@ -27,6 +29,11 @@ public class SearchTrainController {
 
     @Autowired
     private TrainModel trainModel;
+
+    @RequestMapping(value = "/administrator/train/searchTrain", method = RequestMethod.GET)
+    public ModelAndView initTrainBean() {
+        return new ModelAndView("/administrator/train/searchTrain", "trainBean", new TrainBean());
+    }
 
     @RequestMapping("/administrator/train/SearchTrain")
     public String searchTrain(HttpServletRequest request) {

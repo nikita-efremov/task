@@ -12,9 +12,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import ru.tsystems.tsproject.sbb.ValidationBean;
 import ru.tsystems.tsproject.sbb.Validator;
 import ru.tsystems.tsproject.sbb.bean.PassengerBean;
+import ru.tsystems.tsproject.sbb.bean.TrainBean;
 import ru.tsystems.tsproject.sbb.model.PassengerModel;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +47,11 @@ public class PassengerRegisterController {
     @Autowired
     @Qualifier("customAuthenticationManager")
     protected AuthenticationManager authenticationManager;
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public ModelAndView initPassengerBean() {
+        return new ModelAndView("/register", "passengerBean", new PassengerBean());
+    }
 
     @RequestMapping("/RegisterPassenger")
     public String register(HttpServletRequest request) {

@@ -7,7 +7,7 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            Station_name: {
+            stationName: {
                 message: 'Station name is not valid',
                 validators: {
                     notEmpty: {
@@ -24,7 +24,7 @@ $(document).ready(function() {
                     }
                 }
             },
-            Departure_date: {
+            date: {
                 message: 'Departure date is not valid',
                 validators: {
                     notEmpty: {
