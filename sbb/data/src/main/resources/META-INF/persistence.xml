@@ -4,20 +4,18 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
  http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
 
-    <persistence-unit name="jpa-hibernate">
+    <persistence-unit name="jpa-hibernate" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:jboss/datasources/mySQLDS</jta-data-source>
         <class>ru.tsystems.tsproject.sbb.entity.Passenger</class>
         <class>ru.tsystems.tsproject.sbb.entity.Ticket</class>
         <class>ru.tsystems.tsproject.sbb.entity.Train</class>
         <class>ru.tsystems.tsproject.sbb.entity.Timetable</class>
         <class>ru.tsystems.tsproject.sbb.entity.Station</class>
         <properties>
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3307/test"/>
-            <property name="hibernate.connection.username" value="root"/>
-            <property name="hibernate.connection.password" value="12345"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/>
+            <property name="hibernate.show_sql" value="false"/>
         </properties>
     </persistence-unit>
 </persistence>
