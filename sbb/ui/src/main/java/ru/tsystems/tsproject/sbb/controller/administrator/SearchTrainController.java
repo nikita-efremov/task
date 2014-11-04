@@ -55,7 +55,7 @@ public class SearchTrainController {
         trainBean.setNumber(trainNumber);
         trainBean = trainModel.findTrain(trainBean);
         modelMap.addAttribute("trainBean", trainBean);
-        return "/administrator/timetable/trainTimetable";
+        return "/common/trainTimetable";
     }
 
     @RequestMapping(value = "/administrator/train/SearchTrain", method = RequestMethod.POST)

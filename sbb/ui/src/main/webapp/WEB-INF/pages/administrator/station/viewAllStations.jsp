@@ -71,7 +71,7 @@
                         <security:authorize access="! isAuthenticated()">
                             You are not logged on system
                             <button type="button" onclick="location.href='${contextPath}/login'" class="btn btn-success navbar-btn">Login</button>
-                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-primary navbar-btn">Register</button>
+                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-info navbar-btn">Register</button>
                         </security:authorize>
                     </li>
                 </ul>
@@ -87,17 +87,19 @@
     <div class="panel-body">
         <div class="col-sm-8">
             <div class="form-group">
-                <table id = "resultData">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                    </tr>
-                    <c:forEach var="station" items="${allStations}">
+                <table id = "resultDataV2" class = "table table-striped table-bordered table-hover">
+                    <tbody>
                         <tr>
-                            <td>${station.id}</td>
-                            <td>${station.name}</td>
+                            <th>ID</th>
+                            <th>Name</th>
                         </tr>
-                    </c:forEach>
+                        <c:forEach var="station" items="${allStations}">
+                            <tr>
+                                <td>${station.id}</td>
+                                <td>${station.name}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
                 </table>
             </div>
             <div class="form-group">

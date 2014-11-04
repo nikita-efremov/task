@@ -62,7 +62,7 @@ public class AddNewTrainStopController {
                 trainBean.setNumber(timetableBean.getTrainNumber());
                 trainBean = trainModel.findTrain(trainBean);
                 modelMap.addAttribute("trainBean", trainBean);
-                return "/administrator/timetable/trainTimetable";
+                return "/common/trainTimetable";
             }
         }
     }

@@ -70,7 +70,7 @@
                         <security:authorize access="! isAuthenticated()">
                             You are not logged on system
                             <button type="button" onclick="location.href='${contextPath}/login'" class="btn btn-success navbar-btn">Login</button>
-                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-primary navbar-btn">Register</button>
+                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-info navbar-btn">Register</button>
                         </security:authorize>
                     </li>
                 </ul>

@@ -71,7 +71,7 @@
                         <security:authorize access="! isAuthenticated()">
                             You are not logged on system
                             <button type="button" onclick="location.href='${contextPath}/login'" class="btn btn-success navbar-btn">Login</button>
-                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-primary navbar-btn">Register</button>
+                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-info navbar-btn">Register</button>
                         </security:authorize>
                     </li>
                 </ul>
@@ -87,21 +87,26 @@
     <div class="panel-body">
         <div class="col-sm-8">
             <div class="form-group">
-                <table id = "resultData">
-                    <tr>
-                        <th>Station name</th>
-                        <th>Departure date</th>
-                    </tr>
-                    <c:forEach var="timetable" items="${trainBean.timetables}">
-                    <tr>
-                        <td>${timetable.stationName}</td>
-                        <td><fmt:formatDate pattern="HH:mm dd-MM-yyyy" value = "${timetable.date}"/></td>
-                    </tr>
-                    </c:forEach>
+                <table id = "resultDataV2" class = "table table-striped table-bordered table-hover">
+                    <tbody>
+                        <tr>
+                            <th>Station name</th>
+                            <th>Departure date</th>
+                        </tr>
+                        <c:forEach var="timetable" items="${trainBean.timetables}">
+                        <tr>
+                            <td>${timetable.stationName}</td>
+                            <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value = "${timetable.date}"/></td>
+                        </tr>
+                        </c:forEach>
+                    </tbody>
                 </table>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-10">
+                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                        <input type=button class = "btn btn-success" onClick="location.href='${contextPath}/administrator/train/addNewTrainStop?Train_number=${trainBean.number}'" value='Add new stop'>
+                    </security:authorize>
                     <input type=button class="btn btn-primary" onClick="history.go(-1);" value='Back'>
                 </div>
             </div>

@@ -72,7 +72,7 @@
                         <security:authorize access="! isAuthenticated()">
                             You are not logged on system
                             <button type="button" onclick="location.href='${contextPath}/login'" class="btn btn-success navbar-btn">Login</button>
-                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-primary navbar-btn">Register</button>
+                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-info navbar-btn">Register</button>
                         </security:authorize>
                     </li>
                 </ul>
@@ -89,27 +89,29 @@
         <div class="col-sm-8">
             <label>You have been registered successfully</label>
             <div class="form-group">
-                <table id = "resultData">
-                    <TR>
-                        <TD>Username:</TD>
-                        <TD>${passengerBean.docNumber}</TD>
-                    </TR>
-                    <TR>
-                        <TD>First name:</TD>
-                        <TD>${passengerBean.firstName}</TD>
-                    </TR>
-                    <TR>
-                        <TD>Last name:</TD>
-                        <TD>${passengerBean.lastName}</TD>
-                    </TR>
-                    <TR>
-                        <TD>Document number:</TD>
-                        <TD>${passengerBean.docNumber}</TD>
-                    </TR>
-                    <TR>
-                        <TD>Birth date:</TD>
-                        <td><fmt:formatDate type="date" value = "${passengerBean.birthDate}"/></td>
-                    </TR>
+                <table id = "resultDataV2" class="table table-bordered">
+                    <tbody>
+                        <TR>
+                            <TD>Username:</TD>
+                            <TD>${passengerBean.docNumber}</TD>
+                        </TR>
+                        <TR>
+                            <TD>First name:</TD>
+                            <TD>${passengerBean.firstName}</TD>
+                        </TR>
+                        <TR>
+                            <TD>Last name:</TD>
+                            <TD>${passengerBean.lastName}</TD>
+                        </TR>
+                        <TR>
+                            <TD>Document number:</TD>
+                            <TD>${passengerBean.docNumber}</TD>
+                        </TR>
+                        <TR>
+                            <TD>Birth date:</TD>
+                            <td><fmt:formatDate type="date" value = "${passengerBean.birthDate}"/></td>
+                        </TR>
+                    </tbody>
                 </table>
             </div>
             <div class="form-group">

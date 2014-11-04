@@ -206,6 +206,7 @@ public class PassengerModel {
             Collection<Passenger> passengers = administratorService.getAllPassengers();
             for (Passenger passenger: passengers) {
                 PassengerBean passengerBean = new PassengerBean();
+                passengerBean.setId(passenger.getId());
                 passengerBean.setDocNumber(passenger.getDocNumber());
                 passengerBean.setFirstName(passenger.getFirstName());
                 passengerBean.setLastName(passenger.getLastName());

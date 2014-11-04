@@ -72,7 +72,7 @@
                         <security:authorize access="! isAuthenticated()">
                             You are not logged on system
                             <button type="button" onclick="location.href='${contextPath}/login'" class="btn btn-success navbar-btn">Login</button>
-                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-primary navbar-btn">Register</button>
+                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-info navbar-btn">Register</button>
                         </security:authorize>
                     </li>
                 </ul>
@@ -88,19 +88,23 @@
     <div class="panel-body">
         <div class="col-sm-8">
             <div class="form-group">
-                <table id = "resultData">
-                    <tr>
-                        <th>Document number</th>
-                        <th>Full name</th>
-                        <th>Birth date</th>
-                    </tr>
-                    <c:forEach var="passenger" items="${trainPassengers}">
-                    <tr>
-                        <td>${passenger.docNumber}</td>
-                        <td>${passenger.lastName} ${passenger.firstName}</td>
-                        <td><fmt:formatDate type="date" value = "${passenger.birthDate}"/></td>
-                    </tr>
-                    </c:forEach>
+                <table id = "resultDataV2" class = "table table-striped table-bordered table-hover">
+                    <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <th>Document number</th>
+                            <th>Full name</th>
+                            <th>Birth date</th>
+                        </tr>
+                        <c:forEach var="passenger" items="${trainPassengers}">
+                        <tr>
+                            <td>${passenger.id}</td>
+                            <td>${passenger.docNumber}</td>
+                            <td>${passenger.lastName} ${passenger.firstName}</td>
+                            <td><fmt:formatDate type="date" value = "${passenger.birthDate}"/></td>
+                        </tr>
+                        </c:forEach>
+                    </tbody>
                 </table>
             </div>
             <div class="form-group">

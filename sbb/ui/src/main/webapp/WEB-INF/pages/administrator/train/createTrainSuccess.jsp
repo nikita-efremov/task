@@ -70,7 +70,7 @@
                         <security:authorize access="! isAuthenticated()">
                             You are not logged on system
                             <button type="button" onclick="location.href='${contextPath}/login'" class="btn btn-success navbar-btn">Login</button>
-                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-primary navbar-btn">Register</button>
+                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-info navbar-btn">Register</button>
                         </security:authorize>
                     </li>
                 </ul>
@@ -87,23 +87,25 @@
         <div class="col-sm-8">
             <label>Train has been created successfully:</label>
             <div class="form-group">
-                <table id = "resultData">
-                    <TR>
-                        <TD>id:</TD>
-                        <TD>${trainBean.id}</TD>
-                    </TR>
-                    <TR>
-                        <TD>number:</TD>
-                        <TD>${trainBean.number}</TD>
-                    </TR>
-                    <TR>
-                        <TD>seats:</TD>
-                        <TD>${trainBean.seats}</TD>
-                    </TR>
-                    <TR>
-                        <TD>total seats:</TD>
-                        <TD>${trainBean.totalSeats}</TD>
-                    </TR>
+                <table id = "resultDataV2" class="table table-bordered">
+                    <tbody>
+                        <TR>
+                            <TD>id:</TD>
+                            <TD>${trainBean.id}</TD>
+                        </TR>
+                        <TR>
+                            <TD>number:</TD>
+                            <TD>${trainBean.number}</TD>
+                        </TR>
+                        <TR>
+                            <TD>seats:</TD>
+                            <TD>${trainBean.seats}</TD>
+                        </TR>
+                        <TR>
+                            <TD>total seats:</TD>
+                            <TD>${trainBean.totalSeats}</TD>
+                        </TR>
+                    </tbody>
                 </table>
             </div>
             <div class="form-group">

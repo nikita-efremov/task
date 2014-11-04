@@ -251,6 +251,20 @@ label {
     padding-top: 30px;
 }
 
+#resultDataV2 { /*table with input fields*/
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+#resultDataV2 tr td, #resultDataV2 tr th {
+    text-align: center;
+}
+
+.tableButton {
+    margin: 0 0;
+}
+
+
 
 
 

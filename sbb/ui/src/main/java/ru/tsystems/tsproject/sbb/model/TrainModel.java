@@ -135,6 +135,7 @@ public class TrainModel {
             Collection<Passenger> passengers = administratorService.getPassengersByTrain(trainBean.getNumber());
             for (Passenger passenger: passengers) {
                 PassengerBean passengerBean = new PassengerBean();
+                passengerBean.setId(passenger.getId());
                 passengerBean.setLastName(passenger.getLastName());
                 passengerBean.setFirstName(passenger.getFirstName());
                 passengerBean.setDocNumber(passenger.getDocNumber());

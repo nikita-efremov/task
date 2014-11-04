@@ -72,7 +72,7 @@
                         <security:authorize access="! isAuthenticated()">
                             You are not logged on system
                             <button type="button" onclick="location.href='${contextPath}/login'" class="btn btn-success navbar-btn">Login</button>
-                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-primary navbar-btn">Register</button>
+                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-info navbar-btn">Register</button>
                         </security:authorize>
                     </li>
                 </ul>
@@ -89,17 +89,19 @@
         <div class="col-sm-8">
             <label>Your tickets</label>
             <div class="form-group">
-                <table id = "resultData">
-                    <tr>
-                        <th>Ticket number</th>
-                        <th>Train number</th>
-                    </tr>
-                    <c:forEach var="ticket" items="${tickets}">
-                    <tr>
-                        <td>${ticket.ticketNumber}</td>
-                        <td>${ticket.trainNumber}</td>
-                    </tr>
-                </c:forEach>
+                <table id = "resultDataV2" class = "table table-striped table-bordered table-hover">
+                    <tbody>
+                        <tr>
+                            <th>Ticket number</th>
+                            <th>Train number</th>
+                        </tr>
+                        <c:forEach var="ticket" items="${tickets}">
+                        <tr>
+                            <td>${ticket.ticketNumber}</td>
+                            <td>${ticket.trainNumber}</td>
+                        </tr>
+                        </c:forEach>
+                    </tbody>
                 </table>
             </div>
             <div class="form-group">

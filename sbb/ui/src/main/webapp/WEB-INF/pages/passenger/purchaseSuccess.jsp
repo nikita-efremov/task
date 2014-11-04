@@ -71,7 +71,7 @@
                         <security:authorize access="! isAuthenticated()">
                             You are not logged on system
                             <button type="button" onclick="location.href='${contextPath}/login'" class="btn btn-success navbar-btn">Login</button>
-                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-primary navbar-btn">Register</button>
+                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-info navbar-btn">Register</button>
                         </security:authorize>
                     </li>
                 </ul>
@@ -88,19 +88,21 @@
         <div class="col-sm-8">
             <label>You have been purchased ticket successfully. Ticket Data:</label>
             <div class="form-group">
-                <table id = "resultData">
-                    <TR>
-                        <TD>Ticket number:</TD>
-                        <TD>${ticketBean.ticketNumber}</TD>
-                    </TR>
-                    <TR>
-                        <TD>Train number:</TD>
-                        <TD>${ticketBean.trainNumber}</TD>
-                    </TR>
-                    <TR>
-                        <TD>Document number:</TD>
-                        <TD>${ticketBean.passengerDocNumber}</TD>
-                    </TR>
+                <table id = "resultDataV2" class="table table-bordered">
+                    <tbody>
+                        <TR>
+                            <TD>Ticket number:</TD>
+                            <TD>${ticketBean.ticketNumber}</TD>
+                        </TR>
+                        <TR>
+                            <TD>Train number:</TD>
+                            <TD>${ticketBean.trainNumber}</TD>
+                        </TR>
+                        <TR>
+                            <TD>Document number:</TD>
+                            <TD>${ticketBean.passengerDocNumber}</TD>
+                        </TR>
+                    </tbody>
                 </table>
             </div>
             <div class="form-group">

@@ -71,7 +71,7 @@
                         <security:authorize access="! isAuthenticated()">
                             You are not logged on system
                             <button type="button" onclick="location.href='${contextPath}/login'" class="btn btn-success navbar-btn">Login</button>
-                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-primary navbar-btn">Register</button>
+                            <button type="button" onclick="location.href='${contextPath}/register'" class="btn btn-info navbar-btn">Register</button>
                         </security:authorize>
                     </li>
                 </ul>
@@ -87,29 +87,31 @@
     <div class="panel-body">
         <div class="col-sm-8">
             <div class="form-group">
-                <table id = "resultData">
-                    <tr>
-                        <th>ID</th>
-                        <th>Number</th>
-                        <th>Seats</th>
-                        <th>Total seats</th>
-                        <th>Timetable</th>
-                        <th>Passengers</th>
-                    </tr>
-                    <c:forEach var="train" items="${allTrains}">
+                <table id = "resultDataV2" class = "table table-striped table-bordered table-hover">
+                    <tbody>
                         <tr>
-                            <td>${train.id}</td>
-                            <td>${train.number}</td>
-                            <td>${train.seats}</td>
-                            <td>${train.totalSeats}</td>
-                            <td>
-                                <a href="${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch timetable&Train_number=${train.number}">watch</a>
-                            </td>
-                            <td>
-                                <a href="${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch passengers&Train_number=${train.number}">watch</a>
-                            </td>
+                            <th>ID</th>
+                            <th>Number</th>
+                            <th>Seats</th>
+                            <th>Total seats</th>
+                            <th>Timetable</th>
+                            <th>Passengers</th>
                         </tr>
-                    </c:forEach>
+                        <c:forEach var="train" items="${allTrains}">
+                            <tr>
+                                <td>${train.id}</td>
+                                <td>${train.number}</td>
+                                <td>${train.seats}</td>
+                                <td>${train.totalSeats}</td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-xs tableButton" onclick="location.href='${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch timetable&Train_number=${train.number}'">Watch</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-xs tableButton" onclick="location.href='${contextPath}/administrator/train/SearchTrain?trainSearchAction=watch passengers&Train_number=${train.number}'">Watch</button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
                 </table>
             </div>
             <div class="form-group">
