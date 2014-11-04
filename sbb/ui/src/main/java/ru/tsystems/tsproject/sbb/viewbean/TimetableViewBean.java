@@ -1,10 +1,9 @@
-package ru.tsystems.tsproject.sbb.bean;
+package ru.tsystems.tsproject.sbb.viewbean;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -12,7 +11,7 @@ import java.util.Date;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class TimetableBean extends BaseBean implements Comparable<TimetableBean> {
+public class TimetableViewBean extends BaseViewBean implements Comparable<TimetableViewBean> {
 
     private int id;
 
@@ -59,7 +58,7 @@ public class TimetableBean extends BaseBean implements Comparable<TimetableBean>
     }
 
     @Override
-    public int compareTo(TimetableBean other) {
+    public int compareTo(TimetableViewBean other) {
        if (this.date.after(other.date)) {
            return 1;
        } else {

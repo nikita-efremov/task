@@ -1,12 +1,12 @@
-package ru.tsystems.tsproject.sbb.controller.administrator;
+package ru.tsystems.tsproject.sbb.controller.controllers.administrator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.tsystems.tsproject.sbb.bean.PassengerBean;
-import ru.tsystems.tsproject.sbb.model.PassengerModel;
+import ru.tsystems.tsproject.sbb.viewbean.PassengerViewBean;
+import ru.tsystems.tsproject.sbb.controller.helpers.PassengerControllersHelper;
 
 import java.util.Collection;
 
@@ -21,11 +21,11 @@ public class ViewAllPassengersController {
     private static final Logger log = Logger.getLogger(ViewAllPassengersController.class);
 
     @Autowired
-    private PassengerModel passengerModel;
+    private PassengerControllersHelper passengerControllersHelper;
 
     @RequestMapping("/administrator/passengers/ViewAllPassengers")
     public String viewPassengers(ModelMap modelMap) {
-        Collection<PassengerBean> passengers = passengerModel.getAllPassengers();
+        Collection<PassengerViewBean> passengers = passengerControllersHelper.getAllPassengers();
         modelMap.addAttribute("passengers", passengers);
         return "/administrator/passengers/viewAllPassengers";
     }

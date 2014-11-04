@@ -1,10 +1,6 @@
-package ru.tsystems.tsproject.sbb.bean;
+package ru.tsystems.tsproject.sbb.viewbean;
 
-import ru.tsystems.tsproject.sbb.entity.Ticket;
-
-import javax.persistence.Column;
 import javax.validation.constraints.*;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
@@ -14,7 +10,7 @@ import java.util.TreeSet;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class PassengerBean extends BaseBean {
+public class PassengerViewBean extends BaseViewBean {
 
     private int id;
 
@@ -31,7 +27,7 @@ public class PassengerBean extends BaseBean {
     @Pattern(regexp = "[A-Za-z0-9]{10}", message="Document number must contain 10 symbols: only english letters and digits")
     private String docNumber = "";
 
-    private Set<TicketBean> tickets = new TreeSet<TicketBean>();
+    private Set<TicketViewBean> tickets = new TreeSet<TicketViewBean>();
 
     @Pattern(regexp = "[A-Za-z0-9]{6,16}", message="Password must contain only english letters and digits, from 6 to 16 symbols")
     private String password;
@@ -76,15 +72,15 @@ public class PassengerBean extends BaseBean {
         this.docNumber = docNumber;
     }
 
-    public Set<TicketBean> getTickets() {
+    public Set<TicketViewBean> getTickets() {
         if (tickets == null) {
-            return new TreeSet<TicketBean>();
+            return new TreeSet<TicketViewBean>();
         } else {
             return tickets;
         }
     }
 
-    public void setTickets(Set<TicketBean> tickets) {
+    public void setTickets(Set<TicketViewBean> tickets) {
         this.tickets = tickets;
     }
 
@@ -100,11 +96,11 @@ public class PassengerBean extends BaseBean {
     public String toString() {
         StringBuilder ticketsString = new StringBuilder();
         if (tickets != null) {
-            for (TicketBean ticketBean: tickets) {
+            for (TicketViewBean ticketBean: tickets) {
                 ticketsString.append(ticketBean.toString()).append(",");
             }
         }
-        return "[PassengerBean: " +
+        return "[PassengerViewBean: " +
                 "id=" + id + ", " +
                 "docNumber=" + docNumber + "," +
                 "lastName=" + lastName + "," +

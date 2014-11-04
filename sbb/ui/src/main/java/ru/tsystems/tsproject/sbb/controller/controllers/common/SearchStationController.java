@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.controller.common;
+package ru.tsystems.tsproject.sbb.controller.controllers.common;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.tsystems.tsproject.sbb.validation.ValidationBean;
 import ru.tsystems.tsproject.sbb.validation.Validator;
-import ru.tsystems.tsproject.sbb.bean.StationBean;
-import ru.tsystems.tsproject.sbb.bean.TrainBean;
-import ru.tsystems.tsproject.sbb.model.TrainModel;
+import ru.tsystems.tsproject.sbb.viewbean.StationViewBean;
+import ru.tsystems.tsproject.sbb.viewbean.TrainViewBean;
+import ru.tsystems.tsproject.sbb.controller.helpers.TrainControllersHelper;
 
 import java.util.Collection;
 
@@ -27,23 +27,23 @@ public class SearchStationController {
     private static final Logger log = Logger.getLogger(SearchStationController.class);
 
     @Autowired
-    private TrainModel trainModel;
+    private TrainControllersHelper trainControllersHelper;
 
     @RequestMapping(value = "/common/searchStation", method = RequestMethod.GET)
     public ModelAndView initStationBean() {
-        return new ModelAndView("/common/searchStation", "stationBean", new StationBean());
+        return new ModelAndView("/common/searchStation", "stationBean", new StationViewBean());
     }
 
     @RequestMapping("/common/SearchStation")
-    public String searchStation(@ModelAttribute("stationBean") StationBean stationBean, ModelMap modelMap) {
-        log.info("Servlet got bean: " + stationBean);
+    public String searchStation(@ModelAttribute("stationBean") StationViewBean stationBean, ModelMap modelMap) {
+        log.info("Servlet got viewBean: " + stationBean);
         ValidationBean validationBean = Validator.validate(stationBean);
         if (validationBean.isValidationFailed()) {
             modelMap.addAttribute("validationBean", validationBean);
             modelMap.addAttribute("stationBean", stationBean);
             return "/common/searchStation";
         } else {
-            Collection<TrainBean> trains = trainModel.findTrainsByStation(stationBean);
+            Collection<TrainViewBean> trains = trainControllersHelper.findTrainsByStation(stationBean);
             if (stationBean.isProcessingFailed()) {
                 modelMap.addAttribute("stationBean", stationBean);
                 return "common/searchStation";

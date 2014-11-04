@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.controller.common;
+package ru.tsystems.tsproject.sbb.controller.controllers.common;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.tsystems.tsproject.sbb.validation.ValidationBean;
 import ru.tsystems.tsproject.sbb.validation.Validator;
-import ru.tsystems.tsproject.sbb.bean.ComplexTrainSearchBean;
-import ru.tsystems.tsproject.sbb.bean.TrainBean;
-import ru.tsystems.tsproject.sbb.model.TrainModel;
+import ru.tsystems.tsproject.sbb.viewbean.ComplexTrainSearchViewBean;
+import ru.tsystems.tsproject.sbb.viewbean.TrainViewBean;
+import ru.tsystems.tsproject.sbb.controller.helpers.TrainControllersHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -32,7 +32,7 @@ public class SearchTrainByStationsAndDateController {
     private static final Logger log = Logger.getLogger(SearchTrainByStationsAndDateController.class);
 
     @Autowired
-    private TrainModel trainModel;
+    private TrainControllersHelper trainControllersHelper;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -43,19 +43,19 @@ public class SearchTrainByStationsAndDateController {
 
     @RequestMapping(value = "/common/searchStationDateTrain", method = RequestMethod.GET)
     public ModelAndView initTimetableBean() {
-        return new ModelAndView("/common/searchStationDateTrain", "complexTrainSearchBean", new ComplexTrainSearchBean());
+        return new ModelAndView("/common/searchStationDateTrain", "complexTrainSearchBean", new ComplexTrainSearchViewBean());
     }
 
     @RequestMapping("/common/SearchStationDateTrain")
-    public String searchTrains(@ModelAttribute("complexTrainSearchBean") ComplexTrainSearchBean complexTrainSearchBean, ModelMap modelMap) {
-        log.info("Servlet got beans " + complexTrainSearchBean);
+    public String searchTrains(@ModelAttribute("complexTrainSearchBean") ComplexTrainSearchViewBean complexTrainSearchBean, ModelMap modelMap) {
+        log.info("Servlet got viewBean " + complexTrainSearchBean);
         ValidationBean validationBean = Validator.validate(complexTrainSearchBean);
         if (validationBean.isValidationFailed()) {
             modelMap.addAttribute("validationBean", validationBean);
             modelMap.addAttribute("complexTrainSearchBean", complexTrainSearchBean);
             return "/common/searchStationDateTrain";
         } else {
-            Collection<TrainBean> trains = trainModel.findTrainsByStationsAndDate(complexTrainSearchBean);
+            Collection<TrainViewBean> trains = trainControllersHelper.findTrainsByStationsAndDate(complexTrainSearchBean);
             if (complexTrainSearchBean.isProcessingFailed()) {
                 modelMap.addAttribute("complexTrainSearchBean", complexTrainSearchBean);
                 return "/common/searchStationDateTrain";

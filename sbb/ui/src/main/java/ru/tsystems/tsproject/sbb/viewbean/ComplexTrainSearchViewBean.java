@@ -1,8 +1,9 @@
-package ru.tsystems.tsproject.sbb.bean;
+package ru.tsystems.tsproject.sbb.viewbean;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Date;
  * @author  Nikita Efremov
  * @since   2.0
  */
-public class ComplexTrainSearchBean extends BaseBean {
+public class ComplexTrainSearchViewBean extends BaseViewBean {
 
     @Pattern(regexp = "[A-Za-z]+", message = "Station name must contain only english letters, one or more")
     private String stationStartName = "";
@@ -56,5 +57,23 @@ public class ComplexTrainSearchBean extends BaseBean {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public String toString() {
+        String startDateString = "";
+        if (startDate != null) {
+            startDateString = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(startDate);
+        }
+        String endDateString = "";
+        if (endDate != null) {
+            endDateString = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(endDate);
+        }
+        return "[ComplexTrainSearchViewBean: " +
+                "stationStartName=" + stationStartName + "," +
+                "stationEndName=" + stationEndName + "," +
+                "startDate=" + startDateString + "," +
+                "endDate=" + endDateString
+                + "]";
     }
 }

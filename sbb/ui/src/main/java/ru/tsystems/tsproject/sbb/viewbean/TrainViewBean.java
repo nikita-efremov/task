@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.bean;
+package ru.tsystems.tsproject.sbb.viewbean;
 
 import javax.validation.constraints.*;
 import java.util.Set;
@@ -9,7 +9,7 @@ import java.util.TreeSet;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class TrainBean extends BaseBean {
+public class TrainViewBean extends BaseViewBean {
 
     private int id;
 
@@ -23,7 +23,7 @@ public class TrainBean extends BaseBean {
     @Pattern(regexp = "[0-9]{1,3}", message = "Train seats value must contain only digits")
     private String totalSeats = "";
 
-    private Set<TimetableBean> timetables = new TreeSet<TimetableBean>();
+    private Set<TimetableViewBean> timetables = new TreeSet<TimetableViewBean>();
 
     public int getId() {
         return id;
@@ -57,15 +57,15 @@ public class TrainBean extends BaseBean {
         this.totalSeats = totalSeats;
     }
 
-    public Set<TimetableBean> getTimetables() {
+    public Set<TimetableViewBean> getTimetables() {
         if (timetables == null) {
-            return new TreeSet<TimetableBean>();
+            return new TreeSet<TimetableViewBean>();
         } else {
             return timetables;
         }
     }
 
-    public void setTimetables(Set<TimetableBean> timetables) {
+    public void setTimetables(Set<TimetableViewBean> timetables) {
         this.timetables = timetables;
     }
 
@@ -73,11 +73,11 @@ public class TrainBean extends BaseBean {
     public String toString() {
         StringBuilder timetable = new StringBuilder();
         if (timetables != null) {
-            for (TimetableBean timetableBean: timetables) {
+            for (TimetableViewBean timetableBean: timetables) {
                 timetable.append(timetableBean.toString()).append(",");
             }
         }
-        return "[TrainBean: " +
+        return "[TrainViewBean: " +
                 "id=" + id + ", " +
                 "number=" + number + "," +
                 "seats=" + seats + "," +

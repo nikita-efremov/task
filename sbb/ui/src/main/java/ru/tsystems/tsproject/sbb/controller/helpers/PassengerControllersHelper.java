@@ -1,20 +1,17 @@
-package ru.tsystems.tsproject.sbb.model;
+package ru.tsystems.tsproject.sbb.controller.helpers;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.tsystems.tsproject.sbb.bean.PassengerBean;
-import ru.tsystems.tsproject.sbb.bean.StationBean;
-import ru.tsystems.tsproject.sbb.bean.TicketBean;
+import ru.tsystems.tsproject.sbb.viewbean.PassengerViewBean;
+import ru.tsystems.tsproject.sbb.viewbean.TicketViewBean;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
-import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Ticket;
 import ru.tsystems.tsproject.sbb.exception.*;
 import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
-import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.service.api.PassengerService;
 
 import java.util.ArrayList;
@@ -28,9 +25,9 @@ import java.util.LinkedList;
  * @since   1.0
  */
 @Component
-public class PassengerModel {
+public class PassengerControllersHelper {
 
-    private static final Logger log = Logger.getLogger(PassengerModel.class);
+    private static final Logger log = Logger.getLogger(PassengerControllersHelper.class);
 
     @Autowired
     private PassengerService passengerService;
@@ -45,10 +42,10 @@ public class PassengerModel {
      * @param  passengerBean
      *         Passenger instance with default id value and specified last name, first name, document number and birth date
      *
-     * @return PassengerBean
+     * @return PassengerViewBean
      *         result of processing
      */
-    public PassengerBean addPassenger(PassengerBean passengerBean) {
+    public PassengerViewBean addPassenger(PassengerViewBean passengerBean) {
         try {
             String passwordHash = DigestUtils.md5Hex(passengerBean.getPassword());
 
@@ -88,10 +85,10 @@ public class PassengerModel {
      * @param  passengerBean
      *         Passenger instance with default id value and specified last name, first name, document number and birth date
      *
-     * @return PassengerBean
+     * @return PassengerViewBean
      *         result of processing
      */
-    public PassengerBean getPassenger(PassengerBean passengerBean) {
+    public PassengerViewBean getPassenger(PassengerViewBean passengerBean) {
         try {
             Passenger passenger = passengerService.findPassenger(passengerBean.getDocNumber());
 
@@ -120,16 +117,16 @@ public class PassengerModel {
      * @param  passengerBean
      *         Passenger instance with default id value and specified last name, first name, document number and birth date
      *
-     * @return Collection<TicketBean>
+     * @return Collection<TicketViewBean>
      *         collection of found tickets
      */
-    public Collection<TicketBean> getPassengerTickets(PassengerBean passengerBean) {
-        Collection<TicketBean> ticketBeans = new LinkedList<TicketBean>();
+    public Collection<TicketViewBean> getPassengerTickets(PassengerViewBean passengerBean) {
+        Collection<TicketViewBean> ticketBeans = new LinkedList<TicketViewBean>();
         try {
             Passenger passenger = passengerService.findPassenger(passengerBean.getDocNumber());
             Collection<Ticket> tickets = passenger.getTickets();
             for (Ticket ticket: tickets) {
-                TicketBean ticketBean = new TicketBean();
+                TicketViewBean ticketBean = new TicketViewBean();
                 ticketBean.setTicketNumber(ticket.getTicketNumber());
                 ticketBean.setTrainNumber(ticket.getTrain().getNumber());
                 ticketBeans.add(ticketBean);
@@ -157,10 +154,10 @@ public class PassengerModel {
      * @param  ticketBean
      *         Passenger instance with default id value and specified last name, first name, document number and birth date
      *
-     * @return TicketBean
+     * @return TicketViewBean
      *         result of processing
      */
-    public TicketBean purchaseTicket(TicketBean ticketBean) {
+    public TicketViewBean purchaseTicket(TicketViewBean ticketBean) {
         try {
             Ticket ticket = passengerService.purchaseTicket(ticketBean.getTrainNumber(), ticketBean.getPassengerDocNumber());
 
@@ -197,15 +194,15 @@ public class PassengerModel {
      * Gets collection of all passengers, which exist in system
      * If error occurs, method will add error message and error flag to output parameter
      *
-     * @return Collection<PassengerBean>
+     * @return Collection<PassengerViewBean>
      *         collection of passengers
      */
-    public Collection<PassengerBean> getAllPassengers() {
-        Collection<PassengerBean> passengerBeans = new ArrayList<PassengerBean>();
+    public Collection<PassengerViewBean> getAllPassengers() {
+        Collection<PassengerViewBean> passengerBeans = new ArrayList<PassengerViewBean>();
         try {
             Collection<Passenger> passengers = administratorService.getAllPassengers();
             for (Passenger passenger: passengers) {
-                PassengerBean passengerBean = new PassengerBean();
+                PassengerViewBean passengerBean = new PassengerViewBean();
                 passengerBean.setId(passenger.getId());
                 passengerBean.setDocNumber(passenger.getDocNumber());
                 passengerBean.setFirstName(passenger.getFirstName());

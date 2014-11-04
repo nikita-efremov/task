@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.bean;
+package ru.tsystems.tsproject.sbb.viewbean;
 
 import org.apache.log4j.Logger;
 
@@ -8,8 +8,8 @@ import org.apache.log4j.Logger;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public abstract class BaseBean {
-    private static final Logger log = Logger.getLogger(BaseBean.class);
+public abstract class BaseViewBean {
+    private static final Logger log = Logger.getLogger(BaseViewBean.class);
 
     /**
      * Text of error, which occurred during processing on service layer

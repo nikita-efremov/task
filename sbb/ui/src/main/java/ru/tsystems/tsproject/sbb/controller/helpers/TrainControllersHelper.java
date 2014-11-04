@@ -1,27 +1,18 @@
-package ru.tsystems.tsproject.sbb.model;
+package ru.tsystems.tsproject.sbb.controller.helpers;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import ru.tsystems.tsproject.sbb.bean.*;
+import ru.tsystems.tsproject.sbb.viewbean.*;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
-import ru.tsystems.tsproject.sbb.dao.api.*;
-import ru.tsystems.tsproject.sbb.dao.impl.*;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
-import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.*;
 import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
-import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.service.api.PassengerService;
-import ru.tsystems.tsproject.sbb.service.impl.AdministratorServiceImpl;
-import ru.tsystems.tsproject.sbb.service.impl.CommonServiceImpl;
-import ru.tsystems.tsproject.sbb.service.impl.PassengerServiceImpl;
 
-import javax.persistence.EntityManager;
 import java.util.*;
 
 /**
@@ -31,9 +22,9 @@ import java.util.*;
  * @since   1.0
  */
 @Component
-public class TrainModel {
+public class TrainControllersHelper {
 
-    private static final Logger log = Logger.getLogger(TrainModel.class);
+    private static final Logger log = Logger.getLogger(TrainControllersHelper.class);
 
     @Autowired
     private AdministratorService administratorService;
@@ -46,12 +37,12 @@ public class TrainModel {
      * If error occurs, method will add error message and error flag to output parameter
      *
      * @param  trainBean
-     *         TrainBean instance with default id value and specified name
+     *         TrainViewBean instance with default id value and specified name
      *
-     * @return TrainBean
+     * @return TrainViewBean
      *         result of processing
      */
-    public TrainBean addTrain(TrainBean trainBean) {
+    public TrainViewBean addTrain(TrainViewBean trainBean) {
         try {
             Train train = new Train();
             train.setNumber(trainBean.getNumber());
@@ -82,12 +73,12 @@ public class TrainModel {
      * If error occurs, method will add error message and error flag to output parameter
      *
      * @param  trainBean
-     *         TrainBean instance with default id value and specified name
+     *         TrainViewBean instance with default id value and specified name
      *
-     * @return TrainBean
+     * @return TrainViewBean
      *         result of processing
      */
-    public TrainBean findTrain(TrainBean trainBean) {
+    public TrainViewBean findTrain(TrainViewBean trainBean) {
         try {
             Train train = administratorService.findTrain(trainBean.getNumber());
 
@@ -96,9 +87,9 @@ public class TrainModel {
             trainBean.setSeats(String.valueOf(train.getSeats()));
             trainBean.setTotalSeats(String.valueOf(train.getTotalSeats()));
             Set<Timetable> timetableSet = train.getTimetables();
-            Set<TimetableBean> timetableBeanSet = new TreeSet<TimetableBean>();
+            Set<TimetableViewBean> timetableBeanSet = new TreeSet<TimetableViewBean>();
             for (Timetable timetable: timetableSet) {
-                TimetableBean timetableBean = new TimetableBean();
+                TimetableViewBean timetableBean = new TimetableViewBean();
                 timetableBean.setId(timetable.getId());
                 timetableBean.setDate(timetable.getDate());
                 timetableBean.setStationName(timetable.getStation().getName());
@@ -124,17 +115,17 @@ public class TrainModel {
      * If error occurs, method will add error message and error flag to output parameter
      *
      * @param  trainBean
-     *         TrainBean instance with default id value and specified name
+     *         TrainViewBean instance with default id value and specified name
      *
-     * @return Collection<PassengerBean>
+     * @return Collection<PassengerViewBean>
      *         result of processing
      */
-    public Collection<PassengerBean> findTrainPassengers(TrainBean trainBean) {
-        Collection<PassengerBean> passengerBeanSet = new LinkedList<PassengerBean>();
+    public Collection<PassengerViewBean> findTrainPassengers(TrainViewBean trainBean) {
+        Collection<PassengerViewBean> passengerBeanSet = new LinkedList<PassengerViewBean>();
         try {
             Collection<Passenger> passengers = administratorService.getPassengersByTrain(trainBean.getNumber());
             for (Passenger passenger: passengers) {
-                PassengerBean passengerBean = new PassengerBean();
+                PassengerViewBean passengerBean = new PassengerViewBean();
                 passengerBean.setId(passenger.getId());
                 passengerBean.setLastName(passenger.getLastName());
                 passengerBean.setFirstName(passenger.getFirstName());
@@ -160,12 +151,12 @@ public class TrainModel {
      * If error occurs, method will add error message and error flag to output parameter
      *
      * @param  timetableBean
-     *         TrainBean instance with default id value and specified name
+     *         TrainViewBean instance with default id value and specified name
      *
-     * @return TimetableBean
+     * @return TimetableViewBean
      *         result of processing
      */
-    public TimetableBean addTrainStop(TimetableBean timetableBean) {
+    public TimetableViewBean addTrainStop(TimetableViewBean timetableBean) {
         try {
             administratorService.addTimetable(timetableBean.getTrainNumber(), timetableBean.getStationName(), timetableBean.getDate());
         } catch (StationNotExistsException e) {
@@ -191,15 +182,15 @@ public class TrainModel {
      * Gets collection of trains, which have stop on specified station
      * If error occurs, method will add error message and error flag to output parameter
      *
-     * @return Collection<TrainBean>
+     * @return Collection<TrainViewBean>
      *         collection of trains
      */
-    public Collection<TrainBean> findTrainsByStation(StationBean stationBean) {
-        Collection<TrainBean> trainBeans = new ArrayList<TrainBean>();
+    public Collection<TrainViewBean> findTrainsByStation(StationViewBean stationBean) {
+        Collection<TrainViewBean> trainBeans = new ArrayList<TrainViewBean>();
         try {
             Collection<Train> trains = passengerService.findTrainsByStation(stationBean.getName());
             for (Train train: trains) {
-                TrainBean trainBean = new TrainBean();
+                TrainViewBean trainBean = new TrainViewBean();
                 trainBean.setId(train.getId());
                 trainBean.setNumber(train.getNumber());
                 trainBean.setSeats(String.valueOf(train.getSeats()));
@@ -223,11 +214,11 @@ public class TrainModel {
      * Gets collection of trains, which have stops on specified stations and specified dates
      * If error occurs, method will add error message and error flag to output parameter
      *
-     * @return Collection<TrainBean>
+     * @return Collection<TrainViewBean>
      *         collection of trains
      */
-    public Collection<TrainBean> findTrainsByStationsAndDate(ComplexTrainSearchBean  complexTrainSearchBean) {
-        Collection<TrainBean> trainBeans = new ArrayList<TrainBean>();
+    public Collection<TrainViewBean> findTrainsByStationsAndDate(ComplexTrainSearchViewBean complexTrainSearchBean) {
+        Collection<TrainViewBean> trainBeans = new ArrayList<TrainViewBean>();
         try {
             Collection<Train> trains = passengerService.findTrainsByStationsAndDate(
                     complexTrainSearchBean.getStationStartName(),
@@ -235,7 +226,7 @@ public class TrainModel {
                     complexTrainSearchBean.getStartDate(),
                     complexTrainSearchBean.getEndDate());
             for (Train train: trains) {
-                TrainBean trainBean = new TrainBean();
+                TrainViewBean trainBean = new TrainViewBean();
                 trainBean.setId(train.getId());
                 trainBean.setNumber(train.getNumber());
                 trainBean.setSeats(String.valueOf(train.getSeats()));
@@ -259,15 +250,15 @@ public class TrainModel {
      * Gets collection of all trains, which exist in system
      * If error occurs, method will add error message and error flag to output parameter
      *
-     * @return Collection<TrainBean>
+     * @return Collection<TrainViewBean>
      *         collection of trains
      */
-    public Collection<TrainBean> getAllTrains() {
-        Collection<TrainBean> trainBeans = new ArrayList<TrainBean>();
+    public Collection<TrainViewBean> getAllTrains() {
+        Collection<TrainViewBean> trainBeans = new ArrayList<TrainViewBean>();
         try {
             Collection<Train> trains = administratorService.getAllTrains();
             for (Train train: trains) {
-                TrainBean trainBean = new TrainBean();
+                TrainViewBean trainBean = new TrainViewBean();
                 trainBean.setId(train.getId());
                 trainBean.setNumber(train.getNumber());
                 trainBean.setSeats(String.valueOf(train.getSeats()));

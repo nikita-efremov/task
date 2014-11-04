@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.controller.passenger;
+package ru.tsystems.tsproject.sbb.controller.controllers.passenger;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.tsystems.tsproject.sbb.validation.ValidationBean;
 import ru.tsystems.tsproject.sbb.validation.Validator;
-import ru.tsystems.tsproject.sbb.bean.PassengerBean;
-import ru.tsystems.tsproject.sbb.model.PassengerModel;
+import ru.tsystems.tsproject.sbb.viewbean.PassengerViewBean;
+import ru.tsystems.tsproject.sbb.controller.helpers.PassengerControllersHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,7 +36,7 @@ public class PassengerRegisterController {
     private static final Logger log = Logger.getLogger(PassengerRegisterController.class);
 
     @Autowired
-    private PassengerModel passengerModel;
+    private PassengerControllersHelper passengerControllersHelper;
 
     @Autowired
     @Qualifier("userDetailsServiceImpl")
@@ -55,12 +55,12 @@ public class PassengerRegisterController {
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView initPassengerBean() {
-        return new ModelAndView("/register", "passengerBean", new PassengerBean());
+        return new ModelAndView("/register", "passengerBean", new PassengerViewBean());
     }
 
     @RequestMapping("/RegisterPassenger")
-    public String register(@ModelAttribute("passengerBean") PassengerBean passengerBean, ModelMap modelMap) {
-        log.info("Servlet got bean: " + passengerBean);
+    public String register(@ModelAttribute("passengerBean") PassengerViewBean passengerBean, ModelMap modelMap) {
+        log.info("Servlet got viewBean: " + passengerBean);
         String password = passengerBean.getPassword();
         ValidationBean validationBean = Validator.validate(passengerBean);
         if (validationBean.isValidationFailed()) {
@@ -68,7 +68,7 @@ public class PassengerRegisterController {
             modelMap.addAttribute("validationBean", validationBean);
             return "/register";
         } else {
-            passengerBean = passengerModel.addPassenger(passengerBean);
+            passengerBean = passengerControllersHelper.addPassenger(passengerBean);
             modelMap.addAttribute("passengerBean", passengerBean);
             if (passengerBean.isProcessingFailed()) {
                 return "/register";

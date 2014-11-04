@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.controller.administrator;
+package ru.tsystems.tsproject.sbb.controller.controllers.administrator;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

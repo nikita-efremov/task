@@ -1,16 +1,15 @@
-package ru.tsystems.tsproject.sbb.bean;
+package ru.tsystems.tsproject.sbb.viewbean;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
-import java.text.SimpleDateFormat;
 
 /**
  * View bean class which contents information about the ticket. It is using for representing data on view layer
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class TicketBean extends BaseBean {
+public class TicketViewBean extends BaseViewBean {
 
     private int id;
 

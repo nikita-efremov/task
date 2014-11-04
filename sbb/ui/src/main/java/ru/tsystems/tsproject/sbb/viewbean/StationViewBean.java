@@ -1,8 +1,5 @@
-package ru.tsystems.tsproject.sbb.bean;
+package ru.tsystems.tsproject.sbb.viewbean;
 
-import ru.tsystems.tsproject.sbb.entity.Timetable;
-
-import javax.persistence.Column;
 import javax.validation.constraints.Pattern;
 import java.util.Set;
 import java.util.TreeSet;
@@ -12,14 +9,14 @@ import java.util.TreeSet;
  * @author  Nikita Efremov
  * @since   1.0
  */
-public class StationBean extends BaseBean {
+public class StationViewBean extends BaseViewBean {
 
     private int id = 0;
 
     @Pattern(regexp = "[A-Za-z]+", message="Station name must contain only english letters, one or more")
     private String name = "";
 
-    private Set<TimetableBean> timetables = new TreeSet<TimetableBean>();
+    private Set<TimetableViewBean> timetables = new TreeSet<TimetableViewBean>();
 
     public int getId() {
         return id;
@@ -37,11 +34,11 @@ public class StationBean extends BaseBean {
         this.name = name;
     }
 
-    public Set<TimetableBean> getTimetables() {
+    public Set<TimetableViewBean> getTimetables() {
         return timetables;
     }
 
-    public void setTimetables(Set<TimetableBean> timetables) {
+    public void setTimetables(Set<TimetableViewBean> timetables) {
         this.timetables = timetables;
     }
 
@@ -49,11 +46,11 @@ public class StationBean extends BaseBean {
     public String toString() {
         StringBuilder timetable = new StringBuilder();
         if (timetables != null) {
-            for (TimetableBean timetableBean: timetables) {
+            for (TimetableViewBean timetableBean: timetables) {
                 timetable.append(timetableBean.toString()).append(",");
             }
         }
-        return "[StationBean: " +
+        return "[StationViewBean: " +
                 "id=" + id + ", " +
                 "name=" + name + "," +
                 "timetables=" + timetable.toString()

@@ -1,24 +1,18 @@
-package ru.tsystems.tsproject.sbb.model;
+package ru.tsystems.tsproject.sbb.controller.helpers;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.tsystems.tsproject.sbb.bean.StationBean;
-import ru.tsystems.tsproject.sbb.bean.TimetableBean;
-import ru.tsystems.tsproject.sbb.dao.api.*;
-import ru.tsystems.tsproject.sbb.dao.impl.*;
+import ru.tsystems.tsproject.sbb.viewbean.StationViewBean;
+import ru.tsystems.tsproject.sbb.viewbean.TimetableViewBean;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
 import ru.tsystems.tsproject.sbb.exception.StationNotExistsException;
 import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
-import ru.tsystems.tsproject.sbb.service.api.CommonService;
-import ru.tsystems.tsproject.sbb.service.impl.AdministratorServiceImpl;
-import ru.tsystems.tsproject.sbb.service.impl.CommonServiceImpl;
 
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -32,8 +26,8 @@ import java.util.TreeSet;
  * @since   1.0
  */
 @Component
-public class StationModel {
-    private static final Logger log = Logger.getLogger(StationModel.class);
+public class StationControllersHelper {
+    private static final Logger log = Logger.getLogger(StationControllersHelper.class);
 
     @Autowired
     private AdministratorService administratorService;
@@ -43,12 +37,12 @@ public class StationModel {
      * If error occurs, method will add error message and error flag to output parameter
      *
      * @param  stationBean
-     *         StationBean instance with default id value and specified name
+     *         StationViewBean instance with default id value and specified name
      *
-     * @return StationBean
+     * @return StationViewBean
      *         result of processing
      */
-    public StationBean addStation(StationBean stationBean) {
+    public StationViewBean addStation(StationViewBean stationBean) {
         try {
             Station station = new Station();
             station.setName(stationBean.getName());
@@ -75,12 +69,12 @@ public class StationModel {
      * If error occurs, method will add error message and error flag to output parameter
      *
      * @param  stationBean
-     *         TrainBean instance with default id value and specified name
+     *         TrainViewBean instance with default id value and specified name
      *
-     * @return StationBean
+     * @return StationViewBean
      *         result of processing
      */
-    public StationBean findStation(StationBean stationBean) {
+    public StationViewBean findStation(StationViewBean stationBean) {
         try {
             Station station = new Station();
             station.setName(stationBean.getName());
@@ -90,9 +84,9 @@ public class StationModel {
             stationBean.setId(station.getId());
             stationBean.setName(station.getName());
             Set<Timetable> timetableSet = station.getTimetables();
-            Set<TimetableBean> timetableBeanSet = new TreeSet<TimetableBean>();
+            Set<TimetableViewBean> timetableBeanSet = new TreeSet<TimetableViewBean>();
             for (Timetable timetable: timetableSet) {
-                TimetableBean timetableBean = new TimetableBean();
+                TimetableViewBean timetableBean = new TimetableViewBean();
                 timetableBean.setId(timetable.getId());
                 timetableBean.setDate(timetable.getDate());
                 timetableBean.setStationName(timetable.getStation().getName());
@@ -117,15 +111,15 @@ public class StationModel {
      * Gets collection of all stations, which exist in system
      * If error occurs, method will add error message and error flag to output parameter
      *
-     * @return Collection<StationBean>
+     * @return Collection<StationViewBean>
      *         collection of stations
      */
-    public Collection<StationBean> getAllStations() {
-        Collection<StationBean> stationBeans = new ArrayList<StationBean>();
+    public Collection<StationViewBean> getAllStations() {
+        Collection<StationViewBean> stationBeans = new ArrayList<StationViewBean>();
         try {
             Collection<Station> stations = administratorService.getAllStations();
             for (Station station: stations) {
-                StationBean stationBean = new StationBean();
+                StationViewBean stationBean = new StationViewBean();
                 stationBean.setId(station.getId());
                 stationBean.setName(station.getName());
                 stationBeans.add(stationBean);
