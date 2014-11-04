@@ -20,9 +20,18 @@ public class ViewAllTrainsController {
 
     private static final Logger log = Logger.getLogger(ViewAllTrainsController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private TrainControllersHelper trainControllersHelper;
 
+    /**
+     * Proceeds requests of getting all trains and forwards to trains view page
+     * @param modelMap
+     *        Map of viewBean
+     * @return JSP address to forward
+     */
     @RequestMapping("/administrator/train/ViewAllTrains")
     public String viewTrains(ModelMap modelMap) {
         Collection<TrainViewBean> trains = trainControllersHelper.getAllTrains();

@@ -32,6 +32,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private PassengerService passengerService;
 
+    /**
+     * Gets user by its docNumber, which is username
+     * @param docNumber
+     *        Document number of passenger
+     * @return Found user details object
+     * @throws UsernameNotFoundException
+     *         If user is not found
+     */
     @Override
     public UserDetails loadUserByUsername(String docNumber) throws UsernameNotFoundException {
         Passenger passenger;

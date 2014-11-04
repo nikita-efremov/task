@@ -22,9 +22,18 @@ public class SearchTicketsController {
 
     private static final Logger log = Logger.getLogger(SearchTicketsController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private PassengerControllersHelper passengerControllersHelper;
 
+    /**
+     * Proceeds requests of searching passenger tickets and forwards to watching tickets page
+     * @param modelMap
+     *        Map with viewBeans
+     * @return JSP address to forward
+     */
     @RequestMapping("/passenger/WatchTickets")
     public String searchTickets(ModelMap modelMap) {
         PassengerViewBean passengerBean = new PassengerViewBean();

@@ -20,9 +20,20 @@ public class TrainTimetableController {
 
     private final static Logger log = Logger.getLogger(TrainTimetableController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private TrainControllersHelper trainControllersHelper;
 
+    /**
+     * Proceeds requests of getting train timetable and forwards to watching timetable view page
+     * @param trainNumber
+     *        Number of the train to search timetable
+     * @param modelMap
+     *        Map with viewBeans
+     * @return JSP address to forward
+     */
     @RequestMapping(value = "/common/TrainTimetable",
             method = RequestMethod.GET,
             params = "trainSearchAction=watch timetable")

@@ -25,14 +25,29 @@ public class PurchaseTicketController {
 
     private static final Logger log = Logger.getLogger(PurchaseTicketController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private PassengerControllersHelper passengerControllersHelper;
 
+    /**
+     * Adds ticketViewBean to the view and forwards to JSP with form of purchasing ticket
+     * @return JSP address to forward
+     */
     @RequestMapping(value = "/passenger/purchase", method = RequestMethod.GET)
     public ModelAndView initTicketBean() {
         return new ModelAndView("/passenger/purchase", "ticketBean", new TicketViewBean());
     }
 
+    /**
+     * Gets request of purchasing ticket,calls purchase proceeding method and then forwards to appropriate page
+     * @param trainNumber
+     *        Number of the train to purchase ticket
+     * @param modelMap
+     *        Map with viewBeans
+     * @return JSP address to redirect
+     */
     @RequestMapping(value = "/passenger/TicketPurchase",
             method = RequestMethod.GET,
             params = "purchaseAction=Purchase")
@@ -43,6 +58,14 @@ public class PurchaseTicketController {
         return makePurchase(ticketBean, modelMap);
     }
 
+    /**
+     * Gets request of purchasing ticket, calls purchase proceeding method and then forwards to appropriate page
+     * @param ticketBean
+     *        Bean with ticket info
+     * @param modelMap
+     *        Map with viewBeans
+     * @return JSP address to redirect
+     */
     @RequestMapping(value = "/passenger/TicketPurchase",
             method = RequestMethod.POST)
     public String purchaseFromSpecialForm(@ModelAttribute("ticketBean") TicketViewBean ticketBean, ModelMap modelMap) {
@@ -50,6 +73,14 @@ public class PurchaseTicketController {
         return makePurchase(ticketBean, modelMap);
     }
 
+    /**
+     * Proceeds ticket purchasing and return result to controller method
+     * @param ticketBean
+     *        ViewBean with ticket info
+     * @param modelMap
+     *        Map with viewBeans
+     * @return JSP address to redirect
+     */
     private String makePurchase(TicketViewBean ticketBean, ModelMap modelMap) {
         log.info("Servlet got viewBean: " + ticketBean);
         ValidationBean validationBean = Validator.validate(ticketBean, "trainNumber");

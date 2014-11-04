@@ -11,21 +11,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ForwarderController {
 
+    /**
+     * Forwards no index page
+     * @return JSP address to forward
+     */
     @RequestMapping(value = {"/", "/index"})
     public String toIndexPage() {
         return "/index";
     }
 
+    /**
+     * Forwards to administrator main page
+     * @return JSP address to forward
+     */
     @RequestMapping("/administrator/administratorMain")
     public String toAdministratorPage() {
         return "/administrator/administratorMain";
     }
 
+    /**
+     * Forwards to login page
+     * @return JSP address to forward
+     */
     @RequestMapping("/login")
     public String toLoginPage() {
         return "/login";
     }
 
+    /**
+     * Forwards to 403 error page
+     * @return JSP address to forward
+     */
     @RequestMapping("/error403")
     public String toErrorPage() {
         return "/error403";

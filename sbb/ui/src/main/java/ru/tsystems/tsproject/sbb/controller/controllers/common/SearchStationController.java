@@ -26,14 +26,29 @@ public class SearchStationController {
 
     private static final Logger log = Logger.getLogger(SearchStationController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private TrainControllersHelper trainControllersHelper;
 
+    /**
+     * Adds stationViewBean to the view and forwards to JSP with form of searching trains by station
+     * @return JSP address to forward
+     */
     @RequestMapping(value = "/common/searchStation", method = RequestMethod.GET)
     public ModelAndView initStationBean() {
         return new ModelAndView("/common/searchStation", "stationBean", new StationViewBean());
     }
 
+    /**
+     * Proceeds requests of station timetable searching and then forwards to appropriate page
+     * @param stationBean
+     *        ViewBean with station information
+     * @param modelMap
+     *        Map with viewBeans
+     * @return JSP address to forward
+     */
     @RequestMapping("/common/SearchStation")
     public String searchStation(@ModelAttribute("stationBean") StationViewBean stationBean, ModelMap modelMap) {
         log.info("Servlet got viewBean: " + stationBean);

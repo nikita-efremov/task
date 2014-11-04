@@ -35,17 +35,32 @@ public class PassengerRegisterController {
 
     private static final Logger log = Logger.getLogger(PassengerRegisterController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private PassengerControllersHelper passengerControllersHelper;
 
+    /**
+     * Needs for searching registered user and its details
+     */
     @Autowired
     @Qualifier("userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
 
+    /**
+     * Needs for authentication after successful registration
+     */
     @Autowired
     @Qualifier("customAuthenticationManager")
     protected AuthenticationManager authenticationManager;
 
+    /**
+     * Creates date formatter for jsp
+     *
+     * @param binder
+     *        Binder which binds data in view
+     */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -53,11 +68,24 @@ public class PassengerRegisterController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, true));
     }
 
+    /**
+     * Adds passengerViewBean to the view and forwards to JSP with form of adding new passenger
+     * @return JSP address to forwards
+     */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView initPassengerBean() {
         return new ModelAndView("/register", "passengerBean", new PassengerViewBean());
     }
 
+    /**
+     * Proceeds requests of passenger registering and then forwards to appropriate page.
+     * If registration was successful, passenger will be authorized in system
+     * @param passengerBean
+     *        ViewBean with new passenger info
+     * @param modelMap
+     *        Map with view beans
+     * @return JSP address to forward
+     */
     @RequestMapping("/RegisterPassenger")
     public String register(@ModelAttribute("passengerBean") PassengerViewBean passengerBean, ModelMap modelMap) {
         log.info("Servlet got viewBean: " + passengerBean);

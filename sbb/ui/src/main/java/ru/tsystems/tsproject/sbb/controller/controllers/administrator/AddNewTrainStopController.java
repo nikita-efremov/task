@@ -27,9 +27,18 @@ public class AddNewTrainStopController {
 
     private static final Logger log = Logger.getLogger(AddNewTrainStopController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private TrainControllersHelper trainControllersHelper;
 
+    /**
+     * Creates date formatter for jsp
+     *
+     * @param binder
+     *        Binder which binds data in view
+     */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -37,6 +46,13 @@ public class AddNewTrainStopController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, true));
     }
 
+    /**
+     * Method adds timetableViewBean to view with specified trainNumber and forwards to JSP with form of adding new train stop
+     * @param trainNumber
+     *        Number of train, on which stop must be added
+     * @return ModelAndView
+     *         JSP page with form of adding new train stop
+     */
     @RequestMapping(value = "/administrator/train/addNewTrainStop", method = RequestMethod.GET)
     public ModelAndView initTimetableBean(@RequestParam("Train_number") String trainNumber) {
         TimetableViewBean timetableBean = new TimetableViewBean();
@@ -44,6 +60,14 @@ public class AddNewTrainStopController {
         return new ModelAndView("/administrator/timetable/addNewTimetable", "timetableBean", timetableBean);
     }
 
+    /**
+     * Proceeds requests of adding a new stop for train and then forwards to appropriate page
+     * @param timetableBean
+     *        ViewBean with information about new stop of the train
+     * @param modelMap
+     *        Map of view beans
+     * @return JSP page address to forward
+     */
     @RequestMapping("/administrator/train/AddNewTrainStop")
     public String addStrop(@ModelAttribute("timetableBean") TimetableViewBean timetableBean, ModelMap modelMap) {
         log.info("Servlet got viewBean:" + timetableBean);

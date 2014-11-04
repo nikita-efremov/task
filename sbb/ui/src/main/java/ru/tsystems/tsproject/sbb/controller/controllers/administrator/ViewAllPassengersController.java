@@ -20,9 +20,18 @@ public class ViewAllPassengersController {
 
     private static final Logger log = Logger.getLogger(ViewAllPassengersController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private PassengerControllersHelper passengerControllersHelper;
 
+    /**
+     * Proceeds requests of getting all passengers and forwards to train view page
+     * @param modelMap
+     *        Map of viewBeans
+     * @return JSP address to forward
+     */
     @RequestMapping("/administrator/passengers/ViewAllPassengers")
     public String viewPassengers(ModelMap modelMap) {
         Collection<PassengerViewBean> passengers = passengerControllersHelper.getAllPassengers();

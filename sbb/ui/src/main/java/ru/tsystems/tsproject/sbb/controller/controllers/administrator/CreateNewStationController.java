@@ -23,14 +23,30 @@ public class CreateNewStationController {
 
     private static final Logger log = Logger.getLogger(CreateNewStationController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private StationControllersHelper stationControllersHelper;
 
+    /**
+     * Method adds stationViewBEan to the view and forwards to JSP with form of adding new station
+     * @return ModelAndView
+     *         JSP page with form of adding new station
+     */
     @RequestMapping(value = "/administrator/station/createNewStation", method = RequestMethod.GET)
     public ModelAndView initStationBean() {
         return new ModelAndView("/administrator/station/createNewStation", "stationBean", new StationViewBean());
     }
 
+    /**
+     * Proceeds requests of creation new station and then forwards to appropriate page
+     * @param stationBean
+     *        ViewBean with information about new station
+     * @param modelMap
+     *        Map of viewBeans
+     * @return JSP page address to forward
+     */
     @RequestMapping("/administrator/station/CreateNewStation")
     public String addStation(@ModelAttribute("stationBean") StationViewBean stationBean, ModelMap modelMap) {
         log.info("Servlet got viewBean: " + stationBean);

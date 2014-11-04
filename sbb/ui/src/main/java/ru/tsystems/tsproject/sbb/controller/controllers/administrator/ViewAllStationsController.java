@@ -20,9 +20,18 @@ public class ViewAllStationsController {
 
     private static final Logger log = Logger.getLogger(ViewAllStationsController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private StationControllersHelper stationControllersHelper;
 
+    /**
+     * Proceeds requests of getting all stations and forwards to passengers view page
+     * @param modelMap
+     *        Map of viewBean
+     * @return JSP address to forward
+     */
     @RequestMapping("/administrator/station/ViewAllStations")
     public String viewStations(ModelMap modelMap) {
         Collection<StationViewBean> stations = stationControllersHelper.getAllStations();

@@ -23,14 +23,30 @@ public class CreateNewTrainController {
 
     private static final Logger log = Logger.getLogger(CreateNewTrainController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private TrainControllersHelper trainControllersHelper;
 
+    /**
+     * Method adds trainViewBean to the view and forwards to JSP with form of adding new train
+     * @return ModelAndView
+     *         JSP page with form of adding new train
+     */
     @RequestMapping(value = "/administrator/train/createNewTrain", method = RequestMethod.GET)
     public ModelAndView initTrainBean() {
         return new ModelAndView("/administrator/train/createNewTrain", "trainBean", new TrainViewBean());
     }
 
+    /**
+     * Proceeds requests of train creation and then forwards to appropriate page
+     * @param trainBean
+     *        ViewBean with information about new train
+     * @param modelMap
+     *        Map of viewBeans
+     * @return JSP page address to forward
+     */
     @RequestMapping("/administrator/train/CreateNewTrain")
     public String addTrain(@ModelAttribute("trainBean") TrainViewBean trainBean, ModelMap modelMap) {
         trainBean.setSeats(trainBean.getTotalSeats());

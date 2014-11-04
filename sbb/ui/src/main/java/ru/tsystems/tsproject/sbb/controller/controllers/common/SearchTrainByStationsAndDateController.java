@@ -31,9 +31,18 @@ public class SearchTrainByStationsAndDateController {
 
     private static final Logger log = Logger.getLogger(SearchTrainByStationsAndDateController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private TrainControllersHelper trainControllersHelper;
 
+    /**
+     * Creates date formatter for jsp
+     *
+     * @param binder
+     *        Binder which binds data in view
+     */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -41,11 +50,23 @@ public class SearchTrainByStationsAndDateController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, true));
     }
 
+    /**
+     * Adds complexTrainSearchViewBean to the view and forwards to JSP with form of searching trains by stations and date
+     * @return JSP address to forward
+     */
     @RequestMapping(value = "/common/searchStationDateTrain", method = RequestMethod.GET)
     public ModelAndView initTimetableBean() {
         return new ModelAndView("/common/searchStationDateTrain", "complexTrainSearchBean", new ComplexTrainSearchViewBean());
     }
 
+    /**
+     * Proceeds requests of searching trains by stations and date and then forwards to appropriate page
+     * @param complexTrainSearchBean
+     *        ViewBean with search information
+     * @param modelMap
+     *        Map with viewBeans
+     * @return JSP address to forward
+     */
     @RequestMapping("/common/SearchStationDateTrain")
     public String searchTrains(@ModelAttribute("complexTrainSearchBean") ComplexTrainSearchViewBean complexTrainSearchBean, ModelMap modelMap) {
         log.info("Servlet got viewBean " + complexTrainSearchBean);

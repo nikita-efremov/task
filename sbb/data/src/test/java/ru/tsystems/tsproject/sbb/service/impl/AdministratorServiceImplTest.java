@@ -224,4 +224,10 @@ public class AdministratorServiceImplTest {
         administratorService.getAllTrains();
         verify(trainDAO).getAll();
     }
+
+    @Test
+    public void testGetAllPassengers() throws Exception {
+        administratorService.getAllPassengers();
+        verify(passengerDAO).getAll();
+    }
 }

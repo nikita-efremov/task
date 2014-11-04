@@ -27,14 +27,29 @@ public class SearchTrainController {
 
     private static final Logger log = Logger.getLogger(SearchTrainController.class);
 
+    /**
+     * Used for mapping data and launching service methods
+     */
     @Autowired
     private TrainControllersHelper trainControllersHelper;
 
+    /**
+     * Adds trainViewBean to the view and forwards to JSP with form of searching train
+     * @return JSP address to forward
+     */
     @RequestMapping(value = "/administrator/train/searchTrain", method = RequestMethod.GET)
     public ModelAndView initTrainBean() {
         return new ModelAndView("/administrator/train/searchTrain", "trainBean", new TrainViewBean());
     }
 
+    /**
+     * Proceeds requests of watching train passengers and then forwards to watching passengers page
+     * @param trainNumber
+     *        Number of the train
+     * @param modelMap
+     *        Map with view beans
+     * @return JSP address to forward
+     */
     @RequestMapping(value = "/administrator/train/SearchTrain",
             method = RequestMethod.GET,
             params = "trainSearchAction=watch passengers")
@@ -47,6 +62,14 @@ public class SearchTrainController {
         return "/administrator/passengers/passengersOnTrain";
     }
 
+    /**
+     * Proceeds requests of watching train timetable and then forwards to watching timetable page
+     * @param trainNumber
+     *        Number of the train
+     * @param modelMap
+     *        Map with view beans
+     * @return JSP address to forward
+     */
     @RequestMapping(value = "/administrator/train/SearchTrain",
             method = RequestMethod.GET,
             params = "trainSearchAction=watch timetable")
@@ -58,6 +81,14 @@ public class SearchTrainController {
         return "/common/trainTimetable";
     }
 
+    /**
+     * Proceeds requests od train searching and then forwards to train search page
+     * @param trainBean
+     *        ViewBean with train information
+     * @param modelMap
+     *        Map with viewBeans
+     * @return JSP address to forward
+     */
     @RequestMapping(value = "/administrator/train/SearchTrain", method = RequestMethod.POST)
     public String searchTrain(@ModelAttribute("trainBean") TrainViewBean trainBean, ModelMap modelMap) {
         log.info("Servlet got viewBean: " + trainBean);
