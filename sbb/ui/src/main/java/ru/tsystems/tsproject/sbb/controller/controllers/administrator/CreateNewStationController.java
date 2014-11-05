@@ -36,7 +36,7 @@ public class CreateNewStationController {
      */
     @RequestMapping(value = "/administrator/station/createNewStation", method = RequestMethod.GET)
     public ModelAndView initStationBean() {
-        return new ModelAndView("/administrator/station/createNewStation", "stationBean", new StationViewBean());
+        return new ModelAndView("/administrator/station/createNewStation", StationViewBean.DEFAULT_NAME, new StationViewBean());
     }
 
     /**
@@ -52,12 +52,12 @@ public class CreateNewStationController {
         log.info("Servlet got viewBean: " + stationBean);
         ValidationBean validationBean = Validator.validate(stationBean);
         if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute("validationBean", validationBean);
-            modelMap.addAttribute("stationBean", stationBean);
+            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
+            modelMap.addAttribute(StationViewBean.DEFAULT_NAME, stationBean);
             return "/administrator/station/createNewStation";
         } else {
             stationBean = stationControllersHelper.addStation(stationBean);
-            modelMap.addAttribute("stationBean", stationBean);
+            modelMap.addAttribute(StationViewBean.DEFAULT_NAME, stationBean);
             if (stationBean.isProcessingFailed()) {
                 return "/administrator/station/createNewStation";
             } else {

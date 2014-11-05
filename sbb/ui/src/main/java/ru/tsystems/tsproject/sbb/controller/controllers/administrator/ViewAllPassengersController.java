@@ -19,6 +19,7 @@ import java.util.Collection;
 public class ViewAllPassengersController {
 
     private static final Logger log = Logger.getLogger(ViewAllPassengersController.class);
+    private static final String PASSENGERS = "passengers";
 
     /**
      * Used for mapping data and launching service methods
@@ -35,7 +36,7 @@ public class ViewAllPassengersController {
     @RequestMapping("/administrator/passengers/ViewAllPassengers")
     public String viewPassengers(ModelMap modelMap) {
         Collection<PassengerViewBean> passengers = passengerControllersHelper.getAllPassengers();
-        modelMap.addAttribute("passengers", passengers);
+        modelMap.addAttribute(PASSENGERS, passengers);
         return "/administrator/passengers/viewAllPassengers";
     }
 }

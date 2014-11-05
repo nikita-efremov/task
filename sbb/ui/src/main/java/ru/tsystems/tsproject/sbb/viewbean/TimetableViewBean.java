@@ -13,6 +13,8 @@ import java.util.Date;
  */
 public class TimetableViewBean extends BaseViewBean implements Comparable<TimetableViewBean> {
 
+    public static final String DEFAULT_NAME = "timetableBean";
+
     private int id;
 
     @Pattern(regexp = "[A-Za-z0-9]+", message = "Train number name must contain only english letters and digits, one or more")

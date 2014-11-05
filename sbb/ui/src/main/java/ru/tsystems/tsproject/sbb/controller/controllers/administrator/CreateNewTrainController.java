@@ -36,7 +36,7 @@ public class CreateNewTrainController {
      */
     @RequestMapping(value = "/administrator/train/createNewTrain", method = RequestMethod.GET)
     public ModelAndView initTrainBean() {
-        return new ModelAndView("/administrator/train/createNewTrain", "trainBean", new TrainViewBean());
+        return new ModelAndView("/administrator/train/createNewTrain", TrainViewBean.DEFAULT_NAME, new TrainViewBean());
     }
 
     /**
@@ -53,12 +53,12 @@ public class CreateNewTrainController {
         log.info("Servlet got viewBean: " + trainBean);
         ValidationBean validationBean = Validator.validate(trainBean);
         if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute("validationBean", validationBean);
-            modelMap.addAttribute("trainBean", trainBean);
+            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
+            modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
             return "/administrator/train/createNewTrain";
         } else {
             trainBean = trainControllersHelper.addTrain(trainBean);
-            modelMap.addAttribute("trainBean", trainBean);
+            modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
             if (trainBean.isProcessingFailed()) {
                 return "/administrator/train/createNewTrain";
             } else {

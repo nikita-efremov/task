@@ -11,6 +11,8 @@ import java.util.TreeSet;
  */
 public class StationViewBean extends BaseViewBean {
 
+    public static final String DEFAULT_NAME = "stationBean";
+
     private int id = 0;
 
     @Pattern(regexp = "[A-Za-z]+", message="Station name must contain only english letters, one or more")

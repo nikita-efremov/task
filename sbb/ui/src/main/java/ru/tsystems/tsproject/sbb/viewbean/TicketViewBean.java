@@ -11,6 +11,8 @@ import javax.validation.constraints.Pattern;
  */
 public class TicketViewBean extends BaseViewBean {
 
+    public static final String DEFAULT_NAME = "ticketBean";
+
     private int id;
 
     @Min(value = 1, message = "Ticket number must not be smaller than 1")

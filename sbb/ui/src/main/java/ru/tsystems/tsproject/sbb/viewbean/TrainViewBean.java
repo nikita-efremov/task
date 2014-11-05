@@ -11,6 +11,8 @@ import java.util.TreeSet;
  */
 public class TrainViewBean extends BaseViewBean {
 
+    public static final String DEFAULT_NAME = "trainBean";
+
     private int id;
 
     @Pattern(regexp = "[A-Za-z0-9]+", message = "Train number name must contain only english letters and digits, one or more")

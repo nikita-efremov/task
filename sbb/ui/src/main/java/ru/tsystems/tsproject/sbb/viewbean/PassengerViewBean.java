@@ -12,6 +12,8 @@ import java.util.TreeSet;
  */
 public class PassengerViewBean extends BaseViewBean {
 
+    public static final String DEFAULT_NAME = "passengerBean";
+
     private int id;
 
     @Pattern(regexp = "[A-Za-z]+", message="First name must contain only english letters, one or more")

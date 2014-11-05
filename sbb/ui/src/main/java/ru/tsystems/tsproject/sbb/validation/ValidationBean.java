@@ -8,6 +8,8 @@ package ru.tsystems.tsproject.sbb.validation;
  */
 public class ValidationBean {
 
+    public static final String DEFAULT_NAME = "validationBean";
+
     /**
      * Text of validation errors
      */

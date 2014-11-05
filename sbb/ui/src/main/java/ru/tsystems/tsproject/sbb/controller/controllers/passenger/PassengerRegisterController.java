@@ -74,7 +74,7 @@ public class PassengerRegisterController {
      */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView initPassengerBean() {
-        return new ModelAndView("/register", "passengerBean", new PassengerViewBean());
+        return new ModelAndView("/register", PassengerViewBean.DEFAULT_NAME, new PassengerViewBean());
     }
 
     /**
@@ -92,12 +92,12 @@ public class PassengerRegisterController {
         String password = passengerBean.getPassword();
         ValidationBean validationBean = Validator.validate(passengerBean);
         if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute("passengerBean", passengerBean);
-            modelMap.addAttribute("validationBean", validationBean);
+            modelMap.addAttribute(PassengerViewBean.DEFAULT_NAME, passengerBean);
+            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
             return "/register";
         } else {
             passengerBean = passengerControllersHelper.addPassenger(passengerBean);
-            modelMap.addAttribute("passengerBean", passengerBean);
+            modelMap.addAttribute(PassengerViewBean.DEFAULT_NAME, passengerBean);
             if (passengerBean.isProcessingFailed()) {
                 return "/register";
             } else {

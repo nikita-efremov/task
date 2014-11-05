@@ -26,6 +26,8 @@ import java.util.Collection;
 public class SearchTrainController {
 
     private static final Logger log = Logger.getLogger(SearchTrainController.class);
+    private static final String TRAIN_PASSENGERS = "trainPassengers";
+
 
     /**
      * Used for mapping data and launching service methods
@@ -39,7 +41,7 @@ public class SearchTrainController {
      */
     @RequestMapping(value = "/administrator/train/searchTrain", method = RequestMethod.GET)
     public ModelAndView initTrainBean() {
-        return new ModelAndView("/administrator/train/searchTrain", "trainBean", new TrainViewBean());
+        return new ModelAndView("/administrator/train/searchTrain", TrainViewBean.DEFAULT_NAME, new TrainViewBean());
     }
 
     /**
@@ -57,8 +59,8 @@ public class SearchTrainController {
         TrainViewBean trainBean = new TrainViewBean();
         trainBean.setNumber(trainNumber);
         Collection<PassengerViewBean> passengerBeanSet = trainControllersHelper.findTrainPassengers(trainBean);
-        modelMap.addAttribute("trainPassengers", passengerBeanSet);
-        modelMap.addAttribute("trainBean", trainBean);
+        modelMap.addAttribute(TRAIN_PASSENGERS, passengerBeanSet);
+        modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
         return "/administrator/passengers/passengersOnTrain";
     }
 
@@ -77,7 +79,7 @@ public class SearchTrainController {
         TrainViewBean trainBean = new TrainViewBean();
         trainBean.setNumber(trainNumber);
         trainBean = trainControllersHelper.findTrain(trainBean);
-        modelMap.addAttribute("trainBean", trainBean);
+        modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
         return "/common/trainTimetable";
     }
 
@@ -94,11 +96,11 @@ public class SearchTrainController {
         log.info("Servlet got viewBean: " + trainBean);
         ValidationBean validationBean = Validator.validate(trainBean, "number");
         if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute("validationBean", validationBean);
+            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
         } else {
             trainBean = trainControllersHelper.findTrain(trainBean);
         }
-        modelMap.addAttribute("trainBean", trainBean);
+        modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
         return "/administrator/train/searchTrain";
     }
 }

@@ -102,11 +102,10 @@
                         <input type="password" class="form-control" id="j_password" placeholder="Password" name = "j_password" value = "">
                     </div>
                 </div>
-                <div class="form-group" hidden="hidden">
-                    <label for="_spring_security_remember_me" class="col-sm-4 control-label">Remember me:</label>
-                    <div class="col-sm-7">
-                        <input type="checkbox" class="form-control" id = "_spring_security_remember_me" name = "_spring_security_remember_me">
-                    </div>
+                <div class="checkbox" id="custom-checkbox">
+                    <label>
+                        <input type="checkbox" id = "_spring_security_remember_me" name = "_spring_security_remember_me"> Remember me
+                    </label>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-1 col-sm-10">
@@ -114,6 +113,8 @@
                         <input type=button class="btn btn-default" onClick="location.href='${contextPath}/index'" value='Back'>
                     </div>
                 </div>
+
+                <a class="register-link" href="${contextPath}/register">I am not registered</a>
 
                 <table id="validationMessages">
                     <tr>

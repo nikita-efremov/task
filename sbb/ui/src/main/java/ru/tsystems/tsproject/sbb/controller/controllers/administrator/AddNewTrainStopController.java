@@ -57,7 +57,7 @@ public class AddNewTrainStopController {
     public ModelAndView initTimetableBean(@RequestParam("Train_number") String trainNumber) {
         TimetableViewBean timetableBean = new TimetableViewBean();
         timetableBean.setTrainNumber(trainNumber);
-        return new ModelAndView("/administrator/timetable/addNewTimetable", "timetableBean", timetableBean);
+        return new ModelAndView("/administrator/timetable/addNewTimetable", TimetableViewBean.DEFAULT_NAME, timetableBean);
     }
 
     /**
@@ -73,19 +73,19 @@ public class AddNewTrainStopController {
         log.info("Servlet got viewBean:" + timetableBean);
         ValidationBean validationBean = Validator.validate(timetableBean);
         if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute("timetableBean", timetableBean);
-            modelMap.addAttribute("validationBean", validationBean);
+            modelMap.addAttribute(TimetableViewBean.DEFAULT_NAME, timetableBean);
+            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
             return "/administrator/timetable/addNewTimetable";
         } else {
             timetableBean = trainControllersHelper.addTrainStop(timetableBean);
             if (timetableBean.isProcessingFailed()) {
-                modelMap.addAttribute("timetableBean", timetableBean);
+                modelMap.addAttribute(TimetableViewBean.DEFAULT_NAME, timetableBean);
                 return "/administrator/timetable/addNewTimetable";
             } else {
                 TrainViewBean trainBean = new TrainViewBean();
                 trainBean.setNumber(timetableBean.getTrainNumber());
                 trainBean = trainControllersHelper.findTrain(trainBean);
-                modelMap.addAttribute("trainBean", trainBean);
+                modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
                 return "/common/trainTimetable";
             }
         }

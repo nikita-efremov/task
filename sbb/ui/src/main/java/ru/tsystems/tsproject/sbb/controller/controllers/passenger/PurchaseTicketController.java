@@ -37,7 +37,7 @@ public class PurchaseTicketController {
      */
     @RequestMapping(value = "/passenger/purchase", method = RequestMethod.GET)
     public ModelAndView initTicketBean() {
-        return new ModelAndView("/passenger/purchase", "ticketBean", new TicketViewBean());
+        return new ModelAndView("/passenger/purchase", TicketViewBean.DEFAULT_NAME, new TicketViewBean());
     }
 
     /**
@@ -85,12 +85,12 @@ public class PurchaseTicketController {
         log.info("Servlet got viewBean: " + ticketBean);
         ValidationBean validationBean = Validator.validate(ticketBean, "trainNumber");
         if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute("validationBean", validationBean);
-            modelMap.addAttribute("ticketBean", ticketBean);
+            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
+            modelMap.addAttribute(TicketViewBean.DEFAULT_NAME, ticketBean);
             return "/passenger/purchase";
         } else {
             ticketBean = passengerControllersHelper.purchaseTicket(ticketBean);
-            modelMap.addAttribute("ticketBean", ticketBean);
+            modelMap.addAttribute(TicketViewBean.DEFAULT_NAME, ticketBean);
             if (ticketBean.isProcessingFailed()) {
                 return "/passenger/purchase";
             } else {

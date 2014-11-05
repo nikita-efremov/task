@@ -1,8 +1,7 @@
-package ru.tsystems.tsproject.sbb;
+package ru.tsystems.tsproject.sbb.user;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -10,16 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import ru.tsystems.tsproject.sbb.dao.DAOException;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
-import ru.tsystems.tsproject.sbb.exception.PassengerNotExistsException;
 import ru.tsystems.tsproject.sbb.service.api.PassengerService;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class, which create create UserDetails object for spring security. It gets data from passengerService
+ * Class, which create create UserDetails object for passenger for spring security. It gets data from passengerService
  * It passenger is not found or another error occurs, it return null, which means, that authentication failed
  * @author  Nikita Efremov
  * @since   2.0
@@ -47,11 +44,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             passenger = passengerService.findPassenger(docNumber);
         } catch (Exception e) {
             log.error("Error occurred while getting passenger " + docNumber + ". Error: " + e.getMessage());
-            return null;
+            throw new UsernameNotFoundException("Cannot find passenger with docNumber: " + docNumber);
         }
         Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
-        roles.add(new SimpleGrantedAuthority("ROLE_PASSENGER"));
-
+        roles.add(new SimpleGrantedAuthority(UserRole.ROLE_PASSENGER.toString()));
         return new User(passenger.getDocNumber(), passenger.getPassword(), roles);
     }
 }

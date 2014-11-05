@@ -19,6 +19,7 @@ import java.util.Collection;
 public class ViewAllStationsController {
 
     private static final Logger log = Logger.getLogger(ViewAllStationsController.class);
+    private static final String STATIONS = "allStations";
 
     /**
      * Used for mapping data and launching service methods
@@ -35,7 +36,7 @@ public class ViewAllStationsController {
     @RequestMapping("/administrator/station/ViewAllStations")
     public String viewStations(ModelMap modelMap) {
         Collection<StationViewBean> stations = stationControllersHelper.getAllStations();
-        modelMap.addAttribute("allStations", stations);
+        modelMap.addAttribute(STATIONS, stations);
         return "/administrator/station/viewAllStations";
     }
 }

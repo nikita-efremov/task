@@ -23,7 +23,7 @@
     <!--needs to display auth data in jsp -->
     <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
-    <bean id = "userDetailsServiceImpl" class="ru.tsystems.tsproject.sbb.UserDetailsServiceImpl"/>
+    <bean id = "userDetailsServiceImpl" class="ru.tsystems.tsproject.sbb.user.UserDetailsServiceImpl"/>
     <bean id = "passengerRegisterController" class="ru.tsystems.tsproject.sbb.controller.controllers.passenger.PassengerRegisterController">
         <property name = "userDetailsService" ref="userDetailsServiceImpl"/>
     </bean>

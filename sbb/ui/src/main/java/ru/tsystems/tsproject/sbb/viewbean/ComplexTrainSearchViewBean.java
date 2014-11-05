@@ -13,6 +13,8 @@ import java.util.Date;
  */
 public class ComplexTrainSearchViewBean extends BaseViewBean {
 
+    public static final String DEFAULT_NAME = "complexTrainSearchBean";
+
     @Pattern(regexp = "[A-Za-z]+", message = "Station name must contain only english letters, one or more")
     private String stationStartName = "";
 

@@ -30,6 +30,7 @@ import java.util.Date;
 public class SearchTrainByStationsAndDateController {
 
     private static final Logger log = Logger.getLogger(SearchTrainByStationsAndDateController.class);
+    private static final String TRAINS = "foundTrains";
 
     /**
      * Used for mapping data and launching service methods
@@ -56,7 +57,7 @@ public class SearchTrainByStationsAndDateController {
      */
     @RequestMapping(value = "/common/searchStationDateTrain", method = RequestMethod.GET)
     public ModelAndView initTimetableBean() {
-        return new ModelAndView("/common/searchStationDateTrain", "complexTrainSearchBean", new ComplexTrainSearchViewBean());
+        return new ModelAndView("/common/searchStationDateTrain", ComplexTrainSearchViewBean.DEFAULT_NAME, new ComplexTrainSearchViewBean());
     }
 
     /**
@@ -72,16 +73,16 @@ public class SearchTrainByStationsAndDateController {
         log.info("Servlet got viewBean " + complexTrainSearchBean);
         ValidationBean validationBean = Validator.validate(complexTrainSearchBean);
         if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute("validationBean", validationBean);
-            modelMap.addAttribute("complexTrainSearchBean", complexTrainSearchBean);
+            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
+            modelMap.addAttribute(ComplexTrainSearchViewBean.DEFAULT_NAME, complexTrainSearchBean);
             return "/common/searchStationDateTrain";
         } else {
             Collection<TrainViewBean> trains = trainControllersHelper.findTrainsByStationsAndDate(complexTrainSearchBean);
             if (complexTrainSearchBean.isProcessingFailed()) {
-                modelMap.addAttribute("complexTrainSearchBean", complexTrainSearchBean);
+                modelMap.addAttribute(ComplexTrainSearchViewBean.DEFAULT_NAME, complexTrainSearchBean);
                 return "/common/searchStationDateTrain";
             } else {
-                modelMap.addAttribute("foundTrains", trains);
+                modelMap.addAttribute(TRAINS, trains);
                 return "/common/viewFoundTrains";
             }
         }

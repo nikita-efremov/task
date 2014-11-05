@@ -21,6 +21,7 @@ import java.util.Collection;
 public class SearchTicketsController {
 
     private static final Logger log = Logger.getLogger(SearchTicketsController.class);
+    private static final String TICKETS = "tickets";
 
     /**
      * Used for mapping data and launching service methods
@@ -39,7 +40,7 @@ public class SearchTicketsController {
         PassengerViewBean passengerBean = new PassengerViewBean();
         passengerBean.setDocNumber(SecurityContextHolder.getContext().getAuthentication().getName());
         Collection<TicketViewBean> ticketBeans = passengerControllersHelper.getPassengerTickets(passengerBean);
-        modelMap.addAttribute("tickets", ticketBeans);
+        modelMap.addAttribute(TICKETS, ticketBeans);
         return "/passenger/watchTickets";
     }
 }

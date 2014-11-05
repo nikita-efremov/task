@@ -25,6 +25,7 @@ import java.util.Collection;
 public class SearchStationController {
 
     private static final Logger log = Logger.getLogger(SearchStationController.class);
+    private static final String TRAINS = "foundTrains";
 
     /**
      * Used for mapping data and launching service methods
@@ -38,7 +39,7 @@ public class SearchStationController {
      */
     @RequestMapping(value = "/common/searchStation", method = RequestMethod.GET)
     public ModelAndView initStationBean() {
-        return new ModelAndView("/common/searchStation", "stationBean", new StationViewBean());
+        return new ModelAndView("/common/searchStation", StationViewBean.DEFAULT_NAME, new StationViewBean());
     }
 
     /**
@@ -54,16 +55,16 @@ public class SearchStationController {
         log.info("Servlet got viewBean: " + stationBean);
         ValidationBean validationBean = Validator.validate(stationBean);
         if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute("validationBean", validationBean);
-            modelMap.addAttribute("stationBean", stationBean);
+            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
+            modelMap.addAttribute(StationViewBean.DEFAULT_NAME, stationBean);
             return "/common/searchStation";
         } else {
             Collection<TrainViewBean> trains = trainControllersHelper.findTrainsByStation(stationBean);
             if (stationBean.isProcessingFailed()) {
-                modelMap.addAttribute("stationBean", stationBean);
+                modelMap.addAttribute(StationViewBean.DEFAULT_NAME, stationBean);
                 return "common/searchStation";
             } else {
-                modelMap.addAttribute("foundTrains", trains);
+                modelMap.addAttribute(TRAINS, trains);
                 return "common/viewFoundTrains";
             }
         }

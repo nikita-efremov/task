@@ -42,7 +42,7 @@ public class TrainTimetableController {
         trainBean.setNumber(trainNumber);
         log.info("Servlet got viewBean: " + trainBean);
         trainBean = trainControllersHelper.findTrain(trainBean);
-        modelMap.addAttribute("trainBean", trainBean);
+        modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
         return "/common/trainTimetable";
     }
 }

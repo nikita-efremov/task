@@ -263,6 +263,17 @@ label {
 .tableButton {
     margin: 0 0;
 }
+#custom-checkbox{
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 15px;
+    margin-left: -15px;
+}
+
+.register-link	{
+    text-decoration: underline;
+    color: rgb(0, 0, 128);
+}
 
 
 
