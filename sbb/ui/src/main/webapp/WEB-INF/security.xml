@@ -8,12 +8,10 @@
 
 
     <http access-denied-page="/error403">
-        <intercept-url pattern="/passenger/*" access="ROLE_PASSENGER"/>
-        <intercept-url pattern="/administrator/*" access="ROLE_ADMIN"/>
-        <intercept-url pattern="/common/*" access="ROLE_PASSENGER, ROLE_ADMIN, ROLE_ANONYMOUS"/>
+        <intercept-url pattern="/passenger/*" access="#{T(ru.tsystems.tsproject.sbb.user.UserRole).ROLE_PASSENGER.toString()}"/>
+        <intercept-url pattern="/administrator/*" access="#{T(ru.tsystems.tsproject.sbb.user.UserRole).ROLE_ADMIN.toString()}"/>
         <form-login login-page="/login" default-target-url="/index" authentication-failure-url="/login?error=true"/>
         <logout logout-url="/logout" logout-success-url="/index"/>
-        <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
         <remember-me user-service-ref="userDetailsServiceImpl" key="someKey" token-validity-seconds="31536000"/>
         <remember-me user-service-ref="adminUserDetailsServiceImpl" key="someAnotherKey" token-validity-seconds="43200"/>
     </http>
