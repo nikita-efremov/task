@@ -2,6 +2,7 @@ package ru.tsystems.tsproject.sbb.controller.controllers.passenger;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -48,6 +49,7 @@ public class PurchaseTicketController {
      *        Map with viewBeans
      * @return JSP address to redirect
      */
+    @Secured("ROLE_PASSENGER")
     @RequestMapping(value = "/passenger/TicketPurchase",
             method = RequestMethod.GET,
             params = "purchaseAction=Purchase")
@@ -66,6 +68,7 @@ public class PurchaseTicketController {
      *        Map with viewBeans
      * @return JSP address to redirect
      */
+    @Secured("ROLE_PASSENGER")
     @RequestMapping(value = "/passenger/TicketPurchase",
             method = RequestMethod.POST)
     public String purchaseFromSpecialForm(@ModelAttribute("ticketBean") TicketViewBean ticketBean, ModelMap modelMap) {

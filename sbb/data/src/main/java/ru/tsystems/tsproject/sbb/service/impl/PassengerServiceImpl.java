@@ -19,6 +19,7 @@ import java.util.*;
  * @since   1.0
  */
 @Service
+@Transactional
 public class PassengerServiceImpl extends CommonServiceImpl implements PassengerService {
 
     private static final Logger log = Logger.getLogger(PassengerServiceImpl.class);
@@ -26,7 +27,7 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
     @Autowired
     private TicketDAO ticketDAO;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<Train> findTrainsByStation(String stationName) throws StationNotExistsException, DAOException {
         log.info("Start searching trains by stationName:" + stationName);
         Station station = findStation(stationName);
@@ -41,7 +42,7 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
         return foundTrains;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<Train> findTrainsByStationsAndDate(String stationStartName,
                                                          String stationEndName,
                                                          Date start,
@@ -81,7 +82,6 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
         return directionImportantTrains;
     }
 
-    @Transactional
     public Ticket purchaseTicket(String trainNumber, String docNumber) throws
             TrainNotExistsException, PassengerNotExistsException, TrainAlreadyFullException,
             PassengerAlreadyRegisteredOnTrainException, TrainAlreadyDepartedException, DAOException {
@@ -124,7 +124,6 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
         return ticket;
     }
 
-    @Transactional
     public Passenger addPassenger(Passenger passenger) throws PassengerAlreadyExistsException, DAOException {
         log.info("Start adding " + passenger);
         Passenger foundPassenger = getPassengerDAO().getPassengerByDocumentNumber(passenger.getDocNumber());

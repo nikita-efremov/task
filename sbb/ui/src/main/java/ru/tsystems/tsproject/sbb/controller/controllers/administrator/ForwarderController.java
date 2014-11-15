@@ -1,5 +1,6 @@
 package ru.tsystems.tsproject.sbb.controller.controllers.administrator;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,6 +25,7 @@ public class ForwarderController {
      * Forwards to administrator main page
      * @return JSP address to forward
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping("/administrator/administratorMain")
     public String toAdministratorPage() {
         return "/administrator/administratorMain";

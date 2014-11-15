@@ -2,6 +2,7 @@ package ru.tsystems.tsproject.sbb.controller.controllers.administrator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,7 @@ public class ViewAllTrainsController {
      *        Map of viewBean
      * @return JSP address to forward
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping("/administrator/train/ViewAllTrains")
     public String viewTrains(ModelMap modelMap) {
         Collection<TrainViewBean> trains = trainControllersHelper.getAllTrains();

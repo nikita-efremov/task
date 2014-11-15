@@ -2,6 +2,7 @@ package ru.tsystems.tsproject.sbb.controller.controllers.administrator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,6 +35,7 @@ public class CreateNewStationController {
      * @return ModelAndView
      *         JSP page with form of adding new station
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/administrator/station/createNewStation", method = RequestMethod.GET)
     public ModelAndView initStationBean() {
         return new ModelAndView("/administrator/station/createNewStation", StationViewBean.DEFAULT_NAME, new StationViewBean());
@@ -47,6 +49,7 @@ public class CreateNewStationController {
      *        Map of viewBeans
      * @return JSP page address to forward
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping("/administrator/station/CreateNewStation")
     public String addStation(@ModelAttribute("stationBean") StationViewBean stationBean, ModelMap modelMap) {
         log.info("Servlet got viewBean: " + stationBean);

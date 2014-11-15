@@ -3,11 +3,13 @@ package ru.tsystems.tsproject.sbb.controller.controllers.administrator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.tsystems.tsproject.sbb.user.UserRole;
 import ru.tsystems.tsproject.sbb.validation.ValidationBean;
 import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.TimetableViewBean;
@@ -53,6 +55,7 @@ public class AddNewTrainStopController {
      * @return ModelAndView
      *         JSP page with form of adding new train stop
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/administrator/train/addNewTrainStop", method = RequestMethod.GET)
     public ModelAndView initTimetableBean(@RequestParam("Train_number") String trainNumber) {
         TimetableViewBean timetableBean = new TimetableViewBean();
@@ -68,6 +71,7 @@ public class AddNewTrainStopController {
      *        Map of view beans
      * @return JSP page address to forward
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping("/administrator/train/AddNewTrainStop")
     public String addStrop(@ModelAttribute("timetableBean") TimetableViewBean timetableBean, ModelMap modelMap) {
         log.info("Servlet got viewBean:" + timetableBean);

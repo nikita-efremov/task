@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,6 +73,7 @@ public class PassengerRegisterController {
      * Adds passengerViewBean to the view and forwards to JSP with form of adding new passenger
      * @return JSP address to forwards
      */
+    @Secured("ROLE_ANONYMOUS")
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView initPassengerBean() {
         return new ModelAndView("/register", PassengerViewBean.DEFAULT_NAME, new PassengerViewBean());
@@ -86,6 +88,7 @@ public class PassengerRegisterController {
      *        Map with view beans
      * @return JSP address to forward
      */
+    @Secured("ROLE_ANONYMOUS")
     @RequestMapping("/RegisterPassenger")
     public String register(@ModelAttribute("passengerBean") PassengerViewBean passengerBean, ModelMap modelMap) {
         log.info("Servlet got viewBean: " + passengerBean);

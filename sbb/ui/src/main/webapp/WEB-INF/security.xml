@@ -8,20 +8,18 @@
 
 
     <http access-denied-page="/error403">
-        <intercept-url pattern="/passenger/*" access="#{T(ru.tsystems.tsproject.sbb.user.UserRole).ROLE_PASSENGER.toString()}"/>
-        <intercept-url pattern="/administrator/*" access="#{T(ru.tsystems.tsproject.sbb.user.UserRole).ROLE_ADMIN.toString()}"/>
+        <intercept-url pattern="/passenger/**" access="#{T(ru.tsystems.tsproject.sbb.user.UserRole).ROLE_PASSENGER.toString()}"/>
+        <intercept-url pattern="/administrator/**" access="#{T(ru.tsystems.tsproject.sbb.user.UserRole).ROLE_ADMIN.toString()}"/>
         <form-login login-page="/login" default-target-url="/index" authentication-failure-url="/login?error=true"/>
         <logout logout-url="/logout" logout-success-url="/index"/>
         <remember-me user-service-ref="userDetailsServiceImpl" key="someKey" token-validity-seconds="31536000"/>
-        <remember-me user-service-ref="adminUserDetailsServiceImpl" key="someAnotherKey" token-validity-seconds="43200"/>
     </http>
 
     <authentication-manager alias="customAuthenticationManager">
         <authentication-provider user-service-ref="userDetailsServiceImpl">
             <password-encoder hash="md5"/>
         </authentication-provider>
-        <authentication-provider user-service-ref="adminUserDetailsServiceImpl">
-            <password-encoder hash="md5"/>
-        </authentication-provider>
     </authentication-manager>
+
+    <global-method-security secured-annotations="enabled" />
 </beans:beans>

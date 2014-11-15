@@ -21,6 +21,7 @@ import ru.tsystems.tsproject.sbb.dao.DAOException;
  * @since   1.0
  */
 @Service
+@Transactional(readOnly = true)
 public class CommonServiceImpl implements CommonService {
 
     private static final Logger log = Logger.getLogger(CommonServiceImpl.class);
@@ -34,7 +35,6 @@ public class CommonServiceImpl implements CommonService {
     @Autowired
     private PassengerDAO passengerDAO;
 
-    @Transactional
     public Station findStation(String stationName) throws StationNotExistsException, DAOException {
         log.info("Start search station with name: " + stationName);
         Station station = stationDAO.getStationByName(stationName);
@@ -45,7 +45,6 @@ public class CommonServiceImpl implements CommonService {
         return station;
     }
 
-    @Transactional
     public Train findTrain(String trainNumber) throws TrainNotExistsException, DAOException {
         log.info("Start search train with number: " + trainNumber);
         Train train = trainDAO.getTrainByNumber(trainNumber);
@@ -56,7 +55,6 @@ public class CommonServiceImpl implements CommonService {
         return train;
     }
 
-    @Transactional
     public Passenger findPassenger(String docNumber) throws DAOException, PassengerNotExistsException {
         log.info("Start search passenger with document number: " + docNumber);
         Passenger passenger = passengerDAO.getPassengerByDocumentNumber(docNumber);

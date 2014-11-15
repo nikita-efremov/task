@@ -24,6 +24,7 @@ import java.util.Set;
  * @since   1.0
  */
 @Service
+@Transactional
 public class AdministratorServiceImpl extends CommonServiceImpl implements AdministratorService {
 
     private static final Logger log = Logger.getLogger(AdministratorServiceImpl.class);
@@ -31,7 +32,6 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
     @Autowired
     private TimetableDAO timetableDAO;
 
-    @Transactional
     public Station addStation(Station station) throws StationAlreadyExistsException, DAOException {
         log.info("Start adding station with name: " + station.getName());
         if (getStationDAO().getStationByName(station.getName()) == null) {
@@ -44,7 +44,6 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
         return station;
     }
 
-    @Transactional
     public Train addTrain(Train train) throws TrainAlreadyExistsException, DAOException {
         log.info("Start adding train with number: " + train.getNumber() + " and totalSeats: " + train.getSeats());
         if (getTrainDAO().getTrainByNumber(train.getNumber()) == null) {
@@ -57,7 +56,6 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
         return train;
     }
 
-    @Transactional
     public void addTimetable(String trainNumber, String stationName, Date departureDate)
             throws TrainNotExistsException, StationNotExistsException, TrainStopAlreadyExistsException, DAOException {
         log.info("Start adding timetable for train number: " + trainNumber
@@ -83,26 +81,26 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
         log.info("Timetable added: " + timetable);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<Passenger> getPassengersByTrain(String trainNumber) throws TrainNotExistsException, DAOException {
         log.info("Start getting passengers by train number: " + trainNumber);
         Train train = findTrain(trainNumber);
         return getPassengerDAO().getPassengersByTrain(train.getId());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<Train> getAllTrains() throws DAOException {
         log.info("Start getting all trains");
         return getTrainDAO().<Train>getAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<Station> getAllStations() throws DAOException {
         log.info("Start getting all stations");
         return getStationDAO().<Station>getAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<Passenger> getAllPassengers() throws DAOException {
         log.info("Start getting all passengers");
         return getPassengerDAO().<Station>getAll();

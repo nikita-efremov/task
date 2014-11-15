@@ -2,6 +2,7 @@ package ru.tsystems.tsproject.sbb.controller.controllers.passenger;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,6 +36,7 @@ public class SearchTicketsController {
      *        Map with viewBeans
      * @return JSP address to forward
      */
+    @Secured("ROLE_PASSENGER")
     @RequestMapping("/passenger/WatchTickets")
     public String searchTickets(ModelMap modelMap) {
         PassengerViewBean passengerBean = new PassengerViewBean();

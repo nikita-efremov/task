@@ -2,6 +2,7 @@ package ru.tsystems.tsproject.sbb.controller.controllers.administrator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,6 +35,7 @@ public class CreateNewTrainController {
      * @return ModelAndView
      *         JSP page with form of adding new train
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/administrator/train/createNewTrain", method = RequestMethod.GET)
     public ModelAndView initTrainBean() {
         return new ModelAndView("/administrator/train/createNewTrain", TrainViewBean.DEFAULT_NAME, new TrainViewBean());
@@ -47,6 +49,7 @@ public class CreateNewTrainController {
      *        Map of viewBeans
      * @return JSP page address to forward
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping("/administrator/train/CreateNewTrain")
     public String addTrain(@ModelAttribute("trainBean") TrainViewBean trainBean, ModelMap modelMap) {
         trainBean.setSeats(trainBean.getTotalSeats());

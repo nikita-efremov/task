@@ -2,6 +2,7 @@ package ru.tsystems.tsproject.sbb.controller.controllers.administrator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,6 +40,7 @@ public class SearchTrainController {
      * Adds trainViewBean to the view and forwards to JSP with form of searching train
      * @return JSP address to forward
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/administrator/train/searchTrain", method = RequestMethod.GET)
     public ModelAndView initTrainBean() {
         return new ModelAndView("/administrator/train/searchTrain", TrainViewBean.DEFAULT_NAME, new TrainViewBean());
@@ -52,6 +54,7 @@ public class SearchTrainController {
      *        Map with view beans
      * @return JSP address to forward
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/administrator/train/SearchTrain",
             method = RequestMethod.GET,
             params = "trainSearchAction=watch passengers")
@@ -72,6 +75,7 @@ public class SearchTrainController {
      *        Map with view beans
      * @return JSP address to forward
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/administrator/train/SearchTrain",
             method = RequestMethod.GET,
             params = "trainSearchAction=watch timetable")
@@ -91,6 +95,7 @@ public class SearchTrainController {
      *        Map with viewBeans
      * @return JSP address to forward
      */
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/administrator/train/SearchTrain", method = RequestMethod.POST)
     public String searchTrain(@ModelAttribute("trainBean") TrainViewBean trainBean, ModelMap modelMap) {
         log.info("Servlet got viewBean: " + trainBean);
