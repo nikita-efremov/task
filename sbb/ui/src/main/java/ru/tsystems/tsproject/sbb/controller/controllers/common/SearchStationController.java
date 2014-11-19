@@ -62,10 +62,10 @@ public class SearchStationController {
             Collection<TrainViewBean> trains = trainControllersHelper.findTrainsByStation(stationBean);
             if (stationBean.isProcessingFailed()) {
                 modelMap.addAttribute(StationViewBean.DEFAULT_NAME, stationBean);
-                return "common/searchStation";
+                return "/common/searchStation";
             } else {
                 modelMap.addAttribute(TRAINS, trains);
-                return "common/viewFoundTrains";
+                return "/common/viewFoundTrains";
             }
         }
     }

@@ -1,0 +1,144 @@
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="baseTemplate"
+                template="/WEB-INF/tiles/base_template.jsp">
+    </definition>
+
+    <definition name="/administrator/passengers/passengersOnTrain" extends="baseTemplate">
+        <put-attribute name="title" value="Passengers of train"/>
+        <put-attribute name="content" value="/WEB-INF/pages/administrator/passengers/passengersOnTrain.jsp" />
+    </definition>
+
+    <definition name="/administrator/passengers/viewAllPassengers" extends="baseTemplate">
+        <put-attribute name="title" value="All passengers"/>
+        <put-attribute name="content" value="/WEB-INF/pages/administrator/passengers/viewAllPassengers.jsp" />
+    </definition>
+
+    <definition name="/administrator/station/createNewStation" extends="baseTemplate">
+        <put-attribute name="title" value="Creating new station"/>
+        <put-attribute name="content" value="/WEB-INF/pages/administrator/station/createNewStation.jsp" />
+    </definition>
+
+    <definition name="/administrator/station/createStationSuccess" extends="baseTemplate">
+        <put-attribute name="title" value="Station create success"/>
+        <put-attribute name="content" value="/WEB-INF/pages/administrator/station/createStationSuccess.jsp" />
+    </definition>
+
+    <definition name="/administrator/station/viewAllStations" extends="baseTemplate">
+        <put-attribute name="title" value="All stations"/>
+        <put-attribute name="content" value="/WEB-INF/pages/administrator/station/viewAllStations.jsp" />
+    </definition>
+
+    <definition name="/administrator/timetable/addNewTimetable" extends="baseTemplate">
+        <put-attribute name="title" value="Adding new timetable"/>
+        <put-attribute name="content" value="/WEB-INF/pages/administrator/timetable/addNewTimetable.jsp" />
+    </definition>
+
+    <definition name="/administrator/train/createNewTrain" extends="baseTemplate">
+        <put-attribute name="title" value="Creating new train"/>
+        <put-attribute name="content" value="/WEB-INF/pages/administrator/train/createNewTrain.jsp" />
+    </definition>
+
+    <definition name="/administrator/train/createTrainSuccess" extends="baseTemplate">
+        <put-attribute name="title" value="Train creating success"/>
+        <put-attribute name="content" value="/WEB-INF/pages/administrator/train/createTrainSuccess.jsp" />
+    </definition>
+
+    <definition name="/administrator/train/searchTrain" extends="baseTemplate">
+        <put-attribute name="title" value="Train search"/>
+        <put-attribute name="content" value="/WEB-INF/pages/administrator/train/searchTrain.jsp" />
+    </definition>
+
+    <definition name="/administrator/train/viewAllTrains" extends="baseTemplate">
+        <put-attribute name="title" value="All trains"/>
+        <put-attribute name="content" value="/WEB-INF/pages/administrator/train/viewAllTrains.jsp" />
+    </definition>
+
+    <definition name="/administrator/administratorMain" extends="baseTemplate">
+        <put-attribute name="title" value="Administrator page"/>
+        <put-attribute name="content" value="/WEB-INF/pages/administrator/administratorMain.jsp" />
+    </definition>
+
+
+
+    <definition name="/common/searchStation" extends="baseTemplate">
+        <put-attribute name="title" value="Station search"/>
+        <put-attribute name="content" value="/WEB-INF/pages/common/searchStation.jsp" />
+    </definition>
+
+    <definition name="/common/searchStationDateTrain" extends="baseTemplate">
+        <put-attribute name="title" value="Search trains by stations and date"/>
+        <put-attribute name="content" value="/WEB-INF/pages/common/searchStationDateTrain.jsp" />
+    </definition>
+
+    <definition name="/common/trainTimetable" extends="baseTemplate">
+        <put-attribute name="title" value="Train timetable"/>
+        <put-attribute name="content" value="/WEB-INF/pages/common/trainTimetable.jsp" />
+    </definition>
+
+    <definition name="/common/viewFoundTrains" extends="baseTemplate">
+        <put-attribute name="title" value="Search trains by stations and date"/>
+        <put-attribute name="content" value="/WEB-INF/pages/common/viewFoundTrains.jsp" />
+    </definition>
+
+
+
+    <definition name="/passenger/purchase" extends="baseTemplate">
+        <put-attribute name="title" value="Ticket purchasing"/>
+        <put-attribute name="content" value="/WEB-INF/pages/passenger/purchase.jsp" />
+    </definition>
+
+    <definition name="/passenger/purchaseSuccess" extends="baseTemplate">
+        <put-attribute name="title" value="Purchase Success"/>
+        <put-attribute name="content" value="/WEB-INF/pages/passenger/purchaseSuccess.jsp" />
+    </definition>
+
+    <definition name="/passenger/registerSuccess" extends="baseTemplate">
+        <put-attribute name="title" value="Register Success"/>
+        <put-attribute name="content" value="/WEB-INF/pages/passenger/registerSuccess.jsp" />
+    </definition>
+
+    <definition name="/passenger/watchTickets" extends="baseTemplate">
+        <put-attribute name="title" value="Tickets"/>
+        <put-attribute name="content" value="/WEB-INF/pages/passenger/watchTickets.jsp" />
+    </definition>
+
+
+
+    <definition name="/login" extends="baseTemplate">
+        <put-attribute name="title" value="Passenger login page"/>
+        <put-attribute name="content" value="/WEB-INF/pages/login.jsp" />
+    </definition>
+
+    <definition name="/register" extends="baseTemplate">
+        <put-attribute name="title" value="Passenger register page"/>
+        <put-attribute name="content" value="/WEB-INF/pages/register.jsp" />
+    </definition>
+
+    <definition name="/index" extends="baseTemplate">
+        <put-attribute name="title" value="Start page"/>
+        <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
+    </definition>
+
+
+
+
+    <definition name="/error403" extends="baseTemplate">
+        <put-attribute name="title" value="Access denied"/>
+        <put-attribute name="content" value="/WEB-INF/pages/error403.jsp" />
+    </definition>
+
+    <definition name="/error404" extends="baseTemplate">
+        <put-attribute name="title" value="Page is not found"/>
+        <put-attribute name="content" value="/WEB-INF/pages/error404.jsp" />
+    </definition>
+
+    <definition name="/error500" extends="baseTemplate">
+        <put-attribute name="title" value="Server internal error"/>
+        <put-attribute name="content" value="/WEB-INF/pages/error500.jsp" />
+    </definition>
+
+</tiles-definitions>
