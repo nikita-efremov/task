@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.controller.controllers.administrator;
+package ru.tsystems.tsproject.sbb.controller.controllers.train;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.user.UserRole;
 import ru.tsystems.tsproject.sbb.validation.ValidationBean;
 import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.TimetableViewBean;

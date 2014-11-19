@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.controller.controllers.administrator;
+package ru.tsystems.tsproject.sbb.controller.controllers;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;

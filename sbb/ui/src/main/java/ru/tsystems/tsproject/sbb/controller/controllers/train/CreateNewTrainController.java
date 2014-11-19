@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.controller.controllers.administrator;
+package ru.tsystems.tsproject.sbb.controller.controllers.train;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

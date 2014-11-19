@@ -1,4 +1,4 @@
-package ru.tsystems.tsproject.sbb.controller.controllers.common;
+package ru.tsystems.tsproject.sbb.controller.controllers.train;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ import java.util.Collection;
  * @since   2.0
  */
 @Controller
-public class SearchStationController {
+public class SearchTrainByStationController {
 
-    private static final Logger log = Logger.getLogger(SearchStationController.class);
+    private static final Logger log = Logger.getLogger(SearchTrainByStationController.class);
     private static final String TRAINS = "foundTrains";
 
     /**
