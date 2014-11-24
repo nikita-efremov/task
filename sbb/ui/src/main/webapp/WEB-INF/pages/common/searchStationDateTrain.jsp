@@ -44,7 +44,16 @@
                 </div>
                 <table id="validationMessages">
                     <tr>
-                        <td>${validationBean.validationMessage}</td>
+                        <td><form:errors path="stationStartName"/></td>
+                    </tr>
+                    <tr>
+                        <td><form:errors path="startDate"/></td>
+                    </tr>
+                    <tr>
+                        <td><form:errors path="stationEndName"/></td>
+                    </tr>
+                    <tr>
+                        <td><form:errors path="endDate"/></td>
                     </tr>
                     <tr>
                         <td>${complexTrainSearchBean.processingErrorMessage}</td>

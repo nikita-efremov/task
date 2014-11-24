@@ -6,15 +6,15 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.validation.ValidationBean;
-import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.TimetableViewBean;
 import ru.tsystems.tsproject.sbb.viewbean.TrainViewBean;
 import ru.tsystems.tsproject.sbb.controller.helpers.TrainControllersHelper;
 
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -72,25 +72,23 @@ public class AddNewTrainStopController {
      */
     @Secured("ROLE_ADMIN")
     @RequestMapping("/administrator/train/AddNewTrainStop")
-    public String addStrop(@ModelAttribute("timetableBean") TimetableViewBean timetableBean, ModelMap modelMap) {
+    public String addStrop(@ModelAttribute("timetableBean") @Valid TimetableViewBean timetableBean,
+                           BindingResult bindingResult,
+                           ModelMap modelMap) {
         log.info("Servlet got viewBean:" + timetableBean);
-        ValidationBean validationBean = Validator.validate(timetableBean);
-        if (validationBean.isValidationFailed()) {
+        if (bindingResult.hasErrors()) {
+            return "/administrator/timetable/addNewTimetable";
+        }
+        timetableBean = trainControllersHelper.addTrainStop(timetableBean);
+        if (timetableBean.isProcessingFailed()) {
             modelMap.addAttribute(TimetableViewBean.DEFAULT_NAME, timetableBean);
-            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
             return "/administrator/timetable/addNewTimetable";
         } else {
-            timetableBean = trainControllersHelper.addTrainStop(timetableBean);
-            if (timetableBean.isProcessingFailed()) {
-                modelMap.addAttribute(TimetableViewBean.DEFAULT_NAME, timetableBean);
-                return "/administrator/timetable/addNewTimetable";
-            } else {
-                TrainViewBean trainBean = new TrainViewBean();
-                trainBean.setNumber(timetableBean.getTrainNumber());
-                trainBean = trainControllersHelper.findTrain(trainBean);
-                modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
-                return "/common/trainTimetable";
-            }
+            TrainViewBean trainBean = new TrainViewBean();
+            trainBean.setNumber(timetableBean.getTrainNumber());
+            trainBean = trainControllersHelper.findTrain(trainBean);
+            modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
+            return "/common/trainTimetable";
         }
     }
 }

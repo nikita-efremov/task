@@ -15,17 +15,17 @@ public class ComplexTrainSearchViewBean extends BaseViewBean {
 
     public static final String DEFAULT_NAME = "complexTrainSearchBean";
 
-    @Pattern(regexp = "[A-Za-z]+", message = "Station name must contain only english letters, one or more")
+    @Pattern(regexp = "[A-Za-z]+", message = "Station start name must contain only english letters, one or more")
     private String stationStartName = "";
 
     @Future(message = "Train departure date must be in future")
     @NotNull(message = "Date format: dd-MM-yyyy HH:mm")
     private Date startDate;
 
-    @Pattern(regexp = "[A-Za-z]+", message = "Station name must contain only english letters, one or more")
+    @Pattern(regexp = "[A-Za-z]+", message = "Station end name must contain only english letters, one or more")
     private String stationEndName = "";
 
-    @Future(message = "Train departure date must be in future")
+    @Future(message = "Train arrival date must be in future")
     @NotNull(message = "Date format: dd-MM-yyyy HH:mm")
     private Date endDate;
 

@@ -5,14 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.validation.ValidationBean;
-import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.TrainViewBean;
 import ru.tsystems.tsproject.sbb.controller.helpers.TrainControllersHelper;
+
+import javax.validation.Valid;
 
 /**
  * Controller, which gets and proceeds requests of train creation
@@ -51,22 +52,20 @@ public class CreateNewTrainController {
      */
     @Secured("ROLE_ADMIN")
     @RequestMapping("/administrator/train/CreateNewTrain")
-    public String addTrain(@ModelAttribute("trainBean") TrainViewBean trainBean, ModelMap modelMap) {
+    public String addTrain(@ModelAttribute("trainBean") @Valid TrainViewBean trainBean,
+                           BindingResult bindingResult,
+                           ModelMap modelMap) {
         trainBean.setSeats(trainBean.getTotalSeats());
         log.info("Servlet got viewBean: " + trainBean);
-        ValidationBean validationBean = Validator.validate(trainBean);
-        if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
-            modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
+        if (bindingResult.hasErrors()) {
+            return "/administrator/train/createNewTrain";
+        }
+        trainBean = trainControllersHelper.addTrain(trainBean);
+        modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
+        if (trainBean.isProcessingFailed()) {
             return "/administrator/train/createNewTrain";
         } else {
-            trainBean = trainControllersHelper.addTrain(trainBean);
-            modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
-            if (trainBean.isProcessingFailed()) {
-                return "/administrator/train/createNewTrain";
-            } else {
-                return "/administrator/train/createTrainSuccess";
-            }
+            return "/administrator/train/createTrainSuccess";
         }
     }
 }

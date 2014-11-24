@@ -27,7 +27,7 @@
 
                 <table id="validationMessages">
                     <tr>
-                        <td>${validationBean.validationMessage}</td>
+                        <td><form:errors path="name"/></td>
                     </tr>
                     <tr>
                         <td>${stationBean.processingErrorMessage}</td>

@@ -5,14 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.validation.ValidationBean;
-import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.StationViewBean;
 import ru.tsystems.tsproject.sbb.controller.helpers.StationControllersHelper;
+
+import javax.validation.Valid;
 
 /**
  * Controller, which gets and proceeds requests of creation new station
@@ -51,21 +52,19 @@ public class CreateNewStationController {
      */
     @Secured("ROLE_ADMIN")
     @RequestMapping("/administrator/station/CreateNewStation")
-    public String addStation(@ModelAttribute("stationBean") StationViewBean stationBean, ModelMap modelMap) {
+    public String addStation(@ModelAttribute("stationBean") @Valid StationViewBean stationBean,
+                             BindingResult bindingResult,
+                             ModelMap modelMap) {
         log.info("Servlet got viewBean: " + stationBean);
-        ValidationBean validationBean = Validator.validate(stationBean);
-        if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
-            modelMap.addAttribute(StationViewBean.DEFAULT_NAME, stationBean);
+        if (bindingResult.hasErrors()) {
+            return "/administrator/station/createNewStation";
+        }
+        stationBean = stationControllersHelper.addStation(stationBean);
+        modelMap.addAttribute(StationViewBean.DEFAULT_NAME, stationBean);
+        if (stationBean.isProcessingFailed()) {
             return "/administrator/station/createNewStation";
         } else {
-            stationBean = stationControllersHelper.addStation(stationBean);
-            modelMap.addAttribute(StationViewBean.DEFAULT_NAME, stationBean);
-            if (stationBean.isProcessingFailed()) {
-                return "/administrator/station/createNewStation";
-            } else {
-                return "/administrator/station/createStationSuccess";
-            }
+            return "/administrator/station/createStationSuccess";
         }
     }
 }

@@ -39,7 +39,10 @@
 
                 <table id="validationMessages">
                     <tr>
-                        <td>${validationBean.validationMessage}</td>
+                        <td><form:errors path="stationName"/></td>
+                    </tr>
+                    <tr>
+                        <td><form:errors path="date"/></td>
                     </tr>
                     <tr>
                         <td>${timetableBean.processingErrorMessage}</td>

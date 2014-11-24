@@ -13,6 +13,12 @@
             <label>To purchase ticket, please fill the following fields: </label>
             <form:form commandName="ticketBean" class="form-horizontal" role="form" method="post" action="TicketPurchase" id = "trainSearchForm">
                 <div class="form-group">
+                    <label for="passengerDocNumber" class="col-sm-4 control-label">Document number:</label>
+                    <div class="col-sm-7">
+                        <form:input path="passengerDocNumber" type="text" class="form-control" id="passengerDocNumber" placeholder="Document number" value = "${ticketBean.passengerDocNumber}" readonly="true"/>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="trainNumber" class="col-sm-4 control-label">Train number:</label>
                     <div class="col-sm-7">
                         <form:input path="trainNumber" type="text" class="form-control" id="trainNumber" placeholder="Train number" value = "${ticketBean.trainNumber}"/>
@@ -27,7 +33,7 @@
 
                 <table id="validationMessages">
                     <tr>
-                        <td>${validationBean.validationMessage}</td>
+                        <td><form:errors path="trainNumber"/></td>
                     </tr>
                     <tr>
                         <td>${ticketBean.processingErrorMessage}</td>

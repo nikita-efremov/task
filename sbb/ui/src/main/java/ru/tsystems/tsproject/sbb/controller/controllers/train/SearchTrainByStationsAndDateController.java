@@ -5,18 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.validation.ValidationBean;
-import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.ComplexTrainSearchViewBean;
 import ru.tsystems.tsproject.sbb.viewbean.TrainViewBean;
 import ru.tsystems.tsproject.sbb.controller.helpers.TrainControllersHelper;
 
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -69,22 +69,20 @@ public class SearchTrainByStationsAndDateController {
      * @return JSP address to forward
      */
     @RequestMapping("/common/SearchStationDateTrain")
-    public String searchTrains(@ModelAttribute("complexTrainSearchBean") ComplexTrainSearchViewBean complexTrainSearchBean, ModelMap modelMap) {
+    public String searchTrains(@ModelAttribute("complexTrainSearchBean") @Valid ComplexTrainSearchViewBean complexTrainSearchBean,
+                               BindingResult bindingResult,
+                               ModelMap modelMap) {
         log.info("Servlet got viewBean " + complexTrainSearchBean);
-        ValidationBean validationBean = Validator.validate(complexTrainSearchBean);
-        if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
+        if (bindingResult.hasErrors()) {
+            return "/common/searchStationDateTrain";
+        }
+        Collection<TrainViewBean> trains = trainControllersHelper.findTrainsByStationsAndDate(complexTrainSearchBean);
+        if (complexTrainSearchBean.isProcessingFailed()) {
             modelMap.addAttribute(ComplexTrainSearchViewBean.DEFAULT_NAME, complexTrainSearchBean);
             return "/common/searchStationDateTrain";
         } else {
-            Collection<TrainViewBean> trains = trainControllersHelper.findTrainsByStationsAndDate(complexTrainSearchBean);
-            if (complexTrainSearchBean.isProcessingFailed()) {
-                modelMap.addAttribute(ComplexTrainSearchViewBean.DEFAULT_NAME, complexTrainSearchBean);
-                return "/common/searchStationDateTrain";
-            } else {
-                modelMap.addAttribute(TRAINS, trains);
-                return "/common/viewFoundTrains";
-            }
+            modelMap.addAttribute(TRAINS, trains);
+            return "/common/viewFoundTrains";
         }
     }
 }

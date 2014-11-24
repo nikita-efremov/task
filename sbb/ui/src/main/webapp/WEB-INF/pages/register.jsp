@@ -55,7 +55,19 @@
                 </div>
                 <table id="validationMessages">
                     <tr>
-                        <td>${validationBean.validationMessage}</td>
+                        <td><form:errors path="firstName"/></td>
+                    </tr>
+                    <tr>
+                        <td><form:errors path="lastName"/></td>
+                    </tr>
+                    <tr>
+                        <td><form:errors path="birthDate"/></td>
+                    </tr>
+                    <tr>
+                        <td><form:errors path="docNumber"/></td>
+                    </tr>
+                    <tr>
+                        <td><form:errors path="password"/></td>
                     </tr>
                     <tr>
                         <td>${passengerBean.processingErrorMessage}</td>

@@ -6,15 +6,16 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.validation.ValidationBean;
-import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.TicketViewBean;
 import ru.tsystems.tsproject.sbb.controller.helpers.PassengerControllersHelper;
+
+import javax.validation.Valid;
 
 /**
  * Controller, which gets and proceeds requests of ticket purchasing
@@ -36,9 +37,12 @@ public class PurchaseTicketController {
      * Adds ticketViewBean to the view and forwards to JSP with form of purchasing ticket
      * @return JSP address to forward
      */
+    @Secured("ROLE_PASSENGER")
     @RequestMapping(value = "/passenger/purchase", method = RequestMethod.GET)
     public ModelAndView initTicketBean() {
-        return new ModelAndView("/passenger/purchase", TicketViewBean.DEFAULT_NAME, new TicketViewBean());
+        TicketViewBean ticketViewBean = new TicketViewBean();
+        ticketViewBean.setPassengerDocNumber(SecurityContextHolder.getContext().getAuthentication().getName());
+        return new ModelAndView("/passenger/purchase", TicketViewBean.DEFAULT_NAME, ticketViewBean);
     }
 
     /**
@@ -71,8 +75,12 @@ public class PurchaseTicketController {
     @Secured("ROLE_PASSENGER")
     @RequestMapping(value = "/passenger/TicketPurchase",
             method = RequestMethod.POST)
-    public String purchaseFromSpecialForm(@ModelAttribute("ticketBean") TicketViewBean ticketBean, ModelMap modelMap) {
-        ticketBean.setPassengerDocNumber(SecurityContextHolder.getContext().getAuthentication().getName());
+    public String purchaseFromSpecialForm(@ModelAttribute("ticketBean") @Valid TicketViewBean ticketBean,
+                                          BindingResult bindingResult,
+                                          ModelMap modelMap) {
+        if (bindingResult.hasErrors()) {
+            return "/passenger/purchase";
+        }
         return makePurchase(ticketBean, modelMap);
     }
 
@@ -86,19 +94,12 @@ public class PurchaseTicketController {
      */
     private String makePurchase(TicketViewBean ticketBean, ModelMap modelMap) {
         log.info("Servlet got viewBean: " + ticketBean);
-        ValidationBean validationBean = Validator.validate(ticketBean, "trainNumber");
-        if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
-            modelMap.addAttribute(TicketViewBean.DEFAULT_NAME, ticketBean);
+        ticketBean = passengerControllersHelper.purchaseTicket(ticketBean);
+        modelMap.addAttribute(TicketViewBean.DEFAULT_NAME, ticketBean);
+        if (ticketBean.isProcessingFailed()) {
             return "/passenger/purchase";
         } else {
-            ticketBean = passengerControllersHelper.purchaseTicket(ticketBean);
-            modelMap.addAttribute(TicketViewBean.DEFAULT_NAME, ticketBean);
-            if (ticketBean.isProcessingFailed()) {
-                return "/passenger/purchase";
-            } else {
-                return "/passenger/purchaseSuccess";
-            }
+            return "/passenger/purchaseSuccess";
         }
     }
 }

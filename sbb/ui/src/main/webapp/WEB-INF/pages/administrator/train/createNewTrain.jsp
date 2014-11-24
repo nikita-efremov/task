@@ -32,7 +32,10 @@
                 </div>
                 <table id="validationMessages">
                     <tr>
-                        <td>${validationBean.validationMessage}</td>
+                        <td><form:errors path="number"/></td>
+                    </tr>
+                    <tr>
+                        <td><form:errors path="totalSeats"/></td>
                     </tr>
                     <tr>
                         <td>${trainBean.processingErrorMessage}</td>

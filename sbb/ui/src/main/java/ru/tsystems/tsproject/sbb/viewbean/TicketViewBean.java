@@ -15,8 +15,6 @@ public class TicketViewBean extends BaseViewBean {
 
     private int id;
 
-    @Min(value = 1, message = "Ticket number must not be smaller than 1")
-    @Max(value = 999999999999999L, message = "Ticket number must not be bigger than " + 999999999999999L)
     private long ticketNumber;
 
     @Pattern(regexp = "[A-Za-z0-9]{10}", message="Document number must contain 10 symbols: only english letters and digits")

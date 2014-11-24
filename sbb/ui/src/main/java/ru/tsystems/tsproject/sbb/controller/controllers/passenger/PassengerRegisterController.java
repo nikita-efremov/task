@@ -12,17 +12,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.validation.ValidationBean;
-import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.PassengerViewBean;
 import ru.tsystems.tsproject.sbb.controller.helpers.PassengerControllersHelper;
 
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -90,30 +90,28 @@ public class PassengerRegisterController {
      */
     @Secured("ROLE_ANONYMOUS")
     @RequestMapping("/RegisterPassenger")
-    public String register(@ModelAttribute("passengerBean") PassengerViewBean passengerBean, ModelMap modelMap) {
+    public String register(@ModelAttribute("passengerBean") @Valid PassengerViewBean passengerBean,
+                           BindingResult bindingResult,
+                           ModelMap modelMap) {
         log.info("Servlet got viewBean: " + passengerBean);
+        if (bindingResult.hasErrors()) {
+            return "/register";
+        }
         String password = passengerBean.getPassword();
-        ValidationBean validationBean = Validator.validate(passengerBean);
-        if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute(PassengerViewBean.DEFAULT_NAME, passengerBean);
-            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
+        passengerBean = passengerControllersHelper.addPassenger(passengerBean);
+        modelMap.addAttribute(PassengerViewBean.DEFAULT_NAME, passengerBean);
+        if (passengerBean.isProcessingFailed()) {
             return "/register";
         } else {
-            passengerBean = passengerControllersHelper.addPassenger(passengerBean);
-            modelMap.addAttribute(PassengerViewBean.DEFAULT_NAME, passengerBean);
-            if (passengerBean.isProcessingFailed()) {
-                return "/register";
-            } else {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(passengerBean.getDocNumber());
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                        userDetails, password, userDetails.getAuthorities());
-                authenticationManager.authenticate(auth);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(passengerBean.getDocNumber());
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                    userDetails, password, userDetails.getAuthorities());
+            authenticationManager.authenticate(auth);
 
-                if(auth.isAuthenticated()) {
-                    SecurityContextHolder.getContext().setAuthentication(auth);
-                }
-                return "/passenger/registerSuccess";
+            if(auth.isAuthenticated()) {
+                SecurityContextHolder.getContext().setAuthentication(auth);
             }
+            return "/passenger/registerSuccess";
         }
     }
 

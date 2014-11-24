@@ -4,16 +4,16 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.tsystems.tsproject.sbb.validation.ValidationBean;
-import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.StationViewBean;
 import ru.tsystems.tsproject.sbb.viewbean.TrainViewBean;
 import ru.tsystems.tsproject.sbb.controller.helpers.TrainControllersHelper;
 
+import javax.validation.Valid;
 import java.util.Collection;
 
 /**
@@ -51,22 +51,20 @@ public class SearchTrainByStationController {
      * @return JSP address to forward
      */
     @RequestMapping("/common/SearchStation")
-    public String searchStation(@ModelAttribute("stationBean") StationViewBean stationBean, ModelMap modelMap) {
+    public String searchStation(@ModelAttribute("stationBean") @Valid StationViewBean stationBean,
+                                BindingResult bindingResult,
+                                ModelMap modelMap) {
         log.info("Servlet got viewBean: " + stationBean);
-        ValidationBean validationBean = Validator.validate(stationBean);
-        if (validationBean.isValidationFailed()) {
-            modelMap.addAttribute(ValidationBean.DEFAULT_NAME, validationBean);
+        if (bindingResult.hasErrors()) {
+            return "/common/searchStation";
+        }
+        Collection<TrainViewBean> trains = trainControllersHelper.findTrainsByStation(stationBean);
+        if (stationBean.isProcessingFailed()) {
             modelMap.addAttribute(StationViewBean.DEFAULT_NAME, stationBean);
             return "/common/searchStation";
         } else {
-            Collection<TrainViewBean> trains = trainControllersHelper.findTrainsByStation(stationBean);
-            if (stationBean.isProcessingFailed()) {
-                modelMap.addAttribute(StationViewBean.DEFAULT_NAME, stationBean);
-                return "/common/searchStation";
-            } else {
-                modelMap.addAttribute(TRAINS, trains);
-                return "/common/viewFoundTrains";
-            }
+            modelMap.addAttribute(TRAINS, trains);
+            return "/common/viewFoundTrains";
         }
     }
 }
