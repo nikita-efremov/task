@@ -23,13 +23,10 @@ public interface CommonService {
      *
      * @return station with full info
      *
-     * @throws DAOException
-     *         If error occurred in JPA layer
-     *
      * @throws StationNotExistsException
      *         If station not found
      */
-    public Station findStation(String stationName) throws StationNotExistsException, DAOException;
+    public Station findStation(String stationName) throws StationNotExistsException;
 
     /**
      * Searches passenger in system with using information, specified in param. Method expects, that passenger exists
@@ -39,13 +36,10 @@ public interface CommonService {
      *
      * @return train with full info
      *
-     * @throws DAOException
-     *         If error occurred in JPA layer
-     *
      * @throws PassengerNotExistsException
      *         if passenger is not found
      */
-    public Passenger findPassenger(String docNumber) throws PassengerNotExistsException, DAOException;
+    public Passenger findPassenger(String docNumber) throws PassengerNotExistsException;
 
     /**
      * Searches train in system with using information, specified in param. Method expects, that train exists
@@ -55,11 +49,9 @@ public interface CommonService {
      *
      * @return train with full info
      *
-     * @throws DAOException
-     *         If error occurred in JPA layer
      *
      * @throws TrainNotExistsException
      *         if train not found in system
      */
-    public Train findTrain(String trainNumber) throws TrainNotExistsException, DAOException;
+    public Train findTrain(String trainNumber) throws TrainNotExistsException;
 }

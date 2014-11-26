@@ -10,6 +10,7 @@ import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Train;
 import ru.tsystems.tsproject.sbb.exception.PassengerNotExistsException;
 import ru.tsystems.tsproject.sbb.exception.StationNotExistsException;
+import ru.tsystems.tsproject.sbb.exception.SystemException;
 import ru.tsystems.tsproject.sbb.exception.TrainNotExistsException;
 import ru.tsystems.tsproject.sbb.service.api.CommonService;
 import ru.tsystems.tsproject.sbb.dao.DAOException;
@@ -35,34 +36,55 @@ public class CommonServiceImpl implements CommonService {
     @Autowired
     private PassengerDAO passengerDAO;
 
-    public Station findStation(String stationName) throws StationNotExistsException, DAOException {
-        log.info("Start search station with name: " + stationName);
-        Station station = stationDAO.getStationByName(stationName);
-        if (station == null) {
-            throw new StationNotExistsException("Station with name " + stationName + " not exists");
+    public Station findStation(String stationName) throws StationNotExistsException {
+        try {
+            log.info("Start search station with name: " + stationName);
+            Station station = stationDAO.getStationByName(stationName);
+            if (station == null) {
+                throw new StationNotExistsException("Station with name " + stationName + " not exists");
+            }
+            log.info("Station found: " + station);
+            return station;
+        } catch (DAOException e) {
+            SystemException systemException = new SystemException(e.getMessage());
+            systemException.setErrorCode(e.getErrorCode());
+            systemException.initCause(e.getCause());
+            throw systemException;
         }
-        log.info("Station found: " + station);
-        return station;
     }
 
-    public Train findTrain(String trainNumber) throws TrainNotExistsException, DAOException {
-        log.info("Start search train with number: " + trainNumber);
-        Train train = trainDAO.getTrainByNumber(trainNumber);
-        if (train == null) {
-            throw new TrainNotExistsException("Train with number " + trainNumber + " not exists");
+    public Train findTrain(String trainNumber) throws TrainNotExistsException {
+        try {
+            log.info("Start search train with number: " + trainNumber);
+            Train train = trainDAO.getTrainByNumber(trainNumber);
+            if (train == null) {
+                throw new TrainNotExistsException("Train with number " + trainNumber + " not exists");
+            }
+            log.info("Train found: " + train);
+            return train;
+        } catch (DAOException e) {
+            SystemException systemException = new SystemException(e.getMessage());
+            systemException.setErrorCode(e.getErrorCode());
+            systemException.initCause(e.getCause());
+            throw systemException;
         }
-        log.info("Train found: " + train);
-        return train;
     }
 
-    public Passenger findPassenger(String docNumber) throws DAOException, PassengerNotExistsException {
-        log.info("Start search passenger with document number: " + docNumber);
-        Passenger passenger = passengerDAO.getPassengerByDocumentNumber(docNumber);
-        if (passenger == null) {
-            throw new PassengerNotExistsException("Passenger with document number " + docNumber + " is not registered");
+    public Passenger findPassenger(String docNumber) throws PassengerNotExistsException {
+        try {
+            log.info("Start search passenger with document number: " + docNumber);
+            Passenger passenger = passengerDAO.getPassengerByDocumentNumber(docNumber);
+            if (passenger == null) {
+                throw new PassengerNotExistsException("Passenger with document number " + docNumber + " is not registered");
+            }
+            log.info("Passenger found " + passenger);
+            return passenger;
+        } catch (DAOException e) {
+            SystemException systemException = new SystemException(e.getMessage());
+            systemException.setErrorCode(e.getErrorCode());
+            systemException.initCause(e.getCause());
+            throw systemException;
         }
-        log.info("Passenger found " + passenger);
-        return passenger;
     }
 
     public StationDAO getStationDAO() {

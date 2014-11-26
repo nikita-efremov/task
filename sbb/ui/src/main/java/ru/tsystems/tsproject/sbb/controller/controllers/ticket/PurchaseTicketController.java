@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ru.tsystems.tsproject.sbb.controller.InvalidParameterException;
+import ru.tsystems.tsproject.sbb.validation.ValidationBean;
+import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.TicketViewBean;
 import ru.tsystems.tsproject.sbb.controller.helpers.PassengerControllersHelper;
 
@@ -57,10 +60,14 @@ public class PurchaseTicketController {
     @RequestMapping(value = "/passenger/TicketPurchase",
             method = RequestMethod.GET,
             params = "purchaseAction=Purchase")
-    public String purchaseFromTrainList(@RequestParam("trainNumber") String trainNumber, ModelMap modelMap) {
+    public String purchaseFromTrainList(@RequestParam("trainNumber") String trainNumber, ModelMap modelMap) throws Exception {
         TicketViewBean ticketBean = new TicketViewBean();
         ticketBean.setTrainNumber(trainNumber);
         ticketBean.setPassengerDocNumber(SecurityContextHolder.getContext().getAuthentication().getName());
+        ValidationBean validationBean = Validator.validate(ticketBean);
+        if (validationBean.isValidationFailed()) {
+            throw new InvalidParameterException(validationBean.getValidationMessage());
+        }
         return makePurchase(ticketBean, modelMap);
     }
 

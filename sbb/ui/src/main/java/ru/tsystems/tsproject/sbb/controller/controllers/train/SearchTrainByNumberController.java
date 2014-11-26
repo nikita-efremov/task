@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ru.tsystems.tsproject.sbb.controller.InvalidParameterException;
 import ru.tsystems.tsproject.sbb.validation.ValidationBean;
 import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.PassengerViewBean;
@@ -58,9 +59,13 @@ public class SearchTrainByNumberController {
     @RequestMapping(value = "/administrator/train/SearchTrain",
             method = RequestMethod.GET,
             params = "trainSearchAction=watch passengers")
-    public String watchPassengers(@RequestParam("Train_number") String trainNumber, ModelMap modelMap) {
+    public String watchPassengers(@RequestParam("Train_number") String trainNumber, ModelMap modelMap) throws InvalidParameterException {
         TrainViewBean trainBean = new TrainViewBean();
         trainBean.setNumber(trainNumber);
+        ValidationBean validationBean = Validator.validate(trainBean, "number");
+        if (validationBean.isValidationFailed()) {
+            throw new InvalidParameterException(validationBean.getValidationMessage());
+        }
         Collection<PassengerViewBean> passengerBeanSet = trainControllersHelper.findTrainPassengers(trainBean);
         modelMap.addAttribute(TRAIN_PASSENGERS, passengerBeanSet);
         modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
@@ -79,9 +84,13 @@ public class SearchTrainByNumberController {
     @RequestMapping(value = "/administrator/train/SearchTrain",
             method = RequestMethod.GET,
             params = "trainSearchAction=watch timetable")
-    public String watchTimetable(@RequestParam("Train_number") String trainNumber, ModelMap modelMap) {
+    public String watchTimetable(@RequestParam("Train_number") String trainNumber, ModelMap modelMap) throws InvalidParameterException {
         TrainViewBean trainBean = new TrainViewBean();
         trainBean.setNumber(trainNumber);
+        ValidationBean validationBean = Validator.validate(trainBean, "number");
+        if (validationBean.isValidationFailed()) {
+            throw new InvalidParameterException(validationBean.getValidationMessage());
+        }
         trainBean = trainControllersHelper.findTrain(trainBean);
         modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
         return "/common/trainTimetable";

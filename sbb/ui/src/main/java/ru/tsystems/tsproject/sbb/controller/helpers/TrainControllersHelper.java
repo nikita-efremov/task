@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.tsystems.tsproject.sbb.viewbean.*;
-import ru.tsystems.tsproject.sbb.dao.DAOException;
+import ru.tsystems.tsproject.sbb.exception.SystemException;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
 import ru.tsystems.tsproject.sbb.entity.Train;
@@ -58,9 +58,9 @@ public class TrainControllersHelper {
         } catch (TrainAlreadyExistsException e) {
             trainBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e);
-        } catch (DAOException e) {
-            trainBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
-            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (SystemException e) {
+            trainBean.setProcessingErrorMessage("System error occurred. Error code: " + e.getErrorCode());
+            log.log(Level.ERROR, "System error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             trainBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
@@ -100,9 +100,9 @@ public class TrainControllersHelper {
         } catch (TrainNotExistsException e) {
             trainBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e.getMessage() + " - " + e);
-        } catch (DAOException e) {
-            trainBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
-            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (SystemException e) {
+            trainBean.setProcessingErrorMessage("System error occurred. Error code: " + e.getErrorCode());
+            log.log(Level.ERROR, "System error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             trainBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
@@ -136,9 +136,9 @@ public class TrainControllersHelper {
         } catch (TrainNotExistsException e) {
             trainBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e.getMessage() + " - " + e);
-        } catch (DAOException e) {
-            trainBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
-            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (SystemException e) {
+            trainBean.setProcessingErrorMessage("System error occurred. Error code: " + e.getErrorCode());
+            log.log(Level.ERROR, "System error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             trainBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
@@ -168,9 +168,9 @@ public class TrainControllersHelper {
         } catch (TrainStopAlreadyExistsException e) {
             timetableBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e.getMessage() + " - " + e);
-        } catch (DAOException e) {
-            timetableBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
-            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (SystemException e) {
+            timetableBean.setProcessingErrorMessage("System error occurred. Error code: " + e.getErrorCode());
+            log.log(Level.ERROR, "System error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             timetableBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
@@ -200,9 +200,9 @@ public class TrainControllersHelper {
         } catch (StationNotExistsException e) {
             stationBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e.getMessage() + " - " + e);
-        } catch (DAOException e) {
-            stationBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
-            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (SystemException e) {
+            stationBean.setProcessingErrorMessage("System error occurred. Error code: " + e.getErrorCode());
+            log.log(Level.ERROR, "System error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             stationBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
@@ -236,9 +236,9 @@ public class TrainControllersHelper {
         } catch (StationNotExistsException e) {
             complexTrainSearchBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e.getMessage() + " - " + e);
-        } catch (DAOException e) {
-            complexTrainSearchBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
-            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (SystemException e) {
+            complexTrainSearchBean.setProcessingErrorMessage("System error occurred. Error code: " + e.getErrorCode());
+            log.log(Level.ERROR, "System error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             complexTrainSearchBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
@@ -265,8 +265,8 @@ public class TrainControllersHelper {
                 trainBean.setTotalSeats(String.valueOf(train.getTotalSeats()));
                 trainBeans.add(trainBean);
             }
-        } catch (DAOException e) {
-            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (SystemException e) {
+            log.log(Level.ERROR, "System error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             log.log(Level.ERROR, "Unknown error occurred: " + e);
         }

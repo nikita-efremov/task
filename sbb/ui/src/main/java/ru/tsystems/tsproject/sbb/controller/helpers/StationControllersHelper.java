@@ -8,7 +8,7 @@ import ru.tsystems.tsproject.sbb.viewbean.StationViewBean;
 import ru.tsystems.tsproject.sbb.viewbean.TimetableViewBean;
 import ru.tsystems.tsproject.sbb.entity.Station;
 import ru.tsystems.tsproject.sbb.entity.Timetable;
-import ru.tsystems.tsproject.sbb.dao.DAOException;
+import ru.tsystems.tsproject.sbb.exception.SystemException;
 import ru.tsystems.tsproject.sbb.exception.StationAlreadyExistsException;
 import ru.tsystems.tsproject.sbb.exception.StationNotExistsException;
 import ru.tsystems.tsproject.sbb.service.api.AdministratorService;
@@ -54,9 +54,9 @@ public class StationControllersHelper {
         } catch (StationAlreadyExistsException e) {
             stationBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e);
-        } catch (DAOException e) {
-            stationBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
-            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (SystemException e) {
+            stationBean.setProcessingErrorMessage("System error occurred. Error code: " + e.getErrorCode());
+            log.log(Level.ERROR, "System error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             stationBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
@@ -97,9 +97,9 @@ public class StationControllersHelper {
         } catch (StationNotExistsException e) {
             stationBean.setProcessingErrorMessage(e.getMessage());
             log.log(Level.ERROR, e.getMessage() + " - " + e);
-        } catch (DAOException e) {
-            stationBean.setProcessingErrorMessage("Database error occurred. Error code: " + e.getErrorCode());
-            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (SystemException e) {
+            stationBean.setProcessingErrorMessage("System error occurred. Error code: " + e.getErrorCode());
+            log.log(Level.ERROR, "System error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             stationBean.setProcessingErrorMessage("Unknown error occurred");
             log.log(Level.ERROR, "Unknown error occurred: " + e);
@@ -124,8 +124,8 @@ public class StationControllersHelper {
                 stationBean.setName(station.getName());
                 stationBeans.add(stationBean);
             }
-        } catch (DAOException e) {
-            log.log(Level.ERROR, "Database error occurred. Error code: " + e.getErrorCode() + " - " + e);
+        } catch (SystemException e) {
+            log.log(Level.ERROR, "System error occurred. Error code: " + e.getErrorCode() + " - " + e);
         } catch (Exception e) {
             log.log(Level.ERROR, "Unknown error occurred: " + e);
         }

@@ -7,6 +7,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.tsystems.tsproject.sbb.controller.InvalidParameterException;
+import ru.tsystems.tsproject.sbb.validation.ValidationBean;
+import ru.tsystems.tsproject.sbb.validation.Validator;
 import ru.tsystems.tsproject.sbb.viewbean.TrainViewBean;
 import ru.tsystems.tsproject.sbb.controller.helpers.TrainControllersHelper;
 
@@ -37,10 +40,14 @@ public class TrainTimetableController {
     @RequestMapping(value = "/common/TrainTimetable",
             method = RequestMethod.GET,
             params = "trainSearchAction=watch timetable")
-    public String watchTimetable(@RequestParam("Train_number") String trainNumber, ModelMap modelMap) {
+    public String watchTimetable(@RequestParam("Train_number") String trainNumber, ModelMap modelMap) throws InvalidParameterException {
         TrainViewBean trainBean = new TrainViewBean();
         trainBean.setNumber(trainNumber);
         log.info("Servlet got viewBean: " + trainBean);
+        ValidationBean validationBean = Validator.validate(trainBean, "number");
+        if (validationBean.isValidationFailed()) {
+            throw new InvalidParameterException(validationBean.getValidationMessage());
+        }
         trainBean = trainControllersHelper.findTrain(trainBean);
         modelMap.addAttribute(TrainViewBean.DEFAULT_NAME, trainBean);
         return "/common/trainTimetable";

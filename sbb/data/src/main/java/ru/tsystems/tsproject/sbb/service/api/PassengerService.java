@@ -24,12 +24,9 @@ public interface PassengerService extends CommonService {
      *
      * @throws StationNotExistsException
      *         if station not found
-     *
-     * @throws DAOException
-     *         If error occurred in JPA layer
      */
     public Collection<Train> findTrainsByStation(String stationName)
-            throws StationNotExistsException, DAOException;
+            throws StationNotExistsException;
 
     /**
      * Finds all trains which are move from stationStart, departs to stationEnd and trip time is between start and end
@@ -48,12 +45,9 @@ public interface PassengerService extends CommonService {
      *
      * @throws StationNotExistsException
      *         if station not found
-     *
-     * @throws DAOException
-     *         If error occurred in JPA layer
      */
     public Collection<Train> findTrainsByStationsAndDate(String stationStartName, String stationEndName, Date start, Date end)
-            throws StationNotExistsException, DAOException;
+            throws StationNotExistsException;
 
     /**
      * Create ticket for specified passenger on specified train
@@ -79,12 +73,13 @@ public interface PassengerService extends CommonService {
      * @throws TrainAlreadyDepartedException
      *         If current train had been already departed
      *
-     * @throws DAOException
-     *         If error occurred in JPA layer
+     * @throws TicketAlreadyExistsException
+     *         If current ticket already purchased
      */
     public Ticket purchaseTicket(String trainNumber, String docNumber) throws
             TrainNotExistsException, PassengerNotExistsException, TrainAlreadyFullException,
-            PassengerAlreadyRegisteredOnTrainException, TrainAlreadyDepartedException, DAOException;
+            PassengerAlreadyRegisteredOnTrainException, TrainAlreadyDepartedException,
+            TicketAlreadyExistsException;
 
     /**
      * Creates passenger, if passenger with specified document number not exists
@@ -95,8 +90,6 @@ public interface PassengerService extends CommonService {
      * @throws PassengerAlreadyExistsException
      *         If current passenger had been already registered in system
      *
-     * @throws DAOException
-     *         If error occurred in JPA layer
      */
-    public Passenger addPassenger(Passenger passenger) throws PassengerAlreadyExistsException, DAOException;
+    public Passenger addPassenger(Passenger passenger) throws PassengerAlreadyExistsException;
 }

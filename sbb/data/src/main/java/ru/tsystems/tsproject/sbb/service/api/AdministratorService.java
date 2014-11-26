@@ -25,10 +25,8 @@ public interface AdministratorService extends CommonService {
      *
      * @throws  StationAlreadyExistsException
      *          If station with specified name already exists
-     * @throws DAOException
-     *         If error occurred in JPA layer
      */
-    public Station addStation(Station station) throws StationAlreadyExistsException, DAOException;
+    public Station addStation(Station station) throws StationAlreadyExistsException;
 
     /**
      * Adds new train with name, specified in param
@@ -38,10 +36,8 @@ public interface AdministratorService extends CommonService {
      *
      * @throws  TrainAlreadyExistsException
      *          If train with specified name already exists
-     * @throws DAOException
-     *         If error occurred in JPA layer
      */
-    public Train addTrain(Train train) throws TrainAlreadyExistsException, DAOException;
+    public Train addTrain(Train train) throws TrainAlreadyExistsException;
 
     /**
      * Adds new timetable with station, train and date specified in param
@@ -55,9 +51,6 @@ public interface AdministratorService extends CommonService {
      * @param departureDate
      *        Date of train departure from station
      *
-     * @throws DAOException
-     *         If error occurred in JPA layer
-     *
      * @throws TrainNotExistsException
      *         if train not found
      *
@@ -68,7 +61,7 @@ public interface AdministratorService extends CommonService {
      *         if stop of train on target station already exists
      */
     public void addTimetable(String trainNumber, String stationName, Date departureDate)
-            throws TrainNotExistsException, StationNotExistsException, TrainStopAlreadyExistsException, DAOException;
+            throws TrainNotExistsException, StationNotExistsException, TrainStopAlreadyExistsException;
 
     /**
      * Gets collection of passengers which have tickets on train, specified in param
@@ -78,41 +71,30 @@ public interface AdministratorService extends CommonService {
      *
      * @return collection of passengers
      *
-     * @throws DAOException
-     *         If error occurred in JPA layer
-     *
      * @throws TrainNotExistsException
      *         if train not found
      */
-    public Collection<Passenger> getPassengersByTrain(String trainNumber) throws TrainNotExistsException,DAOException;
+    public Collection<Passenger> getPassengersByTrain(String trainNumber) throws TrainNotExistsException;
 
     /**
      * Gets collection of all exists trains
      *
      * @return collection of trains
-     *
-     * @throws DAOException
-     *         If error occurred in JPA layer
      */
-    public Collection<Station> getAllStations() throws DAOException;
+    public Collection<Station> getAllStations();
 
     /**
      * Gets collection of all exists stations
      *
      * @return collection of trains
-     *
-     * @throws DAOException
-     *         If error occurred in JPA layer
      */
-    public Collection<Train> getAllTrains() throws DAOException;
+    public Collection<Train> getAllTrains();
 
     /**
      * Gets collection of all exists passengers
      *
      * @return collection of passengers
      *
-     * @throws DAOException
-     *         If error occurred in JPA layer
      */
-    public Collection<Passenger> getAllPassengers() throws DAOException;
+    public Collection<Passenger> getAllPassengers();
 }
