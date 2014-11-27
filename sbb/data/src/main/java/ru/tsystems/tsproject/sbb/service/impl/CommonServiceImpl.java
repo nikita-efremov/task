@@ -46,10 +46,7 @@ public class CommonServiceImpl implements CommonService {
             log.info("Station found: " + station);
             return station;
         } catch (DAOException e) {
-            SystemException systemException = new SystemException(e.getMessage());
-            systemException.setErrorCode(e.getErrorCode());
-            systemException.initCause(e.getCause());
-            throw systemException;
+            throw convertDAOException(e);
         }
     }
 
@@ -63,10 +60,7 @@ public class CommonServiceImpl implements CommonService {
             log.info("Train found: " + train);
             return train;
         } catch (DAOException e) {
-            SystemException systemException = new SystemException(e.getMessage());
-            systemException.setErrorCode(e.getErrorCode());
-            systemException.initCause(e.getCause());
-            throw systemException;
+            throw convertDAOException(e);
         }
     }
 
@@ -80,11 +74,23 @@ public class CommonServiceImpl implements CommonService {
             log.info("Passenger found " + passenger);
             return passenger;
         } catch (DAOException e) {
-            SystemException systemException = new SystemException(e.getMessage());
-            systemException.setErrorCode(e.getErrorCode());
-            systemException.initCause(e.getCause());
-            throw systemException;
+           throw convertDAOException(e);
         }
+    }
+
+    /**
+     * Method converts DAOException, which can occur in data access layer, to SystemException,
+     * with saving cause, message and error code
+     * @param e
+     *        DAOException to convert
+     * @return SystemException
+     *        Result of converting
+     */
+    public SystemException convertDAOException(DAOException e) {
+        SystemException systemException = new SystemException(e.getMessage());
+        systemException.setErrorCode(e.getErrorCode());
+        systemException.initCause(e.getCause());
+        return systemException;
     }
 
     public StationDAO getStationDAO() {

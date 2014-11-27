@@ -42,10 +42,7 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
             log.info("Found trains: " + trainString.toString());
             return foundTrains;
         } catch (DAOException e) {
-            SystemException systemException = new SystemException(e.getMessage());
-            systemException.setErrorCode(e.getErrorCode());
-            systemException.initCause(e.getCause());
-            throw systemException;
+            throw convertDAOException(e);
         }
     }
 
@@ -89,10 +86,7 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
             log.info("Found trains: " + trainString.toString());
             return directionImportantTrains;
         } catch (DAOException e) {
-            SystemException systemException = new SystemException(e.getMessage());
-            systemException.setErrorCode(e.getErrorCode());
-            systemException.initCause(e.getCause());
-            throw systemException;
+            throw convertDAOException(e);
         }
     }
 
@@ -145,10 +139,7 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
                             + docNumber + " already purchased");
                 }
                 default:{
-                    SystemException systemException = new SystemException(e.getMessage());
-                    systemException.setErrorCode(e.getErrorCode());
-                    systemException.initCause(e.getCause());
-                    throw systemException;
+                    throw convertDAOException(e);
                 }
             }
         }
@@ -174,10 +165,7 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
                             + " already registered in system");
                 }
                 default:{
-                    SystemException systemException = new SystemException(e.getMessage());
-                    systemException.setErrorCode(e.getErrorCode());
-                    systemException.initCause(e.getCause());
-                    throw systemException;
+                    throw convertDAOException(e);
                 }
             }
         }

@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tsystems.tsproject.sbb.dao.ErrorCode;
 import ru.tsystems.tsproject.sbb.dao.api.*;
 import ru.tsystems.tsproject.sbb.entity.Passenger;
 import ru.tsystems.tsproject.sbb.entity.Station;
@@ -50,10 +49,7 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
                     throw new StationAlreadyExistsException("Station with name " + station.getName() + " already exists");
                 }
                 default:{
-                    SystemException systemException = new SystemException(e.getMessage());
-                    systemException.setErrorCode(e.getErrorCode());
-                    systemException.initCause(e.getCause());
-                    throw systemException;
+                    throw convertDAOException(e);
                 }
             }
         }
@@ -76,10 +72,7 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
                     throw new TrainAlreadyExistsException("Train with number " + train.getNumber() + " already exists");
                 }
                 default:{
-                    SystemException systemException = new SystemException(e.getMessage());
-                    systemException.setErrorCode(e.getErrorCode());
-                    systemException.initCause(e.getCause());
-                    throw systemException;
+                    throw convertDAOException(e);
                 }
             }
         }
@@ -116,10 +109,7 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
                             + " already exists on station with name " + stationName);
                 }
                 default:{
-                    SystemException systemException = new SystemException(e.getMessage());
-                    systemException.setErrorCode(e.getErrorCode());
-                    systemException.initCause(e.getCause());
-                    throw systemException;
+                    throw convertDAOException(e);
                 }
             }
         }
@@ -132,10 +122,7 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
             Train train = findTrain(trainNumber);
             return getPassengerDAO().getPassengersByTrain(train.getId());
         } catch (DAOException e) {
-            SystemException systemException = new SystemException(e.getMessage());
-            systemException.setErrorCode(e.getErrorCode());
-            systemException.initCause(e.getCause());
-            throw systemException;
+            throw convertDAOException(e);
         }
     }
 
@@ -145,10 +132,7 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
             log.info("Start getting all trains");
             return getTrainDAO().<Train>getAll();
         } catch (DAOException e) {
-            SystemException systemException = new SystemException(e.getMessage());
-            systemException.setErrorCode(e.getErrorCode());
-            systemException.initCause(e.getCause());
-            throw systemException;
+            throw convertDAOException(e);
         }
     }
 
@@ -158,10 +142,7 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
             log.info("Start getting all stations");
             return getStationDAO().<Station>getAll();
         } catch (DAOException e) {
-            SystemException systemException = new SystemException(e.getMessage());
-            systemException.setErrorCode(e.getErrorCode());
-            systemException.initCause(e.getCause());
-            throw systemException;
+            throw convertDAOException(e);
         }
     }
 
@@ -171,10 +152,7 @@ public class AdministratorServiceImpl extends CommonServiceImpl implements Admin
             log.info("Start getting all passengers");
             return getPassengerDAO().<Station>getAll();
         } catch (DAOException e) {
-            SystemException systemException = new SystemException(e.getMessage());
-            systemException.setErrorCode(e.getErrorCode());
-            systemException.initCause(e.getCause());
-            throw systemException;
+            throw convertDAOException(e);
         }
     }
 }
