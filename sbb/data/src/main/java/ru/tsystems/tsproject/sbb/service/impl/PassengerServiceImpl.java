@@ -63,17 +63,20 @@ public class PassengerServiceImpl extends CommonServiceImpl implements Passenger
             for (Train train : directionUnImportantTrains) {
                 if (!trains.contains(train.getNumber())) {
                     Collection<Timetable> trainTimetables = train.getTimetables();
-                    Date currentTrainStart = null;
-                    Date currentTrainEnd = null;
+                    long currentTrainStart = 0;
+                    long currentTrainEnd = 0;
                     for (Timetable timetable : trainTimetables) {
                         if (timetable.getStation().getId() == stationStart.getId()) {
-                            currentTrainStart = timetable.getDate();
+                            currentTrainStart = timetable.getDate().getTime();
                         }
                         if (timetable.getStation().getId() == stationEnd.getId()) {
-                            currentTrainEnd = timetable.getDate();
+                            currentTrainEnd = timetable.getDate().getTime();
                         }
                     }
-                    if ((currentTrainStart != null) && (currentTrainEnd != null) && (currentTrainStart.before(currentTrainEnd))) {
+                    if ((currentTrainStart != 0) && (currentTrainEnd != 0)
+                            && (currentTrainStart < currentTrainEnd)
+                            && (currentTrainStart >= start.getTime())
+                            && (currentTrainEnd <= end.getTime())) {
                         directionImportantTrains.add(train);
                     }
                     trains.add(train.getNumber());

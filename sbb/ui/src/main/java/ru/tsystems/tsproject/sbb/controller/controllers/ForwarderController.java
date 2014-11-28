@@ -48,4 +48,13 @@ public class ForwarderController {
     public String toErrorPage() {
         return "/error403";
     }
+
+    /**
+     * Forwards to 404 error page
+     * @return JSP address to forward
+     */
+    @RequestMapping("/error404")
+    public String to404Page() {
+        return "/error404";
+    }
 }
